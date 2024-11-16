@@ -2,7 +2,7 @@ aid: bluesky
 url: https://raw.githubusercontent.com/api-search/bluesky/refs/heads/main/apis.yml
 apis:
   - aid: bluesky:bluesky
-    name: AT Protocol XRPC API
+    name: Bluesky API
     tags:
       - Social Networks
     humanURL: https://docs.bsky.app/
@@ -12,9 +12,9 @@ apis:
       - url: properties/bluesky.yml
         type: OpenAPI
     description: >-
-      This section contains HTTP API reference docs for Bluesky and AT Protocol
-      lexicons. Generate a bearer token to test API calls directly from the
-      docs.
+      The Bluesky API allows you to work programmatically with actors, feeds,
+      graph, conversations, and other resources available for the the Bluesky
+      app and social network.
 name: Bluesky
 tags:
   - Social Networks
