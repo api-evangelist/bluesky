@@ -12,9 +12,9 @@ apis:
       - url: properties/bluesky.yml
         type: OpenAPI
     description: >-
-      This section contains HTTP API reference docs for Bluesky and AT Protocol
-      lexicons. Generate a bearer token to test API calls directly from the
-      docs.
+      The Bluesky API allows you to work programmatically with actors, feeds,
+      graph, conversations, and other resources available for the the Bluesky
+      app and social network.
 name: Bluesky
 tags:
   - Social Networks
@@ -32,3 +32,25 @@ maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.19'
+common:
+  - name: Bots | Bluesky
+    url: https://docs.bsky.app/docs/starter-templates/bots
+    type: Bots
+  - name: Support | Bluesky
+    url: https://docs.bsky.app/docs/category/support
+    type: Support
+  - name: Blog | Bluesky
+    url: https://docs.bsky.app/blog
+    type: Blog
+  - name: Get Started | Bluesky
+    url: https://docs.bsky.app/docs/get-started
+    type: GettingStarted
+  - name: Starter Templates | Bluesky
+    url: https://docs.bsky.app/docs/category/starter-templates
+    type: Templates
+  - name: Tutorials | Bluesky
+    url: https://docs.bsky.app/docs/category/tutorials
+    type: Tutorials
+  - name: Developer Mailing List | Bluesky
+    url: https://docs.bsky.app/docs/support/mailing-list
+    type: Newsletter
