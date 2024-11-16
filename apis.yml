@@ -11,6 +11,9 @@ apis:
         type: Documentation
       - url: properties/bluesky-openapi.yml
         type: OpenAPI
+      - url: >-
+          /bluesky/collection/35240-9a69d0f1-4fbf-41bc-8781-c53d58c6e278/?action=share&creator=35240
+        type: PostmanCollection
     description: >-
       The Bluesky API allows you to work programmatically with actors, feeds,
       graph, conversations, and other resources available for the the Bluesky
@@ -21,6 +24,34 @@ tags:
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
+common:
+  - url: https://docs.bsky.app/docs/starter-templates/bots
+    name: Bots | Bluesky
+    type: Bots
+  - url: https://docs.bsky.app/docs/category/support
+    name: Support | Bluesky
+    type: Support
+  - url: https://docs.bsky.app/blog
+    name: Blog | Bluesky
+    type: Blog
+  - url: https://docs.bsky.app/docs/get-started
+    name: Get Started | Bluesky
+    type: GettingStarted
+  - url: https://docs.bsky.app/docs/category/starter-templates
+    name: Starter Templates | Bluesky
+    type: Templates
+  - url: https://docs.bsky.app/docs/category/tutorials
+    name: Tutorials | Bluesky
+    type: Tutorials
+  - url: https://docs.bsky.app/docs/support/mailing-list
+    name: Developer Mailing List | Bluesky
+    type: Newsletter
+  - name: Postman Workspace
+    description: >-
+      This is the dedicated workspace for the Bluesky API, storing collections
+      and automations that can be used.
+    url: https://www.postman.com/api-evangelist/bluesky/overview
+    type: PostmanWorkspace
 created: '2024-11-16'
 modified: '2024-11-16'
 position: Consumer
@@ -32,25 +63,3 @@ maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.19'
-common:
-  - name: Bots | Bluesky
-    url: https://docs.bsky.app/docs/starter-templates/bots
-    type: Bots
-  - name: Support | Bluesky
-    url: https://docs.bsky.app/docs/category/support
-    type: Support
-  - name: Blog | Bluesky
-    url: https://docs.bsky.app/blog
-    type: Blog
-  - name: Get Started | Bluesky
-    url: https://docs.bsky.app/docs/get-started
-    type: GettingStarted
-  - name: Starter Templates | Bluesky
-    url: https://docs.bsky.app/docs/category/starter-templates
-    type: Templates
-  - name: Tutorials | Bluesky
-    url: https://docs.bsky.app/docs/category/tutorials
-    type: Tutorials
-  - name: Developer Mailing List | Bluesky
-    url: https://docs.bsky.app/docs/support/mailing-list
-    type: Newsletter
