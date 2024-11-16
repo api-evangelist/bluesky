@@ -1,32 +1,32 @@
 aid: bluesky
-name: Bluesky
-description: >-
-  Read the docs. API ReferenceView the complete HTTP API reference.
-  TutorialsView tutorials for handling the Bluesky API. Starter TemplatesView
-  starter code for ...
-type: Index
-position: Consumer
-access: 3rd-Party
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-tags:
-  - API
-created: '2024-11-16'
-modified: '2024-11-16'
 url: https://raw.githubusercontent.com/api-search/bluesky/refs/heads/main/apis.yml
-specificationVersion: '0.19'
 apis:
   - aid: bluesky:bluesky
     name: Bluesky
+    tags:
+      - API
+    humanURL: https://docs.bsky.app/
+    properties:
+      - url: https://docs.bsky.app/
+        type: Documentation
     description: >-
       Read the docs. API ReferenceView the complete HTTP API reference.
       TutorialsView tutorials for handling the Bluesky API. Starter
       TemplatesView starter code for ...
-    humanURL: https://docs.bsky.app/
-    tags:
-      - API
-    properties:
-      - type: Documentation
-        url: https://docs.bsky.app/
+name: Bluesky
+tags:
+  - Social Networks
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+created: '2024-11-16'
+modified: '2024-11-16'
+position: Consumer
+description: >-
+  Read the docs. API ReferenceView the complete HTTP API reference.
+  TutorialsView tutorials for handling the Bluesky API. Starter TemplatesView
+  starter code for ...
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
+specificationVersion: '0.19'
