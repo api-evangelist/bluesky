@@ -12,7 +12,7 @@ apis:
       - url: properties/bluesky-openapi.yml
         type: OpenAPI
       - url: >-
-          /bluesky/collection/35240-9a69d0f1-4fbf-41bc-8781-c53d58c6e278/?action=share&creator=35240
+          https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
         type: PostmanCollection
     description: >-
       The Bluesky API allows you to work programmatically with actors, feeds,
@@ -46,12 +46,12 @@ common:
   - url: https://docs.bsky.app/docs/support/mailing-list
     name: Developer Mailing List | Bluesky
     type: Newsletter
-  - name: Postman Workspace
+  - url: https://www.postman.com/api-evangelist/bluesky/overview
+    name: Postman Workspace
+    type: PostmanWorkspace
     description: >-
       This is the dedicated workspace for the Bluesky API, storing collections
       and automations that can be used.
-    url: https://www.postman.com/api-evangelist/bluesky/overview
-    type: PostmanWorkspace
 created: '2024-11-16'
 modified: '2024-11-16'
 position: Consumer
