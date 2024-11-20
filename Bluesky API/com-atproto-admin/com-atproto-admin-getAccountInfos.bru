@@ -1,0 +1,19 @@
+meta {
+  name: com-atproto-admin-getAccountInfos
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.admin.getAccountInfos
+  body: none
+  auth: bearer
+}
+
+params:query {
+  dids: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

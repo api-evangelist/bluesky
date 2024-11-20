@@ -1,0 +1,19 @@
+meta {
+  name: tools-ozone-signature-findCorrelation
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/xrpc/tools.ozone.signature.findCorrelation
+  body: none
+  auth: bearer
+}
+
+params:query {
+  dids: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

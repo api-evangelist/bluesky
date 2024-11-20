@@ -1,0 +1,23 @@
+meta {
+  name: tools-ozone-setting-listOptions
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/xrpc/tools.ozone.setting.listOptions
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~limit: 
+  ~cursor: 
+  ~scope: 
+  ~prefix: 
+  ~keys: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

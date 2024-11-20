@@ -1,0 +1,36 @@
+meta {
+  name: tools-ozone-moderation-queryEvents
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/xrpc/tools.ozone.moderation.queryEvents
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~types: 
+  ~createdBy: 
+  ~sortDirection: 
+  ~createdAfter: 
+  ~createdBefore: 
+  ~subject: 
+  ~collections: 
+  ~subjectType: 
+  ~includeAllUserRecords: 
+  ~limit: 
+  ~hasComment: 
+  ~comment: 
+  ~addedLabels: 
+  ~removedLabels: 
+  ~addedTags: 
+  ~removedTags: 
+  ~reportTypes: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

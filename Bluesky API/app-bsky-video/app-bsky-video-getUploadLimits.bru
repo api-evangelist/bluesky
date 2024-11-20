@@ -1,0 +1,15 @@
+meta {
+  name: app-bsky-video-getUploadLimits
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.video.getUploadLimits
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

@@ -1,0 +1,15 @@
+meta {
+  name: app-bsky-feed-describeFeedGenerator
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.describeFeedGenerator
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

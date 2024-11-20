@@ -1,0 +1,20 @@
+meta {
+  name: app-bsky-labeler-getServices
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.labeler.getServices
+  body: none
+  auth: bearer
+}
+
+params:query {
+  dids: 
+  ~detailed: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

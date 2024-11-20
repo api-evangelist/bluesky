@@ -1,0 +1,15 @@
+meta {
+  name: com-atproto-server-checkAccountStatus
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.server.checkAccountStatus
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

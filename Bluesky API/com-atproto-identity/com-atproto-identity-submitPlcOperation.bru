@@ -1,0 +1,21 @@
+meta {
+  name: com-atproto-identity-submitPlcOperation
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.identity.submitPlcOperation
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "operation": ""
+  }
+}

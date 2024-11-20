@@ -1,0 +1,15 @@
+meta {
+  name: chat-bsky-actor-deleteAccount
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/xrpc/chat.bsky.actor.deleteAccount
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

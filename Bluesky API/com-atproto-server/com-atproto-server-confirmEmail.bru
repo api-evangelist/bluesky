@@ -1,0 +1,22 @@
+meta {
+  name: com-atproto-server-confirmEmail
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.confirmEmail
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "email": "",
+    "token": ""
+  }
+}

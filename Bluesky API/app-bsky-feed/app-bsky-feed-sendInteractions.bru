@@ -1,0 +1,27 @@
+meta {
+  name: app-bsky-feed-sendInteractions
+  type: http
+  seq: 18
+}
+
+post {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.sendInteractions
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "interactions": [
+      {
+        "item": "",
+        "event": "",
+        "feedContext": ""
+      }
+    ]
+  }
+}

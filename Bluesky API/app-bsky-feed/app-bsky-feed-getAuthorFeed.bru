@@ -1,0 +1,23 @@
+meta {
+  name: app-bsky-feed-getAuthorFeed
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.getAuthorFeed
+  body: none
+  auth: bearer
+}
+
+params:query {
+  actor: 
+  ~limit: 
+  ~cursor: 
+  ~filter: 
+  ~includePins: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

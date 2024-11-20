@@ -1,0 +1,27 @@
+meta {
+  name: com-atproto-repo-putRecord
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.repo.putRecord
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "repo": "",
+    "collection": "",
+    "rkey": "",
+    "validate": "",
+    "record": "",
+    "swapRecord": "",
+    "swapCommit": ""
+  }
+}

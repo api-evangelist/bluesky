@@ -1,0 +1,15 @@
+meta {
+  name: tools-ozone-server-getConfig
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/xrpc/tools.ozone.server.getConfig
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

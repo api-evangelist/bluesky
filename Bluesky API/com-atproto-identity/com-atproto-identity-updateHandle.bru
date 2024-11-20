@@ -1,0 +1,21 @@
+meta {
+  name: com-atproto-identity-updateHandle
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.identity.updateHandle
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "handle": ""
+  }
+}

@@ -1,0 +1,25 @@
+meta {
+  name: tools-ozone-communication-createTemplate
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/xrpc/tools.ozone.communication.createTemplate
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "",
+    "contentMarkdown": "",
+    "subject": "",
+    "lang": "",
+    "createdBy": ""
+  }
+}

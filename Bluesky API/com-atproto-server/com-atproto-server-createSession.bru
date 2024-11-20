@@ -1,0 +1,23 @@
+meta {
+  name: com-atproto-server-createSession
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.createSession
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "identifier": "",
+    "password": "",
+    "authFactorToken": ""
+  }
+}

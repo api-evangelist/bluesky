@@ -1,0 +1,15 @@
+meta {
+  name: com-atproto-server-activateAccount
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.activateAccount
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

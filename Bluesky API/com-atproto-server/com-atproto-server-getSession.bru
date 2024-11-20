@@ -1,0 +1,15 @@
+meta {
+  name: com-atproto-server-getSession
+  type: http
+  seq: 15
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.server.getSession
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

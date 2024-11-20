@@ -1,0 +1,23 @@
+meta {
+  name: com-atproto-repo-listRecords
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.repo.listRecords
+  body: none
+  auth: bearer
+}
+
+params:query {
+  repo: 
+  collection: 
+  ~limit: 
+  ~cursor: 
+  ~reverse: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

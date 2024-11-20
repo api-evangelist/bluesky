@@ -1,0 +1,21 @@
+meta {
+  name: app-bsky-graph-getList
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.graph.getList
+  body: none
+  auth: bearer
+}
+
+params:query {
+  list: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

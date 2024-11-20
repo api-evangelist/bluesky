@@ -1,0 +1,19 @@
+meta {
+  name: com-atproto-sync-getRepoStatus
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.sync.getRepoStatus
+  body: none
+  auth: bearer
+}
+
+params:query {
+  did: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

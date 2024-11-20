@@ -1,0 +1,21 @@
+meta {
+  name: app-bsky-graph-muteActorList
+  type: http
+  seq: 16
+}
+
+post {
+  url: {{baseUrl}}/xrpc/app.bsky.graph.muteActorList
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "list": ""
+  }
+}

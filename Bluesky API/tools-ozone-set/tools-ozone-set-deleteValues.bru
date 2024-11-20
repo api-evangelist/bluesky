@@ -1,0 +1,22 @@
+meta {
+  name: tools-ozone-set-deleteValues
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/xrpc/tools.ozone.set.deleteValues
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "",
+    "values": []
+  }
+}

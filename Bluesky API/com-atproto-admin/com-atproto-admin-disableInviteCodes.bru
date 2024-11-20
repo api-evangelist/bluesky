@@ -1,0 +1,22 @@
+meta {
+  name: com-atproto-admin-disableInviteCodes
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.admin.disableInviteCodes
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "codes": [],
+    "accounts": []
+  }
+}

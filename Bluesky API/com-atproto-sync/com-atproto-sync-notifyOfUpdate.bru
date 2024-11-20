@@ -1,0 +1,21 @@
+meta {
+  name: com-atproto-sync-notifyOfUpdate
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.sync.notifyOfUpdate
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "hostname": ""
+  }
+}

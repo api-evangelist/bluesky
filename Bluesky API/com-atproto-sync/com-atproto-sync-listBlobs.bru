@@ -1,0 +1,22 @@
+meta {
+  name: com-atproto-sync-listBlobs
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.sync.listBlobs
+  body: none
+  auth: bearer
+}
+
+params:query {
+  did: 
+  ~since: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

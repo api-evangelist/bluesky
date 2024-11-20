@@ -1,0 +1,29 @@
+meta {
+  name: com-atproto-server-createAccount
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.createAccount
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "email": "",
+    "handle": "",
+    "did": "",
+    "inviteCode": "",
+    "verificationCode": "",
+    "verificationPhone": "",
+    "password": "",
+    "recoveryKey": "",
+    "plcOp": ""
+  }
+}

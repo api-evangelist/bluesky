@@ -1,0 +1,15 @@
+meta {
+  name: com-atproto-server-requestEmailConfirmation
+  type: http
+  seq: 19
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.requestEmailConfirmation
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

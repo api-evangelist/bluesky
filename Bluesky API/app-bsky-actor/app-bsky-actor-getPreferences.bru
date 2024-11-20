@@ -1,0 +1,15 @@
+meta {
+  name: app-bsky-actor-getPreferences
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.actor.getPreferences
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

@@ -1,0 +1,23 @@
+meta {
+  name: tools-ozone-set-querySets
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/xrpc/tools.ozone.set.querySets
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~limit: 
+  ~cursor: 
+  ~namePrefix: 
+  ~sortBy: 
+  ~sortDirection: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

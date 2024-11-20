@@ -1,0 +1,19 @@
+meta {
+  name: chat-bsky-convo-getConvoForMembers
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/xrpc/chat.bsky.convo.getConvoForMembers
+  body: none
+  auth: bearer
+}
+
+params:query {
+  members: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

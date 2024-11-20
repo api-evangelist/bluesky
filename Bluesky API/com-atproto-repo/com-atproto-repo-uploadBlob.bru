@@ -1,0 +1,15 @@
+meta {
+  name: com-atproto-repo-uploadBlob
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.repo.uploadBlob
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

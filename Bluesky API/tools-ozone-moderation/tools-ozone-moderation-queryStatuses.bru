@@ -1,0 +1,45 @@
+meta {
+  name: tools-ozone-moderation-queryStatuses
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/xrpc/tools.ozone.moderation.queryStatuses
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~includeAllUserRecords: 
+  ~subject: 
+  ~comment: 
+  ~reportedAfter: 
+  ~reportedBefore: 
+  ~reviewedAfter: 
+  ~hostingDeletedAfter: 
+  ~hostingDeletedBefore: 
+  ~hostingUpdatedAfter: 
+  ~hostingUpdatedBefore: 
+  ~hostingStatuses: 
+  ~reviewedBefore: 
+  ~includeMuted: 
+  ~onlyMuted: 
+  ~reviewState: 
+  ~ignoreSubjects: 
+  ~lastReviewedBy: 
+  ~sortField: 
+  ~sortDirection: 
+  ~takendown: 
+  ~appealed: 
+  ~limit: 
+  ~tags: 
+  ~excludeTags: 
+  ~cursor: 
+  ~collections: 
+  ~subjectType: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

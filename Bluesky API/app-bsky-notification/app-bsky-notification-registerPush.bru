@@ -1,0 +1,24 @@
+meta {
+  name: app-bsky-notification-registerPush
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/xrpc/app.bsky.notification.registerPush
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "serviceDid": "",
+    "token": "",
+    "platform": "",
+    "appId": ""
+  }
+}

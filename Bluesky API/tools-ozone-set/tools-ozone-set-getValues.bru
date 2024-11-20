@@ -1,0 +1,21 @@
+meta {
+  name: tools-ozone-set-getValues
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/xrpc/tools.ozone.set.getValues
+  body: none
+  auth: bearer
+}
+
+params:query {
+  name: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

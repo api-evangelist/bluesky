@@ -1,0 +1,22 @@
+meta {
+  name: app-bsky-feed-getLikes
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.getLikes
+  body: none
+  auth: bearer
+}
+
+params:query {
+  uri: 
+  ~cid: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

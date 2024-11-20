@@ -1,0 +1,21 @@
+meta {
+  name: chat-bsky-convo-leaveConvo
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/xrpc/chat.bsky.convo.leaveConvo
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "convoId": ""
+  }
+}

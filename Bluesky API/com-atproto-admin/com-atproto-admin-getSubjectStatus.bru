@@ -1,0 +1,21 @@
+meta {
+  name: com-atproto-admin-getSubjectStatus
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.admin.getSubjectStatus
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~did: 
+  ~uri: 
+  ~blob: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

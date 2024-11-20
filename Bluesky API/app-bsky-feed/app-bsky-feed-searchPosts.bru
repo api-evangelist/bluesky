@@ -1,0 +1,30 @@
+meta {
+  name: app-bsky-feed-searchPosts
+  type: http
+  seq: 17
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.searchPosts
+  body: none
+  auth: bearer
+}
+
+params:query {
+  q: 
+  ~sort: 
+  ~since: 
+  ~until: 
+  ~mentions: 
+  ~author: 
+  ~lang: 
+  ~domain: 
+  ~url: 
+  ~tag: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

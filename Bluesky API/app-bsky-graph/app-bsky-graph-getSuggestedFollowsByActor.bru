@@ -1,0 +1,19 @@
+meta {
+  name: app-bsky-graph-getSuggestedFollowsByActor
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.graph.getSuggestedFollowsByActor
+  body: none
+  auth: bearer
+}
+
+params:query {
+  actor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

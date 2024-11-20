@@ -1,0 +1,21 @@
+meta {
+  name: com-atproto-admin-getInviteCodes
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.admin.getInviteCodes
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~sort: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

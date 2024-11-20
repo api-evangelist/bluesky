@@ -1,0 +1,19 @@
+meta {
+  name: chat-bsky-moderation-getActorMetadata
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/xrpc/chat.bsky.moderation.getActorMetadata
+  body: none
+  auth: bearer
+}
+
+params:query {
+  actor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

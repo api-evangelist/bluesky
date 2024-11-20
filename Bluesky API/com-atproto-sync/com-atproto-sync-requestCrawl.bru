@@ -1,0 +1,21 @@
+meta {
+  name: com-atproto-sync-requestCrawl
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.sync.requestCrawl
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "hostname": ""
+  }
+}

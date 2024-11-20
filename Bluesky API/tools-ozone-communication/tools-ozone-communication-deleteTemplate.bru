@@ -1,0 +1,21 @@
+meta {
+  name: tools-ozone-communication-deleteTemplate
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/xrpc/tools.ozone.communication.deleteTemplate
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "id": ""
+  }
+}

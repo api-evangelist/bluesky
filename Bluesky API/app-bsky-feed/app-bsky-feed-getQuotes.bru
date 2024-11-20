@@ -1,0 +1,22 @@
+meta {
+  name: app-bsky-feed-getQuotes
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.getQuotes
+  body: none
+  auth: bearer
+}
+
+params:query {
+  uri: 
+  ~cid: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

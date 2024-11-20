@@ -1,0 +1,21 @@
+meta {
+  name: app-bsky-graph-muteThread
+  type: http
+  seq: 17
+}
+
+post {
+  url: {{baseUrl}}/xrpc/app.bsky.graph.muteThread
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "root": ""
+  }
+}

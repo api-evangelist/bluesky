@@ -1,0 +1,15 @@
+meta {
+  name: com-atproto-server-refreshSession
+  type: http
+  seq: 17
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.refreshSession
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

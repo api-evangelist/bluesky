@@ -1,0 +1,25 @@
+meta {
+  name: com-atproto-admin-sendEmail
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.admin.sendEmail
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "recipientDid": "",
+    "content": "",
+    "subject": "",
+    "senderDid": "",
+    "comment": ""
+  }
+}

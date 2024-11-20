@@ -1,0 +1,22 @@
+meta {
+  name: tools-ozone-set-addValues
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/xrpc/tools.ozone.set.addValues
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "",
+    "values": []
+  }
+}

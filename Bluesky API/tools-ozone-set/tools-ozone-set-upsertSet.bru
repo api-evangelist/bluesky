@@ -1,0 +1,22 @@
+meta {
+  name: tools-ozone-set-upsertSet
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/xrpc/tools.ozone.set.upsertSet
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "",
+    "description": ""
+  }
+}

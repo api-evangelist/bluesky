@@ -1,0 +1,22 @@
+meta {
+  name: com-atproto-label-queryLabels
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.label.queryLabels
+  body: none
+  auth: bearer
+}
+
+params:query {
+  uriPatterns: 
+  ~sources: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

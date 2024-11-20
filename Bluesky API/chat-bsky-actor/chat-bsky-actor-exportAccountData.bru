@@ -1,0 +1,15 @@
+meta {
+  name: chat-bsky-actor-exportAccountData
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/xrpc/chat.bsky.actor.exportAccountData
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

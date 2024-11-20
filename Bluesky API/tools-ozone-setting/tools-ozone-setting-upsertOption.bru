@@ -1,0 +1,25 @@
+meta {
+  name: tools-ozone-setting-upsertOption
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/xrpc/tools.ozone.setting.upsertOption
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "key": "",
+    "scope": "",
+    "value": "",
+    "description": "",
+    "managerRole": ""
+  }
+}

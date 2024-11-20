@@ -1,0 +1,20 @@
+meta {
+  name: app-bsky-actor-searchActorsTypeahead
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.actor.searchActorsTypeahead
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~q: 
+  ~limit: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

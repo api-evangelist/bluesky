@@ -1,0 +1,22 @@
+meta {
+  name: com-atproto-admin-updateAccountHandle
+  type: http
+  seq: 12
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.admin.updateAccountHandle
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "did": "",
+    "handle": ""
+  }
+}

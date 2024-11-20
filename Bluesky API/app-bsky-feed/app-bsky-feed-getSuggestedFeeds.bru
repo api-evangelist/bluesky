@@ -1,0 +1,20 @@
+meta {
+  name: app-bsky-feed-getSuggestedFeeds
+  type: http
+  seq: 15
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.getSuggestedFeeds
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

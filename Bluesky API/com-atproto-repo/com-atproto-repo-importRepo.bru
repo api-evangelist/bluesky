@@ -1,0 +1,15 @@
+meta {
+  name: com-atproto-repo-importRepo
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.repo.importRepo
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

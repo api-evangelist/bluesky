@@ -1,0 +1,19 @@
+meta {
+  name: com-atproto-identity-resolveHandle
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.identity.resolveHandle
+  body: none
+  auth: bearer
+}
+
+params:query {
+  handle: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

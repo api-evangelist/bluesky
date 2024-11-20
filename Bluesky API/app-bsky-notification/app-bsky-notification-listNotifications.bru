@@ -1,0 +1,22 @@
+meta {
+  name: app-bsky-notification-listNotifications
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.notification.listNotifications
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~limit: 
+  ~priority: 
+  ~cursor: 
+  ~seenAt: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

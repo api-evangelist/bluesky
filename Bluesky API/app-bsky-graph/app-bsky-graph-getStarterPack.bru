@@ -1,0 +1,19 @@
+meta {
+  name: app-bsky-graph-getStarterPack
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.graph.getStarterPack
+  body: none
+  auth: bearer
+}
+
+params:query {
+  starterPack: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

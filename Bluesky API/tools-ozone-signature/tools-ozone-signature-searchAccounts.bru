@@ -1,0 +1,21 @@
+meta {
+  name: tools-ozone-signature-searchAccounts
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/xrpc/tools.ozone.signature.searchAccounts
+  body: none
+  auth: bearer
+}
+
+params:query {
+  values: 
+  ~cursor: 
+  ~limit: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

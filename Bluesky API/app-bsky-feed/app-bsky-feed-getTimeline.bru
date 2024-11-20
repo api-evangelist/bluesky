@@ -1,0 +1,21 @@
+meta {
+  name: app-bsky-feed-getTimeline
+  type: http
+  seq: 16
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.getTimeline
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~algorithm: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

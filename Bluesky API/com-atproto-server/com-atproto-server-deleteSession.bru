@@ -1,0 +1,15 @@
+meta {
+  name: com-atproto-server-deleteSession
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.deleteSession
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

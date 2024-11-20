@@ -1,0 +1,25 @@
+meta {
+  name: com-atproto-repo-deleteRecord
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.repo.deleteRecord
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "repo": "",
+    "collection": "",
+    "rkey": "",
+    "swapRecord": "",
+    "swapCommit": ""
+  }
+}

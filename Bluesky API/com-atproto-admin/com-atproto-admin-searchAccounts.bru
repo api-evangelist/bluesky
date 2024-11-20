@@ -1,0 +1,21 @@
+meta {
+  name: com-atproto-admin-searchAccounts
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.admin.searchAccounts
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~email: 
+  ~cursor: 
+  ~limit: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

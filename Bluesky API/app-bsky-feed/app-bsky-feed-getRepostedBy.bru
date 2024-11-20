@@ -1,0 +1,22 @@
+meta {
+  name: app-bsky-feed-getRepostedBy
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.getRepostedBy
+  body: none
+  auth: bearer
+}
+
+params:query {
+  uri: 
+  ~cid: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

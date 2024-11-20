@@ -1,0 +1,15 @@
+meta {
+  name: app-bsky-video-uploadVideo
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/xrpc/app.bsky.video.uploadVideo
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

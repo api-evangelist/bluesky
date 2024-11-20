@@ -1,0 +1,19 @@
+meta {
+  name: com-atproto-repo-describeRepo
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.repo.describeRepo
+  body: none
+  auth: bearer
+}
+
+params:query {
+  repo: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

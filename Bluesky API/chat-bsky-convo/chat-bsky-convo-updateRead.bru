@@ -1,0 +1,22 @@
+meta {
+  name: chat-bsky-convo-updateRead
+  type: http
+  seq: 12
+}
+
+post {
+  url: {{baseUrl}}/xrpc/chat.bsky.convo.updateRead
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "convoId": "",
+    "messageId": ""
+  }
+}

@@ -1,0 +1,21 @@
+meta {
+  name: app-bsky-graph-getKnownFollowers
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.graph.getKnownFollowers
+  body: none
+  auth: bearer
+}
+
+params:query {
+  actor: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

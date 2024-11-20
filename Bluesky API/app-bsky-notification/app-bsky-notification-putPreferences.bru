@@ -1,0 +1,21 @@
+meta {
+  name: app-bsky-notification-putPreferences
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/xrpc/app.bsky.notification.putPreferences
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "priority": ""
+  }
+}

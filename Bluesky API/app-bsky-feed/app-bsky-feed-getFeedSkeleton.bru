@@ -1,0 +1,21 @@
+meta {
+  name: app-bsky-feed-getFeedSkeleton
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.getFeedSkeleton
+  body: none
+  auth: bearer
+}
+
+params:query {
+  feed: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

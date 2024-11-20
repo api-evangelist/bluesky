@@ -1,0 +1,23 @@
+meta {
+  name: com-atproto-server-updateEmail
+  type: http
+  seq: 25
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.updateEmail
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "email": "",
+    "emailAuthFactor": "",
+    "token": ""
+  }
+}

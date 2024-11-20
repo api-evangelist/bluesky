@@ -1,0 +1,27 @@
+meta {
+  name: tools-ozone-communication-updateTemplate
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/xrpc/tools.ozone.communication.updateTemplate
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "id": "",
+    "name": "",
+    "lang": "",
+    "contentMarkdown": "",
+    "subject": "",
+    "updatedBy": "",
+    "disabled": ""
+  }
+}

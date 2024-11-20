@@ -1,0 +1,21 @@
+meta {
+  name: tools-ozone-signature-findRelatedAccounts
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/xrpc/tools.ozone.signature.findRelatedAccounts
+  body: none
+  auth: bearer
+}
+
+params:query {
+  did: 
+  ~cursor: 
+  ~limit: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

@@ -1,0 +1,15 @@
+meta {
+  name: com-atproto-server-requestEmailUpdate
+  type: http
+  seq: 20
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.requestEmailUpdate
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

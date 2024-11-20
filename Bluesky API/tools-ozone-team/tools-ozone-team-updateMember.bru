@@ -1,0 +1,23 @@
+meta {
+  name: tools-ozone-team-updateMember
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/xrpc/tools.ozone.team.updateMember
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "did": "",
+    "disabled": "",
+    "role": ""
+  }
+}

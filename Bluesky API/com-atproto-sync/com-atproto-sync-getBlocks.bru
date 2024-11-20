@@ -1,0 +1,20 @@
+meta {
+  name: com-atproto-sync-getBlocks
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.sync.getBlocks
+  body: none
+  auth: bearer
+}
+
+params:query {
+  did: 
+  cids: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

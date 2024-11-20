@@ -1,0 +1,19 @@
+meta {
+  name: com-atproto-sync-getLatestCommit
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.sync.getLatestCommit
+  body: none
+  auth: bearer
+}
+
+params:query {
+  did: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

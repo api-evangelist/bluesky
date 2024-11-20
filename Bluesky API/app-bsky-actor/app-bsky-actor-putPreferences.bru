@@ -1,0 +1,21 @@
+meta {
+  name: app-bsky-actor-putPreferences
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/xrpc/app.bsky.actor.putPreferences
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "preferences": ""
+  }
+}

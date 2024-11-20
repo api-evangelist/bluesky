@@ -1,0 +1,23 @@
+meta {
+  name: chat-bsky-moderation-updateActorAccess
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/xrpc/chat.bsky.moderation.updateActorAccess
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "actor": "",
+    "allowAccess": "",
+    "ref": ""
+  }
+}

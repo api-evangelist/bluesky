@@ -1,0 +1,22 @@
+meta {
+  name: chat-bsky-moderation-getMessageContext
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/xrpc/chat.bsky.moderation.getMessageContext
+  body: none
+  auth: bearer
+}
+
+params:query {
+  messageId: 
+  ~convoId: 
+  ~before: 
+  ~after: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

@@ -1,0 +1,20 @@
+meta {
+  name: app-bsky-graph-getBlocks
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.graph.getBlocks
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

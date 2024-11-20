@@ -1,0 +1,20 @@
+meta {
+  name: tools-ozone-team-listMembers
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/xrpc/tools.ozone.team.listMembers
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

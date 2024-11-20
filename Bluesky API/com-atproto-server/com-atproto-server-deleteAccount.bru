@@ -1,0 +1,23 @@
+meta {
+  name: com-atproto-server-deleteAccount
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.deleteAccount
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "did": "",
+    "password": "",
+    "token": ""
+  }
+}

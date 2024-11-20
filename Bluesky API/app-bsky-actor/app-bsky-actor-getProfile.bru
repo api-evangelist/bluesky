@@ -1,0 +1,19 @@
+meta {
+  name: app-bsky-actor-getProfile
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.actor.getProfile
+  body: none
+  auth: bearer
+}
+
+params:query {
+  actor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

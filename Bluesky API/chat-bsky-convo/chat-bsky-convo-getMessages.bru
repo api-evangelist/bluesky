@@ -1,0 +1,21 @@
+meta {
+  name: chat-bsky-convo-getMessages
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/xrpc/chat.bsky.convo.getMessages
+  body: none
+  auth: bearer
+}
+
+params:query {
+  convoId: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

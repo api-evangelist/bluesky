@@ -1,0 +1,22 @@
+meta {
+  name: com-atproto-admin-updateAccountEmail
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.admin.updateAccountEmail
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "account": "",
+    "email": ""
+  }
+}

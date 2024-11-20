@@ -1,0 +1,22 @@
+meta {
+  name: tools-ozone-team-addMember
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/xrpc/tools.ozone.team.addMember
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "did": "",
+    "role": ""
+  }
+}

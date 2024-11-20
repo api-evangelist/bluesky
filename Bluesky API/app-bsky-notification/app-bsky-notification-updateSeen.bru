@@ -1,0 +1,21 @@
+meta {
+  name: app-bsky-notification-updateSeen
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/xrpc/app.bsky.notification.updateSeen
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "seenAt": ""
+  }
+}

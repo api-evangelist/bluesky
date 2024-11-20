@@ -1,0 +1,20 @@
+meta {
+  name: app-bsky-actor-getSuggestions
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.actor.getSuggestions
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

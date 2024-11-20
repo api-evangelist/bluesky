@@ -1,0 +1,21 @@
+meta {
+  name: com-atproto-server-deactivateAccount
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.deactivateAccount
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "deleteAfter": ""
+  }
+}

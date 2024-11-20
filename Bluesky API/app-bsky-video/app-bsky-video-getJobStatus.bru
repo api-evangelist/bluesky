@@ -1,0 +1,19 @@
+meta {
+  name: app-bsky-video-getJobStatus
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.video.getJobStatus
+  body: none
+  auth: bearer
+}
+
+params:query {
+  jobId: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

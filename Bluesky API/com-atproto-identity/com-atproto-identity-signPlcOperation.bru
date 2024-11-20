@@ -1,0 +1,25 @@
+meta {
+  name: com-atproto-identity-signPlcOperation
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.identity.signPlcOperation
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "token": "",
+    "rotationKeys": [],
+    "alsoKnownAs": [],
+    "verificationMethods": "",
+    "services": ""
+  }
+}

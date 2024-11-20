@@ -1,0 +1,21 @@
+meta {
+  name: com-atproto-server-reserveSigningKey
+  type: http
+  seq: 22
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.server.reserveSigningKey
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "did": ""
+  }
+}

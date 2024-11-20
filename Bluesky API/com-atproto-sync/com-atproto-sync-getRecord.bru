@@ -1,0 +1,21 @@
+meta {
+  name: com-atproto-sync-getRecord
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.sync.getRecord
+  body: none
+  auth: bearer
+}
+
+params:query {
+  did: 
+  collection: 
+  rkey: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

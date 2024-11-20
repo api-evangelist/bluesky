@@ -1,0 +1,20 @@
+meta {
+  name: chat-bsky-convo-listConvos
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/xrpc/chat.bsky.convo.listConvos
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

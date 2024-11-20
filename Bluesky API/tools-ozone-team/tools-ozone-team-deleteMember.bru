@@ -1,0 +1,21 @@
+meta {
+  name: tools-ozone-team-deleteMember
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/xrpc/tools.ozone.team.deleteMember
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "did": ""
+  }
+}

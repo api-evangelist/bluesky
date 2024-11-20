@@ -1,0 +1,22 @@
+meta {
+  name: chat-bsky-convo-deleteMessageForSelf
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/xrpc/chat.bsky.convo.deleteMessageForSelf
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "convoId": "",
+    "messageId": ""
+  }
+}

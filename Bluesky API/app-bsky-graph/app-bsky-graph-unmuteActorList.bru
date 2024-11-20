@@ -1,0 +1,21 @@
+meta {
+  name: app-bsky-graph-unmuteActorList
+  type: http
+  seq: 19
+}
+
+post {
+  url: {{baseUrl}}/xrpc/app.bsky.graph.unmuteActorList
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "list": ""
+  }
+}

@@ -1,0 +1,19 @@
+meta {
+  name: app-bsky-feed-getFeedGenerators
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.getFeedGenerators
+  body: none
+  auth: bearer
+}
+
+params:query {
+  feeds: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

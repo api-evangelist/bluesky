@@ -1,0 +1,19 @@
+meta {
+  name: tools-ozone-moderation-getRepos
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/xrpc/tools.ozone.moderation.getRepos
+  body: none
+  auth: bearer
+}
+
+params:query {
+  dids: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

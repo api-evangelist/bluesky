@@ -1,0 +1,21 @@
+meta {
+  name: app-bsky-graph-getActorStarterPacks
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.graph.getActorStarterPacks
+  body: none
+  auth: bearer
+}
+
+params:query {
+  actor: 
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

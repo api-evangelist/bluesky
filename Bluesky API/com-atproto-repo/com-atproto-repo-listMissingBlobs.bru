@@ -1,0 +1,20 @@
+meta {
+  name: com-atproto-repo-listMissingBlobs
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.repo.listMissingBlobs
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~limit: 
+  ~cursor: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

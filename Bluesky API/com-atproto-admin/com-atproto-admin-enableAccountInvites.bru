@@ -1,0 +1,22 @@
+meta {
+  name: com-atproto-admin-enableAccountInvites
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.admin.enableAccountInvites
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "account": "",
+    "note": ""
+  }
+}

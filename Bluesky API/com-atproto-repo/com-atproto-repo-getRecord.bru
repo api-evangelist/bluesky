@@ -1,0 +1,22 @@
+meta {
+  name: com-atproto-repo-getRecord
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.repo.getRecord
+  body: none
+  auth: bearer
+}
+
+params:query {
+  repo: 
+  collection: 
+  rkey: 
+  ~cid: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

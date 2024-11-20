@@ -1,0 +1,19 @@
+meta {
+  name: app-bsky-feed-getPosts
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.feed.getPosts
+  body: none
+  auth: bearer
+}
+
+params:query {
+  uris: 
+}
+
+auth:bearer {
+  token: {{token}}
+}

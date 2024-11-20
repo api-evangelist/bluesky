@@ -1,0 +1,26 @@
+meta {
+  name: chat-bsky-convo-sendMessageBatch
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{baseUrl}}/xrpc/chat.bsky.convo.sendMessageBatch
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "items": [
+      {
+        "convoId": "",
+        "message": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+meta {
+  name: com-atproto-server-getServiceAuth
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{baseUrl}}/xrpc/com.atproto.server.getServiceAuth
+  body: none
+  auth: bearer
+}
+
+params:query {
+  aud: 
+  ~exp: 
+  ~lxm: 
+}
+
+auth:bearer {
+  token: {{token}}
+}
