@@ -1,17 +1,18 @@
 meta {
-  name: app-bsky-feed-getListFeed
+  name: app-bsky-feed-getLikes
   type: http
-  seq: 10
+  seq: 9
 }
 
 get {
-  url: {{baseUrl}}/xrpc/app.bsky.feed.getListFeed
+  url: {{baseUrl}}/xrpc/app.bsky.feed.getLikes?uri
   body: none
   auth: bearer
 }
 
 params:query {
-  list: 
+  uri: 
+  ~cid: 
   ~limit: 
   ~cursor: 
 }

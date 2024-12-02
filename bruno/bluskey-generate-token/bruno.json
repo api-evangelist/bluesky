@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Bluesky - Generate Token",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

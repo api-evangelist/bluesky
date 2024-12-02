@@ -1,17 +1,17 @@
 meta {
-  name: app-bsky-feed-getFeed
+  name: Get Followers
   type: http
-  seq: 5
+  seq: 3
 }
 
 get {
-  url: {{baseUrl}}/xrpc/app.bsky.feed.getFeed
+  url: {{baseUrl}}/xrpc/app.bsky.graph.getFollowers?actor=metadaddy.net
   body: none
   auth: bearer
 }
 
 params:query {
-  feed: 
+  actor: metadaddy.net
   ~limit: 
   ~cursor: 
 }

@@ -1,17 +1,17 @@
 meta {
-  name: app-bsky-feed-searchPosts
+  name: Search Posts
   type: http
   seq: 17
 }
 
 get {
-  url: {{baseUrl}}/xrpc/app.bsky.feed.searchPosts
+  url: {{baseUrl}}/xrpc/app.bsky.feed.searchPosts?q=art
   body: none
   auth: bearer
 }
 
 params:query {
-  q: 
+  q: art
   ~sort: 
   ~since: 
   ~until: 

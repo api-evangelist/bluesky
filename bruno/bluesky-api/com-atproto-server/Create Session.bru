@@ -1,0 +1,30 @@
+meta {
+  name: Create Session
+  type: http
+  seq: 8
+}
+
+post {
+  url: https://bsky.social/xrpc/com.atproto.server.createSession
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "identifier": "{{identifier}}",
+    "password": "{{password}}"
+  }
+}
+
+script:post-response {
+  console.log(res.body);
+  let repo = bru.setEnvVar("email", res.body.email);
+  let accessJwt = bru.setEnvVar("token", res.body.accessJwt);
+  let refreshJwt = bru.setEnvVar("refreshJwt", res.body.refreshJwt);
+  //console.log(repo);
+}

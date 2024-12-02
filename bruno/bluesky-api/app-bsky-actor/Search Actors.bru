@@ -1,17 +1,17 @@
 meta {
-  name: app-bsky-actor-searchActors
+  name: Search Actors
   type: http
   seq: 6
 }
 
 get {
-  url: {{baseUrl}}/xrpc/app.bsky.actor.searchActors
+  url: {{baseUrl}}/xrpc/app.bsky.actor.searchActors?q=api
   body: none
   auth: bearer
 }
 
 params:query {
-  ~q: 
+  q: api
   ~limit: 
   ~cursor: 
 }

@@ -1,0 +1,19 @@
+meta {
+  name: Get Profiles
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.actor.getProfiles?actors=kinlane.bsky.social,audreywatters.bsky.social
+  body: none
+  auth: bearer
+}
+
+params:query {
+  actors: kinlane.bsky.social,audreywatters.bsky.social
+}
+
+auth:bearer {
+  token: {{token}}
+}

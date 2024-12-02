@@ -1,0 +1,39 @@
+meta {
+  name: Follow User
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/xrpc/com.atproto.repo.createRecord
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJhdCtqd3QiLCJhbGciOiJFUzI1NksifQ.eyJzY29wZSI6ImNvbS5hdHByb3RvLmFjY2VzcyIsInN1YiI6ImRpZDpwbGM6ZWM1a2d4bW4ybDJtdWN5dHZtM2NjMm82IiwiaWF0IjoxNzMzMDAxMjA5LCJleHAiOjE3MzMwMDg0MDksImF1ZCI6ImRpZDp3ZWI6bWF0c3V0YWtlLnVzLXdlc3QuaG9zdC5ic2t5Lm5ldHdvcmsifQ.RUNoMEk1kVIz71kAX5Q1pAmQHrTyJ8DsazldMxp2Aqw6qEekS838Sx0TGSvbO25eOanr6UBbGaECifTpGe2PDQ
+}
+
+body:json {
+  {
+    "repo": "kinlane.bsky.social",
+    "collection": "app.bsky.graph.follow",
+    "record": {
+      "$type": "app.bsky.graph.follow",
+      "createdAt": "{{created1}}:{{created2}}:{{created3}}Z",
+      "subject": "{{subject}}"
+    }
+  }
+}
+
+script:pre-request {
+  const moment = require("moment");
+  var timestamp = moment();
+  // This is hack to get around Bruno bug with colons
+  var timestamp_array = moment().format("YYYY-MM-DDTHH:mm:ss").split(":");
+  console.log(timestamp);
+  bru.setEnvVar("created1",timestamp_array[0]);
+  bru.setEnvVar("created2",timestamp_array[1]);
+  bru.setEnvVar("created3",timestamp_array[2]);
+  
+}

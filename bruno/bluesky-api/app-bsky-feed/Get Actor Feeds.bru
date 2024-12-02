@@ -1,17 +1,17 @@
 meta {
-  name: app-bsky-feed-getActorFeeds
+  name: Get Actor Feeds
   type: http
   seq: 2
 }
 
 get {
-  url: {{baseUrl}}/xrpc/app.bsky.feed.getActorFeeds
+  url: {{baseUrl}}/xrpc/app.bsky.feed.getActorFeeds?actor=kinlane.bsky.social
   body: none
   auth: bearer
 }
 
 params:query {
-  actor: 
+  actor: kinlane.bsky.social
   ~limit: 
   ~cursor: 
 }

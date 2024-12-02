@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Bluesky - Search Posts",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

@@ -1,17 +1,17 @@
 meta {
-  name: app-bsky-actor-getProfiles
+  name: Search Posts
   type: http
-  seq: 3
+  seq: 2
 }
 
 get {
-  url: {{baseUrl}}/xrpc/app.bsky.actor.getProfiles
+  url: {{baseUrl}}/xrpc/app.bsky.feed.searchPosts?q=art
   body: none
   auth: bearer
 }
 
 params:query {
-  actors: 
+  q: art
 }
 
 auth:bearer {

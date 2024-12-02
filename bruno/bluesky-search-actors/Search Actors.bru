@@ -1,0 +1,19 @@
+meta {
+  name: Search Actors
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/xrpc/app.bsky.actor.searchActors?q=api
+  body: none
+  auth: bearer
+}
+
+params:query {
+  q: api
+}
+
+auth:bearer {
+  token: {{tok
+}
