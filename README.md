@@ -1,12 +1,50 @@
-# Bluesky API
-This is a repo for managing the [APIs.io](https://apis.io) listing for [Bluesky API](https://docs.bsky.app/). It contains the following artifacts:
+# Bluesky (bluesky)
+Read the docs. API ReferenceView the complete HTTP API reference. TutorialsView tutorials for handling the Bluesky API. Starter TemplatesView starter code for ...
 
-- [**APIs.json**](apis.yml) - The index for all business and technical details of the API.
-- [**OpenAPI**](properties/bluesky-openapi.yml) - The technical details of the API.
-- [**Bruno Collection**](bruno/bluesky-apis/bruno.json) - An complete executable [Bruno collection](https://bit.ly/4fpe6FO) for the API.
-- [**Bruno Collection - Generate Token**](bruno/bluesky-apis/bruno.json) - An individual capability collection for generating a Bearer token.
-- [**Bruno Collection - Search ACtors**](bruno/bluesky-apis/bruno.json) - An individual capability collection for searching user.
-- [**Bruno Collection - Search Posts**](bruno/bluesky-apis/bruno.json) - An individual capability collection for searching posts.
-- [**Bruno Collection - Follow User**](bruno/bluesky-apis/bruno.json) - An individual capability collection for following user.
+**Type:** Index
+**Position:** Consumer
+**Access:** 3rd-Party
 
-If you have any questions about this API please submit an issue or email kin@apievangelist.com.
+## Tags
+
+- Social Networks
+
+**Created:** 2024-11-16
+**Modified:** 2024-11-16
+
+**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-search/bluesky/refs/heads/main/apis.yml)
+
+## APIs
+
+### Bluesky API
+The Bluesky API allows you to work programmatically with actors, feeds, graph, conversations, and other resources available for the the Bluesky app and social network.
+
+**Human URL:** [https://docs.bsky.app/](https://docs.bsky.app/)
+
+#### Tags
+
+- Social Networks
+
+#### Properties
+
+- [Documentation](https://docs.bsky.app/)
+- [OpenAPI](properties/bluesky-openapi.yml)
+- [PostmanCollection](https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api)
+
+## Common Properties
+
+- [Bots](https://docs.bsky.app/docs/starter-templates/bots)
+- [Support](https://docs.bsky.app/docs/category/support)
+- [Blog](https://docs.bsky.app/blog)
+- [GettingStarted](https://docs.bsky.app/docs/get-started)
+- [Templates](https://docs.bsky.app/docs/category/starter-templates)
+- [Tutorials](https://docs.bsky.app/docs/category/tutorials)
+- [Newsletter](https://docs.bsky.app/docs/support/mailing-list)
+- [PostmanWorkspace](https://www.postman.com/api-evangelist/bluesky/overview)
+
+## Maintainers
+
+**FN:** Kin Lane
+
+**Email:** info@apievangelist.com
+
