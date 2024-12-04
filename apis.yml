@@ -11,21 +11,13 @@ apis:
         type: Documentation
       - url: properties/bluesky-openapi.yml
         type: OpenAPI
-      - url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+      - url: >-
+          https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
         type: PostmanCollection
-      - url: bruno/bluesky-api/bruno.json
-        type: BrunoCollection
-      - url: bruno/bluesky-api/bruno.json
-        type: BrunoCollection
-      - url: bruno/bluesky-follow-user/bruno.json
-        type: BrunoCollection
-      - url: bruno/bluesky-search-actors/bruno.json
-        type: BrunoCollection
-      - url: bruno/bluesky-search-posts/bruno.json
-        type: BrunoCollection                        
-      - url: bruno/bluskey-generate-token/bruno.json
-        type: BrunoCollection   
-
+    description: >-
+      The Bluesky API allows you to work programmatically with actors, feeds,
+      graph, conversations, and other resources available for the the Bluesky
+      app and social network.
 name: Bluesky
 tags:
   - Social Networks
