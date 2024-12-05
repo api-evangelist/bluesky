@@ -14,6 +14,18 @@ apis:
       - url: >-
           https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
         type: PostmanCollection
+      - type: Summary
+        data:
+          numberOfAPITags: 1
+          numberOfAPIProperties: 3
+          numberOfAPIPaths: 168
+          numberOfAPIGetMethods: 93
+          numberOfAPIPostMethods: 75
+          numberOfAPIPutMethods: 0
+          numberOfAPIPatchMethods: 0
+          numberOfAPIDeleteMethods: 0
+          numberOfAPIOptionMethods: 0
+          numberOfAPIParameters: 2
     description: >-
       The Bluesky API allows you to work programmatically with actors, feeds,
       graph, conversations, and other resources available for the the Bluesky
