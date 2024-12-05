@@ -1,4 +1,4 @@
-executed: '2024-11-16T23:58:01.419Z'
+executed: '2024-12-05T00:07:23.834Z'
 results:
   - code: apis-json-specification-aid-info
     message: There is an aid.
@@ -181,6 +181,22 @@ results:
       end:
         line: 12
         character: 21
+  - code: apis-json-apis-properties-url-info
+    message: Property URLs Are Valid
+    path:
+      - apis
+      - '0'
+      - properties
+      - '2'
+      - url
+    severity: 2
+    range:
+      start:
+        line: 13
+        character: 13
+      end:
+        line: 14
+        character: 87
   - code: apis-json-apis-properties-postman-collection-info
     message: Has a Postman Collection
     path:
@@ -283,7 +299,7 @@ results:
         character: 7
       end:
         line: 53
-        character: 26
+        character: 39
   - code: apis-json-apis-properties-url-info
     message: Property URLs Are Valid
     path:
@@ -419,10 +435,10 @@ results:
     severity: 2
     range:
       start:
-        line: 52
+        line: 48
         character: 9
       end:
-        line: 52
+        line: 48
         character: 64
   - code: apis-json-apis-properties-postman-public-workspace-info
     message: Has Public Postman Workspace
@@ -433,10 +449,10 @@ results:
     severity: 2
     range:
       start:
-        line: 53
+        line: 50
         character: 10
       end:
-        line: 53
+        line: 50
         character: 26
   - code: apis-json-created-info
     message: There is a created date.
