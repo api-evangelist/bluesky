@@ -9,9 +9,9 @@ Read the docs. API ReferenceView the complete HTTP API reference. TutorialsView 
 - **Position:** Consumer 
 - **Access:** 3rd-Party 
 
-## Tags
+## Tags:
 
-- Social Networks
+ - Social Networks
 
 ## Timestamps
 
@@ -24,16 +24,16 @@ Read the docs. API ReferenceView the complete HTTP API reference. TutorialsView 
 The Bluesky API allows you to work programmatically with actors, feeds, graph, conversations, and other resources available for the the Bluesky app and social network.
 
 **Human URL:** [https://docs.bsky.app/](https://docs.bsky.app/)
-r
 
-#### Tags
 
-- Social Networks
+#### Tags:
+
+ - Social Networks
 
 #### Properties
 
 - [Documentation](https://docs.bsky.app/)
-- [OpenAPI](properties/bluesky-openapi.yml)
+- [OpenAPI](openapi/bluesky-openapi.yml)
 - [PostmanCollection](https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api)
 - [Summary](undefined)
 
