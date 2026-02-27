@@ -1,5 +1,5 @@
 # Bluesky (bluesky)
-Read the docs. API ReferenceView the complete HTTP API reference. TutorialsView tutorials for handling the Bluesky API. Starter TemplatesView starter code for ...
+API for the Bluesky decentralized social network built on the AT Protocol
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-search/bluesky/refs/heads/main/apis.yml)
 
@@ -11,7 +11,7 @@ Read the docs. API ReferenceView the complete HTTP API reference. TutorialsView 
 
 ## Tags:
 
- - Social Networks
+ - Social Networks, at-protocol, decentralized, federated, open-source, social-media
 
 ## Timestamps
 
@@ -35,7 +35,6 @@ The Bluesky API allows you to work programmatically with actors, feeds, graph, c
 - [Documentation](https://docs.bsky.app/)
 - [OpenAPI](openapi/bluesky-openapi.yml)
 - [PostmanCollection](https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api)
-- [Summary](undefined)
 
 ## Common Properties
 
@@ -47,11 +46,12 @@ The Bluesky API allows you to work programmatically with actors, feeds, graph, c
 - [Tutorials](https://docs.bsky.app/docs/category/tutorials)
 - [Newsletter](https://docs.bsky.app/docs/support/mailing-list)
 - [PostmanWorkspace](https://www.postman.com/api-evangelist/bluesky/overview)
-- [Summary](undefined)
 
 ## Maintainers
 
 **FN:** Kin Lane
 
 **Email:** info@apievangelist.com
+**FN:** Bluesky Social PBC
 
+**Email:** support@bsky.app
