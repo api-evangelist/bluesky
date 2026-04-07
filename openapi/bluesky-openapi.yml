@@ -17,44 +17,26 @@ servers:
 tags:
   - name: Actor Profiles
     description: Operations for managing user profiles, preferences, and actor information.
-  - name: Embeds
-    description: Operations for handling embedded content in posts.
-  - name: Feeds
-    description: Operations for managing feeds, posts, likes, and reposts.
-  - name: Social Graph
-    description: Operations for managing follows, followers, blocks, mutes, and lists.
-  - name: Content Labels
-    description: Operations for managing content labelers and label subscriptions.
-  - name: Notifications
-    description: Operations for managing user notifications.
-  - name: Rich Text
-    description: Operations for handling rich text formatting and facets.
-  - name: Experimental Features
-    description: Experimental and unspecified operations.
-  - name: Video
-    description: Operations for video upload and processing.
-  - name: Chat Actors
-    description: Operations for managing chat actor settings and declarations.
-  - name: Conversations
-    description: Operations for managing direct message conversations.
-  - name: Chat Moderation
-    description: Operations for moderating chat content.
   - name: Administration
     description: Administrative operations for managing accounts and invites.
+  - name: Chat Actors
+    description: Operations for managing chat actor settings and declarations.
+  - name: Chat Moderation
+    description: Operations for moderating chat content.
+  - name: Content Labels
+    description: Operations for managing content labelers and label subscriptions.
+  - name: Conversations
+    description: Operations for managing direct message conversations.
+  - name: Feeds
+    description: Operations for managing feeds, posts, likes, and reposts.
   - name: Identity
     description: Operations for identity management and DID resolution.
   - name: Labels
     description: Operations for content labeling and moderation.
   - name: Moderation
     description: Operations for content moderation reporting.
-  - name: Repository
-    description: Operations for managing AT Protocol repositories.
-  - name: Server
-    description: Operations for server management and authentication.
-  - name: Sync
-    description: Operations for repository synchronization.
-  - name: Temporary
-    description: Temporary operations that may be deprecated.
+  - name: Notifications
+    description: Operations for managing user notifications.
   - name: Ozone Communication
     description: Ozone moderation tool communication operations.
   - name: Ozone Moderation
@@ -69,6 +51,16 @@ tags:
     description: Ozone signature and threat analysis operations.
   - name: Ozone Team
     description: Ozone team member management operations.
+  - name: Repository
+    description: Operations for managing AT Protocol repositories.
+  - name: Server
+    description: Operations for server management and authentication.
+  - name: Social Graph
+    description: Operations for managing follows, followers, blocks, mutes, and lists.
+  - name: Sync
+    description: Operations for repository synchronization.
+  - name: Video
+    description: Operations for video upload and processing.
 paths:
   /xrpc/app.bsky.actor.getPreferences:
     get:

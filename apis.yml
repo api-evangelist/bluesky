@@ -1,6 +1,5 @@
 aid: bluesky
-url: 
-  https://raw.githubusercontent.com/api-search/bluesky/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-search/bluesky/refs/heads/main/apis.yml
 apis:
   - aid: bluesky:bluesky-api
     name: Bluesky API
@@ -12,8 +11,7 @@ apis:
         type: Documentation
       - url: openapi/bluesky-openapi.yml
         type: OpenAPI
-      - url: 
-          https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+      - url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
         type: PostmanCollection
       - url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
         type: APIReference
@@ -43,33 +41,28 @@ apis:
           numberOfAPIDeleteMethods: 0
           numberOfAPIOptionMethods: 0
         type: Summary
-    description: The Bluesky API allows you to work programmatically with 
-      actors, feeds, graph, conversations, and other resources available for the
-      the Bluesky app and social network.
+    description: The Bluesky API allows you to work programmatically with actors, feeds, graph, conversations, and other resources available for the the Bluesky app and social network.
   - aid: bluesky:bluesky-jetstream
     name: Bluesky Jetstream
     tags:
-      - Streaming
       - Events
       - Social Networks
+      - Streaming
     humanURL: https://docs.bsky.app/blog/jetstream
     properties:
       - url: https://docs.bsky.app/blog/jetstream
         type: Documentation
       - url: https://github.com/bluesky-social/jetstream
         type: GitHubRepository
-    description: Jetstream is a simplified JSON event stream for the AT Protocol
-      that converts CBOR-encoded MST blocks from the firehose into JSON objects 
-      over WebSocket connections, making it easier to consume real-time Bluesky 
-      network events for building feed generators, bots, and search engines.
+    description: Jetstream is a simplified JSON event stream for the AT Protocol that converts CBOR-encoded MST blocks from the firehose into JSON objects over WebSocket connections, making it easier to consume real-time Bluesky network events for building feed generators, bots, and search engines.
 name: Bluesky
 tags:
+  - At-Protocol
+  - Decentralized
+  - Federated
+  - Open-Source
   - Social Networks
-  - at-protocol
-  - decentralized
-  - federated
-  - open-source
-  - social-media
+  - Social-Media
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
@@ -98,8 +91,7 @@ common:
   - url: https://www.postman.com/api-evangelist/bluesky/overview
     name: Postman Workspace
     type: PostmanWorkspace
-    description: This is the dedicated workspace for the Bluesky API, storing 
-      collections and automations that can be used.
+    description: This is the dedicated workspace for the Bluesky API, storing collections and automations that can be used.
   - url: https://docs.bsky.app/docs/support/developer-guidelines
     name: Developer Guidelines | Bluesky
     type: Guidelines
