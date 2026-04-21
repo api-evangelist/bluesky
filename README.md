@@ -1,57 +1,32 @@
-# Bluesky (bluesky)
-API for the Bluesky decentralized social network built on the AT Protocol
+# Bluesky
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-search/bluesky/refs/heads/main/apis.yml)
+Bluesky is a decentralized social network built on the AT Protocol, an open federated protocol for social applications. The Bluesky API provides programmatic access to actors, feeds, graph relationships, conversations, moderation, and real-time event streaming via Jetstream.
 
-## Scope
-
-- **Type:** Index 
-- **Position:** Consumer 
-- **Access:** 3rd-Party 
-
-## Tags:
-
- - Social Networks, at-protocol, decentralized, federated, open-source, social-media
-
-## Timestamps
-
-- **Created:** 2024-11-16 
-- **Modified:** 2025-01-05 
+**URL:** [View APIs.yml](https://raw.githubusercontent.com/api-evangelist/bluesky/refs/heads/main/apis.yml)
 
 ## APIs
 
 ### Bluesky API
-The Bluesky API allows you to work programmatically with actors, feeds, graph, conversations, and other resources available for the the Bluesky app and social network.
+Programmatic access to the Bluesky social network including actors, feeds, graph, conversations, and moderation. 168 operations (93 GET, 75 POST) covering all core platform functionality.
 
-**Human URL:** [https://docs.bsky.app/](https://docs.bsky.app/)
+### Bluesky Jetstream
+Simplified JSON event stream for the AT Protocol converting CBOR-encoded MST blocks from the firehose into JSON objects over WebSocket. Ideal for building feed generators, bots, and search engines.
 
-
-#### Tags:
-
- - Social Networks
-
-#### Properties
+## Links
 
 - [Documentation](https://docs.bsky.app/)
-- [OpenAPI](openapi/bluesky-openapi.yml)
-- [PostmanCollection](https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api)
-
-## Common Properties
-
-- [Bots](https://docs.bsky.app/docs/starter-templates/bots)
-- [Support](https://docs.bsky.app/docs/category/support)
-- [Blog](https://docs.bsky.app/blog)
-- [GettingStarted](https://docs.bsky.app/docs/get-started)
-- [Templates](https://docs.bsky.app/docs/category/starter-templates)
+- [Getting Started](https://docs.bsky.app/docs/get-started)
+- [AT Protocol Reference](https://docs.bsky.app/docs/api/at-protocol-xrpc-api)
+- [Rate Limits](https://docs.bsky.app/docs/advanced-guides/rate-limits)
+- [Authentication / OAuth](https://docs.bsky.app/docs/advanced-guides/oauth-client)
+- [Firehose](https://docs.bsky.app/docs/advanced-guides/firehose)
+- [Postman Workspace](https://www.postman.com/api-evangelist/bluesky/overview)
+- [AT Protocol](https://atproto.com/)
+- [GitHub Organization](https://github.com/bluesky-social)
 - [Tutorials](https://docs.bsky.app/docs/category/tutorials)
-- [Newsletter](https://docs.bsky.app/docs/support/mailing-list)
-- [PostmanWorkspace](https://www.postman.com/api-evangelist/bluesky/overview)
+- [Terms of Service](https://bsky.social/about/support/tos)
+- [Privacy Policy](https://bsky.social/about/support/privacy-policy)
 
 ## Maintainers
 
-**FN:** Kin Lane
-
-**Email:** info@apievangelist.com
-**FN:** Bluesky Social PBC
-
-**Email:** support@bsky.app
+- **Kin Lane** - kinlane@gmail.com
