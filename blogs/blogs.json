@@ -1,0 +1,13 @@
+{
+  "repo": "bluesky",
+  "feeds": [
+    {
+      "source": "https://docs.bsky.app/blog",
+      "feed_url": "https://docs.bsky.app/blog/rss.xml",
+      "saved": 10,
+      "title": "Bluesky Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:24:01Z"
+}
