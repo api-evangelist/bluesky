@@ -3,11 +3,11 @@
   "feeds": [
     {
       "source": "https://docs.bsky.app/blog",
-      "feed_url": "https://docs.bsky.app/blog/rss.xml",
-      "saved": 10,
-      "title": "Bluesky Blog"
+      "feed_url": "https://docs.bsky.app/blog/atom.xml",
+      "title": "Bluesky Blog",
+      "saved": 0
     }
   ],
   "post_count": 10,
-  "fetched": "2026-05-03T23:24:01Z"
+  "fetched": "2026-05-09T20:17:51Z"
 }
