@@ -1,0 +1,184 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bluesky Social API — Ozone Settings
+  description: 'Bluesky Social API — Ozone Settings. 3 operations. Lead operation: Bluesky List settings with optional filtering.
+    Self-contained Naftiko capability covering one Bluesky business surface.'
+  tags:
+  - Bluesky
+  - Ozone Settings
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLUESKY_API_KEY: BLUESKY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bluesky-ozone-settings
+    baseUri: https://bsky.social/xrpc
+    description: Bluesky Social API — Ozone Settings business capability. Self-contained, no shared references.
+    resources:
+    - name: xrpc-tools.ozone.setting.listOptions
+      path: /xrpc/tools.ozone.setting.listOptions
+      operations:
+      - name: ozonesettinglistoptions
+        method: GET
+        description: Bluesky List settings with optional filtering
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+        - name: scope
+          in: query
+          type: string
+        - name: prefix
+          in: query
+          type: string
+          description: Filter keys by prefix
+        - name: keys
+          in: query
+          type: array
+          description: Filter for only the specified keys. Ignored if prefix is provided
+    - name: xrpc-tools.ozone.setting.removeOptions
+      path: /xrpc/tools.ozone.setting.removeOptions
+      operations:
+      - name: ozonesettingremoveoptions
+        method: POST
+        description: Bluesky Delete settings by key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-tools.ozone.setting.upsertOption
+      path: /xrpc/tools.ozone.setting.upsertOption
+      operations:
+      - name: ozonesettingupsertoption
+        method: POST
+        description: Bluesky Create or update setting option
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BLUESKY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bluesky-ozone-settings-rest
+    port: 8080
+    description: REST adapter for Bluesky Social API — Ozone Settings. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/xrpc/tools-ozone-setting-listoptions
+      name: xrpc-tools-ozone-setting-listoptions
+      description: REST surface for xrpc-tools.ozone.setting.listOptions.
+      operations:
+      - method: GET
+        name: ozonesettinglistoptions
+        description: Bluesky List settings with optional filtering
+        call: bluesky-ozone-settings.ozonesettinglistoptions
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+          scope: rest.scope
+          prefix: rest.prefix
+          keys: rest.keys
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/tools-ozone-setting-removeoptions
+      name: xrpc-tools-ozone-setting-removeoptions
+      description: REST surface for xrpc-tools.ozone.setting.removeOptions.
+      operations:
+      - method: POST
+        name: ozonesettingremoveoptions
+        description: Bluesky Delete settings by key
+        call: bluesky-ozone-settings.ozonesettingremoveoptions
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/tools-ozone-setting-upsertoption
+      name: xrpc-tools-ozone-setting-upsertoption
+      description: REST surface for xrpc-tools.ozone.setting.upsertOption.
+      operations:
+      - method: POST
+        name: ozonesettingupsertoption
+        description: Bluesky Create or update setting option
+        call: bluesky-ozone-settings.ozonesettingupsertoption
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bluesky-ozone-settings-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bluesky Social API — Ozone Settings. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: bluesky-list-settings-optional-filtering
+      description: Bluesky List settings with optional filtering
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-ozone-settings.ozonesettinglistoptions
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+        scope: tools.scope
+        prefix: tools.prefix
+        keys: tools.keys
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-delete-settings-key
+      description: Bluesky Delete settings by key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-ozone-settings.ozonesettingremoveoptions
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-create-update-setting-option
+      description: Bluesky Create or update setting option
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-ozone-settings.ozonesettingupsertoption
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

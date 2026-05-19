@@ -1,0 +1,277 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bluesky Social API — Identity
+  description: 'Bluesky Social API — Identity. 6 operations. Lead operation: Bluesky Describe the credentials that should
+    be included in the DID doc of an account that is migrating t.... Self-contained Naftiko capability covering one Bluesky
+    business surface.'
+  tags:
+  - Bluesky
+  - Identity
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLUESKY_API_KEY: BLUESKY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bluesky-identity
+    baseUri: https://bsky.social/xrpc
+    description: Bluesky Social API — Identity business capability. Self-contained, no shared references.
+    resources:
+    - name: xrpc-com.atproto.identity.getRecommendedDidCredentials
+      path: /xrpc/com.atproto.identity.getRecommendedDidCredentials
+      operations:
+      - name: identitygetrecommendeddidcredentials
+        method: GET
+        description: Bluesky Describe the credentials that should be included in the DID doc of an account that is migrating
+          t...
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.identity.requestPlcOperationSignature
+      path: /xrpc/com.atproto.identity.requestPlcOperationSignature
+      operations:
+      - name: identityrequestplcoperationsignature
+        method: POST
+        description: Bluesky Request an email with a code to in order to request a signed PLC operation.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.identity.resolveHandle
+      path: /xrpc/com.atproto.identity.resolveHandle
+      operations:
+      - name: identityresolvehandle
+        method: GET
+        description: Bluesky Resolves a handle (domain name) to a DID.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: handle
+          in: query
+          type: string
+          description: The handle to resolve.
+          required: true
+    - name: xrpc-com.atproto.identity.signPlcOperation
+      path: /xrpc/com.atproto.identity.signPlcOperation
+      operations:
+      - name: identitysignplcoperation
+        method: POST
+        description: Bluesky Signs a PLC operation to update some value(s) in the requesting DID's document.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.identity.submitPlcOperation
+      path: /xrpc/com.atproto.identity.submitPlcOperation
+      operations:
+      - name: identitysubmitplcoperation
+        method: POST
+        description: Bluesky Validates a PLC operation to ensure that it doesn't violate a service's constraints or get the
+          id...
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.identity.updateHandle
+      path: /xrpc/com.atproto.identity.updateHandle
+      operations:
+      - name: identityupdatehandle
+        method: POST
+        description: Bluesky Updates the current account's handle.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BLUESKY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bluesky-identity-rest
+    port: 8080
+    description: REST adapter for Bluesky Social API — Identity. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/xrpc/com-atproto-identity-getrecommendeddidcredentials
+      name: xrpc-com-atproto-identity-getrecommendeddidcredentials
+      description: REST surface for xrpc-com.atproto.identity.getRecommendedDidCredentials.
+      operations:
+      - method: GET
+        name: identitygetrecommendeddidcredentials
+        description: Bluesky Describe the credentials that should be included in the DID doc of an account that is migrating
+          t...
+        call: bluesky-identity.identitygetrecommendeddidcredentials
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-identity-requestplcoperationsignature
+      name: xrpc-com-atproto-identity-requestplcoperationsignature
+      description: REST surface for xrpc-com.atproto.identity.requestPlcOperationSignature.
+      operations:
+      - method: POST
+        name: identityrequestplcoperationsignature
+        description: Bluesky Request an email with a code to in order to request a signed PLC operation.
+        call: bluesky-identity.identityrequestplcoperationsignature
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-identity-resolvehandle
+      name: xrpc-com-atproto-identity-resolvehandle
+      description: REST surface for xrpc-com.atproto.identity.resolveHandle.
+      operations:
+      - method: GET
+        name: identityresolvehandle
+        description: Bluesky Resolves a handle (domain name) to a DID.
+        call: bluesky-identity.identityresolvehandle
+        with:
+          handle: rest.handle
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-identity-signplcoperation
+      name: xrpc-com-atproto-identity-signplcoperation
+      description: REST surface for xrpc-com.atproto.identity.signPlcOperation.
+      operations:
+      - method: POST
+        name: identitysignplcoperation
+        description: Bluesky Signs a PLC operation to update some value(s) in the requesting DID's document.
+        call: bluesky-identity.identitysignplcoperation
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-identity-submitplcoperation
+      name: xrpc-com-atproto-identity-submitplcoperation
+      description: REST surface for xrpc-com.atproto.identity.submitPlcOperation.
+      operations:
+      - method: POST
+        name: identitysubmitplcoperation
+        description: Bluesky Validates a PLC operation to ensure that it doesn't violate a service's constraints or get the
+          id...
+        call: bluesky-identity.identitysubmitplcoperation
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-identity-updatehandle
+      name: xrpc-com-atproto-identity-updatehandle
+      description: REST surface for xrpc-com.atproto.identity.updateHandle.
+      operations:
+      - method: POST
+        name: identityupdatehandle
+        description: Bluesky Updates the current account's handle.
+        call: bluesky-identity.identityupdatehandle
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bluesky-identity-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bluesky Social API — Identity. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: bluesky-describe-credentials-that-should
+      description: Bluesky Describe the credentials that should be included in the DID doc of an account that is migrating
+        t...
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-identity.identitygetrecommendeddidcredentials
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-request-email-code-order
+      description: Bluesky Request an email with a code to in order to request a signed PLC operation.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-identity.identityrequestplcoperationsignature
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-resolves-handle-domain-name
+      description: Bluesky Resolves a handle (domain name) to a DID.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-identity.identityresolvehandle
+      with:
+        handle: tools.handle
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-signs-plc-operation-update
+      description: Bluesky Signs a PLC operation to update some value(s) in the requesting DID's document.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-identity.identitysignplcoperation
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-validates-plc-operation-ensure
+      description: Bluesky Validates a PLC operation to ensure that it doesn't violate a service's constraints or get the
+        id...
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: bluesky-identity.identitysubmitplcoperation
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-updates-current-account-s-handle
+      description: Bluesky Updates the current account's handle.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-identity.identityupdatehandle
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

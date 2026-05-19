@@ -1,0 +1,264 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bluesky Social API — Notifications
+  description: 'Bluesky Social API — Notifications. 5 operations. Lead operation: Bluesky Count the number of unread notifications
+    for the requesting account.. Self-contained Naftiko capability covering one Bluesky business surface.'
+  tags:
+  - Bluesky
+  - Notifications
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLUESKY_API_KEY: BLUESKY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bluesky-notifications
+    baseUri: https://bsky.social/xrpc
+    description: Bluesky Social API — Notifications business capability. Self-contained, no shared references.
+    resources:
+    - name: xrpc-app.bsky.notification.getUnreadCount
+      path: /xrpc/app.bsky.notification.getUnreadCount
+      operations:
+      - name: notificationgetunreadcount
+        method: GET
+        description: Bluesky Count the number of unread notifications for the requesting account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: priority
+          in: query
+          type: boolean
+        - name: seenAt
+          in: query
+          type: string
+    - name: xrpc-app.bsky.notification.listNotifications
+      path: /xrpc/app.bsky.notification.listNotifications
+      operations:
+      - name: notificationlistnotifications
+        method: GET
+        description: Bluesky Enumerate notifications for the requesting account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: priority
+          in: query
+          type: boolean
+        - name: cursor
+          in: query
+          type: string
+        - name: seenAt
+          in: query
+          type: string
+    - name: xrpc-app.bsky.notification.putPreferences
+      path: /xrpc/app.bsky.notification.putPreferences
+      operations:
+      - name: notificationputpreferences
+        method: POST
+        description: Bluesky Set notification-related preferences for an account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-app.bsky.notification.registerPush
+      path: /xrpc/app.bsky.notification.registerPush
+      operations:
+      - name: notificationregisterpush
+        method: POST
+        description: Bluesky Register to receive push notifications, via a specified service, for the requesting account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-app.bsky.notification.updateSeen
+      path: /xrpc/app.bsky.notification.updateSeen
+      operations:
+      - name: notificationupdateseen
+        method: POST
+        description: Bluesky Notify server that the requesting account has seen notifications.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BLUESKY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bluesky-notifications-rest
+    port: 8080
+    description: REST adapter for Bluesky Social API — Notifications. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/xrpc/app-bsky-notification-getunreadcount
+      name: xrpc-app-bsky-notification-getunreadcount
+      description: REST surface for xrpc-app.bsky.notification.getUnreadCount.
+      operations:
+      - method: GET
+        name: notificationgetunreadcount
+        description: Bluesky Count the number of unread notifications for the requesting account.
+        call: bluesky-notifications.notificationgetunreadcount
+        with:
+          priority: rest.priority
+          seenAt: rest.seenAt
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-notification-listnotifications
+      name: xrpc-app-bsky-notification-listnotifications
+      description: REST surface for xrpc-app.bsky.notification.listNotifications.
+      operations:
+      - method: GET
+        name: notificationlistnotifications
+        description: Bluesky Enumerate notifications for the requesting account.
+        call: bluesky-notifications.notificationlistnotifications
+        with:
+          limit: rest.limit
+          priority: rest.priority
+          cursor: rest.cursor
+          seenAt: rest.seenAt
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-notification-putpreferences
+      name: xrpc-app-bsky-notification-putpreferences
+      description: REST surface for xrpc-app.bsky.notification.putPreferences.
+      operations:
+      - method: POST
+        name: notificationputpreferences
+        description: Bluesky Set notification-related preferences for an account.
+        call: bluesky-notifications.notificationputpreferences
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-notification-registerpush
+      name: xrpc-app-bsky-notification-registerpush
+      description: REST surface for xrpc-app.bsky.notification.registerPush.
+      operations:
+      - method: POST
+        name: notificationregisterpush
+        description: Bluesky Register to receive push notifications, via a specified service, for the requesting account.
+        call: bluesky-notifications.notificationregisterpush
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-notification-updateseen
+      name: xrpc-app-bsky-notification-updateseen
+      description: REST surface for xrpc-app.bsky.notification.updateSeen.
+      operations:
+      - method: POST
+        name: notificationupdateseen
+        description: Bluesky Notify server that the requesting account has seen notifications.
+        call: bluesky-notifications.notificationupdateseen
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bluesky-notifications-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bluesky Social API — Notifications. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: bluesky-count-number-unread-notifications
+      description: Bluesky Count the number of unread notifications for the requesting account.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-notifications.notificationgetunreadcount
+      with:
+        priority: tools.priority
+        seenAt: tools.seenAt
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-enumerate-notifications-requesting-account
+      description: Bluesky Enumerate notifications for the requesting account.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-notifications.notificationlistnotifications
+      with:
+        limit: tools.limit
+        priority: tools.priority
+        cursor: tools.cursor
+        seenAt: tools.seenAt
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-set-notification-related-preferences
+      description: Bluesky Set notification-related preferences for an account.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-notifications.notificationputpreferences
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-register-receive-push-notifications
+      description: Bluesky Register to receive push notifications, via a specified service, for the requesting account.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-notifications.notificationregisterpush
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-notify-server-that-requesting
+      description: Bluesky Notify server that the requesting account has seen notifications.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-notifications.notificationupdateseen
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

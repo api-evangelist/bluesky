@@ -1,0 +1,209 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bluesky Social API — Ozone Team
+  description: 'Bluesky Social API — Ozone Team. 4 operations. Lead operation: Bluesky Add a member to the ozone team.. Self-contained
+    Naftiko capability covering one Bluesky business surface.'
+  tags:
+  - Bluesky
+  - Ozone Team
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLUESKY_API_KEY: BLUESKY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bluesky-ozone-team
+    baseUri: https://bsky.social/xrpc
+    description: Bluesky Social API — Ozone Team business capability. Self-contained, no shared references.
+    resources:
+    - name: xrpc-tools.ozone.team.addMember
+      path: /xrpc/tools.ozone.team.addMember
+      operations:
+      - name: ozoneteamaddmember
+        method: POST
+        description: Bluesky Add a member to the ozone team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-tools.ozone.team.deleteMember
+      path: /xrpc/tools.ozone.team.deleteMember
+      operations:
+      - name: ozoneteamdeletemember
+        method: POST
+        description: Bluesky Delete a member from ozone team.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-tools.ozone.team.listMembers
+      path: /xrpc/tools.ozone.team.listMembers
+      operations:
+      - name: ozoneteamlistmembers
+        method: GET
+        description: Bluesky List all members with access to the ozone service.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-tools.ozone.team.updateMember
+      path: /xrpc/tools.ozone.team.updateMember
+      operations:
+      - name: ozoneteamupdatemember
+        method: POST
+        description: Bluesky Update a member in the ozone service.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BLUESKY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bluesky-ozone-team-rest
+    port: 8080
+    description: REST adapter for Bluesky Social API — Ozone Team. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/xrpc/tools-ozone-team-addmember
+      name: xrpc-tools-ozone-team-addmember
+      description: REST surface for xrpc-tools.ozone.team.addMember.
+      operations:
+      - method: POST
+        name: ozoneteamaddmember
+        description: Bluesky Add a member to the ozone team.
+        call: bluesky-ozone-team.ozoneteamaddmember
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/tools-ozone-team-deletemember
+      name: xrpc-tools-ozone-team-deletemember
+      description: REST surface for xrpc-tools.ozone.team.deleteMember.
+      operations:
+      - method: POST
+        name: ozoneteamdeletemember
+        description: Bluesky Delete a member from ozone team.
+        call: bluesky-ozone-team.ozoneteamdeletemember
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/tools-ozone-team-listmembers
+      name: xrpc-tools-ozone-team-listmembers
+      description: REST surface for xrpc-tools.ozone.team.listMembers.
+      operations:
+      - method: GET
+        name: ozoneteamlistmembers
+        description: Bluesky List all members with access to the ozone service.
+        call: bluesky-ozone-team.ozoneteamlistmembers
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/tools-ozone-team-updatemember
+      name: xrpc-tools-ozone-team-updatemember
+      description: REST surface for xrpc-tools.ozone.team.updateMember.
+      operations:
+      - method: POST
+        name: ozoneteamupdatemember
+        description: Bluesky Update a member in the ozone service.
+        call: bluesky-ozone-team.ozoneteamupdatemember
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bluesky-ozone-team-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bluesky Social API — Ozone Team. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: bluesky-add-member-ozone-team
+      description: Bluesky Add a member to the ozone team.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-ozone-team.ozoneteamaddmember
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-delete-member-ozone-team
+      description: Bluesky Delete a member from ozone team.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-ozone-team.ozoneteamdeletemember
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-list-all-members-access
+      description: Bluesky List all members with access to the ozone service.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-ozone-team.ozoneteamlistmembers
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-update-member-ozone-service
+      description: Bluesky Update a member in the ozone service.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-ozone-team.ozoneteamupdatemember
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,950 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bluesky Social API — Social Graph
+  description: 'Bluesky Social API — Social Graph. 20 operations. Lead operation: Bluesky Get a list of starter packs created
+    by the actor.. Self-contained Naftiko capability covering one Bluesky business surface.'
+  tags:
+  - Bluesky
+  - Social Graph
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLUESKY_API_KEY: BLUESKY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bluesky-social-graph
+    baseUri: https://bsky.social/xrpc
+    description: Bluesky Social API — Social Graph business capability. Self-contained, no shared references.
+    resources:
+    - name: xrpc-app.bsky.graph.getActorStarterPacks
+      path: /xrpc/app.bsky.graph.getActorStarterPacks
+      operations:
+      - name: graphgetactorstarterpacks
+        method: GET
+        description: Bluesky Get a list of starter packs created by the actor.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: actor
+          in: query
+          type: string
+          required: true
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-app.bsky.graph.getBlocks
+      path: /xrpc/app.bsky.graph.getBlocks
+      operations:
+      - name: graphgetblocks
+        method: GET
+        description: Bluesky Enumerates which accounts the requesting account is currently blocking.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-app.bsky.graph.getFollowers
+      path: /xrpc/app.bsky.graph.getFollowers
+      operations:
+      - name: graphgetfollowers
+        method: GET
+        description: Bluesky Enumerates accounts which follow a specified account (actor).
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: actor
+          in: query
+          type: string
+          required: true
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-app.bsky.graph.getFollows
+      path: /xrpc/app.bsky.graph.getFollows
+      operations:
+      - name: graphgetfollows
+        method: GET
+        description: Bluesky Enumerates accounts which a specified account (actor) follows.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: actor
+          in: query
+          type: string
+          required: true
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-app.bsky.graph.getKnownFollowers
+      path: /xrpc/app.bsky.graph.getKnownFollowers
+      operations:
+      - name: graphgetknownfollowers
+        method: GET
+        description: Bluesky Enumerates accounts which follow a specified account (actor) and are followed by the viewer.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: actor
+          in: query
+          type: string
+          required: true
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-app.bsky.graph.getList
+      path: /xrpc/app.bsky.graph.getList
+      operations:
+      - name: graphgetlist
+        method: GET
+        description: Bluesky Gets a 'view' (with additional context) of a specified list.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: list
+          in: query
+          type: string
+          description: Reference (AT-URI) of the list record to hydrate.
+          required: true
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-app.bsky.graph.getListBlocks
+      path: /xrpc/app.bsky.graph.getListBlocks
+      operations:
+      - name: graphgetlistblocks
+        method: GET
+        description: Bluesky Get mod lists that the requesting account (actor) is blocking.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-app.bsky.graph.getListMutes
+      path: /xrpc/app.bsky.graph.getListMutes
+      operations:
+      - name: graphgetlistmutes
+        method: GET
+        description: Bluesky Enumerates mod lists that the requesting account (actor) currently has muted.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-app.bsky.graph.getLists
+      path: /xrpc/app.bsky.graph.getLists
+      operations:
+      - name: graphgetlists
+        method: GET
+        description: Bluesky Enumerates the lists created by a specified account (actor).
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: actor
+          in: query
+          type: string
+          description: The account (actor) to enumerate lists from.
+          required: true
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-app.bsky.graph.getMutes
+      path: /xrpc/app.bsky.graph.getMutes
+      operations:
+      - name: graphgetmutes
+        method: GET
+        description: Bluesky Enumerates accounts that the requesting account (actor) currently has muted.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-app.bsky.graph.getRelationships
+      path: /xrpc/app.bsky.graph.getRelationships
+      operations:
+      - name: graphgetrelationships
+        method: GET
+        description: Bluesky Enumerates public relationships between one account, and a list of other accounts.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: actor
+          in: query
+          type: string
+          description: Primary account requesting relationships for.
+          required: true
+        - name: others
+          in: query
+          type: array
+          description: List of 'other' accounts to be related back to the primary.
+    - name: xrpc-app.bsky.graph.getStarterPack
+      path: /xrpc/app.bsky.graph.getStarterPack
+      operations:
+      - name: graphgetstarterpack
+        method: GET
+        description: Bluesky Gets a view of a starter pack.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: starterPack
+          in: query
+          type: string
+          description: Reference (AT-URI) of the starter pack record.
+          required: true
+    - name: xrpc-app.bsky.graph.getStarterPacks
+      path: /xrpc/app.bsky.graph.getStarterPacks
+      operations:
+      - name: graphgetstarterpacks
+        method: GET
+        description: Bluesky Get views for a list of starter packs.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: uris
+          in: query
+          type: array
+          required: true
+    - name: xrpc-app.bsky.graph.getSuggestedFollowsByActor
+      path: /xrpc/app.bsky.graph.getSuggestedFollowsByActor
+      operations:
+      - name: graphgetsuggestedfollowsbyactor
+        method: GET
+        description: Bluesky Enumerates follows similar to a given account (actor).
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: actor
+          in: query
+          type: string
+          required: true
+    - name: xrpc-app.bsky.graph.muteActor
+      path: /xrpc/app.bsky.graph.muteActor
+      operations:
+      - name: graphmuteactor
+        method: POST
+        description: Bluesky Creates a mute relationship for the specified account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-app.bsky.graph.muteActorList
+      path: /xrpc/app.bsky.graph.muteActorList
+      operations:
+      - name: graphmuteactorlist
+        method: POST
+        description: Bluesky Creates a mute relationship for the specified list of accounts.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-app.bsky.graph.muteThread
+      path: /xrpc/app.bsky.graph.muteThread
+      operations:
+      - name: graphmutethread
+        method: POST
+        description: Bluesky Mutes a thread preventing notifications from the thread and any of its children.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-app.bsky.graph.unmuteActor
+      path: /xrpc/app.bsky.graph.unmuteActor
+      operations:
+      - name: graphunmuteactor
+        method: POST
+        description: Bluesky Unmutes the specified account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-app.bsky.graph.unmuteActorList
+      path: /xrpc/app.bsky.graph.unmuteActorList
+      operations:
+      - name: graphunmuteactorlist
+        method: POST
+        description: Bluesky Unmutes the specified list of accounts.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-app.bsky.graph.unmuteThread
+      path: /xrpc/app.bsky.graph.unmuteThread
+      operations:
+      - name: graphunmutethread
+        method: POST
+        description: Bluesky Unmutes the specified thread.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BLUESKY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bluesky-social-graph-rest
+    port: 8080
+    description: REST adapter for Bluesky Social API — Social Graph. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/xrpc/app-bsky-graph-getactorstarterpacks
+      name: xrpc-app-bsky-graph-getactorstarterpacks
+      description: REST surface for xrpc-app.bsky.graph.getActorStarterPacks.
+      operations:
+      - method: GET
+        name: graphgetactorstarterpacks
+        description: Bluesky Get a list of starter packs created by the actor.
+        call: bluesky-social-graph.graphgetactorstarterpacks
+        with:
+          actor: rest.actor
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getblocks
+      name: xrpc-app-bsky-graph-getblocks
+      description: REST surface for xrpc-app.bsky.graph.getBlocks.
+      operations:
+      - method: GET
+        name: graphgetblocks
+        description: Bluesky Enumerates which accounts the requesting account is currently blocking.
+        call: bluesky-social-graph.graphgetblocks
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getfollowers
+      name: xrpc-app-bsky-graph-getfollowers
+      description: REST surface for xrpc-app.bsky.graph.getFollowers.
+      operations:
+      - method: GET
+        name: graphgetfollowers
+        description: Bluesky Enumerates accounts which follow a specified account (actor).
+        call: bluesky-social-graph.graphgetfollowers
+        with:
+          actor: rest.actor
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getfollows
+      name: xrpc-app-bsky-graph-getfollows
+      description: REST surface for xrpc-app.bsky.graph.getFollows.
+      operations:
+      - method: GET
+        name: graphgetfollows
+        description: Bluesky Enumerates accounts which a specified account (actor) follows.
+        call: bluesky-social-graph.graphgetfollows
+        with:
+          actor: rest.actor
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getknownfollowers
+      name: xrpc-app-bsky-graph-getknownfollowers
+      description: REST surface for xrpc-app.bsky.graph.getKnownFollowers.
+      operations:
+      - method: GET
+        name: graphgetknownfollowers
+        description: Bluesky Enumerates accounts which follow a specified account (actor) and are followed by the viewer.
+        call: bluesky-social-graph.graphgetknownfollowers
+        with:
+          actor: rest.actor
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getlist
+      name: xrpc-app-bsky-graph-getlist
+      description: REST surface for xrpc-app.bsky.graph.getList.
+      operations:
+      - method: GET
+        name: graphgetlist
+        description: Bluesky Gets a 'view' (with additional context) of a specified list.
+        call: bluesky-social-graph.graphgetlist
+        with:
+          list: rest.list
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getlistblocks
+      name: xrpc-app-bsky-graph-getlistblocks
+      description: REST surface for xrpc-app.bsky.graph.getListBlocks.
+      operations:
+      - method: GET
+        name: graphgetlistblocks
+        description: Bluesky Get mod lists that the requesting account (actor) is blocking.
+        call: bluesky-social-graph.graphgetlistblocks
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getlistmutes
+      name: xrpc-app-bsky-graph-getlistmutes
+      description: REST surface for xrpc-app.bsky.graph.getListMutes.
+      operations:
+      - method: GET
+        name: graphgetlistmutes
+        description: Bluesky Enumerates mod lists that the requesting account (actor) currently has muted.
+        call: bluesky-social-graph.graphgetlistmutes
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getlists
+      name: xrpc-app-bsky-graph-getlists
+      description: REST surface for xrpc-app.bsky.graph.getLists.
+      operations:
+      - method: GET
+        name: graphgetlists
+        description: Bluesky Enumerates the lists created by a specified account (actor).
+        call: bluesky-social-graph.graphgetlists
+        with:
+          actor: rest.actor
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getmutes
+      name: xrpc-app-bsky-graph-getmutes
+      description: REST surface for xrpc-app.bsky.graph.getMutes.
+      operations:
+      - method: GET
+        name: graphgetmutes
+        description: Bluesky Enumerates accounts that the requesting account (actor) currently has muted.
+        call: bluesky-social-graph.graphgetmutes
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getrelationships
+      name: xrpc-app-bsky-graph-getrelationships
+      description: REST surface for xrpc-app.bsky.graph.getRelationships.
+      operations:
+      - method: GET
+        name: graphgetrelationships
+        description: Bluesky Enumerates public relationships between one account, and a list of other accounts.
+        call: bluesky-social-graph.graphgetrelationships
+        with:
+          actor: rest.actor
+          others: rest.others
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getstarterpack
+      name: xrpc-app-bsky-graph-getstarterpack
+      description: REST surface for xrpc-app.bsky.graph.getStarterPack.
+      operations:
+      - method: GET
+        name: graphgetstarterpack
+        description: Bluesky Gets a view of a starter pack.
+        call: bluesky-social-graph.graphgetstarterpack
+        with:
+          starterPack: rest.starterPack
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getstarterpacks
+      name: xrpc-app-bsky-graph-getstarterpacks
+      description: REST surface for xrpc-app.bsky.graph.getStarterPacks.
+      operations:
+      - method: GET
+        name: graphgetstarterpacks
+        description: Bluesky Get views for a list of starter packs.
+        call: bluesky-social-graph.graphgetstarterpacks
+        with:
+          uris: rest.uris
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-getsuggestedfollowsbyactor
+      name: xrpc-app-bsky-graph-getsuggestedfollowsbyactor
+      description: REST surface for xrpc-app.bsky.graph.getSuggestedFollowsByActor.
+      operations:
+      - method: GET
+        name: graphgetsuggestedfollowsbyactor
+        description: Bluesky Enumerates follows similar to a given account (actor).
+        call: bluesky-social-graph.graphgetsuggestedfollowsbyactor
+        with:
+          actor: rest.actor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-muteactor
+      name: xrpc-app-bsky-graph-muteactor
+      description: REST surface for xrpc-app.bsky.graph.muteActor.
+      operations:
+      - method: POST
+        name: graphmuteactor
+        description: Bluesky Creates a mute relationship for the specified account.
+        call: bluesky-social-graph.graphmuteactor
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-muteactorlist
+      name: xrpc-app-bsky-graph-muteactorlist
+      description: REST surface for xrpc-app.bsky.graph.muteActorList.
+      operations:
+      - method: POST
+        name: graphmuteactorlist
+        description: Bluesky Creates a mute relationship for the specified list of accounts.
+        call: bluesky-social-graph.graphmuteactorlist
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-mutethread
+      name: xrpc-app-bsky-graph-mutethread
+      description: REST surface for xrpc-app.bsky.graph.muteThread.
+      operations:
+      - method: POST
+        name: graphmutethread
+        description: Bluesky Mutes a thread preventing notifications from the thread and any of its children.
+        call: bluesky-social-graph.graphmutethread
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-unmuteactor
+      name: xrpc-app-bsky-graph-unmuteactor
+      description: REST surface for xrpc-app.bsky.graph.unmuteActor.
+      operations:
+      - method: POST
+        name: graphunmuteactor
+        description: Bluesky Unmutes the specified account.
+        call: bluesky-social-graph.graphunmuteactor
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-unmuteactorlist
+      name: xrpc-app-bsky-graph-unmuteactorlist
+      description: REST surface for xrpc-app.bsky.graph.unmuteActorList.
+      operations:
+      - method: POST
+        name: graphunmuteactorlist
+        description: Bluesky Unmutes the specified list of accounts.
+        call: bluesky-social-graph.graphunmuteactorlist
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/app-bsky-graph-unmutethread
+      name: xrpc-app-bsky-graph-unmutethread
+      description: REST surface for xrpc-app.bsky.graph.unmuteThread.
+      operations:
+      - method: POST
+        name: graphunmutethread
+        description: Bluesky Unmutes the specified thread.
+        call: bluesky-social-graph.graphunmutethread
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bluesky-social-graph-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bluesky Social API — Social Graph. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: bluesky-get-list-starter-packs
+      description: Bluesky Get a list of starter packs created by the actor.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetactorstarterpacks
+      with:
+        actor: tools.actor
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-enumerates-which-accounts-requesting
+      description: Bluesky Enumerates which accounts the requesting account is currently blocking.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetblocks
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-enumerates-accounts-which-follow
+      description: Bluesky Enumerates accounts which follow a specified account (actor).
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetfollowers
+      with:
+        actor: tools.actor
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-enumerates-accounts-which-specified
+      description: Bluesky Enumerates accounts which a specified account (actor) follows.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetfollows
+      with:
+        actor: tools.actor
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-enumerates-accounts-which-follow-2
+      description: Bluesky Enumerates accounts which follow a specified account (actor) and are followed by the viewer.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetknownfollowers
+      with:
+        actor: tools.actor
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-gets-view-additional-context
+      description: Bluesky Gets a 'view' (with additional context) of a specified list.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetlist
+      with:
+        list: tools.list
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-get-mod-lists-that
+      description: Bluesky Get mod lists that the requesting account (actor) is blocking.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetlistblocks
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-enumerates-mod-lists-that
+      description: Bluesky Enumerates mod lists that the requesting account (actor) currently has muted.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetlistmutes
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-enumerates-lists-created-specified
+      description: Bluesky Enumerates the lists created by a specified account (actor).
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetlists
+      with:
+        actor: tools.actor
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-enumerates-accounts-that-requesting
+      description: Bluesky Enumerates accounts that the requesting account (actor) currently has muted.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetmutes
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-enumerates-public-relationships-between
+      description: Bluesky Enumerates public relationships between one account, and a list of other accounts.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetrelationships
+      with:
+        actor: tools.actor
+        others: tools.others
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-gets-view-starter-pack
+      description: Bluesky Gets a view of a starter pack.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetstarterpack
+      with:
+        starterPack: tools.starterPack
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-get-views-list-starter
+      description: Bluesky Get views for a list of starter packs.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetstarterpacks
+      with:
+        uris: tools.uris
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-enumerates-follows-similar-given
+      description: Bluesky Enumerates follows similar to a given account (actor).
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-social-graph.graphgetsuggestedfollowsbyactor
+      with:
+        actor: tools.actor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-creates-mute-relationship-specified
+      description: Bluesky Creates a mute relationship for the specified account.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-social-graph.graphmuteactor
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-creates-mute-relationship-specified-2
+      description: Bluesky Creates a mute relationship for the specified list of accounts.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: bluesky-social-graph.graphmuteactorlist
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-mutes-thread-preventing-notifications
+      description: Bluesky Mutes a thread preventing notifications from the thread and any of its children.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-social-graph.graphmutethread
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-unmutes-specified-account
+      description: Bluesky Unmutes the specified account.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-social-graph.graphunmuteactor
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-unmutes-specified-list-accounts
+      description: Bluesky Unmutes the specified list of accounts.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: bluesky-social-graph.graphunmuteactorlist
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-unmutes-specified-thread
+      description: Bluesky Unmutes the specified thread.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-social-graph.graphunmutethread
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

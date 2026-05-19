@@ -1,0 +1,197 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bluesky Social API — Ozone Communication
+  description: 'Bluesky Social API — Ozone Communication. 4 operations. Lead operation: Bluesky Administrative action to create
+    a new, re-usable communication (email for now) template.. Self-contained Naftiko capability covering one Bluesky business
+    surface.'
+  tags:
+  - Bluesky
+  - Ozone Communication
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLUESKY_API_KEY: BLUESKY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bluesky-ozone-communication
+    baseUri: https://bsky.social/xrpc
+    description: Bluesky Social API — Ozone Communication business capability. Self-contained, no shared references.
+    resources:
+    - name: xrpc-tools.ozone.communication.createTemplate
+      path: /xrpc/tools.ozone.communication.createTemplate
+      operations:
+      - name: ozonecommunicationcreatetemplate
+        method: POST
+        description: Bluesky Administrative action to create a new, re-usable communication (email for now) template.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-tools.ozone.communication.deleteTemplate
+      path: /xrpc/tools.ozone.communication.deleteTemplate
+      operations:
+      - name: ozonecommunicationdeletetemplate
+        method: POST
+        description: Bluesky Delete a communication template.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-tools.ozone.communication.listTemplates
+      path: /xrpc/tools.ozone.communication.listTemplates
+      operations:
+      - name: ozonecommunicationlisttemplates
+        method: GET
+        description: Bluesky Get list of all communication templates.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-tools.ozone.communication.updateTemplate
+      path: /xrpc/tools.ozone.communication.updateTemplate
+      operations:
+      - name: ozonecommunicationupdatetemplate
+        method: POST
+        description: Bluesky Administrative action to update an existing communication template.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BLUESKY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bluesky-ozone-communication-rest
+    port: 8080
+    description: REST adapter for Bluesky Social API — Ozone Communication. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/xrpc/tools-ozone-communication-createtemplate
+      name: xrpc-tools-ozone-communication-createtemplate
+      description: REST surface for xrpc-tools.ozone.communication.createTemplate.
+      operations:
+      - method: POST
+        name: ozonecommunicationcreatetemplate
+        description: Bluesky Administrative action to create a new, re-usable communication (email for now) template.
+        call: bluesky-ozone-communication.ozonecommunicationcreatetemplate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/tools-ozone-communication-deletetemplate
+      name: xrpc-tools-ozone-communication-deletetemplate
+      description: REST surface for xrpc-tools.ozone.communication.deleteTemplate.
+      operations:
+      - method: POST
+        name: ozonecommunicationdeletetemplate
+        description: Bluesky Delete a communication template.
+        call: bluesky-ozone-communication.ozonecommunicationdeletetemplate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/tools-ozone-communication-listtemplates
+      name: xrpc-tools-ozone-communication-listtemplates
+      description: REST surface for xrpc-tools.ozone.communication.listTemplates.
+      operations:
+      - method: GET
+        name: ozonecommunicationlisttemplates
+        description: Bluesky Get list of all communication templates.
+        call: bluesky-ozone-communication.ozonecommunicationlisttemplates
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/tools-ozone-communication-updatetemplate
+      name: xrpc-tools-ozone-communication-updatetemplate
+      description: REST surface for xrpc-tools.ozone.communication.updateTemplate.
+      operations:
+      - method: POST
+        name: ozonecommunicationupdatetemplate
+        description: Bluesky Administrative action to update an existing communication template.
+        call: bluesky-ozone-communication.ozonecommunicationupdatetemplate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bluesky-ozone-communication-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bluesky Social API — Ozone Communication. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: bluesky-administrative-action-create-new
+      description: Bluesky Administrative action to create a new, re-usable communication (email for now) template.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-ozone-communication.ozonecommunicationcreatetemplate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-delete-communication-template
+      description: Bluesky Delete a communication template.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-ozone-communication.ozonecommunicationdeletetemplate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-get-list-all-communication
+      description: Bluesky Get list of all communication templates.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-ozone-communication.ozonecommunicationlisttemplates
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-administrative-action-update-existing
+      description: Bluesky Administrative action to update an existing communication template.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-ozone-communication.ozonecommunicationupdatetemplate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

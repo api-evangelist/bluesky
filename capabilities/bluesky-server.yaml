@@ -1,0 +1,1005 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bluesky Social API — Server
+  description: 'Bluesky Social API — Server. 25 operations. Lead operation: Bluesky Activates a currently deactivated account..
+    Self-contained Naftiko capability covering one Bluesky business surface.'
+  tags:
+  - Bluesky
+  - Server
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLUESKY_API_KEY: BLUESKY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bluesky-server
+    baseUri: https://bsky.social/xrpc
+    description: Bluesky Social API — Server business capability. Self-contained, no shared references.
+    resources:
+    - name: xrpc-com.atproto.server.activateAccount
+      path: /xrpc/com.atproto.server.activateAccount
+      operations:
+      - name: serveractivateaccount
+        method: POST
+        description: Bluesky Activates a currently deactivated account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.server.checkAccountStatus
+      path: /xrpc/com.atproto.server.checkAccountStatus
+      operations:
+      - name: servercheckaccountstatus
+        method: GET
+        description: Bluesky Returns the status of an account, especially as pertaining to import or recovery.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.server.confirmEmail
+      path: /xrpc/com.atproto.server.confirmEmail
+      operations:
+      - name: serverconfirmemail
+        method: POST
+        description: Bluesky Confirm an email using a token from com.atproto.server.requestEmailConfirmation.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.createAccount
+      path: /xrpc/com.atproto.server.createAccount
+      operations:
+      - name: servercreateaccount
+        method: POST
+        description: Bluesky Create an account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.createAppPassword
+      path: /xrpc/com.atproto.server.createAppPassword
+      operations:
+      - name: servercreateapppassword
+        method: POST
+        description: Bluesky Create an App Password.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.createInviteCode
+      path: /xrpc/com.atproto.server.createInviteCode
+      operations:
+      - name: servercreateinvitecode
+        method: POST
+        description: Bluesky Create an invite code.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.createInviteCodes
+      path: /xrpc/com.atproto.server.createInviteCodes
+      operations:
+      - name: servercreateinvitecodes
+        method: POST
+        description: Bluesky Create invite codes.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.createSession
+      path: /xrpc/com.atproto.server.createSession
+      operations:
+      - name: servercreatesession
+        method: POST
+        description: Bluesky Create an authentication session.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.deactivateAccount
+      path: /xrpc/com.atproto.server.deactivateAccount
+      operations:
+      - name: serverdeactivateaccount
+        method: POST
+        description: Bluesky Deactivates a currently active account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.deleteAccount
+      path: /xrpc/com.atproto.server.deleteAccount
+      operations:
+      - name: serverdeleteaccount
+        method: POST
+        description: Bluesky Delete an actor's account with a token and password.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.deleteSession
+      path: /xrpc/com.atproto.server.deleteSession
+      operations:
+      - name: serverdeletesession
+        method: POST
+        description: Bluesky Delete the current session.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.server.describeServer
+      path: /xrpc/com.atproto.server.describeServer
+      operations:
+      - name: serverdescribeserver
+        method: GET
+        description: Bluesky Describes the server's account creation requirements and capabilities.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.server.getAccountInviteCodes
+      path: /xrpc/com.atproto.server.getAccountInviteCodes
+      operations:
+      - name: servergetaccountinvitecodes
+        method: GET
+        description: Bluesky Get all invite codes for the current account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: includeUsed
+          in: query
+          type: boolean
+        - name: createAvailable
+          in: query
+          type: boolean
+          description: Controls whether any new 'earned' but not 'created' invites should be created.
+    - name: xrpc-com.atproto.server.getServiceAuth
+      path: /xrpc/com.atproto.server.getServiceAuth
+      operations:
+      - name: servergetserviceauth
+        method: GET
+        description: Bluesky Get a signed token on behalf of the requesting DID for the requested service.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: aud
+          in: query
+          type: string
+          description: The DID of the service that the token will be used to authenticate with
+          required: true
+        - name: exp
+          in: query
+          type: integer
+          description: The time in Unix Epoch seconds that the JWT expires. Defaults to 60 seconds in the future. The service
+            may enforce certain time bounds on tokens depending on th
+        - name: lxm
+          in: query
+          type: string
+          description: Lexicon (XRPC) method to bind the requested token to
+    - name: xrpc-com.atproto.server.getSession
+      path: /xrpc/com.atproto.server.getSession
+      operations:
+      - name: servergetsession
+        method: GET
+        description: Bluesky Get information about the current auth session.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.server.listAppPasswords
+      path: /xrpc/com.atproto.server.listAppPasswords
+      operations:
+      - name: serverlistapppasswords
+        method: GET
+        description: Bluesky List all App Passwords.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.server.refreshSession
+      path: /xrpc/com.atproto.server.refreshSession
+      operations:
+      - name: serverrefreshsession
+        method: POST
+        description: Bluesky Refresh an authentication session.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.server.requestAccountDelete
+      path: /xrpc/com.atproto.server.requestAccountDelete
+      operations:
+      - name: serverrequestaccountdelete
+        method: POST
+        description: Bluesky Initiate a user account deletion via email.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.server.requestEmailConfirmation
+      path: /xrpc/com.atproto.server.requestEmailConfirmation
+      operations:
+      - name: serverrequestemailconfirmation
+        method: POST
+        description: Bluesky Request an email with a code to confirm ownership of email.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.server.requestEmailUpdate
+      path: /xrpc/com.atproto.server.requestEmailUpdate
+      operations:
+      - name: serverrequestemailupdate
+        method: POST
+        description: Bluesky Request a token in order to update email.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-com.atproto.server.requestPasswordReset
+      path: /xrpc/com.atproto.server.requestPasswordReset
+      operations:
+      - name: serverrequestpasswordreset
+        method: POST
+        description: Bluesky Initiate a user account password reset via email.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.reserveSigningKey
+      path: /xrpc/com.atproto.server.reserveSigningKey
+      operations:
+      - name: serverreservesigningkey
+        method: POST
+        description: Bluesky Reserve a repo signing key, for use with account creation.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.resetPassword
+      path: /xrpc/com.atproto.server.resetPassword
+      operations:
+      - name: serverresetpassword
+        method: POST
+        description: Bluesky Reset a user account password using a token.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.revokeAppPassword
+      path: /xrpc/com.atproto.server.revokeAppPassword
+      operations:
+      - name: serverrevokeapppassword
+        method: POST
+        description: Bluesky Revoke an App Password by name.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.server.updateEmail
+      path: /xrpc/com.atproto.server.updateEmail
+      operations:
+      - name: serverupdateemail
+        method: POST
+        description: Bluesky Update an account's email.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BLUESKY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bluesky-server-rest
+    port: 8080
+    description: REST adapter for Bluesky Social API — Server. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/xrpc/com-atproto-server-activateaccount
+      name: xrpc-com-atproto-server-activateaccount
+      description: REST surface for xrpc-com.atproto.server.activateAccount.
+      operations:
+      - method: POST
+        name: serveractivateaccount
+        description: Bluesky Activates a currently deactivated account.
+        call: bluesky-server.serveractivateaccount
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-checkaccountstatus
+      name: xrpc-com-atproto-server-checkaccountstatus
+      description: REST surface for xrpc-com.atproto.server.checkAccountStatus.
+      operations:
+      - method: GET
+        name: servercheckaccountstatus
+        description: Bluesky Returns the status of an account, especially as pertaining to import or recovery.
+        call: bluesky-server.servercheckaccountstatus
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-confirmemail
+      name: xrpc-com-atproto-server-confirmemail
+      description: REST surface for xrpc-com.atproto.server.confirmEmail.
+      operations:
+      - method: POST
+        name: serverconfirmemail
+        description: Bluesky Confirm an email using a token from com.atproto.server.requestEmailConfirmation.
+        call: bluesky-server.serverconfirmemail
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-createaccount
+      name: xrpc-com-atproto-server-createaccount
+      description: REST surface for xrpc-com.atproto.server.createAccount.
+      operations:
+      - method: POST
+        name: servercreateaccount
+        description: Bluesky Create an account.
+        call: bluesky-server.servercreateaccount
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-createapppassword
+      name: xrpc-com-atproto-server-createapppassword
+      description: REST surface for xrpc-com.atproto.server.createAppPassword.
+      operations:
+      - method: POST
+        name: servercreateapppassword
+        description: Bluesky Create an App Password.
+        call: bluesky-server.servercreateapppassword
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-createinvitecode
+      name: xrpc-com-atproto-server-createinvitecode
+      description: REST surface for xrpc-com.atproto.server.createInviteCode.
+      operations:
+      - method: POST
+        name: servercreateinvitecode
+        description: Bluesky Create an invite code.
+        call: bluesky-server.servercreateinvitecode
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-createinvitecodes
+      name: xrpc-com-atproto-server-createinvitecodes
+      description: REST surface for xrpc-com.atproto.server.createInviteCodes.
+      operations:
+      - method: POST
+        name: servercreateinvitecodes
+        description: Bluesky Create invite codes.
+        call: bluesky-server.servercreateinvitecodes
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-createsession
+      name: xrpc-com-atproto-server-createsession
+      description: REST surface for xrpc-com.atproto.server.createSession.
+      operations:
+      - method: POST
+        name: servercreatesession
+        description: Bluesky Create an authentication session.
+        call: bluesky-server.servercreatesession
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-deactivateaccount
+      name: xrpc-com-atproto-server-deactivateaccount
+      description: REST surface for xrpc-com.atproto.server.deactivateAccount.
+      operations:
+      - method: POST
+        name: serverdeactivateaccount
+        description: Bluesky Deactivates a currently active account.
+        call: bluesky-server.serverdeactivateaccount
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-deleteaccount
+      name: xrpc-com-atproto-server-deleteaccount
+      description: REST surface for xrpc-com.atproto.server.deleteAccount.
+      operations:
+      - method: POST
+        name: serverdeleteaccount
+        description: Bluesky Delete an actor's account with a token and password.
+        call: bluesky-server.serverdeleteaccount
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-deletesession
+      name: xrpc-com-atproto-server-deletesession
+      description: REST surface for xrpc-com.atproto.server.deleteSession.
+      operations:
+      - method: POST
+        name: serverdeletesession
+        description: Bluesky Delete the current session.
+        call: bluesky-server.serverdeletesession
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-describeserver
+      name: xrpc-com-atproto-server-describeserver
+      description: REST surface for xrpc-com.atproto.server.describeServer.
+      operations:
+      - method: GET
+        name: serverdescribeserver
+        description: Bluesky Describes the server's account creation requirements and capabilities.
+        call: bluesky-server.serverdescribeserver
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-getaccountinvitecodes
+      name: xrpc-com-atproto-server-getaccountinvitecodes
+      description: REST surface for xrpc-com.atproto.server.getAccountInviteCodes.
+      operations:
+      - method: GET
+        name: servergetaccountinvitecodes
+        description: Bluesky Get all invite codes for the current account.
+        call: bluesky-server.servergetaccountinvitecodes
+        with:
+          includeUsed: rest.includeUsed
+          createAvailable: rest.createAvailable
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-getserviceauth
+      name: xrpc-com-atproto-server-getserviceauth
+      description: REST surface for xrpc-com.atproto.server.getServiceAuth.
+      operations:
+      - method: GET
+        name: servergetserviceauth
+        description: Bluesky Get a signed token on behalf of the requesting DID for the requested service.
+        call: bluesky-server.servergetserviceauth
+        with:
+          aud: rest.aud
+          exp: rest.exp
+          lxm: rest.lxm
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-getsession
+      name: xrpc-com-atproto-server-getsession
+      description: REST surface for xrpc-com.atproto.server.getSession.
+      operations:
+      - method: GET
+        name: servergetsession
+        description: Bluesky Get information about the current auth session.
+        call: bluesky-server.servergetsession
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-listapppasswords
+      name: xrpc-com-atproto-server-listapppasswords
+      description: REST surface for xrpc-com.atproto.server.listAppPasswords.
+      operations:
+      - method: GET
+        name: serverlistapppasswords
+        description: Bluesky List all App Passwords.
+        call: bluesky-server.serverlistapppasswords
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-refreshsession
+      name: xrpc-com-atproto-server-refreshsession
+      description: REST surface for xrpc-com.atproto.server.refreshSession.
+      operations:
+      - method: POST
+        name: serverrefreshsession
+        description: Bluesky Refresh an authentication session.
+        call: bluesky-server.serverrefreshsession
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-requestaccountdelete
+      name: xrpc-com-atproto-server-requestaccountdelete
+      description: REST surface for xrpc-com.atproto.server.requestAccountDelete.
+      operations:
+      - method: POST
+        name: serverrequestaccountdelete
+        description: Bluesky Initiate a user account deletion via email.
+        call: bluesky-server.serverrequestaccountdelete
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-requestemailconfirmation
+      name: xrpc-com-atproto-server-requestemailconfirmation
+      description: REST surface for xrpc-com.atproto.server.requestEmailConfirmation.
+      operations:
+      - method: POST
+        name: serverrequestemailconfirmation
+        description: Bluesky Request an email with a code to confirm ownership of email.
+        call: bluesky-server.serverrequestemailconfirmation
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-requestemailupdate
+      name: xrpc-com-atproto-server-requestemailupdate
+      description: REST surface for xrpc-com.atproto.server.requestEmailUpdate.
+      operations:
+      - method: POST
+        name: serverrequestemailupdate
+        description: Bluesky Request a token in order to update email.
+        call: bluesky-server.serverrequestemailupdate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-requestpasswordreset
+      name: xrpc-com-atproto-server-requestpasswordreset
+      description: REST surface for xrpc-com.atproto.server.requestPasswordReset.
+      operations:
+      - method: POST
+        name: serverrequestpasswordreset
+        description: Bluesky Initiate a user account password reset via email.
+        call: bluesky-server.serverrequestpasswordreset
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-reservesigningkey
+      name: xrpc-com-atproto-server-reservesigningkey
+      description: REST surface for xrpc-com.atproto.server.reserveSigningKey.
+      operations:
+      - method: POST
+        name: serverreservesigningkey
+        description: Bluesky Reserve a repo signing key, for use with account creation.
+        call: bluesky-server.serverreservesigningkey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-resetpassword
+      name: xrpc-com-atproto-server-resetpassword
+      description: REST surface for xrpc-com.atproto.server.resetPassword.
+      operations:
+      - method: POST
+        name: serverresetpassword
+        description: Bluesky Reset a user account password using a token.
+        call: bluesky-server.serverresetpassword
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-revokeapppassword
+      name: xrpc-com-atproto-server-revokeapppassword
+      description: REST surface for xrpc-com.atproto.server.revokeAppPassword.
+      operations:
+      - method: POST
+        name: serverrevokeapppassword
+        description: Bluesky Revoke an App Password by name.
+        call: bluesky-server.serverrevokeapppassword
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-server-updateemail
+      name: xrpc-com-atproto-server-updateemail
+      description: REST surface for xrpc-com.atproto.server.updateEmail.
+      operations:
+      - method: POST
+        name: serverupdateemail
+        description: Bluesky Update an account's email.
+        call: bluesky-server.serverupdateemail
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bluesky-server-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bluesky Social API — Server. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: bluesky-activates-currently-deactivated-account
+      description: Bluesky Activates a currently deactivated account.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serveractivateaccount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-returns-status-account-especially
+      description: Bluesky Returns the status of an account, especially as pertaining to import or recovery.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-server.servercheckaccountstatus
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-confirm-email-using-token
+      description: Bluesky Confirm an email using a token from com.atproto.server.requestEmailConfirmation.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverconfirmemail
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-create-account
+      description: Bluesky Create an account.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.servercreateaccount
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-create-app-password
+      description: Bluesky Create an App Password.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.servercreateapppassword
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-create-invite-code
+      description: Bluesky Create an invite code.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.servercreateinvitecode
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-create-invite-codes
+      description: Bluesky Create invite codes.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.servercreateinvitecodes
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-create-authentication-session
+      description: Bluesky Create an authentication session.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.servercreatesession
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-deactivates-currently-active-account
+      description: Bluesky Deactivates a currently active account.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverdeactivateaccount
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-delete-actor-s-account-token
+      description: Bluesky Delete an actor's account with a token and password.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverdeleteaccount
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-delete-current-session
+      description: Bluesky Delete the current session.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverdeletesession
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-describes-server-s-account-creation
+      description: Bluesky Describes the server's account creation requirements and capabilities.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-server.serverdescribeserver
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-get-all-invite-codes
+      description: Bluesky Get all invite codes for the current account.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-server.servergetaccountinvitecodes
+      with:
+        includeUsed: tools.includeUsed
+        createAvailable: tools.createAvailable
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-get-signed-token-behalf
+      description: Bluesky Get a signed token on behalf of the requesting DID for the requested service.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-server.servergetserviceauth
+      with:
+        aud: tools.aud
+        exp: tools.exp
+        lxm: tools.lxm
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-get-information-about-current
+      description: Bluesky Get information about the current auth session.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-server.servergetsession
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-list-all-app-passwords
+      description: Bluesky List all App Passwords.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-server.serverlistapppasswords
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-refresh-authentication-session
+      description: Bluesky Refresh an authentication session.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverrefreshsession
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-initiate-user-account-deletion
+      description: Bluesky Initiate a user account deletion via email.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverrequestaccountdelete
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-request-email-code-confirm
+      description: Bluesky Request an email with a code to confirm ownership of email.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverrequestemailconfirmation
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-request-token-order-update
+      description: Bluesky Request a token in order to update email.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverrequestemailupdate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-initiate-user-account-password
+      description: Bluesky Initiate a user account password reset via email.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverrequestpasswordreset
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-reserve-repo-signing-key
+      description: Bluesky Reserve a repo signing key, for use with account creation.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverreservesigningkey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-reset-user-account-password
+      description: Bluesky Reset a user account password using a token.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverresetpassword
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-revoke-app-password-name
+      description: Bluesky Revoke an App Password by name.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverrevokeapppassword
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-update-account-s-email
+      description: Bluesky Update an account's email.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-server.serverupdateemail
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

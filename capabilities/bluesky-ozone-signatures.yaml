@@ -1,0 +1,181 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bluesky Social API — Ozone Signatures
+  description: 'Bluesky Social API — Ozone Signatures. 3 operations. Lead operation: Bluesky Find all correlated threat signatures
+    between 2 or more accounts.. Self-contained Naftiko capability covering one Bluesky business surface.'
+  tags:
+  - Bluesky
+  - Ozone Signatures
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLUESKY_API_KEY: BLUESKY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bluesky-ozone-signatures
+    baseUri: https://bsky.social/xrpc
+    description: Bluesky Social API — Ozone Signatures business capability. Self-contained, no shared references.
+    resources:
+    - name: xrpc-tools.ozone.signature.findCorrelation
+      path: /xrpc/tools.ozone.signature.findCorrelation
+      operations:
+      - name: ozonesignaturefindcorrelation
+        method: GET
+        description: Bluesky Find all correlated threat signatures between 2 or more accounts.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: dids
+          in: query
+          type: array
+          required: true
+    - name: xrpc-tools.ozone.signature.findRelatedAccounts
+      path: /xrpc/tools.ozone.signature.findRelatedAccounts
+      operations:
+      - name: ozonesignaturefindrelatedaccounts
+        method: GET
+        description: Bluesky Get accounts that share some matching threat signatures with the root account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: did
+          in: query
+          type: string
+          required: true
+        - name: cursor
+          in: query
+          type: string
+        - name: limit
+          in: query
+          type: integer
+    - name: xrpc-tools.ozone.signature.searchAccounts
+      path: /xrpc/tools.ozone.signature.searchAccounts
+      operations:
+      - name: ozonesignaturesearchaccounts
+        method: GET
+        description: Bluesky Search for accounts that match one or more threat signature values.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: values
+          in: query
+          type: array
+          required: true
+        - name: cursor
+          in: query
+          type: string
+        - name: limit
+          in: query
+          type: integer
+    authentication:
+      type: bearer
+      token: '{{env.BLUESKY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bluesky-ozone-signatures-rest
+    port: 8080
+    description: REST adapter for Bluesky Social API — Ozone Signatures. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/xrpc/tools-ozone-signature-findcorrelation
+      name: xrpc-tools-ozone-signature-findcorrelation
+      description: REST surface for xrpc-tools.ozone.signature.findCorrelation.
+      operations:
+      - method: GET
+        name: ozonesignaturefindcorrelation
+        description: Bluesky Find all correlated threat signatures between 2 or more accounts.
+        call: bluesky-ozone-signatures.ozonesignaturefindcorrelation
+        with:
+          dids: rest.dids
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/tools-ozone-signature-findrelatedaccounts
+      name: xrpc-tools-ozone-signature-findrelatedaccounts
+      description: REST surface for xrpc-tools.ozone.signature.findRelatedAccounts.
+      operations:
+      - method: GET
+        name: ozonesignaturefindrelatedaccounts
+        description: Bluesky Get accounts that share some matching threat signatures with the root account.
+        call: bluesky-ozone-signatures.ozonesignaturefindrelatedaccounts
+        with:
+          did: rest.did
+          cursor: rest.cursor
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/tools-ozone-signature-searchaccounts
+      name: xrpc-tools-ozone-signature-searchaccounts
+      description: REST surface for xrpc-tools.ozone.signature.searchAccounts.
+      operations:
+      - method: GET
+        name: ozonesignaturesearchaccounts
+        description: Bluesky Search for accounts that match one or more threat signature values.
+        call: bluesky-ozone-signatures.ozonesignaturesearchaccounts
+        with:
+          values: rest.values
+          cursor: rest.cursor
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bluesky-ozone-signatures-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bluesky Social API — Ozone Signatures. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: bluesky-find-all-correlated-threat
+      description: Bluesky Find all correlated threat signatures between 2 or more accounts.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-ozone-signatures.ozonesignaturefindcorrelation
+      with:
+        dids: tools.dids
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-get-accounts-that-share
+      description: Bluesky Get accounts that share some matching threat signatures with the root account.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-ozone-signatures.ozonesignaturefindrelatedaccounts
+      with:
+        did: tools.did
+        cursor: tools.cursor
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-search-accounts-that-match
+      description: Bluesky Search for accounts that match one or more threat signature values.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-ozone-signatures.ozonesignaturesearchaccounts
+      with:
+        values: tools.values
+        cursor: tools.cursor
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.

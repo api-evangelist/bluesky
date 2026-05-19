@@ -1,0 +1,505 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bluesky Social API — Repository
+  description: 'Bluesky Social API — Repository. 10 operations. Lead operation: Bluesky Apply a batch transaction of repository
+    creates, updates, and deletes.. Self-contained Naftiko capability covering one Bluesky business surface.'
+  tags:
+  - Bluesky
+  - Repository
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLUESKY_API_KEY: BLUESKY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bluesky-repository
+    baseUri: https://bsky.social/xrpc
+    description: Bluesky Social API — Repository business capability. Self-contained, no shared references.
+    resources:
+    - name: xrpc-com.atproto.repo.applyWrites
+      path: /xrpc/com.atproto.repo.applyWrites
+      operations:
+      - name: repoapplywrites
+        method: POST
+        description: Bluesky Apply a batch transaction of repository creates, updates, and deletes.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.repo.createRecord
+      path: /xrpc/com.atproto.repo.createRecord
+      operations:
+      - name: repocreaterecord
+        method: POST
+        description: Bluesky Create a single new repository record.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.repo.deleteRecord
+      path: /xrpc/com.atproto.repo.deleteRecord
+      operations:
+      - name: repodeleterecord
+        method: POST
+        description: Bluesky Delete a repository record, or ensure it doesn't exist.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.repo.describeRepo
+      path: /xrpc/com.atproto.repo.describeRepo
+      operations:
+      - name: repodescriberepo
+        method: GET
+        description: Bluesky Get information about an account and repository, including the list of collections.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: repo
+          in: query
+          type: string
+          description: The handle or DID of the repo.
+          required: true
+    - name: xrpc-com.atproto.repo.getRecord
+      path: /xrpc/com.atproto.repo.getRecord
+      operations:
+      - name: repogetrecord
+        method: GET
+        description: Bluesky Get a single record from a repository.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: repo
+          in: query
+          type: string
+          description: The handle or DID of the repo.
+          required: true
+        - name: collection
+          in: query
+          type: string
+          description: The NSID of the record collection.
+          required: true
+        - name: rkey
+          in: query
+          type: string
+          description: The Record Key.
+          required: true
+        - name: cid
+          in: query
+          type: string
+          description: The CID of the version of the record. If not specified, then return the most recent version.
+    - name: xrpc-com.atproto.repo.importRepo
+      path: /xrpc/com.atproto.repo.importRepo
+      operations:
+      - name: repoimportrepo
+        method: POST
+        description: Bluesky Import a repo in the form of a CAR file.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.repo.listMissingBlobs
+      path: /xrpc/com.atproto.repo.listMissingBlobs
+      operations:
+      - name: repolistmissingblobs
+        method: GET
+        description: Bluesky Returns a list of missing blobs for the requesting account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-com.atproto.repo.listRecords
+      path: /xrpc/com.atproto.repo.listRecords
+      operations:
+      - name: repolistrecords
+        method: GET
+        description: Bluesky List a range of records in a repository, matching a specific collection.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: repo
+          in: query
+          type: string
+          description: The handle or DID of the repo.
+          required: true
+        - name: collection
+          in: query
+          type: string
+          description: The NSID of the record type.
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: The number of records to return.
+        - name: cursor
+          in: query
+          type: string
+        - name: reverse
+          in: query
+          type: boolean
+          description: Flag to reverse the order of the returned records.
+    - name: xrpc-com.atproto.repo.putRecord
+      path: /xrpc/com.atproto.repo.putRecord
+      operations:
+      - name: repoputrecord
+        method: POST
+        description: Bluesky Write a repository record, creating or updating it as needed.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-com.atproto.repo.uploadBlob
+      path: /xrpc/com.atproto.repo.uploadBlob
+      operations:
+      - name: repouploadblob
+        method: POST
+        description: Bluesky Upload a new blob, to be referenced from a repository record.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BLUESKY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bluesky-repository-rest
+    port: 8080
+    description: REST adapter for Bluesky Social API — Repository. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/xrpc/com-atproto-repo-applywrites
+      name: xrpc-com-atproto-repo-applywrites
+      description: REST surface for xrpc-com.atproto.repo.applyWrites.
+      operations:
+      - method: POST
+        name: repoapplywrites
+        description: Bluesky Apply a batch transaction of repository creates, updates, and deletes.
+        call: bluesky-repository.repoapplywrites
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-repo-createrecord
+      name: xrpc-com-atproto-repo-createrecord
+      description: REST surface for xrpc-com.atproto.repo.createRecord.
+      operations:
+      - method: POST
+        name: repocreaterecord
+        description: Bluesky Create a single new repository record.
+        call: bluesky-repository.repocreaterecord
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-repo-deleterecord
+      name: xrpc-com-atproto-repo-deleterecord
+      description: REST surface for xrpc-com.atproto.repo.deleteRecord.
+      operations:
+      - method: POST
+        name: repodeleterecord
+        description: Bluesky Delete a repository record, or ensure it doesn't exist.
+        call: bluesky-repository.repodeleterecord
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-repo-describerepo
+      name: xrpc-com-atproto-repo-describerepo
+      description: REST surface for xrpc-com.atproto.repo.describeRepo.
+      operations:
+      - method: GET
+        name: repodescriberepo
+        description: Bluesky Get information about an account and repository, including the list of collections.
+        call: bluesky-repository.repodescriberepo
+        with:
+          repo: rest.repo
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-repo-getrecord
+      name: xrpc-com-atproto-repo-getrecord
+      description: REST surface for xrpc-com.atproto.repo.getRecord.
+      operations:
+      - method: GET
+        name: repogetrecord
+        description: Bluesky Get a single record from a repository.
+        call: bluesky-repository.repogetrecord
+        with:
+          repo: rest.repo
+          collection: rest.collection
+          rkey: rest.rkey
+          cid: rest.cid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-repo-importrepo
+      name: xrpc-com-atproto-repo-importrepo
+      description: REST surface for xrpc-com.atproto.repo.importRepo.
+      operations:
+      - method: POST
+        name: repoimportrepo
+        description: Bluesky Import a repo in the form of a CAR file.
+        call: bluesky-repository.repoimportrepo
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-repo-listmissingblobs
+      name: xrpc-com-atproto-repo-listmissingblobs
+      description: REST surface for xrpc-com.atproto.repo.listMissingBlobs.
+      operations:
+      - method: GET
+        name: repolistmissingblobs
+        description: Bluesky Returns a list of missing blobs for the requesting account.
+        call: bluesky-repository.repolistmissingblobs
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-repo-listrecords
+      name: xrpc-com-atproto-repo-listrecords
+      description: REST surface for xrpc-com.atproto.repo.listRecords.
+      operations:
+      - method: GET
+        name: repolistrecords
+        description: Bluesky List a range of records in a repository, matching a specific collection.
+        call: bluesky-repository.repolistrecords
+        with:
+          repo: rest.repo
+          collection: rest.collection
+          limit: rest.limit
+          cursor: rest.cursor
+          reverse: rest.reverse
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-repo-putrecord
+      name: xrpc-com-atproto-repo-putrecord
+      description: REST surface for xrpc-com.atproto.repo.putRecord.
+      operations:
+      - method: POST
+        name: repoputrecord
+        description: Bluesky Write a repository record, creating or updating it as needed.
+        call: bluesky-repository.repoputrecord
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/com-atproto-repo-uploadblob
+      name: xrpc-com-atproto-repo-uploadblob
+      description: REST surface for xrpc-com.atproto.repo.uploadBlob.
+      operations:
+      - method: POST
+        name: repouploadblob
+        description: Bluesky Upload a new blob, to be referenced from a repository record.
+        call: bluesky-repository.repouploadblob
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bluesky-repository-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bluesky Social API — Repository. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: bluesky-apply-batch-transaction-repository
+      description: Bluesky Apply a batch transaction of repository creates, updates, and deletes.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-repository.repoapplywrites
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-create-single-new-repository
+      description: Bluesky Create a single new repository record.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-repository.repocreaterecord
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-delete-repository-record-ensure
+      description: Bluesky Delete a repository record, or ensure it doesn't exist.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-repository.repodeleterecord
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-get-information-about-account
+      description: Bluesky Get information about an account and repository, including the list of collections.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-repository.repodescriberepo
+      with:
+        repo: tools.repo
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-get-single-record-repository
+      description: Bluesky Get a single record from a repository.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-repository.repogetrecord
+      with:
+        repo: tools.repo
+        collection: tools.collection
+        rkey: tools.rkey
+        cid: tools.cid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-import-repo-form-car
+      description: Bluesky Import a repo in the form of a CAR file.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-repository.repoimportrepo
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-returns-list-missing-blobs
+      description: Bluesky Returns a list of missing blobs for the requesting account.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-repository.repolistmissingblobs
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-list-range-records-repository
+      description: Bluesky List a range of records in a repository, matching a specific collection.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-repository.repolistrecords
+      with:
+        repo: tools.repo
+        collection: tools.collection
+        limit: tools.limit
+        cursor: tools.cursor
+        reverse: tools.reverse
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-write-repository-record-creating
+      description: Bluesky Write a repository record, creating or updating it as needed.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-repository.repoputrecord
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-upload-new-blob-be
+      description: Bluesky Upload a new blob, to be referenced from a repository record.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-repository.repouploadblob
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bluesky Social API — Chat Actors
+  description: 'Bluesky Social API — Chat Actors. 2 operations. Lead operation: Bluesky Operation. Self-contained Naftiko
+    capability covering one Bluesky business surface.'
+  tags:
+  - Bluesky
+  - Chat Actors
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLUESKY_API_KEY: BLUESKY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bluesky-chat-actors
+    baseUri: https://bsky.social/xrpc
+    description: Bluesky Social API — Chat Actors business capability. Self-contained, no shared references.
+    resources:
+    - name: xrpc-chat.bsky.actor.deleteAccount
+      path: /xrpc/chat.bsky.actor.deleteAccount
+      operations:
+      - name: chatactordeleteaccount
+        method: POST
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: xrpc-chat.bsky.actor.exportAccountData
+      path: /xrpc/chat.bsky.actor.exportAccountData
+      operations:
+      - name: chatactorexportaccountdata
+        method: GET
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.BLUESKY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bluesky-chat-actors-rest
+    port: 8080
+    description: REST adapter for Bluesky Social API — Chat Actors. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/xrpc/chat-bsky-actor-deleteaccount
+      name: xrpc-chat-bsky-actor-deleteaccount
+      description: REST surface for xrpc-chat.bsky.actor.deleteAccount.
+      operations:
+      - method: POST
+        name: chatactordeleteaccount
+        description: Bluesky Operation
+        call: bluesky-chat-actors.chatactordeleteaccount
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-actor-exportaccountdata
+      name: xrpc-chat-bsky-actor-exportaccountdata
+      description: REST surface for xrpc-chat.bsky.actor.exportAccountData.
+      operations:
+      - method: GET
+        name: chatactorexportaccountdata
+        description: Bluesky Operation
+        call: bluesky-chat-actors.chatactorexportaccountdata
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bluesky-chat-actors-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bluesky Social API — Chat Actors. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: bluesky-operation
+      description: Bluesky Operation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-chat-actors.chatactordeleteaccount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-2
+      description: Bluesky Operation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-chat-actors.chatactorexportaccountdata
+      outputParameters:
+      - type: object
+        mapping: $.

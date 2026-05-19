@@ -1,0 +1,550 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bluesky Social API — Conversations
+  description: 'Bluesky Social API — Conversations. 12 operations. Lead operation: Bluesky Operation. Self-contained Naftiko
+    capability covering one Bluesky business surface.'
+  tags:
+  - Bluesky
+  - Conversations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLUESKY_API_KEY: BLUESKY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bluesky-conversations
+    baseUri: https://bsky.social/xrpc
+    description: Bluesky Social API — Conversations business capability. Self-contained, no shared references.
+    resources:
+    - name: xrpc-chat.bsky.convo.deleteMessageForSelf
+      path: /xrpc/chat.bsky.convo.deleteMessageForSelf
+      operations:
+      - name: chatconvodeletemessageforself
+        method: POST
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-chat.bsky.convo.getConvo
+      path: /xrpc/chat.bsky.convo.getConvo
+      operations:
+      - name: chatconvogetconvo
+        method: GET
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: convoId
+          in: query
+          type: string
+          required: true
+    - name: xrpc-chat.bsky.convo.getConvoForMembers
+      path: /xrpc/chat.bsky.convo.getConvoForMembers
+      operations:
+      - name: chatconvogetconvoformembers
+        method: GET
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: members
+          in: query
+          type: array
+          required: true
+    - name: xrpc-chat.bsky.convo.getLog
+      path: /xrpc/chat.bsky.convo.getLog
+      operations:
+      - name: chatconvogetlog
+        method: GET
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-chat.bsky.convo.getMessages
+      path: /xrpc/chat.bsky.convo.getMessages
+      operations:
+      - name: chatconvogetmessages
+        method: GET
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: convoId
+          in: query
+          type: string
+          required: true
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-chat.bsky.convo.leaveConvo
+      path: /xrpc/chat.bsky.convo.leaveConvo
+      operations:
+      - name: chatconvoleaveconvo
+        method: POST
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-chat.bsky.convo.listConvos
+      path: /xrpc/chat.bsky.convo.listConvos
+      operations:
+      - name: chatconvolistconvos
+        method: GET
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: cursor
+          in: query
+          type: string
+    - name: xrpc-chat.bsky.convo.muteConvo
+      path: /xrpc/chat.bsky.convo.muteConvo
+      operations:
+      - name: chatconvomuteconvo
+        method: POST
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-chat.bsky.convo.sendMessage
+      path: /xrpc/chat.bsky.convo.sendMessage
+      operations:
+      - name: chatconvosendmessage
+        method: POST
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-chat.bsky.convo.sendMessageBatch
+      path: /xrpc/chat.bsky.convo.sendMessageBatch
+      operations:
+      - name: chatconvosendmessagebatch
+        method: POST
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-chat.bsky.convo.unmuteConvo
+      path: /xrpc/chat.bsky.convo.unmuteConvo
+      operations:
+      - name: chatconvounmuteconvo
+        method: POST
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: xrpc-chat.bsky.convo.updateRead
+      path: /xrpc/chat.bsky.convo.updateRead
+      operations:
+      - name: chatconvoupdateread
+        method: POST
+        description: Bluesky Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BLUESKY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bluesky-conversations-rest
+    port: 8080
+    description: REST adapter for Bluesky Social API — Conversations. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/xrpc/chat-bsky-convo-deletemessageforself
+      name: xrpc-chat-bsky-convo-deletemessageforself
+      description: REST surface for xrpc-chat.bsky.convo.deleteMessageForSelf.
+      operations:
+      - method: POST
+        name: chatconvodeletemessageforself
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvodeletemessageforself
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-convo-getconvo
+      name: xrpc-chat-bsky-convo-getconvo
+      description: REST surface for xrpc-chat.bsky.convo.getConvo.
+      operations:
+      - method: GET
+        name: chatconvogetconvo
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvogetconvo
+        with:
+          convoId: rest.convoId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-convo-getconvoformembers
+      name: xrpc-chat-bsky-convo-getconvoformembers
+      description: REST surface for xrpc-chat.bsky.convo.getConvoForMembers.
+      operations:
+      - method: GET
+        name: chatconvogetconvoformembers
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvogetconvoformembers
+        with:
+          members: rest.members
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-convo-getlog
+      name: xrpc-chat-bsky-convo-getlog
+      description: REST surface for xrpc-chat.bsky.convo.getLog.
+      operations:
+      - method: GET
+        name: chatconvogetlog
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvogetlog
+        with:
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-convo-getmessages
+      name: xrpc-chat-bsky-convo-getmessages
+      description: REST surface for xrpc-chat.bsky.convo.getMessages.
+      operations:
+      - method: GET
+        name: chatconvogetmessages
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvogetmessages
+        with:
+          convoId: rest.convoId
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-convo-leaveconvo
+      name: xrpc-chat-bsky-convo-leaveconvo
+      description: REST surface for xrpc-chat.bsky.convo.leaveConvo.
+      operations:
+      - method: POST
+        name: chatconvoleaveconvo
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvoleaveconvo
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-convo-listconvos
+      name: xrpc-chat-bsky-convo-listconvos
+      description: REST surface for xrpc-chat.bsky.convo.listConvos.
+      operations:
+      - method: GET
+        name: chatconvolistconvos
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvolistconvos
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-convo-muteconvo
+      name: xrpc-chat-bsky-convo-muteconvo
+      description: REST surface for xrpc-chat.bsky.convo.muteConvo.
+      operations:
+      - method: POST
+        name: chatconvomuteconvo
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvomuteconvo
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-convo-sendmessage
+      name: xrpc-chat-bsky-convo-sendmessage
+      description: REST surface for xrpc-chat.bsky.convo.sendMessage.
+      operations:
+      - method: POST
+        name: chatconvosendmessage
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvosendmessage
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-convo-sendmessagebatch
+      name: xrpc-chat-bsky-convo-sendmessagebatch
+      description: REST surface for xrpc-chat.bsky.convo.sendMessageBatch.
+      operations:
+      - method: POST
+        name: chatconvosendmessagebatch
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvosendmessagebatch
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-convo-unmuteconvo
+      name: xrpc-chat-bsky-convo-unmuteconvo
+      description: REST surface for xrpc-chat.bsky.convo.unmuteConvo.
+      operations:
+      - method: POST
+        name: chatconvounmuteconvo
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvounmuteconvo
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/xrpc/chat-bsky-convo-updateread
+      name: xrpc-chat-bsky-convo-updateread
+      description: REST surface for xrpc-chat.bsky.convo.updateRead.
+      operations:
+      - method: POST
+        name: chatconvoupdateread
+        description: Bluesky Operation
+        call: bluesky-conversations.chatconvoupdateread
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bluesky-conversations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bluesky Social API — Conversations. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: bluesky-operation
+      description: Bluesky Operation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-conversations.chatconvodeletemessageforself
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-2
+      description: Bluesky Operation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-conversations.chatconvogetconvo
+      with:
+        convoId: tools.convoId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-3
+      description: Bluesky Operation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-conversations.chatconvogetconvoformembers
+      with:
+        members: tools.members
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-4
+      description: Bluesky Operation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-conversations.chatconvogetlog
+      with:
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-5
+      description: Bluesky Operation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-conversations.chatconvogetmessages
+      with:
+        convoId: tools.convoId
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-6
+      description: Bluesky Operation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-conversations.chatconvoleaveconvo
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-7
+      description: Bluesky Operation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bluesky-conversations.chatconvolistconvos
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-8
+      description: Bluesky Operation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-conversations.chatconvomuteconvo
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-9
+      description: Bluesky Operation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-conversations.chatconvosendmessage
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-10
+      description: Bluesky Operation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-conversations.chatconvosendmessagebatch
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-11
+      description: Bluesky Operation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-conversations.chatconvounmuteconvo
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bluesky-operation-12
+      description: Bluesky Operation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bluesky-conversations.chatconvoupdateread
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
