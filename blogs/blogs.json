@@ -2,12 +2,20 @@
   "repo": "bluesky",
   "feeds": [
     {
-      "source": "https://docs.bsky.app/blog",
+      "source": "https://docs.bsky.app/blog/atom.xml",
       "feed_url": "https://docs.bsky.app/blog/atom.xml",
-      "title": "Bluesky Blog",
-      "saved": 14
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://docs.bsky.app/blog",
+      "feed_url": "https://docs.bsky.app/blog/rss.xml",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
     }
   ],
   "post_count": 24,
-  "fetched": "2026-05-17T20:20:35Z"
+  "fetched": "2026-06-01T23:35:02Z"
 }

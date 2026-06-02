@@ -1,0 +1,994 @@
+asyncapi: '2.6.0'
+info:
+  title: Bluesky / AT Protocol Event Streams
+  version: '1.1.0'
+  description: |
+    AsyncAPI definition for the public event streams of the Bluesky network and the
+    underlying AT Protocol.
+
+    Three streams are documented:
+
+    * **`com.atproto.sync.subscribeRepos`** - the primary repository event stream
+      ("firehose"). Binary WebSocket frames carrying two concatenated DAG-CBOR
+      objects (header + payload). Implemented by every PDS and Relay; the public
+      Bluesky relay is reachable at `wss://bsky.network` (legacy) and
+      `wss://relay1.us-east.bsky.network` (Sync 1.1, with `prevData`).
+    * **`com.atproto.sync.subscribeLabels`** - the label / negation stream, served
+      by moderation services. Same binary CBOR frame format as `subscribeRepos`.
+    * **Jetstream** - a simplified JSON projection of the firehose. Plain
+      JSON-text WebSocket frames (optionally zstd-compressed). Operated by
+      Bluesky at `jetstream{1,2}.{us-east,us-west}.bsky.network`.
+
+    Schemas are reproduced verbatim from the upstream AT Protocol lexicons
+    (`com.atproto.sync.subscribeRepos`, `com.atproto.label.subscribeLabels`,
+    `com.atproto.label.defs`) and the `bluesky-social/jetstream` repository.
+  contact:
+    name: Bluesky Social PBC
+    url: https://bsky.social
+    email: support@bsky.app
+  license:
+    name: MIT
+    url: https://github.com/bluesky-social/atproto/blob/main/LICENSE.txt
+  termsOfService: https://bsky.social/about/support/tos
+  x-references:
+    - name: AT Protocol Event Stream specification
+      url: https://atproto.com/specs/event-stream
+    - name: AT Protocol Sync specification
+      url: https://atproto.com/specs/sync
+    - name: Bluesky Firehose advanced guide
+      url: https://docs.bsky.app/docs/advanced-guides/firehose
+    - name: subscribeRepos lexicon
+      url: https://github.com/bluesky-social/atproto/blob/main/lexicons/com/atproto/sync/subscribeRepos.json
+    - name: subscribeLabels lexicon
+      url: https://github.com/bluesky-social/atproto/blob/main/lexicons/com/atproto/label/subscribeLabels.json
+    - name: label defs lexicon
+      url: https://github.com/bluesky-social/atproto/blob/main/lexicons/com/atproto/label/defs.json
+    - name: Jetstream repository
+      url: https://github.com/bluesky-social/jetstream
+
+defaultContentType: application/cbor
+
+servers:
+  relay:
+    url: bsky.network
+    protocol: wss
+    description: |
+      Public Bluesky Relay firehose. Hosts the binary CBOR-framed
+      `com.atproto.sync.subscribeRepos` endpoint. Legacy endpoint; does not
+      emit the Sync 1.1 `prevData` field.
+  relay-sync-1-1:
+    url: relay1.us-east.bsky.network
+    protocol: wss
+    description: |
+      Bluesky Sync 1.1 relay. Same XRPC endpoints as `bsky.network`, but emits
+      the inductive-firehose `prevData` field and `#sync` events.
+  ozone:
+    url: mod.bsky.app
+    protocol: wss
+    description: |
+      Bluesky's Ozone moderation service. Hosts the binary CBOR-framed
+      `com.atproto.label.subscribeLabels` endpoint.
+  jetstream2-us-east:
+    url: jetstream2.us-east.bsky.network
+    protocol: wss
+    description: |
+      Public Jetstream instance (US-East). JSON projection of the firehose.
+  jetstream1-us-east:
+    url: jetstream1.us-east.bsky.network
+    protocol: wss
+    description: Public Jetstream instance (US-East).
+  jetstream1-us-west:
+    url: jetstream1.us-west.bsky.network
+    protocol: wss
+    description: Public Jetstream instance (US-West).
+  jetstream2-us-west:
+    url: jetstream2.us-west.bsky.network
+    protocol: wss
+    description: Public Jetstream instance (US-West).
+
+channels:
+
+  #####################################################################
+  # com.atproto.sync.subscribeRepos
+  #####################################################################
+  xrpc/com.atproto.sync.subscribeRepos:
+    description: |
+      Repository event stream, aka Firehose endpoint. Outputs repo commits with
+      diff data, and identity update events, for all repositories on the
+      current server. Public; no auth. Implemented by PDS and Relay. Frames are
+      binary WebSocket messages consisting of two concatenated DAG-CBOR
+      objects: a header (`{op, t}`) followed by a payload whose shape depends
+      on `t`.
+    servers:
+      - relay
+      - relay-sync-1-1
+    parameters:
+      cursor:
+        description: The last known event seq number to backfill from.
+        schema:
+          type: integer
+          format: int64
+    bindings:
+      ws:
+        method: GET
+        query:
+          type: object
+          properties:
+            cursor:
+              type: integer
+              description: The last known event seq number to backfill from.
+        bindingVersion: '0.1.0'
+    subscribe:
+      operationId: subscribeRepos
+      summary: Subscribe to the repository event stream (firehose).
+      message:
+        oneOf:
+          - $ref: '#/components/messages/RepoCommitFrame'
+          - $ref: '#/components/messages/RepoSyncFrame'
+          - $ref: '#/components/messages/RepoIdentityFrame'
+          - $ref: '#/components/messages/RepoAccountFrame'
+          - $ref: '#/components/messages/RepoHandleFrame'
+          - $ref: '#/components/messages/RepoMigrateFrame'
+          - $ref: '#/components/messages/RepoTombstoneFrame'
+          - $ref: '#/components/messages/RepoInfoFrame'
+          - $ref: '#/components/messages/RepoErrorFrame'
+
+  #####################################################################
+  # com.atproto.label.subscribeLabels
+  #####################################################################
+  xrpc/com.atproto.label.subscribeLabels:
+    description: |
+      Subscribe to stream of labels (and negations). Public endpoint
+      implemented by mod services. Uses the same sequencing scheme as the
+      repository event stream and the same binary CBOR header/payload framing.
+    servers:
+      - ozone
+    parameters:
+      cursor:
+        description: The last known event seq number to backfill from.
+        schema:
+          type: integer
+          format: int64
+    bindings:
+      ws:
+        method: GET
+        query:
+          type: object
+          properties:
+            cursor:
+              type: integer
+        bindingVersion: '0.1.0'
+    subscribe:
+      operationId: subscribeLabels
+      summary: Subscribe to the label/negation stream.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/LabelsFrame'
+          - $ref: '#/components/messages/LabelInfoFrame'
+          - $ref: '#/components/messages/LabelErrorFrame'
+
+  #####################################################################
+  # Jetstream
+  #####################################################################
+  subscribe:
+    description: |
+      Jetstream WebSocket endpoint. Emits a simplified JSON projection of the
+      AT Protocol firehose. Each WebSocket frame is one JSON event object
+      (optionally zstd-compressed if `compress=true` is set on the query).
+    servers:
+      - jetstream2-us-east
+      - jetstream1-us-east
+      - jetstream1-us-west
+      - jetstream2-us-west
+    bindings:
+      ws:
+        method: GET
+        query:
+          type: object
+          properties:
+            wantedCollections:
+              type: array
+              description: |
+                Filter events to only the listed collection NSIDs. Supports
+                NSID prefixes (e.g., `app.bsky.graph.*`). Up to 100 entries.
+              items:
+                type: string
+            wantedDids:
+              type: array
+              description: |
+                Filter events to only the listed repository DIDs. Up to 10,000
+                entries.
+              items:
+                type: string
+                format: did
+            maxMessageSizeBytes:
+              type: integer
+              description: |
+                Maximum payload size, in bytes. Zero (the default) is treated
+                as unlimited; negative values are treated as zero.
+              default: 0
+            cursor:
+              type: integer
+              format: int64
+              description: |
+                Unix microseconds timestamp to begin playback from. If absent
+                or in the future, the stream operates in live-tail mode.
+            compress:
+              type: boolean
+              description: When `true`, frames are zstd-compressed.
+              default: false
+            requireHello:
+              type: boolean
+              description: |
+                When `true`, the server pauses event delivery until the
+                client sends an `options_update` SubscriberSourcedMessage.
+              default: false
+        bindingVersion: '0.1.0'
+    subscribe:
+      operationId: jetstreamSubscribe
+      summary: Subscribe to the Jetstream JSON event stream.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/JetstreamCommitCreate'
+          - $ref: '#/components/messages/JetstreamCommitUpdate'
+          - $ref: '#/components/messages/JetstreamCommitDelete'
+          - $ref: '#/components/messages/JetstreamIdentity'
+          - $ref: '#/components/messages/JetstreamAccount'
+    publish:
+      operationId: jetstreamSubscriberMessage
+      summary: |
+        Send a `SubscriberSourcedMessage` to update subscription options after
+        connecting. Currently supports the `options_update` message.
+      message:
+        $ref: '#/components/messages/JetstreamSubscriberSourcedMessage'
+
+components:
+
+  messages:
+
+    #################################################################
+    # subscribeRepos frames
+    #################################################################
+    RepoCommitFrame:
+      name: RepoCommitFrame
+      title: '#commit'
+      summary: Repository commit event.
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/RepoCommitFrame'
+
+    RepoSyncFrame:
+      name: RepoSyncFrame
+      title: '#sync'
+      summary: |
+        Sync event - asserts current repository state without including diff
+        data on the firehose. Used for recovery / desync resolution.
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/RepoSyncFrame'
+
+    RepoIdentityFrame:
+      name: RepoIdentityFrame
+      title: '#identity'
+      summary: Account identity change event (handle, signing key, or PDS).
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/RepoIdentityFrame'
+
+    RepoAccountFrame:
+      name: RepoAccountFrame
+      title: '#account'
+      summary: Account hosting-status change event.
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/RepoAccountFrame'
+
+    RepoHandleFrame:
+      name: RepoHandleFrame
+      title: '#handle'
+      summary: DEPRECATED - use `#identity` instead. Legacy handle change event.
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/RepoHandleFrame'
+
+    RepoMigrateFrame:
+      name: RepoMigrateFrame
+      title: '#migrate'
+      summary: DEPRECATED - use `#account` instead. Legacy account-migration event.
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/RepoMigrateFrame'
+
+    RepoTombstoneFrame:
+      name: RepoTombstoneFrame
+      title: '#tombstone'
+      summary: DEPRECATED - use `#account` instead. Legacy account-tombstone event.
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/RepoTombstoneFrame'
+
+    RepoInfoFrame:
+      name: RepoInfoFrame
+      title: '#info'
+      summary: |
+        Informational message (not persisted, no `seq`). Currently the only
+        defined name value is `OutdatedCursor`.
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/InfoFrame'
+
+    RepoErrorFrame:
+      name: RepoErrorFrame
+      title: error
+      summary: |
+        Error frame (`op = -1`). Possible `error` values for subscribeRepos:
+        `FutureCursor`, `ConsumerTooSlow`. The connection is closed after this
+        frame is delivered.
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/ErrorFrame'
+
+    #################################################################
+    # subscribeLabels frames
+    #################################################################
+    LabelsFrame:
+      name: LabelsFrame
+      title: '#labels'
+      summary: A batch of labels (and/or negations).
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/LabelsFrame'
+
+    LabelInfoFrame:
+      name: LabelInfoFrame
+      title: '#info'
+      summary: Informational message on the label stream.
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/InfoFrame'
+
+    LabelErrorFrame:
+      name: LabelErrorFrame
+      title: error
+      summary: |
+        Error frame (`op = -1`). Possible `error` values for subscribeLabels:
+        `FutureCursor`.
+      contentType: application/cbor
+      payload:
+        $ref: '#/components/schemas/ErrorFrame'
+
+    #################################################################
+    # Jetstream messages
+    #################################################################
+    JetstreamCommitCreate:
+      name: JetstreamCommitCreate
+      title: commit (create)
+      summary: |
+        Jetstream commit event with `commit.operation = "create"`. Contains
+        the full record JSON.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/JetstreamCommitCreate'
+
+    JetstreamCommitUpdate:
+      name: JetstreamCommitUpdate
+      title: commit (update)
+      summary: |
+        Jetstream commit event with `commit.operation = "update"`. Contains
+        the full record JSON, replacing the previous version.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/JetstreamCommitUpdate'
+
+    JetstreamCommitDelete:
+      name: JetstreamCommitDelete
+      title: commit (delete)
+      summary: |
+        Jetstream commit event with `commit.operation = "delete"`. No record
+        body.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/JetstreamCommitDelete'
+
+    JetstreamIdentity:
+      name: JetstreamIdentity
+      title: identity
+      summary: |
+        Jetstream identity event. Wraps the AT Protocol `#identity` event in
+        a Jetstream envelope.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/JetstreamIdentity'
+
+    JetstreamAccount:
+      name: JetstreamAccount
+      title: account
+      summary: |
+        Jetstream account event. Wraps the AT Protocol `#account` event in a
+        Jetstream envelope.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/JetstreamAccount'
+
+    JetstreamSubscriberSourcedMessage:
+      name: JetstreamSubscriberSourcedMessage
+      title: SubscriberSourcedMessage
+      summary: |
+        JSON message sent from client to Jetstream server after connecting.
+        Currently the only supported `type` is `options_update`.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/JetstreamSubscriberSourcedMessage'
+
+  schemas:
+
+    #################################################################
+    # Shared firehose frame primitives
+    #################################################################
+    FirehoseFrameHeader:
+      type: object
+      description: |
+        DAG-CBOR object that prefixes every WebSocket frame. `op = 1` for
+        regular messages (with `t` set to the short-form type, e.g.
+        `#commit`); `op = -1` for error frames (no `t`).
+      required: [op]
+      properties:
+        op:
+          type: integer
+          enum: [1, -1]
+          description: 1 = regular message; -1 = error frame.
+        t:
+          type: string
+          description: |
+            Short-form lexicon type identifier, e.g. `#commit`, `#identity`,
+            `#account`, `#handle`, `#migrate`, `#tombstone`, `#info`,
+            `#sync`, `#labels`. Required when `op = 1`.
+
+    ErrorFrame:
+      type: object
+      description: |
+        Payload of an error frame. The connection is closed by the server
+        immediately after the frame is sent.
+      required: [error]
+      properties:
+        error:
+          type: string
+          description: Short error name.
+        message:
+          type: string
+          description: Optional human-readable error message.
+
+    InfoFrame:
+      type: object
+      description: |
+        Informational message payload. Not persisted; has no `seq`.
+      required: [name]
+      properties:
+        name:
+          type: string
+          enum: [OutdatedCursor]
+          description: Short info name. Known values - `OutdatedCursor`.
+        message:
+          type: string
+          description: Optional human-readable message.
+
+    #################################################################
+    # com.atproto.sync.subscribeRepos payload schemas
+    #################################################################
+    RepoCommitFrame:
+      type: object
+      description: |
+        `#commit` payload. Represents an update of repository state. Empty
+        commits (no record changes, only `rev`/signature update) are allowed.
+      required:
+        - seq
+        - rebase
+        - tooBig
+        - repo
+        - commit
+        - rev
+        - since
+        - blocks
+        - ops
+        - blobs
+        - time
+      properties:
+        seq:
+          type: integer
+          format: int64
+          description: The stream sequence number of this message.
+        rebase:
+          type: boolean
+          description: DEPRECATED - unused.
+        tooBig:
+          type: boolean
+          description: |
+            DEPRECATED - replaced by `#sync` event and data limits. Indicates
+            this commit contained too many ops or was too large; consumers
+            need a separate fetch to recover.
+        repo:
+          type: string
+          format: did
+          description: |
+            The repo this event comes from. (All other message types use
+            `did` for the same purpose.)
+        commit:
+          type: string
+          format: cid
+          description: Repo commit object CID.
+        rev:
+          type: string
+          format: tid
+          description: |
+            The rev of the emitted commit. Also present inside the commit
+            block in `blocks` (unless `tooBig`).
+        since:
+          type: string
+          format: tid
+          nullable: true
+          description: The rev of the last emitted commit from this repo (if any).
+        blocks:
+          type: string
+          format: byte
+          description: |
+            CAR file (binary) containing relevant blocks as a diff since the
+            previous repo state. The commit block must be the first entry in
+            the CAR header `roots` list. Maximum 2,000,000 bytes.
+          maxLength: 2000000
+        ops:
+          type: array
+          maxItems: 200
+          description: Repo mutation operations included in this commit.
+          items:
+            $ref: '#/components/schemas/RepoOp'
+        blobs:
+          type: array
+          description: |
+            DEPRECATED - will soon always be empty. List of new blob CIDs
+            referenced by records in this commit.
+          items:
+            type: string
+            format: cid
+        prevData:
+          type: string
+          format: cid
+          description: |
+            Root CID of the MST tree for the previous commit (the `since`
+            revision). Required for the Sync 1.1 / "inductive" firehose.
+        time:
+          type: string
+          format: date-time
+          description: Timestamp of when this message was originally broadcast.
+
+    RepoOp:
+      type: object
+      description: A repo operation - a mutation of a single record.
+      required: [action, path, cid]
+      properties:
+        action:
+          type: string
+          enum: [create, update, delete]
+        path:
+          type: string
+          description: '`{collection}/{rkey}` path of the affected record.'
+        cid:
+          type: string
+          format: cid
+          nullable: true
+          description: |
+            For creates and updates, the new record CID. For deletions, null.
+        prev:
+          type: string
+          format: cid
+          description: |
+            For updates and deletes, the previous record CID (required for
+            inductive firehose). For creates, this field is omitted.
+
+    RepoSyncFrame:
+      type: object
+      description: |
+        `#sync` payload. Updates the repo to a new state without including the
+        diff on the firehose. Used to recover from broken commit streams or
+        data-loss incidents.
+      required: [seq, did, blocks, rev, time]
+      properties:
+        seq:
+          type: integer
+          format: int64
+        did:
+          type: string
+          format: did
+          description: |
+            The account this repo event corresponds to. Must match the value
+            inside the commit object.
+        blocks:
+          type: string
+          format: byte
+          description: |
+            CAR file (binary) containing the commit, as a block. CAR header's
+            first root must be the commit block CID. Maximum 10,000 bytes.
+          maxLength: 10000
+        rev:
+          type: string
+          description: |
+            The rev of the commit. Must match the value inside the commit
+            object.
+        time:
+          type: string
+          format: date-time
+
+    RepoIdentityFrame:
+      type: object
+      description: |
+        `#identity` payload. Signals that an account's identity may have
+        changed (handle, signing key, or PDS endpoint). Downstream services
+        should refresh their identity cache.
+      required: [seq, did, time]
+      properties:
+        seq:
+          type: integer
+          format: int64
+        did:
+          type: string
+          format: did
+        time:
+          type: string
+          format: date-time
+        handle:
+          type: string
+          format: handle
+          description: |
+            Current handle for the account, or `handle.invalid` if validation
+            fails. Optional; presence or absence does NOT indicate that the
+            handle itself changed.
+
+    RepoAccountFrame:
+      type: object
+      description: |
+        `#account` payload. Signals an account-status change on the emitting
+        host (PDS or Relay). The status reflects the host that emitted the
+        event, which may differ from the currently active PDS.
+      required: [seq, did, time, active]
+      properties:
+        seq:
+          type: integer
+          format: int64
+        did:
+          type: string
+          format: did
+        time:
+          type: string
+          format: date-time
+        active:
+          type: boolean
+          description: |
+            True if the host can still serve the account's repository.
+        status:
+          type: string
+          enum:
+            - takendown
+            - suspended
+            - deleted
+            - deactivated
+            - desynchronized
+            - throttled
+          description: |
+            If `active = false`, optionally indicates why the account is not
+            active.
+
+    RepoHandleFrame:
+      type: object
+      description: DEPRECATED - use `#identity` instead. Legacy handle event.
+      required: [seq, did, handle, time]
+      properties:
+        seq:
+          type: integer
+          format: int64
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        time:
+          type: string
+          format: date-time
+
+    RepoMigrateFrame:
+      type: object
+      description: DEPRECATED - use `#account` instead. Legacy migrate event.
+      required: [seq, did, migrateTo, time]
+      properties:
+        seq:
+          type: integer
+          format: int64
+        did:
+          type: string
+          format: did
+        migrateTo:
+          type: string
+          nullable: true
+        time:
+          type: string
+          format: date-time
+
+    RepoTombstoneFrame:
+      type: object
+      description: DEPRECATED - use `#account` instead. Legacy tombstone event.
+      required: [seq, did, time]
+      properties:
+        seq:
+          type: integer
+          format: int64
+        did:
+          type: string
+          format: did
+        time:
+          type: string
+          format: date-time
+
+    #################################################################
+    # com.atproto.label.subscribeLabels payload schemas
+    #################################################################
+    LabelsFrame:
+      type: object
+      description: '`#labels` payload - a batch of labels and/or negations.'
+      required: [seq, labels]
+      properties:
+        seq:
+          type: integer
+          format: int64
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+
+    Label:
+      type: object
+      description: |
+        Metadata tag on an atproto resource (eg, repo or record). Defined by
+        `com.atproto.label.defs#label`.
+      required: [src, uri, val, cts]
+      properties:
+        ver:
+          type: integer
+          description: The AT Protocol version of the label object.
+        src:
+          type: string
+          format: did
+          description: DID of the actor who created this label.
+        uri:
+          type: string
+          format: uri
+          description: |
+            AT URI of the record, repository (account), or other resource
+            this label applies to.
+        cid:
+          type: string
+          format: cid
+          description: |
+            Optional; CID of the specific version of the `uri` resource this
+            label applies to.
+        val:
+          type: string
+          maxLength: 128
+          description: Short string name of the value/type of this label.
+        neg:
+          type: boolean
+          description: |
+            If true, this is a negation label that overrides a previous
+            label.
+        cts:
+          type: string
+          format: date-time
+          description: Timestamp when this label was created.
+        exp:
+          type: string
+          format: date-time
+          description: |
+            Timestamp at which this label expires (no longer applies).
+        sig:
+          type: string
+          format: byte
+          description: Signature of the dag-cbor encoded label.
+
+    #################################################################
+    # Jetstream payload schemas
+    #################################################################
+    JetstreamEventBase:
+      type: object
+      description: Fields present on every Jetstream event.
+      required: [did, time_us, kind]
+      properties:
+        did:
+          type: string
+          format: did
+          description: DID of the repository that produced the event.
+        time_us:
+          type: integer
+          format: int64
+          description: |
+            Unix microseconds timestamp at which Jetstream processed the
+            event. Also the cursor value to resume from.
+        kind:
+          type: string
+          enum: [commit, identity, account]
+
+    JetstreamCommitBase:
+      allOf:
+        - $ref: '#/components/schemas/JetstreamEventBase'
+        - type: object
+          required: [commit]
+          properties:
+            kind:
+              type: string
+              enum: [commit]
+
+    JetstreamCommitCreate:
+      allOf:
+        - $ref: '#/components/schemas/JetstreamCommitBase'
+        - type: object
+          properties:
+            commit:
+              type: object
+              required: [rev, operation, collection, rkey, record, cid]
+              properties:
+                rev:
+                  type: string
+                  format: tid
+                operation:
+                  type: string
+                  enum: [create]
+                collection:
+                  type: string
+                  description: NSID of the record's collection.
+                rkey:
+                  type: string
+                  description: Record key.
+                record:
+                  type: object
+                  description: |
+                    Full record contents as JSON. Schema depends on the
+                    `collection` NSID (e.g. `app.bsky.feed.post`,
+                    `app.bsky.feed.like`, `app.bsky.graph.follow`).
+                cid:
+                  type: string
+                  format: cid
+
+    JetstreamCommitUpdate:
+      allOf:
+        - $ref: '#/components/schemas/JetstreamCommitBase'
+        - type: object
+          properties:
+            commit:
+              type: object
+              required: [rev, operation, collection, rkey, record, cid]
+              properties:
+                rev:
+                  type: string
+                  format: tid
+                operation:
+                  type: string
+                  enum: [update]
+                collection:
+                  type: string
+                rkey:
+                  type: string
+                record:
+                  type: object
+                  description: New full record contents, replacing the prior version.
+                cid:
+                  type: string
+                  format: cid
+
+    JetstreamCommitDelete:
+      allOf:
+        - $ref: '#/components/schemas/JetstreamCommitBase'
+        - type: object
+          properties:
+            commit:
+              type: object
+              required: [rev, operation, collection, rkey]
+              properties:
+                rev:
+                  type: string
+                  format: tid
+                operation:
+                  type: string
+                  enum: [delete]
+                collection:
+                  type: string
+                rkey:
+                  type: string
+
+    JetstreamIdentity:
+      allOf:
+        - $ref: '#/components/schemas/JetstreamEventBase'
+        - type: object
+          required: [identity]
+          properties:
+            kind:
+              type: string
+              enum: [identity]
+            identity:
+              type: object
+              description: |
+                Embedded AT Protocol `#identity` event. Fields mirror the
+                `com.atproto.sync.subscribeRepos#identity` payload.
+              required: [did, seq, time]
+              properties:
+                did:
+                  type: string
+                  format: did
+                handle:
+                  type: string
+                  format: handle
+                seq:
+                  type: integer
+                  format: int64
+                time:
+                  type: string
+                  format: date-time
+
+    JetstreamAccount:
+      allOf:
+        - $ref: '#/components/schemas/JetstreamEventBase'
+        - type: object
+          required: [account]
+          properties:
+            kind:
+              type: string
+              enum: [account]
+            account:
+              type: object
+              description: |
+                Embedded AT Protocol `#account` event. Fields mirror the
+                `com.atproto.sync.subscribeRepos#account` payload.
+              required: [active, did, seq, time]
+              properties:
+                active:
+                  type: boolean
+                did:
+                  type: string
+                  format: did
+                seq:
+                  type: integer
+                  format: int64
+                time:
+                  type: string
+                  format: date-time
+                status:
+                  type: string
+                  enum:
+                    - takendown
+                    - suspended
+                    - deleted
+                    - deactivated
+                    - desynchronized
+                    - throttled
+
+    JetstreamSubscriberSourcedMessage:
+      type: object
+      description: |
+        Message sent from a Jetstream client to the server after connecting,
+        used to update subscription options on the fly. Maximum 10 MB per
+        message; payload limits - 100 collections and 10,000 DIDs.
+      required: [type, payload]
+      properties:
+        type:
+          type: string
+          enum: [options_update]
+        payload:
+          type: object
+          properties:
+            wantedCollections:
+              type: array
+              items:
+                type: string
+            wantedDids:
+              type: array
+              items:
+                type: string
+                format: did
+            maxMessageSizeBytes:
+              type: integer

@@ -25,6 +25,8 @@ apis:
     type: RateLimits
   - url: https://docs.bsky.app/docs/advanced-guides/firehose
     type: Firehose
+  - url: asyncapi/bluesky-asyncapi.yml
+    type: AsyncAPI
   - url: https://docs.bsky.app/docs/advanced-guides/moderation
     type: Moderation
   - url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
@@ -101,6 +103,8 @@ apis:
     type: Documentation
   - url: https://github.com/bluesky-social/jetstream
     type: GitHubRepository
+  - url: asyncapi/bluesky-asyncapi.yml
+    type: AsyncAPI
   description: Jetstream is a simplified JSON event stream for the AT Protocol that converts CBOR-encoded MST blocks from
     the firehose into JSON objects over WebSocket connections, making it easier to consume real-time Bluesky network events
     for building feed generators, bots, and search engines.
@@ -202,7 +206,7 @@ common:
     numberOfAPIOptionMethods: 0
   type: Summary
 created: '2024-11-16'
-modified: '2026-05-19'
+modified: '2026-05-29'
 position: Consumer
 description: API for the Bluesky decentralized social network built on the AT Protocol.
 maintainers:
