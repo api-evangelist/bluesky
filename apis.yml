@@ -132,10 +132,10 @@ common:
     type: ProtocolOverview
   - url: https://atproto.com/
     name: AT Protocol Specifications
-    type: Specifications
+    type: Specification
   - url: https://github.com/bluesky-social
     name: Bluesky GitHub Organization
-    type: GitHub Org
+    type: GitHubOrg
   - url: https://github.com/bluesky-social/atproto
     name: AT Protocol Reference Implementation
     type: GitHubRepository
@@ -147,7 +147,7 @@ common:
     type: GitHubRepository
   - url: https://github.com/bluesky-social/atproto/discussions
     name: GitHub Discussions | AT Protocol
-    type: Forum
+    type: Forums
   - data:
       numberOfAPITags: 2
       numberOfAPIPaths: 168
