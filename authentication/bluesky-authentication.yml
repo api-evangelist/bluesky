@@ -1,0 +1,12 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/bluesky-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: Bearer
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/bluesky-openapi.yml
