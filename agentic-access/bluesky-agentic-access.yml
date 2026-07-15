@@ -1,0 +1,2166 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/bluesky-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 168
+  by_action_class:
+    connected: 93
+    acting: 75
+  by_consequence:
+    read: 93
+    write: 61
+    physical: 9
+    safety-critical: 5
+  human_in_the_loop_required: 5
+operations:
+- path: /xrpc/app.bsky.actor.getPreferences
+  method: get
+  operationId: actorGetPreferences
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.actor.getProfile
+  method: get
+  operationId: actorGetProfile
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.actor.getProfiles
+  method: get
+  operationId: actorGetProfiles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.actor.getSuggestions
+  method: get
+  operationId: actorGetSuggestions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.actor.putPreferences
+  method: post
+  operationId: actorPutPreferences
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/app.bsky.actor.searchActors
+  method: get
+  operationId: actorSearchActors
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.actor.searchActorsTypeahead
+  method: get
+  operationId: actorSearchActorsTypeahead
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.describeFeedGenerator
+  method: get
+  operationId: feedDescribeFeedGenerator
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getActorFeeds
+  method: get
+  operationId: feedGetActorFeeds
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getActorLikes
+  method: get
+  operationId: feedGetActorLikes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getAuthorFeed
+  method: get
+  operationId: feedGetAuthorFeed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getFeed
+  method: get
+  operationId: feedGetFeed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getFeedGenerator
+  method: get
+  operationId: feedGetFeedGenerator
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getFeedGenerators
+  method: get
+  operationId: feedGetFeedGenerators
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getFeedSkeleton
+  method: get
+  operationId: feedGetFeedSkeleton
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getLikes
+  method: get
+  operationId: feedGetLikes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getListFeed
+  method: get
+  operationId: feedGetListFeed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getPostThread
+  method: get
+  operationId: feedGetPostThread
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getPosts
+  method: get
+  operationId: feedGetPosts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getQuotes
+  method: get
+  operationId: feedGetQuotes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getRepostedBy
+  method: get
+  operationId: feedGetRepostedBy
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getSuggestedFeeds
+  method: get
+  operationId: feedGetSuggestedFeeds
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.getTimeline
+  method: get
+  operationId: feedGetTimeline
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.searchPosts
+  method: get
+  operationId: feedSearchPosts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.feed.sendInteractions
+  method: post
+  operationId: feedSendInteractions
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/app.bsky.graph.getActorStarterPacks
+  method: get
+  operationId: graphGetActorStarterPacks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getBlocks
+  method: get
+  operationId: graphGetBlocks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getFollowers
+  method: get
+  operationId: graphGetFollowers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getFollows
+  method: get
+  operationId: graphGetFollows
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getKnownFollowers
+  method: get
+  operationId: graphGetKnownFollowers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getList
+  method: get
+  operationId: graphGetList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getListBlocks
+  method: get
+  operationId: graphGetListBlocks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getListMutes
+  method: get
+  operationId: graphGetListMutes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getLists
+  method: get
+  operationId: graphGetLists
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getMutes
+  method: get
+  operationId: graphGetMutes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getRelationships
+  method: get
+  operationId: graphGetRelationships
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getStarterPack
+  method: get
+  operationId: graphGetStarterPack
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getStarterPacks
+  method: get
+  operationId: graphGetStarterPacks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.getSuggestedFollowsByActor
+  method: get
+  operationId: graphGetSuggestedFollowsByActor
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.graph.muteActor
+  method: post
+  operationId: graphMuteActor
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/app.bsky.graph.muteActorList
+  method: post
+  operationId: graphMuteActorList
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/app.bsky.graph.muteThread
+  method: post
+  operationId: graphMuteThread
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/app.bsky.graph.unmuteActor
+  method: post
+  operationId: graphUnmuteActor
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/app.bsky.graph.unmuteActorList
+  method: post
+  operationId: graphUnmuteActorList
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/app.bsky.graph.unmuteThread
+  method: post
+  operationId: graphUnmuteThread
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/app.bsky.labeler.getServices
+  method: get
+  operationId: labelerGetServices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.notification.getUnreadCount
+  method: get
+  operationId: notificationGetUnreadCount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.notification.listNotifications
+  method: get
+  operationId: notificationListNotifications
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.notification.putPreferences
+  method: post
+  operationId: notificationPutPreferences
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/app.bsky.notification.registerPush
+  method: post
+  operationId: notificationRegisterPush
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/app.bsky.notification.updateSeen
+  method: post
+  operationId: notificationUpdateSeen
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/app.bsky.video.getJobStatus
+  method: get
+  operationId: videoGetJobStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.video.getUploadLimits
+  method: get
+  operationId: videoGetUploadLimits
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/app.bsky.video.uploadVideo
+  method: post
+  operationId: videoUploadVideo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/chat.bsky.actor.deleteAccount
+  method: post
+  operationId: chatActorDeleteAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/chat.bsky.actor.exportAccountData
+  method: get
+  operationId: chatActorExportAccountData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/chat.bsky.convo.deleteMessageForSelf
+  method: post
+  operationId: chatConvoDeleteMessageForSelf
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/chat.bsky.convo.getConvo
+  method: get
+  operationId: chatConvoGetConvo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/chat.bsky.convo.getConvoForMembers
+  method: get
+  operationId: chatConvoGetConvoForMembers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/chat.bsky.convo.getLog
+  method: get
+  operationId: chatConvoGetLog
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/chat.bsky.convo.getMessages
+  method: get
+  operationId: chatConvoGetMessages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/chat.bsky.convo.leaveConvo
+  method: post
+  operationId: chatConvoLeaveConvo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/chat.bsky.convo.listConvos
+  method: get
+  operationId: chatConvoListConvos
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/chat.bsky.convo.muteConvo
+  method: post
+  operationId: chatConvoMuteConvo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/chat.bsky.convo.sendMessage
+  method: post
+  operationId: chatConvoSendMessage
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/chat.bsky.convo.sendMessageBatch
+  method: post
+  operationId: chatConvoSendMessageBatch
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/chat.bsky.convo.unmuteConvo
+  method: post
+  operationId: chatConvoUnmuteConvo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/chat.bsky.convo.updateRead
+  method: post
+  operationId: chatConvoUpdateRead
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/chat.bsky.moderation.getActorMetadata
+  method: get
+  operationId: chatModerationGetActorMetadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/chat.bsky.moderation.getMessageContext
+  method: get
+  operationId: chatModerationGetMessageContext
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/chat.bsky.moderation.updateActorAccess
+  method: post
+  operationId: chatModerationUpdateActorAccess
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.admin.deleteAccount
+  method: post
+  operationId: adminDeleteAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.admin.disableAccountInvites
+  method: post
+  operationId: adminDisableAccountInvites
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /xrpc/com.atproto.admin.disableInviteCodes
+  method: post
+  operationId: adminDisableInviteCodes
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /xrpc/com.atproto.admin.enableAccountInvites
+  method: post
+  operationId: adminEnableAccountInvites
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.admin.getAccountInfo
+  method: get
+  operationId: adminGetAccountInfo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.admin.getAccountInfos
+  method: get
+  operationId: adminGetAccountInfos
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.admin.getInviteCodes
+  method: get
+  operationId: adminGetInviteCodes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.admin.getSubjectStatus
+  method: get
+  operationId: adminGetSubjectStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.admin.searchAccounts
+  method: get
+  operationId: adminSearchAccounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.admin.sendEmail
+  method: post
+  operationId: adminSendEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.admin.updateAccountEmail
+  method: post
+  operationId: adminUpdateAccountEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.admin.updateAccountHandle
+  method: post
+  operationId: adminUpdateAccountHandle
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.admin.updateAccountPassword
+  method: post
+  operationId: adminUpdateAccountPassword
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.admin.updateSubjectStatus
+  method: post
+  operationId: adminUpdateSubjectStatus
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.identity.getRecommendedDidCredentials
+  method: get
+  operationId: identityGetRecommendedDidCredentials
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.identity.requestPlcOperationSignature
+  method: post
+  operationId: identityRequestPlcOperationSignature
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.identity.resolveHandle
+  method: get
+  operationId: identityResolveHandle
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.identity.signPlcOperation
+  method: post
+  operationId: identitySignPlcOperation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.identity.submitPlcOperation
+  method: post
+  operationId: identitySubmitPlcOperation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.identity.updateHandle
+  method: post
+  operationId: identityUpdateHandle
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.label.queryLabels
+  method: get
+  operationId: labelQueryLabels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.moderation.createReport
+  method: post
+  operationId: moderationCreateReport
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.repo.applyWrites
+  method: post
+  operationId: repoApplyWrites
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.repo.createRecord
+  method: post
+  operationId: repoCreateRecord
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.repo.deleteRecord
+  method: post
+  operationId: repoDeleteRecord
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.repo.describeRepo
+  method: get
+  operationId: repoDescribeRepo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.repo.getRecord
+  method: get
+  operationId: repoGetRecord
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.repo.importRepo
+  method: post
+  operationId: repoImportRepo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.repo.listMissingBlobs
+  method: get
+  operationId: repoListMissingBlobs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.repo.listRecords
+  method: get
+  operationId: repoListRecords
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.repo.putRecord
+  method: post
+  operationId: repoPutRecord
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.repo.uploadBlob
+  method: post
+  operationId: repoUploadBlob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.activateAccount
+  method: post
+  operationId: serverActivateAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.checkAccountStatus
+  method: get
+  operationId: serverCheckAccountStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.server.confirmEmail
+  method: post
+  operationId: serverConfirmEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.createAccount
+  method: post
+  operationId: serverCreateAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.createAppPassword
+  method: post
+  operationId: serverCreateAppPassword
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.createInviteCode
+  method: post
+  operationId: serverCreateInviteCode
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.createInviteCodes
+  method: post
+  operationId: serverCreateInviteCodes
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.createSession
+  method: post
+  operationId: serverCreateSession
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.deactivateAccount
+  method: post
+  operationId: serverDeactivateAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.deleteAccount
+  method: post
+  operationId: serverDeleteAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.deleteSession
+  method: post
+  operationId: serverDeleteSession
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.describeServer
+  method: get
+  operationId: serverDescribeServer
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.server.getAccountInviteCodes
+  method: get
+  operationId: serverGetAccountInviteCodes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.server.getServiceAuth
+  method: get
+  operationId: serverGetServiceAuth
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.server.getSession
+  method: get
+  operationId: serverGetSession
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.server.listAppPasswords
+  method: get
+  operationId: serverListAppPasswords
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.server.refreshSession
+  method: post
+  operationId: serverRefreshSession
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.requestAccountDelete
+  method: post
+  operationId: serverRequestAccountDelete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.requestEmailConfirmation
+  method: post
+  operationId: serverRequestEmailConfirmation
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.requestEmailUpdate
+  method: post
+  operationId: serverRequestEmailUpdate
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.requestPasswordReset
+  method: post
+  operationId: serverRequestPasswordReset
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /xrpc/com.atproto.server.reserveSigningKey
+  method: post
+  operationId: serverReserveSigningKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.server.resetPassword
+  method: post
+  operationId: serverResetPassword
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /xrpc/com.atproto.server.revokeAppPassword
+  method: post
+  operationId: serverRevokeAppPassword
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /xrpc/com.atproto.server.updateEmail
+  method: post
+  operationId: serverUpdateEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.sync.getBlob
+  method: get
+  operationId: syncGetBlob
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.sync.getBlocks
+  method: get
+  operationId: syncGetBlocks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.sync.getLatestCommit
+  method: get
+  operationId: syncGetLatestCommit
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.sync.getRecord
+  method: get
+  operationId: syncGetRecord
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.sync.getRepo
+  method: get
+  operationId: syncGetRepo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.sync.getRepoStatus
+  method: get
+  operationId: syncGetRepoStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.sync.listBlobs
+  method: get
+  operationId: syncListBlobs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.sync.listRepos
+  method: get
+  operationId: syncListRepos
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/com.atproto.sync.notifyOfUpdate
+  method: post
+  operationId: syncNotifyOfUpdate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/com.atproto.sync.requestCrawl
+  method: post
+  operationId: syncRequestCrawl
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.communication.createTemplate
+  method: post
+  operationId: ozoneCommunicationCreateTemplate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.communication.deleteTemplate
+  method: post
+  operationId: ozoneCommunicationDeleteTemplate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.communication.listTemplates
+  method: get
+  operationId: ozoneCommunicationListTemplates
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.communication.updateTemplate
+  method: post
+  operationId: ozoneCommunicationUpdateTemplate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.moderation.emitEvent
+  method: post
+  operationId: ozoneModerationEmitEvent
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.moderation.getEvent
+  method: get
+  operationId: ozoneModerationGetEvent
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.moderation.getRecord
+  method: get
+  operationId: ozoneModerationGetRecord
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.moderation.getRecords
+  method: get
+  operationId: ozoneModerationGetRecords
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.moderation.getRepo
+  method: get
+  operationId: ozoneModerationGetRepo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.moderation.getRepos
+  method: get
+  operationId: ozoneModerationGetRepos
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.moderation.queryEvents
+  method: get
+  operationId: ozoneModerationQueryEvents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.moderation.queryStatuses
+  method: get
+  operationId: ozoneModerationQueryStatuses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.moderation.searchRepos
+  method: get
+  operationId: ozoneModerationSearchRepos
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.server.getConfig
+  method: get
+  operationId: ozoneServerGetConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.set.addValues
+  method: post
+  operationId: ozoneSetAddValues
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.set.deleteSet
+  method: post
+  operationId: ozoneSetDeleteSet
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.set.deleteValues
+  method: post
+  operationId: ozoneSetDeleteValues
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.set.getValues
+  method: get
+  operationId: ozoneSetGetValues
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.set.querySets
+  method: get
+  operationId: ozoneSetQuerySets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.set.upsertSet
+  method: post
+  operationId: ozoneSetUpsertSet
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.setting.listOptions
+  method: get
+  operationId: ozoneSettingListOptions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.setting.removeOptions
+  method: post
+  operationId: ozoneSettingRemoveOptions
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.setting.upsertOption
+  method: post
+  operationId: ozoneSettingUpsertOption
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.signature.findCorrelation
+  method: get
+  operationId: ozoneSignatureFindCorrelation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.signature.findRelatedAccounts
+  method: get
+  operationId: ozoneSignatureFindRelatedAccounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.signature.searchAccounts
+  method: get
+  operationId: ozoneSignatureSearchAccounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.team.addMember
+  method: post
+  operationId: ozoneTeamAddMember
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.team.deleteMember
+  method: post
+  operationId: ozoneTeamDeleteMember
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /xrpc/tools.ozone.team.listMembers
+  method: get
+  operationId: ozoneTeamListMembers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /xrpc/tools.ozone.team.updateMember
+  method: post
+  operationId: ozoneTeamUpdateMember
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required

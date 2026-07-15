@@ -76,6 +76,8 @@ type: Index
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
+  - type: AgenticAccess
+    url: agentic-access/bluesky-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/bluesky-vulnerability-disclosure.yml
   - type: DomainSecurity
