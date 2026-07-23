@@ -1,0 +1,1453 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Administration API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Administration
+  description: Administrative operations for managing accounts and invites.
+paths:
+  /xrpc/com.atproto.admin.deleteAccount:
+    post:
+      operationId: adminDeleteAccount
+      summary: Bluesky Delete a user account as an administrator.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Delete a user account as an administrator.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - did
+              properties:
+                did:
+                  type: string
+                  format: did
+            examples:
+              AdminDeleteAccountRequestExample:
+                $ref: '#/components/examples/AdminDeleteAccountRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.disableAccountInvites:
+    post:
+      operationId: adminDisableAccountInvites
+      summary: Bluesky Disable an account from receiving new invite codes, but does not invalidate existing codes.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Disable an account from receiving new invite codes, but does not invalidate existing codes.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - account
+              properties:
+                account:
+                  type: string
+                  format: did
+                note:
+                  type: string
+                  description: Optional reason for disabled invites.
+            examples:
+              AdminDisableAccountInvitesRequestExample:
+                $ref: '#/components/examples/AdminDisableAccountInvitesRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.disableInviteCodes:
+    post:
+      operationId: adminDisableInviteCodes
+      summary: Bluesky Disable some set of codes and/or all codes associated with a set of users.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Disable some set of codes and/or all codes associated with a set of users.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                codes:
+                  type: array
+                  items:
+                    type: string
+                accounts:
+                  type: array
+                  items:
+                    type: string
+            examples:
+              AdminDisableInviteCodesRequestExample:
+                $ref: '#/components/examples/AdminDisableInviteCodesRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.enableAccountInvites:
+    post:
+      operationId: adminEnableAccountInvites
+      summary: Bluesky Re-enable an account's ability to receive invite codes.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Re-enable an account''s ability to receive invite codes.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - account
+              properties:
+                account:
+                  type: string
+                  format: did
+                note:
+                  type: string
+                  description: Optional reason for enabled invites.
+            examples:
+              AdminEnableAccountInvitesRequestExample:
+                $ref: '#/components/examples/AdminEnableAccountInvitesRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.getAccountInfo:
+    get:
+      operationId: adminGetAccountInfo
+      summary: Bluesky Get details about an account.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get details about an account.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: did
+        in: query
+        required: true
+        schema:
+          type: string
+          format: did
+        example: did:plc:example123abc
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComAtprotoAdminDefsAccountView'
+              examples:
+                AdminGetAccountInfoResponse200Example:
+                  $ref: '#/components/examples/AdminGetAccountInfoResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.getAccountInfos:
+    get:
+      operationId: adminGetAccountInfos
+      summary: Bluesky Get details about some accounts.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get details about some accounts.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: dids
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+            format: did
+        example:
+        - did:plc:example123abc
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - infos
+                properties:
+                  infos:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComAtprotoAdminDefsAccountView'
+              examples:
+                AdminGetAccountInfosResponse200Example:
+                  $ref: '#/components/examples/AdminGetAccountInfosResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.getInviteCodes:
+    get:
+      operationId: adminGetInviteCodes
+      summary: Bluesky Get an admin view of invite codes.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get an admin view of invite codes.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+          default: recent
+          enum:
+          - recent
+          - usage
+        example: recent
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 500
+          default: 100
+        example: 100
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - codes
+                properties:
+                  cursor:
+                    type: string
+                  codes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
+              examples:
+                AdminGetInviteCodesResponse200Example:
+                  $ref: '#/components/examples/AdminGetInviteCodesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.getSubjectStatus:
+    get:
+      operationId: adminGetSubjectStatus
+      summary: Bluesky Get the service-specific admin status of a subject (account, record, or blob).
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get the service-specific admin status of a subject (account, record, or blob).'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: did
+        in: query
+        required: false
+        schema:
+          type: string
+          format: did
+        example: did:plc:example123abc
+      - name: uri
+        in: query
+        required: false
+        schema:
+          type: string
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      - name: blob
+        in: query
+        required: false
+        schema:
+          type: string
+          format: cid
+        example: bafyreiabc123example
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - subject
+                properties:
+                  subject:
+                    oneOf:
+                    - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoRef'
+                    - $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
+                    - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoBlobRef'
+                  takedown:
+                    $ref: '#/components/schemas/ComAtprotoAdminDefsStatusAttr'
+                  deactivated:
+                    $ref: '#/components/schemas/ComAtprotoAdminDefsStatusAttr'
+              examples:
+                AdminGetSubjectStatusResponse200Example:
+                  $ref: '#/components/examples/AdminGetSubjectStatusResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.searchAccounts:
+    get:
+      operationId: adminSearchAccounts
+      summary: Bluesky Get list of accounts that matches your search query.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get list of accounts that matches your search query.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: email
+        in: query
+        required: false
+        schema:
+          type: string
+        example: user@example.com
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - accounts
+                properties:
+                  cursor:
+                    type: string
+                  accounts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComAtprotoAdminDefsAccountView'
+              examples:
+                AdminSearchAccountsResponse200Example:
+                  $ref: '#/components/examples/AdminSearchAccountsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.sendEmail:
+    post:
+      operationId: adminSendEmail
+      summary: Bluesky Send email to a user's account email address.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Send email to a user''s account email address.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - recipientDid
+              - content
+              - senderDid
+              properties:
+                recipientDid:
+                  type: string
+                  format: did
+                content:
+                  type: string
+                subject:
+                  type: string
+                senderDid:
+                  type: string
+                  format: did
+                comment:
+                  type: string
+                  description: Additional comment by the sender that won't be used in the email itself but helpful to provide more context for moderators/reviewers
+            examples:
+              AdminSendEmailRequestExample:
+                $ref: '#/components/examples/AdminSendEmailRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - sent
+                properties:
+                  sent:
+                    type: boolean
+              examples:
+                AdminSendEmailResponse200Example:
+                  $ref: '#/components/examples/AdminSendEmailResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.updateAccountEmail:
+    post:
+      operationId: adminUpdateAccountEmail
+      summary: Bluesky Administrative action to update an account's email.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Administrative action to update an account''s email.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - account
+              - email
+              properties:
+                account:
+                  type: string
+                  description: The handle or DID of the repo.
+                  format: at-identifier
+                email:
+                  type: string
+            examples:
+              AdminUpdateAccountEmailRequestExample:
+                $ref: '#/components/examples/AdminUpdateAccountEmailRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.updateAccountHandle:
+    post:
+      operationId: adminUpdateAccountHandle
+      summary: Bluesky Administrative action to update an account's handle.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Administrative action to update an account''s handle.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - did
+              - handle
+              properties:
+                did:
+                  type: string
+                  format: did
+                handle:
+                  type: string
+                  format: handle
+            examples:
+              AdminUpdateAccountHandleRequestExample:
+                $ref: '#/components/examples/AdminUpdateAccountHandleRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.updateAccountPassword:
+    post:
+      operationId: adminUpdateAccountPassword
+      summary: Bluesky Update the password for a user account as an administrator.
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Update the password for a user account as an administrator.'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - did
+              - password
+              properties:
+                did:
+                  type: string
+                  format: did
+                password:
+                  type: string
+            examples:
+              AdminUpdateAccountPasswordRequestExample:
+                $ref: '#/components/examples/AdminUpdateAccountPasswordRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.admin.updateSubjectStatus:
+    post:
+      operationId: adminUpdateSubjectStatus
+      summary: Bluesky Update the service-specific admin status of a subject (account, record, or blob).
+      description: '*This endpoint is part of the atproto PDS management APIs. Requests usually require admin authentication and are made directly to the PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Update the service-specific admin status of a subject (account, record, or blob).'
+      tags:
+      - Administration
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - subject
+              properties:
+                subject:
+                  oneOf:
+                  - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoRef'
+                  - $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
+                  - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoBlobRef'
+                takedown:
+                  $ref: '#/components/schemas/ComAtprotoAdminDefsStatusAttr'
+                deactivated:
+                  $ref: '#/components/schemas/ComAtprotoAdminDefsStatusAttr'
+            examples:
+              AdminUpdateSubjectStatusRequestExample:
+                $ref: '#/components/examples/AdminUpdateSubjectStatusRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - subject
+                properties:
+                  subject:
+                    oneOf:
+                    - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoRef'
+                    - $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
+                    - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoBlobRef'
+                  takedown:
+                    $ref: '#/components/schemas/ComAtprotoAdminDefsStatusAttr'
+              examples:
+                AdminUpdateSubjectStatusResponse200Example:
+                  $ref: '#/components/examples/AdminUpdateSubjectStatusResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  schemas:
+    ComAtprotoAdminDefsAccountView:
+      type: object
+      required:
+      - did
+      - handle
+      - indexedAt
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        email:
+          type: string
+        relatedRecords:
+          type: array
+          items: {}
+        indexedAt:
+          type: string
+          format: date-time
+        invitedBy:
+          $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
+        invites:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
+        invitesDisabled:
+          type: boolean
+        emailConfirmedAt:
+          type: string
+          format: date-time
+        inviteNote:
+          type: string
+        deactivatedAt:
+          type: string
+          format: date-time
+        threatSignatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoAdminDefsThreatSignature'
+    ComAtprotoAdminDefsRepoBlobRef:
+      type: object
+      required:
+      - did
+      - cid
+      properties:
+        did:
+          type: string
+          format: did
+        cid:
+          type: string
+          format: cid
+        recordUri:
+          type: string
+          format: at-uri
+    ComAtprotoRepoStrongRef:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+    ComAtprotoServerDefsInviteCode:
+      type: object
+      required:
+      - code
+      - available
+      - disabled
+      - forAccount
+      - createdBy
+      - createdAt
+      - uses
+      properties:
+        code:
+          type: string
+        available:
+          type: integer
+        disabled:
+          type: boolean
+        forAccount:
+          type: string
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        uses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoServerDefsInviteCodeUse'
+    ComAtprotoAdminDefsRepoRef:
+      type: object
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+    ComAtprotoAdminDefsThreatSignature:
+      type: object
+      required:
+      - property
+      - value
+      properties:
+        property:
+          type: string
+        value:
+          type: string
+    ComAtprotoServerDefsInviteCodeUse:
+      type: object
+      required:
+      - usedBy
+      - usedAt
+      properties:
+        usedBy:
+          type: string
+          format: did
+        usedAt:
+          type: string
+          format: date-time
+    ComAtprotoAdminDefsStatusAttr:
+      type: object
+      required:
+      - applied
+      properties:
+        applied:
+          type: boolean
+        ref:
+          type: string
+  examples:
+    AdminUpdateAccountEmailRequestExample:
+      summary: Example request for adminUpdateAccountEmail
+      value:
+        account: user.bsky.social
+        email: user@example.com
+    AdminGetSubjectStatusResponse200Example:
+      summary: Successful response for adminGetSubjectStatus
+      value:
+        subject:
+          did: did:plc:example123abc
+        takedown:
+          applied: true
+          ref: example-ref
+        deactivated:
+          applied: true
+          ref: example-ref
+    AdminUpdateSubjectStatusRequestExample:
+      summary: Example request for adminUpdateSubjectStatus
+      value:
+        subject:
+          did: did:plc:example123abc
+        takedown:
+          applied: true
+          ref: example-ref
+        deactivated:
+          applied: true
+          ref: example-ref
+    AdminDisableAccountInvitesRequestExample:
+      summary: Example request for adminDisableAccountInvites
+      value:
+        account: did:plc:example123abc
+        note: example-note
+    AdminEnableAccountInvitesRequestExample:
+      summary: Example request for adminEnableAccountInvites
+      value:
+        account: did:plc:example123abc
+        note: example-note
+    AdminSearchAccountsResponse200Example:
+      summary: Successful response for adminSearchAccounts
+      value:
+        accounts:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          email: user@example.com
+          relatedRecords: []
+          invitedBy:
+            code: example-code
+            available: 50
+            disabled: true
+            forAccount: example-forAccount
+            createdBy: example-createdBy
+            createdAt: '2024-01-15T12:00:00.000Z'
+            uses: []
+          invites:
+          - code: {}
+            available: {}
+            disabled: {}
+            forAccount: {}
+            createdBy: {}
+            createdAt: {}
+            uses: {}
+          invitesDisabled: true
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    AdminUpdateAccountPasswordRequestExample:
+      summary: Example request for adminUpdateAccountPassword
+      value:
+        did: did:plc:example123abc
+        password: example-password
+    AdminDisableInviteCodesRequestExample:
+      summary: Example request for adminDisableInviteCodes
+      value:
+        codes:
+        - example-codes
+        accounts:
+        - example-accounts
+    AdminSendEmailRequestExample:
+      summary: Example request for adminSendEmail
+      value:
+        recipientDid: did:plc:example123abc
+        content: example-content
+        senderDid: did:plc:example123abc
+        subject: at://did:plc:example123/app.bsky.feed.post/abc123
+        comment: example-comment
+    AdminDeleteAccountRequestExample:
+      summary: Example request for adminDeleteAccount
+      value:
+        did: did:plc:example123abc
+    AdminGetAccountInfosResponse200Example:
+      summary: Successful response for adminGetAccountInfos
+      value:
+        infos:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          email: user@example.com
+          relatedRecords: []
+          invitedBy:
+            code: example-code
+            available: 50
+            disabled: true
+            forAccount: example-forAccount
+            createdBy: example-createdBy
+            createdAt: '2024-01-15T12:00:00.000Z'
+            uses: []
+          invites:
+          - code: {}
+            available: {}
+            disabled: {}
+            forAccount: {}
+            createdBy: {}
+            createdAt: {}
+            uses: {}
+          invitesDisabled: true
+    AdminGetAccountInfoResponse200Example:
+      summary: Successful response for adminGetAccountInfo
+      value:
+        did: did:plc:example123abc
+        handle: user.bsky.social
+        indexedAt: '2024-01-15T12:00:00.000Z'
+        email: user@example.com
+        relatedRecords: []
+        invitedBy:
+          code: example-code
+          available: 50
+          disabled: true
+          forAccount: example-forAccount
+          createdBy: example-createdBy
+          createdAt: '2024-01-15T12:00:00.000Z'
+          uses:
+          - usedBy: {}
+            usedAt: {}
+        invites:
+        - code: example-code
+          available: 50
+          disabled: true
+          forAccount: example-forAccount
+          createdBy: example-createdBy
+          createdAt: '2024-01-15T12:00:00.000Z'
+          uses: []
+        invitesDisabled: true
+    AdminUpdateSubjectStatusResponse200Example:
+      summary: Successful response for adminUpdateSubjectStatus
+      value:
+        subject:
+          did: did:plc:example123abc
+        takedown:
+          applied: true
+          ref: example-ref
+    AdminUpdateAccountHandleRequestExample:
+      summary: Example request for adminUpdateAccountHandle
+      value:
+        did: did:plc:example123abc
+        handle: user.bsky.social
+    AdminSendEmailResponse200Example:
+      summary: Successful response for adminSendEmail
+      value:
+        sent: true
+    AdminGetInviteCodesResponse200Example:
+      summary: Successful response for adminGetInviteCodes
+      value:
+        codes:
+        - code: example-code
+          available: 50
+          disabled: true
+          forAccount: example-forAccount
+          createdBy: example-createdBy
+          createdAt: '2024-01-15T12:00:00.000Z'
+          uses:
+          - usedBy: {}
+            usedAt: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

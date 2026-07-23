@@ -1,0 +1,206 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Moderation API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Moderation
+  description: Operations for content moderation reporting.
+paths:
+  /xrpc/com.atproto.moderation.createReport:
+    post:
+      operationId: moderationCreateReport
+      summary: Bluesky Submit a moderation report regarding an atproto account or record.
+      description: '*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Submit a moderation report regarding an atproto account or record. Implemented by moderation services (with PDS proxying), and requires auth.'
+      tags:
+      - Moderation
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - reasonType
+              - subject
+              properties:
+                reasonType:
+                  $ref: '#/components/schemas/ComAtprotoModerationDefsReasonType'
+                reason:
+                  type: string
+                  description: Additional context about the content and violation.
+                  maxLength: 20000
+                subject:
+                  oneOf:
+                  - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoRef'
+                  - $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
+            examples:
+              ModerationCreateReportRequestExample:
+                $ref: '#/components/examples/ModerationCreateReportRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - id
+                - reasonType
+                - subject
+                - reportedBy
+                - createdAt
+                properties:
+                  id:
+                    type: integer
+                  reasonType:
+                    $ref: '#/components/schemas/ComAtprotoModerationDefsReasonType'
+                  reason:
+                    type: string
+                    maxLength: 20000
+                  subject:
+                    oneOf:
+                    - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoRef'
+                    - $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
+                  reportedBy:
+                    type: string
+                    format: did
+                  createdAt:
+                    type: string
+                    format: date-time
+              examples:
+                ModerationCreateReportResponse200Example:
+                  $ref: '#/components/examples/ModerationCreateReportResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  schemas:
+    ComAtprotoModerationDefsReasonRude:
+      type: string
+      format: token
+      description: Rude, harassing, explicit, or otherwise unwelcoming behavior
+    ComAtprotoModerationDefsReasonSpam:
+      type: string
+      format: token
+      description: 'Spam: frequent unwanted promotion, replies, mentions'
+    ComAtprotoRepoStrongRef:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+    ComAtprotoModerationDefsReasonMisleading:
+      type: string
+      format: token
+      description: Misleading identity, affiliation, or content
+    ComAtprotoAdminDefsRepoRef:
+      type: object
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+    ComAtprotoModerationDefsReasonOther:
+      type: string
+      format: token
+      description: 'Other: reports not falling under another report category'
+    ComAtprotoModerationDefsReasonSexual:
+      type: string
+      format: token
+      description: Unwanted or mislabeled sexual content
+    ComAtprotoModerationDefsReasonViolation:
+      type: string
+      format: token
+      description: Direct violation of server rules, laws, terms of service
+    ComAtprotoModerationDefsReasonAppeal:
+      type: string
+      format: token
+      description: 'Appeal: appeal a previously taken moderation action'
+    ComAtprotoModerationDefsReasonType:
+      oneOf:
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSpam'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonViolation'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonMisleading'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSexual'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonRude'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonOther'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonAppeal'
+  examples:
+    ModerationCreateReportResponse200Example:
+      summary: Successful response for moderationCreateReport
+      value:
+        id: 50
+        reasonType: example-token
+        subject:
+          did: did:plc:example123abc
+        reportedBy: did:plc:example123abc
+        createdAt: '2024-01-15T12:00:00.000Z'
+        reason: Example reason
+    ModerationCreateReportRequestExample:
+      summary: Example request for moderationCreateReport
+      value:
+        reasonType: example-token
+        subject:
+          did: did:plc:example123abc
+        reason: Example reason
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

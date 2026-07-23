@@ -1,0 +1,406 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Ozone Settings API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Ozone Settings
+  description: Ozone settings management operations.
+paths:
+  /xrpc/tools.ozone.setting.listOptions:
+    get:
+      operationId: ozoneSettingListOptions
+      summary: Bluesky List settings with optional filtering
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        List settings with optional filtering'
+      tags:
+      - Ozone Settings
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      - name: scope
+        in: query
+        required: false
+        schema:
+          type: string
+          default: instance
+          enum:
+          - instance
+          - personal
+        example: instance
+      - name: prefix
+        in: query
+        description: Filter keys by prefix
+        required: false
+        schema:
+          type: string
+          description: Filter keys by prefix
+        example: example-prefix
+      - name: keys
+        in: query
+        description: Filter for only the specified keys. Ignored if prefix is provided
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: nsid
+          maxItems: 100
+        example:
+        - app.bsky.feed.post
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - options
+                properties:
+                  cursor:
+                    type: string
+                  options:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ToolsOzoneSettingDefsOption'
+              examples:
+                OzoneSettingListOptionsResponse200Example:
+                  $ref: '#/components/examples/OzoneSettingListOptionsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.setting.removeOptions:
+    post:
+      operationId: ozoneSettingRemoveOptions
+      summary: Bluesky Delete settings by key
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Delete settings by key'
+      tags:
+      - Ozone Settings
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - keys
+              - scope
+              properties:
+                keys:
+                  type: array
+                  items:
+                    type: string
+                    format: nsid
+                  maxItems: 200
+                scope:
+                  type: string
+                  enum:
+                  - instance
+                  - personal
+            examples:
+              OzoneSettingRemoveOptionsRequestExample:
+                $ref: '#/components/examples/OzoneSettingRemoveOptionsRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.setting.upsertOption:
+    post:
+      operationId: ozoneSettingUpsertOption
+      summary: Bluesky Create or update setting option
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Create or update setting option'
+      tags:
+      - Ozone Settings
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - key
+              - scope
+              - value
+              properties:
+                key:
+                  type: string
+                  format: nsid
+                scope:
+                  type: string
+                  enum:
+                  - instance
+                  - personal
+                value: {}
+                description:
+                  type: string
+                  maxLength: 2000
+                managerRole:
+                  type: string
+                  enum:
+                  - tools.ozone.team.defs#roleModerator
+                  - tools.ozone.team.defs#roleTriage
+                  - tools.ozone.team.defs#roleAdmin
+            examples:
+              OzoneSettingUpsertOptionRequestExample:
+                $ref: '#/components/examples/OzoneSettingUpsertOptionRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - option
+                properties:
+                  option:
+                    $ref: '#/components/schemas/ToolsOzoneSettingDefsOption'
+              examples:
+                OzoneSettingUpsertOptionResponse200Example:
+                  $ref: '#/components/examples/OzoneSettingUpsertOptionResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  examples:
+    OzoneSettingRemoveOptionsRequestExample:
+      summary: Example request for ozoneSettingRemoveOptions
+      value:
+        keys:
+        - app.bsky.feed.post
+        scope: instance
+    OzoneSettingUpsertOptionRequestExample:
+      summary: Example request for ozoneSettingUpsertOption
+      value:
+        key: app.bsky.feed.post
+        scope: instance
+        value: {}
+        description: This is an example description.
+        managerRole: tools.ozone.team.defs#roleModerator
+    OzoneSettingListOptionsResponse200Example:
+      summary: Successful response for ozoneSettingListOptions
+      value:
+        options:
+        - key: app.bsky.feed.post
+          value: {}
+          did: did:plc:example123abc
+          scope: instance
+          createdBy: did:plc:example123abc
+          lastUpdatedBy: did:plc:example123abc
+          description: This is an example description.
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneSettingUpsertOptionResponse200Example:
+      summary: Successful response for ozoneSettingUpsertOption
+      value:
+        option:
+          key: app.bsky.feed.post
+          value: {}
+          did: did:plc:example123abc
+          scope: instance
+          createdBy: did:plc:example123abc
+          lastUpdatedBy: did:plc:example123abc
+          description: This is an example description.
+          createdAt: '2024-01-15T12:00:00.000Z'
+  schemas:
+    ToolsOzoneSettingDefsOption:
+      type: object
+      required:
+      - key
+      - value
+      - did
+      - scope
+      - createdBy
+      - lastUpdatedBy
+      properties:
+        key:
+          type: string
+          format: nsid
+        did:
+          type: string
+          format: did
+        value: {}
+        description:
+          type: string
+          maxLength: 10240
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        managerRole:
+          type: string
+          enum:
+          - tools.ozone.team.defs#roleModerator
+          - tools.ozone.team.defs#roleTriage
+          - tools.ozone.team.defs#roleAdmin
+        scope:
+          type: string
+          enum:
+          - instance
+          - personal
+        createdBy:
+          type: string
+          format: did
+        lastUpdatedBy:
+          type: string
+          format: did
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

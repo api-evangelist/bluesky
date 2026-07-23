@@ -1,0 +1,2217 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Ozone Moderation API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Ozone Moderation
+  description: Ozone moderation tool operations.
+paths:
+  /xrpc/tools.ozone.moderation.emitEvent:
+    post:
+      operationId: ozoneModerationEmitEvent
+      summary: Bluesky Take a moderation action on an actor.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Take a moderation action on an actor.'
+      tags:
+      - Ozone Moderation
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - event
+              - subject
+              - createdBy
+              properties:
+                event:
+                  oneOf:
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventTakedown'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventAcknowledge'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventEscalate'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventComment'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventLabel'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventReport'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventMute'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventUnmute'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventMuteReporter'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventUnmuteReporter'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventReverseTakedown'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventResolveAppeal'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventEmail'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventTag'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsAccountEvent'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsIdentityEvent'
+                  - $ref: '#/components/schemas/ToolsOzoneModerationDefsRecordEvent'
+                subject:
+                  oneOf:
+                  - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoRef'
+                  - $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
+                subjectBlobCids:
+                  type: array
+                  items:
+                    type: string
+                    format: cid
+                createdBy:
+                  type: string
+                  format: did
+            examples:
+              OzoneModerationEmitEventRequestExample:
+                $ref: '#/components/examples/OzoneModerationEmitEventRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventView'
+              examples:
+                OzoneModerationEmitEventResponse200Example:
+                  $ref: '#/components/examples/OzoneModerationEmitEventResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - SubjectHasAction
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.moderation.getEvent:
+    get:
+      operationId: ozoneModerationGetEvent
+      summary: Bluesky Get details about a moderation event.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get details about a moderation event.'
+      tags:
+      - Ozone Moderation
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: integer
+        example: 50
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventViewDetail'
+              examples:
+                OzoneModerationGetEventResponse200Example:
+                  $ref: '#/components/examples/OzoneModerationGetEventResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.moderation.getRecord:
+    get:
+      operationId: ozoneModerationGetRecord
+      summary: Bluesky Get details about a record.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get details about a record.'
+      tags:
+      - Ozone Moderation
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: uri
+        in: query
+        required: true
+        schema:
+          type: string
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      - name: cid
+        in: query
+        required: false
+        schema:
+          type: string
+          format: cid
+        example: bafyreiabc123example
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsOzoneModerationDefsRecordViewDetail'
+              examples:
+                OzoneModerationGetRecordResponse200Example:
+                  $ref: '#/components/examples/OzoneModerationGetRecordResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - RecordNotFound
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.moderation.getRecords:
+    get:
+      operationId: ozoneModerationGetRecords
+      summary: Bluesky Get details about some records.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get details about some records.'
+      tags:
+      - Ozone Moderation
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: uris
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+            format: at-uri
+          maxItems: 100
+        example:
+        - at://did:plc:example123/app.bsky.feed.post/abc123
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - records
+                properties:
+                  records:
+                    type: array
+                    items:
+                      oneOf:
+                      - $ref: '#/components/schemas/ToolsOzoneModerationDefsRecordViewDetail'
+                      - $ref: '#/components/schemas/ToolsOzoneModerationDefsRecordViewNotFound'
+              examples:
+                OzoneModerationGetRecordsResponse200Example:
+                  $ref: '#/components/examples/OzoneModerationGetRecordsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.moderation.getRepo:
+    get:
+      operationId: ozoneModerationGetRepo
+      summary: Bluesky Get details about a repository.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get details about a repository.'
+      tags:
+      - Ozone Moderation
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: did
+        in: query
+        required: true
+        schema:
+          type: string
+          format: did
+        example: did:plc:example123abc
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsOzoneModerationDefsRepoViewDetail'
+              examples:
+                OzoneModerationGetRepoResponse200Example:
+                  $ref: '#/components/examples/OzoneModerationGetRepoResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - RepoNotFound
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.moderation.getRepos:
+    get:
+      operationId: ozoneModerationGetRepos
+      summary: Bluesky Get details about some repositories.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get details about some repositories.'
+      tags:
+      - Ozone Moderation
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: dids
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+            format: did
+          maxItems: 100
+        example:
+        - did:plc:example123abc
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - repos
+                properties:
+                  repos:
+                    type: array
+                    items:
+                      oneOf:
+                      - $ref: '#/components/schemas/ToolsOzoneModerationDefsRepoViewDetail'
+                      - $ref: '#/components/schemas/ToolsOzoneModerationDefsRepoViewNotFound'
+              examples:
+                OzoneModerationGetReposResponse200Example:
+                  $ref: '#/components/examples/OzoneModerationGetReposResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.moderation.queryEvents:
+    get:
+      operationId: ozoneModerationQueryEvents
+      summary: Bluesky List moderation events related to a subject.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        List moderation events related to a subject.'
+      tags:
+      - Ozone Moderation
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: types
+        in: query
+        description: The types of events (fully qualified string in the format of tools.ozone.moderation.defs#modEvent<name>) to filter by. If not specified, all events are returned.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - example-types
+      - name: createdBy
+        in: query
+        required: false
+        schema:
+          type: string
+          format: did
+        example: did:plc:example123abc
+      - name: sortDirection
+        in: query
+        description: Sort direction for the events. Defaults to descending order of created at timestamp.
+        required: false
+        schema:
+          type: string
+          description: Sort direction for the events. Defaults to descending order of created at timestamp.
+          default: desc
+        example: example-sortDirection
+      - name: createdAfter
+        in: query
+        description: Retrieve events created after a given timestamp
+        required: false
+        schema:
+          type: string
+          description: Retrieve events created after a given timestamp
+          format: date-time
+        example: '2024-01-15T12:00:00.000Z'
+      - name: createdBefore
+        in: query
+        description: Retrieve events created before a given timestamp
+        required: false
+        schema:
+          type: string
+          description: Retrieve events created before a given timestamp
+          format: date-time
+        example: '2024-01-15T12:00:00.000Z'
+      - name: subject
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uri
+        example: https://example.com/resource
+      - name: collections
+        in: query
+        description: If specified, only events where the subject belongs to the given collections will be returned. When subjectType is set to 'account', this will be ignored.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: nsid
+          maxItems: 20
+        example:
+        - app.bsky.feed.post
+      - name: subjectType
+        in: query
+        description: If specified, only events where the subject is of the given type (account or record) will be returned. When this is set to 'account' the 'collections' parameter will be ignored. When includeAllUserRecords or subject is set, this will be ignored.
+        required: false
+        schema:
+          type: string
+          description: If specified, only events where the subject is of the given type (account or record) will be returned. When this is set to 'account' the 'collections' parameter will be ignored. When includeAllUserRecords or subject is set, this will be ignored.
+          enum:
+          - account
+          - record
+        example: account
+      - name: includeAllUserRecords
+        in: query
+        description: If true, events on all record types (posts, lists, profile etc.) or records from given 'collections' param, owned by the did are returned.
+        required: false
+        schema:
+          type: boolean
+          description: If true, events on all record types (posts, lists, profile etc.) or records from given 'collections' param, owned by the did are returned.
+        example: true
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: hasComment
+        in: query
+        description: If true, only events with comments are returned
+        required: false
+        schema:
+          type: boolean
+          description: If true, only events with comments are returned
+        example: true
+      - name: comment
+        in: query
+        description: If specified, only events with comments containing the keyword are returned
+        required: false
+        schema:
+          type: string
+          description: If specified, only events with comments containing the keyword are returned
+        example: example-comment
+      - name: addedLabels
+        in: query
+        description: If specified, only events where all of these labels were added are returned
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - example-addedLabels
+      - name: removedLabels
+        in: query
+        description: If specified, only events where all of these labels were removed are returned
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - example-removedLabels
+      - name: addedTags
+        in: query
+        description: If specified, only events where all of these tags were added are returned
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - example-addedTags
+      - name: removedTags
+        in: query
+        description: If specified, only events where all of these tags were removed are returned
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - example-removedTags
+      - name: reportTypes
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - example-reportTypes
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - events
+                properties:
+                  cursor:
+                    type: string
+                  events:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventView'
+              examples:
+                OzoneModerationQueryEventsResponse200Example:
+                  $ref: '#/components/examples/OzoneModerationQueryEventsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.moderation.queryStatuses:
+    get:
+      operationId: ozoneModerationQueryStatuses
+      summary: Bluesky View moderation statuses of subjects (record or repo).
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        View moderation statuses of subjects (record or repo).'
+      tags:
+      - Ozone Moderation
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: includeAllUserRecords
+        in: query
+        description: All subjects, or subjects from given 'collections' param, belonging to the account specified in the 'subject' param will be returned.
+        required: false
+        schema:
+          type: boolean
+          description: All subjects, or subjects from given 'collections' param, belonging to the account specified in the 'subject' param will be returned.
+        example: true
+      - name: subject
+        in: query
+        description: The subject to get the status for.
+        required: false
+        schema:
+          type: string
+          description: The subject to get the status for.
+          format: uri
+        example: https://example.com/resource
+      - name: comment
+        in: query
+        description: Search subjects by keyword from comments
+        required: false
+        schema:
+          type: string
+          description: Search subjects by keyword from comments
+        example: example-comment
+      - name: reportedAfter
+        in: query
+        description: Search subjects reported after a given timestamp
+        required: false
+        schema:
+          type: string
+          description: Search subjects reported after a given timestamp
+          format: date-time
+        example: '2024-01-15T12:00:00.000Z'
+      - name: reportedBefore
+        in: query
+        description: Search subjects reported before a given timestamp
+        required: false
+        schema:
+          type: string
+          description: Search subjects reported before a given timestamp
+          format: date-time
+        example: '2024-01-15T12:00:00.000Z'
+      - name: reviewedAfter
+        in: query
+        description: Search subjects reviewed after a given timestamp
+        required: false
+        schema:
+          type: string
+          description: Search subjects reviewed after a given timestamp
+          format: date-time
+        example: '2024-01-15T12:00:00.000Z'
+      - name: hostingDeletedAfter
+        in: query
+        description: Search subjects where the associated record/account was deleted after a given timestamp
+        required: false
+        schema:
+          type: string
+          description: Search subjects where the associated record/account was deleted after a given timestamp
+          format: date-time
+        example: '2024-01-15T12:00:00.000Z'
+      - name: hostingDeletedBefore
+        in: query
+        description: Search subjects where the associated record/account was deleted before a given timestamp
+        required: false
+        schema:
+          type: string
+          description: Search subjects where the associated record/account was deleted before a given timestamp
+          format: date-time
+        example: '2024-01-15T12:00:00.000Z'
+      - name: hostingUpdatedAfter
+        in: query
+        description: Search subjects where the associated record/account was updated after a given timestamp
+        required: false
+        schema:
+          type: string
+          description: Search subjects where the associated record/account was updated after a given timestamp
+          format: date-time
+        example: '2024-01-15T12:00:00.000Z'
+      - name: hostingUpdatedBefore
+        in: query
+        description: Search subjects where the associated record/account was updated before a given timestamp
+        required: false
+        schema:
+          type: string
+          description: Search subjects where the associated record/account was updated before a given timestamp
+          format: date-time
+        example: '2024-01-15T12:00:00.000Z'
+      - name: hostingStatuses
+        in: query
+        description: Search subjects by the status of the associated record/account
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - example-hostingStatuses
+      - name: reviewedBefore
+        in: query
+        description: Search subjects reviewed before a given timestamp
+        required: false
+        schema:
+          type: string
+          description: Search subjects reviewed before a given timestamp
+          format: date-time
+        example: '2024-01-15T12:00:00.000Z'
+      - name: includeMuted
+        in: query
+        description: By default, we don't include muted subjects in the results. Set this to true to include them.
+        required: false
+        schema:
+          type: boolean
+          description: By default, we don't include muted subjects in the results. Set this to true to include them.
+        example: true
+      - name: onlyMuted
+        in: query
+        description: When set to true, only muted subjects and reporters will be returned.
+        required: false
+        schema:
+          type: boolean
+          description: When set to true, only muted subjects and reporters will be returned.
+        example: true
+      - name: reviewState
+        in: query
+        description: Specify when fetching subjects in a certain state
+        required: false
+        schema:
+          type: string
+          description: Specify when fetching subjects in a certain state
+        example: example-reviewState
+      - name: ignoreSubjects
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: uri
+        example:
+        - https://example.com/resource
+      - name: lastReviewedBy
+        in: query
+        description: Get all subject statuses that were reviewed by a specific moderator
+        required: false
+        schema:
+          type: string
+          description: Get all subject statuses that were reviewed by a specific moderator
+          format: did
+        example: did:plc:example123abc
+      - name: sortField
+        in: query
+        required: false
+        schema:
+          type: string
+          default: lastReportedAt
+        example: example-sortField
+      - name: sortDirection
+        in: query
+        required: false
+        schema:
+          type: string
+          default: desc
+        example: example-sortDirection
+      - name: takendown
+        in: query
+        description: Get subjects that were taken down
+        required: false
+        schema:
+          type: boolean
+          description: Get subjects that were taken down
+        example: true
+      - name: appealed
+        in: query
+        description: Get subjects in unresolved appealed status
+        required: false
+        schema:
+          type: boolean
+          description: Get subjects in unresolved appealed status
+        example: true
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: tags
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - example-tags
+      - name: excludeTags
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example:
+        - example-excludeTags
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      - name: collections
+        in: query
+        description: If specified, subjects belonging to the given collections will be returned. When subjectType is set to 'account', this will be ignored.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: nsid
+          maxItems: 20
+        example:
+        - app.bsky.feed.post
+      - name: subjectType
+        in: query
+        description: If specified, subjects of the given type (account or record) will be returned. When this is set to 'account' the 'collections' parameter will be ignored. When includeAllUserRecords or subject is set, this will be ignored.
+        required: false
+        schema:
+          type: string
+          description: If specified, subjects of the given type (account or record) will be returned. When this is set to 'account' the 'collections' parameter will be ignored. When includeAllUserRecords or subject is set, this will be ignored.
+          enum:
+          - account
+          - record
+        example: account
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - subjectStatuses
+                properties:
+                  cursor:
+                    type: string
+                  subjectStatuses:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ToolsOzoneModerationDefsSubjectStatusView'
+              examples:
+                OzoneModerationQueryStatusesResponse200Example:
+                  $ref: '#/components/examples/OzoneModerationQueryStatusesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.moderation.searchRepos:
+    get:
+      operationId: ozoneModerationSearchRepos
+      summary: Bluesky Find repositories based on a search term.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Find repositories based on a search term.'
+      tags:
+      - Ozone Moderation
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+        example: example-q
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - repos
+                properties:
+                  cursor:
+                    type: string
+                  repos:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ToolsOzoneModerationDefsRepoView'
+              examples:
+                OzoneModerationSearchReposResponse200Example:
+                  $ref: '#/components/examples/OzoneModerationSearchReposResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  schemas:
+    ToolsOzoneModerationDefsModEventViewDetail:
+      type: object
+      required:
+      - id
+      - event
+      - subject
+      - subjectBlobs
+      - createdBy
+      - createdAt
+      properties:
+        id:
+          type: integer
+        event:
+          oneOf:
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventTakedown'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventReverseTakedown'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventComment'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventReport'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventLabel'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventAcknowledge'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventEscalate'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventMute'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventUnmute'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventMuteReporter'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventUnmuteReporter'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventEmail'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventResolveAppeal'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventDivert'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventTag'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsAccountEvent'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsIdentityEvent'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsRecordEvent'
+        subject:
+          oneOf:
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsRepoView'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsRepoViewNotFound'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsRecordView'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsRecordViewNotFound'
+        subjectBlobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolsOzoneModerationDefsBlobView'
+        createdBy:
+          type: string
+          format: did
+        createdAt:
+          type: string
+          format: date-time
+    ToolsOzoneModerationDefsAccountEvent:
+      type: object
+      description: Logs account status related events on a repo subject. Normally captured by automod from the firehose and emitted to ozone for historical tracking.
+      required:
+      - timestamp
+      - active
+      properties:
+        comment:
+          type: string
+        active:
+          type: boolean
+          description: Indicates that the account has a repository which can be fetched from the host that emitted this event.
+        status:
+          type: string
+          enum:
+          - unknown
+          - deactivated
+          - deleted
+          - takendown
+          - suspended
+          - tombstoned
+        timestamp:
+          type: string
+          format: date-time
+    ComAtprotoLabelDefsLabel:
+      type: object
+      description: Metadata tag on an atproto resource (eg, repo or record).
+      required:
+      - src
+      - uri
+      - val
+      - cts
+      properties:
+        ver:
+          type: integer
+        src:
+          type: string
+          description: DID of the actor who created this label.
+          format: did
+        uri:
+          type: string
+          description: AT URI of the record, repository (account), or other resource that this label applies to.
+          format: uri
+        cid:
+          type: string
+          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
+          format: cid
+        val:
+          type: string
+          description: The short string name of the value or type of this label.
+          maxLength: 128
+        neg:
+          type: boolean
+          description: If true, this is a negation label, overwriting a previous label.
+        cts:
+          type: string
+          description: Timestamp when this label was created.
+          format: date-time
+        exp:
+          type: string
+          description: Timestamp at which this label expires (no longer applies).
+          format: date-time
+        sig:
+          type: string
+          format: byte
+          description: Signature of dag-cbor encoded label.
+    ToolsOzoneModerationDefsImageDetails:
+      type: object
+      required:
+      - width
+      - height
+      properties:
+        width:
+          type: integer
+        height:
+          type: integer
+    ToolsOzoneModerationDefsSubjectReviewState:
+      type: string
+      enum:
+      - '#reviewOpen'
+      - '#reviewEscalated'
+      - '#reviewClosed'
+      - '#reviewNone'
+    ToolsOzoneModerationDefsModEventReport:
+      type: object
+      description: Report a subject
+      required:
+      - reportType
+      properties:
+        comment:
+          type: string
+        isReporterMuted:
+          type: boolean
+          description: Set to true if the reporter was muted from reporting at the time of the event. These reports won't impact the reviewState of the subject.
+        reportType:
+          $ref: '#/components/schemas/ComAtprotoModerationDefsReasonType'
+    ComAtprotoModerationDefsReasonViolation:
+      type: string
+      format: token
+      description: Direct violation of server rules, laws, terms of service
+    ToolsOzoneModerationDefsModEventEscalate:
+      type: object
+      properties:
+        comment:
+          type: string
+    ComAtprotoModerationDefsReasonRude:
+      type: string
+      format: token
+      description: Rude, harassing, explicit, or otherwise unwelcoming behavior
+    ToolsOzoneModerationDefsModEventView:
+      type: object
+      required:
+      - id
+      - event
+      - subject
+      - subjectBlobCids
+      - createdBy
+      - createdAt
+      properties:
+        id:
+          type: integer
+        event:
+          oneOf:
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventTakedown'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventReverseTakedown'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventComment'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventReport'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventLabel'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventAcknowledge'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventEscalate'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventMute'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventUnmute'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventMuteReporter'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventUnmuteReporter'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventEmail'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventResolveAppeal'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventDivert'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventTag'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsAccountEvent'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsIdentityEvent'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsRecordEvent'
+        subject:
+          oneOf:
+          - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoRef'
+          - $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
+          - $ref: '#/components/schemas/ChatBskyConvoDefsMessageRef'
+        subjectBlobCids:
+          type: array
+          items:
+            type: string
+        createdBy:
+          type: string
+          format: did
+        createdAt:
+          type: string
+          format: date-time
+        creatorHandle:
+          type: string
+        subjectHandle:
+          type: string
+    ComAtprotoModerationDefsReasonType:
+      oneOf:
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSpam'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonViolation'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonMisleading'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSexual'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonRude'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonOther'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonAppeal'
+    ToolsOzoneModerationDefsModerationDetail:
+      type: object
+      properties:
+        subjectStatus:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsSubjectStatusView'
+    ComAtprotoModerationDefsReasonSpam:
+      type: string
+      format: token
+      description: 'Spam: frequent unwanted promotion, replies, mentions'
+    ComAtprotoRepoStrongRef:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+    ChatBskyConvoDefsMessageRef:
+      type: object
+      required:
+      - did
+      - messageId
+      - convoId
+      properties:
+        did:
+          type: string
+          format: did
+        convoId:
+          type: string
+        messageId:
+          type: string
+    ToolsOzoneModerationDefsSubjectStatusView:
+      type: object
+      required:
+      - id
+      - subject
+      - createdAt
+      - updatedAt
+      - reviewState
+      properties:
+        id:
+          type: integer
+        subject:
+          oneOf:
+          - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoRef'
+          - $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
+        hosting:
+          oneOf:
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsAccountHosting'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsRecordHosting'
+        subjectBlobCids:
+          type: array
+          items:
+            type: string
+            format: cid
+        subjectRepoHandle:
+          type: string
+        updatedAt:
+          type: string
+          description: Timestamp referencing when the last update was made to the moderation status of the subject
+          format: date-time
+        createdAt:
+          type: string
+          description: Timestamp referencing the first moderation status impacting event was emitted on the subject
+          format: date-time
+        reviewState:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsSubjectReviewState'
+        comment:
+          type: string
+          description: Sticky comment on the subject.
+        muteUntil:
+          type: string
+          format: date-time
+        muteReportingUntil:
+          type: string
+          format: date-time
+        lastReviewedBy:
+          type: string
+          format: did
+        lastReviewedAt:
+          type: string
+          format: date-time
+        lastReportedAt:
+          type: string
+          format: date-time
+        lastAppealedAt:
+          type: string
+          description: Timestamp referencing when the author of the subject appealed a moderation action
+          format: date-time
+        takendown:
+          type: boolean
+        appealed:
+          type: boolean
+          description: True indicates that the a previously taken moderator action was appealed against, by the author of the content. False indicates last appeal was resolved by moderators.
+        suspendUntil:
+          type: string
+          format: date-time
+        tags:
+          type: array
+          items:
+            type: string
+    ComAtprotoServerDefsInviteCode:
+      type: object
+      required:
+      - code
+      - available
+      - disabled
+      - forAccount
+      - createdBy
+      - createdAt
+      - uses
+      properties:
+        code:
+          type: string
+        available:
+          type: integer
+        disabled:
+          type: boolean
+        forAccount:
+          type: string
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        uses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoServerDefsInviteCodeUse'
+    ToolsOzoneModerationDefsModEventComment:
+      type: object
+      description: Add a comment to a subject
+      required:
+      - comment
+      properties:
+        comment:
+          type: string
+        sticky:
+          type: boolean
+          description: Make the comment persistent on the subject
+    ComAtprotoAdminDefsRepoRef:
+      type: object
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+    ToolsOzoneModerationDefsModEventMute:
+      type: object
+      description: Mute incoming reports on a subject
+      required:
+      - durationInHours
+      properties:
+        comment:
+          type: string
+        durationInHours:
+          type: integer
+    ToolsOzoneModerationDefsModEventLabel:
+      type: object
+      description: Apply/Negate labels on a subject
+      required:
+      - createLabelVals
+      - negateLabelVals
+      properties:
+        comment:
+          type: string
+        createLabelVals:
+          type: array
+          items:
+            type: string
+        negateLabelVals:
+          type: array
+          items:
+            type: string
+    ToolsOzoneModerationDefsRecordViewNotFound:
+      type: object
+      required:
+      - uri
+      properties:
+        uri:
+          type: string
+          format: at-uri
+    ComAtprotoModerationDefsReasonAppeal:
+      type: string
+      format: token
+      description: 'Appeal: appeal a previously taken moderation action'
+    ToolsOzoneModerationDefsRecordEvent:
+      type: object
+      description: Logs lifecycle event on a record subject. Normally captured by automod from the firehose and emitted to ozone for historical tracking.
+      required:
+      - timestamp
+      - op
+      properties:
+        comment:
+          type: string
+        op:
+          type: string
+          enum:
+          - create
+          - update
+          - delete
+        cid:
+          type: string
+          format: cid
+        timestamp:
+          type: string
+          format: date-time
+    ComAtprotoAdminDefsThreatSignature:
+      type: object
+      required:
+      - property
+      - value
+      properties:
+        property:
+          type: string
+        value:
+          type: string
+    ToolsOzoneModerationDefsModEventUnmuteReporter:
+      type: object
+      description: Unmute incoming reports from an account
+      properties:
+        comment:
+          type: string
+          description: Describe reasoning behind the reversal.
+    ToolsOzoneModerationDefsModEventDivert:
+      type: object
+      description: Divert a record's blobs to a 3rd party service for further scanning/tagging
+      properties:
+        comment:
+          type: string
+    ToolsOzoneModerationDefsVideoDetails:
+      type: object
+      required:
+      - width
+      - height
+      - length
+      properties:
+        width:
+          type: integer
+        height:
+          type: integer
+        length:
+          type: integer
+    ToolsOzoneModerationDefsRecordViewDetail:
+      type: object
+      required:
+      - uri
+      - cid
+      - value
+      - blobs
+      - indexedAt
+      - moderation
+      - repo
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        value: {}
+        blobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolsOzoneModerationDefsBlobView'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        indexedAt:
+          type: string
+          format: date-time
+        moderation:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsModerationDetail'
+        repo:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsRepoView'
+    ToolsOzoneModerationDefsModEventTakedown:
+      type: object
+      description: Take down a subject permanently or temporarily
+      properties:
+        comment:
+          type: string
+        durationInHours:
+          type: integer
+        acknowledgeAccountSubjects:
+          type: boolean
+          description: If true, all other reports on content authored by this account will be resolved (acknowledged).
+    ToolsOzoneModerationDefsRecordView:
+      type: object
+      required:
+      - uri
+      - cid
+      - value
+      - blobCids
+      - indexedAt
+      - moderation
+      - repo
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        value: {}
+        blobCids:
+          type: array
+          items:
+            type: string
+            format: cid
+        indexedAt:
+          type: string
+          format: date-time
+        moderation:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsModeration'
+        repo:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsRepoView'
+    ComAtprotoModerationDefsReasonOther:
+      type: string
+      format: token
+      description: 'Other: reports not falling under another report category'
+    ComAtprotoModerationDefsReasonSexual:
+      type: string
+      format: token
+      description: Unwanted or mislabeled sexual content
+    ToolsOzoneModerationDefsRepoView:
+      type: object
+      required:
+      - did
+      - handle
+      - relatedRecords
+      - indexedAt
+      - moderation
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        email:
+          type: string
+        relatedRecords:
+          type: array
+          items: {}
+        indexedAt:
+          type: string
+          format: date-time
+        moderation:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsModeration'
+        invitedBy:
+          $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
+        invitesDisabled:
+          type: boolean
+        inviteNote:
+          type: string
+        deactivatedAt:
+          type: string
+          format: date-time
+        threatSignatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoAdminDefsThreatSignature'
+    ToolsOzoneModerationDefsRepoViewDetail:
+      type: object
+      required:
+      - did
+      - handle
+      - relatedRecords
+      - indexedAt
+      - moderation
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        email:
+          type: string
+        relatedRecords:
+          type: array
+          items: {}
+        indexedAt:
+          type: string
+          format: date-time
+        moderation:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsModerationDetail'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        invitedBy:
+          $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
+        invites:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
+        invitesDisabled:
+          type: boolean
+        inviteNote:
+          type: string
+        emailConfirmedAt:
+          type: string
+          format: date-time
+        deactivatedAt:
+          type: string
+          format: date-time
+        threatSignatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoAdminDefsThreatSignature'
+    ToolsOzoneModerationDefsModEventMuteReporter:
+      type: object
+      description: Mute incoming reports from an account
+      properties:
+        comment:
+          type: string
+        durationInHours:
+          type: integer
+    ToolsOzoneModerationDefsModEventAcknowledge:
+      type: object
+      properties:
+        comment:
+          type: string
+    ToolsOzoneModerationDefsRecordHosting:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          type: string
+          enum:
+          - deleted
+          - unknown
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+    ToolsOzoneModerationDefsAccountHosting:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          type: string
+          enum:
+          - takendown
+          - suspended
+          - deleted
+          - deactivated
+          - unknown
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+        deactivatedAt:
+          type: string
+          format: date-time
+        reactivatedAt:
+          type: string
+          format: date-time
+    ToolsOzoneModerationDefsModeration:
+      type: object
+      properties:
+        subjectStatus:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsSubjectStatusView'
+    ToolsOzoneModerationDefsModEventReverseTakedown:
+      type: object
+      description: Revert take down action on a subject
+      properties:
+        comment:
+          type: string
+          description: Describe reasoning behind the reversal.
+    ToolsOzoneModerationDefsIdentityEvent:
+      type: object
+      description: Logs identity related events on a repo subject. Normally captured by automod from the firehose and emitted to ozone for historical tracking.
+      required:
+      - timestamp
+      properties:
+        comment:
+          type: string
+        handle:
+          type: string
+          format: handle
+        pdsHost:
+          type: string
+          format: uri
+        tombstone:
+          type: boolean
+        timestamp:
+          type: string
+          format: date-time
+    ComAtprotoModerationDefsReasonMisleading:
+      type: string
+      format: token
+      description: Misleading identity, affiliation, or content
+    ToolsOzoneModerationDefsRepoViewNotFound:
+      type: object
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+    ToolsOzoneModerationDefsModEventUnmute:
+      type: object
+      description: Unmute action on a subject
+      properties:
+        comment:
+          type: string
+          description: Describe reasoning behind the reversal.
+    ComAtprotoServerDefsInviteCodeUse:
+      type: object
+      required:
+      - usedBy
+      - usedAt
+      properties:
+        usedBy:
+          type: string
+          format: did
+        usedAt:
+          type: string
+          format: date-time
+    ToolsOzoneModerationDefsBlobView:
+      type: object
+      required:
+      - cid
+      - mimeType
+      - size
+      - createdAt
+      properties:
+        cid:
+          type: string
+          format: cid
+        mimeType:
+          type: string
+        size:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsImageDetails'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsVideoDetails'
+        moderation:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsModeration'
+    ToolsOzoneModerationDefsModEventEmail:
+      type: object
+      description: Keep a log of outgoing email to a user
+      required:
+      - subjectLine
+      properties:
+        subjectLine:
+          type: string
+          description: The subject line of the email sent to the user.
+        content:
+          type: string
+          description: The content of the email sent to the user.
+        comment:
+          type: string
+          description: Additional comment about the outgoing comm.
+    ToolsOzoneModerationDefsModEventTag:
+      type: object
+      description: Add/Remove a tag on a subject
+      required:
+      - add
+      - remove
+      properties:
+        add:
+          type: array
+          items:
+            type: string
+        remove:
+          type: array
+          items:
+            type: string
+        comment:
+          type: string
+          description: Additional comment about added/removed tags.
+    ToolsOzoneModerationDefsModEventResolveAppeal:
+      type: object
+      description: Resolve appeal on a subject
+      properties:
+        comment:
+          type: string
+          description: Describe resolution.
+  examples:
+    OzoneModerationGetRepoResponse200Example:
+      summary: Successful response for ozoneModerationGetRepo
+      value:
+        did: did:plc:example123abc
+        handle: user.bsky.social
+        relatedRecords: []
+        indexedAt: '2024-01-15T12:00:00.000Z'
+        moderation:
+          subjectStatus:
+            id: 50
+            subject: {}
+            createdAt: '2024-01-15T12:00:00.000Z'
+            updatedAt: '2024-01-15T12:00:00.000Z'
+            reviewState: {}
+            hosting: {}
+            subjectBlobCids: []
+            subjectRepoHandle: at://did:plc:example123/app.bsky.feed.post/abc123
+        email: user@example.com
+        labels:
+        - src: did:plc:example123abc
+          uri: https://example.com/resource
+          val: example-val
+          cts: '2024-01-15T12:00:00.000Z'
+          ver: 50
+          cid: bafyreiabc123example
+          neg: true
+          exp: '2024-01-15T12:00:00.000Z'
+        invitedBy:
+          code: example-code
+          available: 50
+          disabled: true
+          forAccount: example-forAccount
+          createdBy: example-createdBy
+          createdAt: '2024-01-15T12:00:00.000Z'
+          uses:
+          - usedBy: {}
+            usedAt: {}
+    OzoneModerationGetRecordResponse200Example:
+      summary: Successful response for ozoneModerationGetRecord
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        cid: bafyreiabc123example
+        value: {}
+        blobs:
+        - cid: bafyreiabc123example
+          mimeType: example-mimeType
+          size: 50
+          createdAt: '2024-01-15T12:00:00.000Z'
+          details: {}
+          moderation:
+            subjectStatus: {}
+        indexedAt: '2024-01-15T12:00:00.000Z'
+        moderation:
+          subjectStatus:
+            id: 50
+            subject: {}
+            createdAt: '2024-01-15T12:00:00.000Z'
+            updatedAt: '2024-01-15T12:00:00.000Z'
+            reviewState: {}
+            hosting: {}
+            subjectBlobCids: []
+            subjectRepoHandle: at://did:plc:example123/app.bsky.feed.post/abc123
+        repo:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          relatedRecords: []
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          moderation:
+            subjectStatus: {}
+          email: user@example.com
+          invitedBy:
+            code: example-code
+            available: 50
+            disabled: true
+            forAccount: example-forAccount
+            createdBy: example-createdBy
+            createdAt: '2024-01-15T12:00:00.000Z'
+            uses: []
+          invitesDisabled: true
+        labels:
+        - src: did:plc:example123abc
+          uri: https://example.com/resource
+          val: example-val
+          cts: '2024-01-15T12:00:00.000Z'
+          ver: 50
+          cid: bafyreiabc123example
+          neg: true
+          exp: '2024-01-15T12:00:00.000Z'
+    OzoneModerationQueryEventsResponse200Example:
+      summary: Successful response for ozoneModerationQueryEvents
+      value:
+        events:
+        - id: 50
+          event:
+            comment: {}
+            durationInHours: {}
+            acknowledgeAccountSubjects: {}
+          subject:
+            did: {}
+          subjectBlobCids:
+          - at://did:plc:example123/app.bsky.feed.post/abc123
+          createdBy: did:plc:example123abc
+          createdAt: '2024-01-15T12:00:00.000Z'
+          creatorHandle: example-creatorHandle
+          subjectHandle: at://did:plc:example123/app.bsky.feed.post/abc123
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneModerationEmitEventResponse200Example:
+      summary: Successful response for ozoneModerationEmitEvent
+      value:
+        id: 50
+        event:
+          comment: example-comment
+          durationInHours: 50
+          acknowledgeAccountSubjects: true
+        subject:
+          did: did:plc:example123abc
+        subjectBlobCids:
+        - at://did:plc:example123/app.bsky.feed.post/abc123
+        createdBy: did:plc:example123abc
+        createdAt: '2024-01-15T12:00:00.000Z'
+        creatorHandle: example-creatorHandle
+        subjectHandle: at://did:plc:example123/app.bsky.feed.post/abc123
+    OzoneModerationQueryStatusesResponse200Example:
+      summary: Successful response for ozoneModerationQueryStatuses
+      value:
+        subjectStatuses:
+        - id: 50
+          subject:
+            did: {}
+          createdAt: '2024-01-15T12:00:00.000Z'
+          updatedAt: '2024-01-15T12:00:00.000Z'
+          reviewState: '#reviewOpen'
+          hosting:
+            status: {}
+            updatedAt: {}
+            createdAt: {}
+            deletedAt: {}
+            deactivatedAt: {}
+            reactivatedAt: {}
+          subjectBlobCids:
+          - bafyreiabc123example
+          subjectRepoHandle: at://did:plc:example123/app.bsky.feed.post/abc123
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneModerationGetEventResponse200Example:
+      summary: Successful response for ozoneModerationGetEvent
+      value:
+        id: 50
+        event:
+          comment: example-comment
+          durationInHours: 50
+          acknowledgeAccountSubjects: true
+        subject:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          relatedRecords: []
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          moderation:
+            subjectStatus: {}
+          email: user@example.com
+          invitedBy:
+            code: {}
+            available: {}
+            disabled: {}
+            forAccount: {}
+            createdBy: {}
+            createdAt: {}
+            uses: {}
+          invitesDisabled: true
+        subjectBlobs:
+        - cid: bafyreiabc123example
+          mimeType: example-mimeType
+          size: 50
+          createdAt: '2024-01-15T12:00:00.000Z'
+          details: {}
+          moderation:
+            subjectStatus: {}
+        createdBy: did:plc:example123abc
+        createdAt: '2024-01-15T12:00:00.000Z'
+    OzoneModerationGetRecordsResponse200Example:
+      summary: Successful response for ozoneModerationGetRecords
+      value:
+        records:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          value: {}
+          blobs: []
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          moderation:
+            subjectStatus: {}
+          repo:
+            did: {}
+            handle: {}
+            relatedRecords: {}
+            indexedAt: {}
+            moderation: {}
+            email: {}
+            invitedBy: {}
+            invitesDisabled: {}
+          labels: []
+    OzoneModerationEmitEventRequestExample:
+      summary: Example request for ozoneModerationEmitEvent
+      value:
+        event:
+          comment: example-comment
+          durationInHours: 50
+          acknowledgeAccountSubjects: true
+        subject:
+          did: did:plc:example123abc
+        createdBy: did:plc:example123abc
+        subjectBlobCids:
+        - bafyreiabc123example
+    OzoneModerationSearchReposResponse200Example:
+      summary: Successful response for ozoneModerationSearchRepos
+      value:
+        repos:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          relatedRecords: []
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          moderation:
+            subjectStatus: {}
+          email: user@example.com
+          invitedBy:
+            code: example-code
+            available: 50
+            disabled: true
+            forAccount: example-forAccount
+            createdBy: example-createdBy
+            createdAt: '2024-01-15T12:00:00.000Z'
+            uses: []
+          invitesDisabled: true
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneModerationGetReposResponse200Example:
+      summary: Successful response for ozoneModerationGetRepos
+      value:
+        repos:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          relatedRecords: []
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          moderation:
+            subjectStatus: {}
+          email: user@example.com
+          labels: []
+          invitedBy:
+            code: {}
+            available: {}
+            disabled: {}
+            forAccount: {}
+            createdBy: {}
+            createdAt: {}
+            uses: {}
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

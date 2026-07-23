@@ -1,0 +1,622 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Ozone Sets API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Ozone Sets
+  description: Ozone set management operations.
+paths:
+  /xrpc/tools.ozone.set.addValues:
+    post:
+      operationId: ozoneSetAddValues
+      summary: Bluesky Add values to a specific set.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Add values to a specific set. Attempting to add values to a set that does not exist will result in an error.'
+      tags:
+      - Ozone Sets
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - values
+              properties:
+                name:
+                  type: string
+                  description: Name of the set to add values to
+                values:
+                  type: array
+                  items:
+                    type: string
+                  maxItems: 1000
+            examples:
+              OzoneSetAddValuesRequestExample:
+                $ref: '#/components/examples/OzoneSetAddValuesRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.set.deleteSet:
+    post:
+      operationId: ozoneSetDeleteSet
+      summary: Bluesky Delete an entire set.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Delete an entire set. Attempting to delete a set that does not exist will result in an error.'
+      tags:
+      - Ozone Sets
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: Name of the set to delete
+            examples:
+              OzoneSetDeleteSetRequestExample:
+                $ref: '#/components/examples/OzoneSetDeleteSetRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _unknown_:
+                    type: object
+                    properties: {}
+              examples:
+                OzoneSetDeleteSetResponse200Example:
+                  $ref: '#/components/examples/OzoneSetDeleteSetResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - SetNotFound
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.set.deleteValues:
+    post:
+      operationId: ozoneSetDeleteValues
+      summary: Bluesky Delete values from a specific set.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Delete values from a specific set. Attempting to delete values that are not in the set will not result in an error'
+      tags:
+      - Ozone Sets
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - values
+              properties:
+                name:
+                  type: string
+                  description: Name of the set to delete values from
+                values:
+                  type: array
+                  items:
+                    type: string
+            examples:
+              OzoneSetDeleteValuesRequestExample:
+                $ref: '#/components/examples/OzoneSetDeleteValuesRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - SetNotFound
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.set.getValues:
+    get:
+      operationId: ozoneSetGetValues
+      summary: Bluesky Get a specific set and its values
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a specific set and its values'
+      tags:
+      - Ozone Sets
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+        example: Example Name
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 100
+        example: 100
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - set
+                - values
+                properties:
+                  set:
+                    $ref: '#/components/schemas/ToolsOzoneSetDefsSetView'
+                  values:
+                    type: array
+                    items:
+                      type: string
+                  cursor:
+                    type: string
+              examples:
+                OzoneSetGetValuesResponse200Example:
+                  $ref: '#/components/examples/OzoneSetGetValuesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - SetNotFound
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.set.querySets:
+    get:
+      operationId: ozoneSetQuerySets
+      summary: Bluesky Query available sets
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Query available sets'
+      tags:
+      - Ozone Sets
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      - name: namePrefix
+        in: query
+        required: false
+        schema:
+          type: string
+        example: Example Name
+      - name: sortBy
+        in: query
+        required: false
+        schema:
+          type: string
+          default: name
+        example: example-sortBy
+      - name: sortDirection
+        in: query
+        description: Defaults to ascending order of name field.
+        required: false
+        schema:
+          type: string
+          description: Defaults to ascending order of name field.
+          default: asc
+        example: example-sortDirection
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - sets
+                properties:
+                  sets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ToolsOzoneSetDefsSetView'
+                  cursor:
+                    type: string
+              examples:
+                OzoneSetQuerySetsResponse200Example:
+                  $ref: '#/components/examples/OzoneSetQuerySetsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.set.upsertSet:
+    post:
+      operationId: ozoneSetUpsertSet
+      summary: Bluesky Create or update set metadata
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Create or update set metadata'
+      tags:
+      - Ozone Sets
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToolsOzoneSetDefsSet'
+            examples:
+              OzoneSetUpsertSetRequestExample:
+                $ref: '#/components/examples/OzoneSetUpsertSetRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsOzoneSetDefsSetView'
+              examples:
+                OzoneSetUpsertSetResponse200Example:
+                  $ref: '#/components/examples/OzoneSetUpsertSetResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  examples:
+    OzoneSetUpsertSetResponse200Example:
+      summary: Successful response for ozoneSetUpsertSet
+      value:
+        name: Example Name
+        setSize: 50
+        createdAt: '2024-01-15T12:00:00.000Z'
+        updatedAt: '2024-01-15T12:00:00.000Z'
+        description: This is an example description.
+    OzoneSetAddValuesRequestExample:
+      summary: Example request for ozoneSetAddValues
+      value:
+        name: Example Name
+        values:
+        - example-values
+    OzoneSetQuerySetsResponse200Example:
+      summary: Successful response for ozoneSetQuerySets
+      value:
+        sets:
+        - name: Example Name
+          setSize: 50
+          createdAt: '2024-01-15T12:00:00.000Z'
+          updatedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneSetUpsertSetRequestExample:
+      summary: Example request for ozoneSetUpsertSet
+      value:
+        name: Example Name
+        description: This is an example description.
+    OzoneSetGetValuesResponse200Example:
+      summary: Successful response for ozoneSetGetValues
+      value:
+        set:
+          name: Example Name
+          setSize: 50
+          createdAt: '2024-01-15T12:00:00.000Z'
+          updatedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+        values:
+        - example-values
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneSetDeleteSetResponse200Example:
+      summary: Successful response for ozoneSetDeleteSet
+      value:
+        _unknown_: {}
+    OzoneSetDeleteSetRequestExample:
+      summary: Example request for ozoneSetDeleteSet
+      value:
+        name: Example Name
+    OzoneSetDeleteValuesRequestExample:
+      summary: Example request for ozoneSetDeleteValues
+      value:
+        name: Example Name
+        values:
+        - example-values
+  schemas:
+    ToolsOzoneSetDefsSet:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 128
+        description:
+          type: string
+          maxLength: 10240
+    ToolsOzoneSetDefsSetView:
+      type: object
+      required:
+      - name
+      - setSize
+      - createdAt
+      - updatedAt
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 128
+        description:
+          type: string
+          maxLength: 10240
+        setSize:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

@@ -1,0 +1,303 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Video API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Video
+  description: Operations for video upload and processing.
+paths:
+  /xrpc/app.bsky.video.getJobStatus:
+    get:
+      operationId: videoGetJobStatus
+      summary: Bluesky Get status details for a video processing job.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get status details for a video processing job.'
+      tags:
+      - Video
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: jobId
+        in: query
+        required: true
+        schema:
+          type: string
+        example: example-jobId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - jobStatus
+                properties:
+                  jobStatus:
+                    $ref: '#/components/schemas/AppBskyVideoDefsJobStatus'
+              examples:
+                VideoGetJobStatusResponse200Example:
+                  $ref: '#/components/examples/VideoGetJobStatusResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.video.getUploadLimits:
+    get:
+      operationId: videoGetUploadLimits
+      summary: Bluesky Get video upload limits for the authenticated user.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get video upload limits for the authenticated user.'
+      tags:
+      - Video
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - canUpload
+                properties:
+                  canUpload:
+                    type: boolean
+                  remainingDailyVideos:
+                    type: integer
+                  remainingDailyBytes:
+                    type: integer
+                  message:
+                    type: string
+                  error:
+                    type: string
+              examples:
+                VideoGetUploadLimitsResponse200Example:
+                  $ref: '#/components/examples/VideoGetUploadLimitsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.video.uploadVideo:
+    post:
+      operationId: videoUploadVideo
+      summary: Bluesky Upload a video to be processed then stored on the PDS.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Upload a video to be processed then stored on the PDS.'
+      tags:
+      - Video
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          video/mp4: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - jobStatus
+                properties:
+                  jobStatus:
+                    $ref: '#/components/schemas/AppBskyVideoDefsJobStatus'
+              examples:
+                VideoUploadVideoResponse200Example:
+                  $ref: '#/components/examples/VideoUploadVideoResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  examples:
+    VideoGetJobStatusResponse200Example:
+      summary: Successful response for videoGetJobStatus
+      value:
+        jobStatus:
+          jobId: example-jobId
+          did: did:plc:example123abc
+          state: JOB_STATE_COMPLETED
+          progress: 50
+          blob: example-blob
+          error: example-error
+          message: example-message
+    VideoUploadVideoResponse200Example:
+      summary: Successful response for videoUploadVideo
+      value:
+        jobStatus:
+          jobId: example-jobId
+          did: did:plc:example123abc
+          state: JOB_STATE_COMPLETED
+          progress: 50
+          blob: example-blob
+          error: example-error
+          message: example-message
+    VideoGetUploadLimitsResponse200Example:
+      summary: Successful response for videoGetUploadLimits
+      value:
+        canUpload: true
+        remainingDailyVideos: 50
+        remainingDailyBytes: 50
+        message: example-message
+        error: example-error
+  schemas:
+    AppBskyVideoDefsJobStatus:
+      type: object
+      required:
+      - jobId
+      - did
+      - state
+      properties:
+        jobId:
+          type: string
+        did:
+          type: string
+          format: did
+        state:
+          type: string
+          description: The state of the video processing job. All values not listed as a known value indicate that the job is in process.
+          enum:
+          - JOB_STATE_COMPLETED
+          - JOB_STATE_FAILED
+        progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+        blob:
+          type: string
+          format: binary
+        error:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

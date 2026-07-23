@@ -1,0 +1,3094 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Feeds API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Feeds
+  description: Operations for managing feeds, posts, likes, and reposts.
+paths:
+  /xrpc/app.bsky.feed.describeFeedGenerator:
+    get:
+      operationId: feedDescribeFeedGenerator
+      summary: Bluesky Get information about a feed generator, including policies and offered feed URIs.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get information about a feed generator, including policies and offered feed URIs. Does not require auth; implemented by Feed Generator services (not App View).'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - did
+                - feeds
+                properties:
+                  did:
+                    type: string
+                    format: did
+                  feeds:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDescribeFeedGeneratorFeed'
+                  links:
+                    $ref: '#/components/schemas/AppBskyFeedDescribeFeedGeneratorLinks'
+              examples:
+                FeedDescribeFeedGeneratorResponse200Example:
+                  $ref: '#/components/examples/FeedDescribeFeedGeneratorResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getActorFeeds:
+    get:
+      operationId: feedGetActorFeeds
+      summary: Bluesky Get a list of feeds (feed generator records) created by the actor (in the actor's repo).
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a list of feeds (feed generator records) created by the actor (in the actor''s repo).'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: actor
+        in: query
+        required: true
+        schema:
+          type: string
+          format: at-identifier
+        example: user.bsky.social
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - feeds
+                properties:
+                  cursor:
+                    type: string
+                  feeds:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
+              examples:
+                FeedGetActorFeedsResponse200Example:
+                  $ref: '#/components/examples/FeedGetActorFeedsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getActorLikes:
+    get:
+      operationId: feedGetActorLikes
+      summary: Bluesky Get a list of posts liked by an actor.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a list of posts liked by an actor. Requires auth, actor must be the requesting account.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: actor
+        in: query
+        required: true
+        schema:
+          type: string
+          format: at-identifier
+        example: user.bsky.social
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - feed
+                properties:
+                  cursor:
+                    type: string
+                  feed:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsFeedViewPost'
+              examples:
+                FeedGetActorLikesResponse200Example:
+                  $ref: '#/components/examples/FeedGetActorLikesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - BlockedActor
+                    - BlockedByActor
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getAuthorFeed:
+    get:
+      operationId: feedGetAuthorFeed
+      summary: Bluesky Get a view of an actor's 'author feed' (post and reposts by the author).
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a view of an actor''s ''author feed'' (post and reposts by the author). Does not require auth.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: actor
+        in: query
+        required: true
+        schema:
+          type: string
+          format: at-identifier
+        example: user.bsky.social
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      - name: filter
+        in: query
+        description: Combinations of post/repost types to include in response.
+        required: false
+        schema:
+          type: string
+          description: Combinations of post/repost types to include in response.
+          default: posts_with_replies
+          enum:
+          - posts_with_replies
+          - posts_no_replies
+          - posts_with_media
+          - posts_and_author_threads
+        example: posts_with_replies
+      - name: includePins
+        in: query
+        required: false
+        schema:
+          type: boolean
+        example: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - feed
+                properties:
+                  cursor:
+                    type: string
+                  feed:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsFeedViewPost'
+              examples:
+                FeedGetAuthorFeedResponse200Example:
+                  $ref: '#/components/examples/FeedGetAuthorFeedResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - BlockedActor
+                    - BlockedByActor
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getFeed:
+    get:
+      operationId: feedGetFeed
+      summary: Bluesky Get a hydrated feed from an actor's selected feed generator.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a hydrated feed from an actor''s selected feed generator. Implemented by App View.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: feed
+        in: query
+        required: true
+        schema:
+          type: string
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - feed
+                properties:
+                  cursor:
+                    type: string
+                  feed:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsFeedViewPost'
+              examples:
+                FeedGetFeedResponse200Example:
+                  $ref: '#/components/examples/FeedGetFeedResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - UnknownFeed
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getFeedGenerator:
+    get:
+      operationId: feedGetFeedGenerator
+      summary: Bluesky Get information about a feed generator.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get information about a feed generator. Implemented by AppView.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: feed
+        in: query
+        description: AT-URI of the feed generator record.
+        required: true
+        schema:
+          type: string
+          description: AT-URI of the feed generator record.
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - view
+                - isOnline
+                - isValid
+                properties:
+                  view:
+                    $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
+                  isOnline:
+                    type: boolean
+                    description: Indicates whether the feed generator service has been online recently, or else seems to be inactive.
+                  isValid:
+                    type: boolean
+                    description: Indicates whether the feed generator service is compatible with the record declaration.
+              examples:
+                FeedGetFeedGeneratorResponse200Example:
+                  $ref: '#/components/examples/FeedGetFeedGeneratorResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getFeedGenerators:
+    get:
+      operationId: feedGetFeedGenerators
+      summary: Bluesky Get information about a list of feed generators.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get information about a list of feed generators.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: feeds
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+            format: at-uri
+        example:
+        - at://did:plc:example123/app.bsky.feed.post/abc123
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - feeds
+                properties:
+                  feeds:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
+              examples:
+                FeedGetFeedGeneratorsResponse200Example:
+                  $ref: '#/components/examples/FeedGetFeedGeneratorsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getFeedSkeleton:
+    get:
+      operationId: feedGetFeedSkeleton
+      summary: Bluesky Get a skeleton of a feed provided by a feed generator.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a skeleton of a feed provided by a feed generator. Auth is optional, depending on provider requirements, and provides the DID of the requester. Implemented by Feed Generator Service.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: feed
+        in: query
+        description: Reference to feed generator record describing the specific feed being requested.
+        required: true
+        schema:
+          type: string
+          description: Reference to feed generator record describing the specific feed being requested.
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - feed
+                properties:
+                  cursor:
+                    type: string
+                  feed:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsSkeletonFeedPost'
+              examples:
+                FeedGetFeedSkeletonResponse200Example:
+                  $ref: '#/components/examples/FeedGetFeedSkeletonResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - UnknownFeed
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getLikes:
+    get:
+      operationId: feedGetLikes
+      summary: Bluesky Get like records which reference a subject (by AT-URI and CID).
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get like records which reference a subject (by AT-URI and CID).'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: uri
+        in: query
+        description: AT-URI of the subject (eg, a post record).
+        required: true
+        schema:
+          type: string
+          description: AT-URI of the subject (eg, a post record).
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      - name: cid
+        in: query
+        description: CID of the subject record (aka, specific version of record), to filter likes.
+        required: false
+        schema:
+          type: string
+          description: CID of the subject record (aka, specific version of record), to filter likes.
+          format: cid
+        example: bafyreiabc123example
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - uri
+                - likes
+                properties:
+                  uri:
+                    type: string
+                    format: at-uri
+                  cid:
+                    type: string
+                    format: cid
+                  cursor:
+                    type: string
+                  likes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedGetLikesLike'
+              examples:
+                FeedGetLikesResponse200Example:
+                  $ref: '#/components/examples/FeedGetLikesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getListFeed:
+    get:
+      operationId: feedGetListFeed
+      summary: Bluesky Get a feed of recent posts from a list (posts and reposts from any actors on the list).
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a feed of recent posts from a list (posts and reposts from any actors on the list). Does not require auth.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: list
+        in: query
+        description: Reference (AT-URI) to the list record.
+        required: true
+        schema:
+          type: string
+          description: Reference (AT-URI) to the list record.
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - feed
+                properties:
+                  cursor:
+                    type: string
+                  feed:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsFeedViewPost'
+              examples:
+                FeedGetListFeedResponse200Example:
+                  $ref: '#/components/examples/FeedGetListFeedResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - UnknownList
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getPostThread:
+    get:
+      operationId: feedGetPostThread
+      summary: Bluesky Get posts in a thread.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get posts in a thread. Does not require auth, but additional metadata and filtering will be applied for authed requests.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: uri
+        in: query
+        description: Reference (AT-URI) to post record.
+        required: true
+        schema:
+          type: string
+          description: Reference (AT-URI) to post record.
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      - name: depth
+        in: query
+        description: How many levels of reply depth should be included in response.
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 1000
+          default: 6
+        example: 6
+      - name: parentHeight
+        in: query
+        description: How many levels of parent (and grandparent, etc) post to include.
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 1000
+          default: 80
+        example: 80
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - thread
+                properties:
+                  thread:
+                    oneOf:
+                    - $ref: '#/components/schemas/AppBskyFeedDefsThreadViewPost'
+                    - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
+                    - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
+                  threadgate:
+                    $ref: '#/components/schemas/AppBskyFeedDefsThreadgateView'
+              examples:
+                FeedGetPostThreadResponse200Example:
+                  $ref: '#/components/examples/FeedGetPostThreadResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - NotFound
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getPosts:
+    get:
+      operationId: feedGetPosts
+      summary: Bluesky Gets post views for a specified list of posts (by AT-URI).
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Gets post views for a specified list of posts (by AT-URI). This is sometimes referred to as ''hydrating'' a ''feed skeleton''.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: uris
+        in: query
+        description: List of post AT-URIs to return hydrated views for.
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+            format: at-uri
+          maxItems: 25
+        example:
+        - at://did:plc:example123/app.bsky.feed.post/abc123
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - posts
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsPostView'
+              examples:
+                FeedGetPostsResponse200Example:
+                  $ref: '#/components/examples/FeedGetPostsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getQuotes:
+    get:
+      operationId: feedGetQuotes
+      summary: Bluesky Get a list of quotes for a given post.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a list of quotes for a given post.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: uri
+        in: query
+        description: Reference (AT-URI) of post record
+        required: true
+        schema:
+          type: string
+          description: Reference (AT-URI) of post record
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      - name: cid
+        in: query
+        description: If supplied, filters to quotes of specific version (by CID) of the post record.
+        required: false
+        schema:
+          type: string
+          description: If supplied, filters to quotes of specific version (by CID) of the post record.
+          format: cid
+        example: bafyreiabc123example
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - uri
+                - posts
+                properties:
+                  uri:
+                    type: string
+                    format: at-uri
+                  cid:
+                    type: string
+                    format: cid
+                  cursor:
+                    type: string
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsPostView'
+              examples:
+                FeedGetQuotesResponse200Example:
+                  $ref: '#/components/examples/FeedGetQuotesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getRepostedBy:
+    get:
+      operationId: feedGetRepostedBy
+      summary: Bluesky Get a list of reposts for a given post.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a list of reposts for a given post.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: uri
+        in: query
+        description: Reference (AT-URI) of post record
+        required: true
+        schema:
+          type: string
+          description: Reference (AT-URI) of post record
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      - name: cid
+        in: query
+        description: If supplied, filters to reposts of specific version (by CID) of the post record.
+        required: false
+        schema:
+          type: string
+          description: If supplied, filters to reposts of specific version (by CID) of the post record.
+          format: cid
+        example: bafyreiabc123example
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - uri
+                - repostedBy
+                properties:
+                  uri:
+                    type: string
+                    format: at-uri
+                  cid:
+                    type: string
+                    format: cid
+                  cursor:
+                    type: string
+                  repostedBy:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+              examples:
+                FeedGetRepostedByResponse200Example:
+                  $ref: '#/components/examples/FeedGetRepostedByResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getSuggestedFeeds:
+    get:
+      operationId: feedGetSuggestedFeeds
+      summary: Bluesky Get a list of suggested feeds (feed generators) for the requesting account.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a list of suggested feeds (feed generators) for the requesting account.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - feeds
+                properties:
+                  cursor:
+                    type: string
+                  feeds:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
+              examples:
+                FeedGetSuggestedFeedsResponse200Example:
+                  $ref: '#/components/examples/FeedGetSuggestedFeedsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.getTimeline:
+    get:
+      operationId: feedGetTimeline
+      summary: Bluesky Get a view of the requesting account's home timeline.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a view of the requesting account''s home timeline. This is expected to be some form of reverse-chronological feed.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: algorithm
+        in: query
+        description: 'Variant ''algorithm'' for timeline. Implementation-specific. NOTE: most feed flexibility has been moved to feed generator mechanism.'
+        required: false
+        schema:
+          type: string
+          description: 'Variant ''algorithm'' for timeline. Implementation-specific. NOTE: most feed flexibility has been moved to feed generator mechanism.'
+        example: example-algorithm
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - feed
+                properties:
+                  cursor:
+                    type: string
+                  feed:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsFeedViewPost'
+              examples:
+                FeedGetTimelineResponse200Example:
+                  $ref: '#/components/examples/FeedGetTimelineResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.searchPosts:
+    get:
+      operationId: feedSearchPosts
+      summary: Bluesky Find posts matching search criteria, returning views of those posts.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Find posts matching search criteria, returning views of those posts.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: q
+        in: query
+        description: Search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended.
+        required: true
+        schema:
+          type: string
+          description: Search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended.
+        example: example-q
+      - name: sort
+        in: query
+        description: Specifies the ranking order of results.
+        required: false
+        schema:
+          type: string
+          description: Specifies the ranking order of results.
+          default: latest
+          enum:
+          - top
+          - latest
+        example: top
+      - name: since
+        in: query
+        description: Filter results for posts after the indicated datetime (inclusive). Expected to use 'sortAt' timestamp, which may not match 'createdAt'. Can be a datetime, or just an ISO date (YYYY-MM-DD).
+        required: false
+        schema:
+          type: string
+          description: Filter results for posts after the indicated datetime (inclusive). Expected to use 'sortAt' timestamp, which may not match 'createdAt'. Can be a datetime, or just an ISO date (YYYY-MM-DD).
+        example: example-since
+      - name: until
+        in: query
+        description: Filter results for posts before the indicated datetime (not inclusive). Expected to use 'sortAt' timestamp, which may not match 'createdAt'. Can be a datetime, or just an ISO date (YYY-MM-DD).
+        required: false
+        schema:
+          type: string
+          description: Filter results for posts before the indicated datetime (not inclusive). Expected to use 'sortAt' timestamp, which may not match 'createdAt'. Can be a datetime, or just an ISO date (YYY-MM-DD).
+        example: example-until
+      - name: mentions
+        in: query
+        description: Filter to posts which mention the given account. Handles are resolved to DID before query-time. Only matches rich-text facet mentions.
+        required: false
+        schema:
+          type: string
+          description: Filter to posts which mention the given account. Handles are resolved to DID before query-time. Only matches rich-text facet mentions.
+          format: at-identifier
+        example: user.bsky.social
+      - name: author
+        in: query
+        description: Filter to posts by the given account. Handles are resolved to DID before query-time.
+        required: false
+        schema:
+          type: string
+          description: Filter to posts by the given account. Handles are resolved to DID before query-time.
+          format: at-identifier
+        example: user.bsky.social
+      - name: lang
+        in: query
+        description: Filter to posts in the given language. Expected to be based on post language field, though server may override language detection.
+        required: false
+        schema:
+          type: string
+          description: Filter to posts in the given language. Expected to be based on post language field, though server may override language detection.
+          format: language
+        example: en
+      - name: domain
+        in: query
+        description: Filter to posts with URLs (facet links or embeds) linking to the given domain (hostname). Server may apply hostname normalization.
+        required: false
+        schema:
+          type: string
+          description: Filter to posts with URLs (facet links or embeds) linking to the given domain (hostname). Server may apply hostname normalization.
+        example: example-domain
+      - name: url
+        in: query
+        description: Filter to posts with links (facet links or embeds) pointing to this URL. Server may apply URL normalization or fuzzy matching.
+        required: false
+        schema:
+          type: string
+          description: Filter to posts with links (facet links or embeds) pointing to this URL. Server may apply URL normalization or fuzzy matching.
+          format: uri
+        example: https://example.com/resource
+      - name: tag
+        in: query
+        description: Filter to posts with the given tag (hashtag), based on rich-text facet or tag field. Do not include the hash (#) prefix. Multiple tags can be specified, with 'AND' matching.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            maxLength: 640
+        example:
+        - example-tag
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 25
+        example: 25
+      - name: cursor
+        in: query
+        description: Optional pagination mechanism; may not necessarily allow scrolling through entire result set.
+        required: false
+        schema:
+          type: string
+          description: Optional pagination mechanism; may not necessarily allow scrolling through entire result set.
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - posts
+                properties:
+                  cursor:
+                    type: string
+                  hitsTotal:
+                    type: integer
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyFeedDefsPostView'
+              examples:
+                FeedSearchPostsResponse200Example:
+                  $ref: '#/components/examples/FeedSearchPostsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - BadQueryString
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.feed.sendInteractions:
+    post:
+      operationId: feedSendInteractions
+      summary: Bluesky Send information about interactions with feed items back to the feed generator that served them.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Send information about interactions with feed items back to the feed generator that served them.'
+      tags:
+      - Feeds
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - interactions
+              properties:
+                interactions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/AppBskyFeedDefsInteraction'
+            examples:
+              FeedSendInteractionsRequestExample:
+                $ref: '#/components/examples/FeedSendInteractionsRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _unknown_:
+                    type: object
+                    properties: {}
+              examples:
+                FeedSendInteractionsResponse200Example:
+                  $ref: '#/components/examples/FeedSendInteractionsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  examples:
+    FeedGetListFeedResponse200Example:
+      summary: Successful response for feedGetListFeed
+      value:
+        feed:
+        - post:
+            uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            author: {}
+            record: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            embed: {}
+            replyCount: 50
+            repostCount: 50
+          reply:
+            root: {}
+            parent: {}
+            grandparentAuthor: {}
+          reason:
+            by: {}
+            indexedAt: {}
+          feedContext: Example text content
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedSearchPostsResponse200Example:
+      summary: Successful response for feedSearchPosts
+      value:
+        posts:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          author:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            avatar: https://example.com/resource
+            associated: {}
+            viewer: {}
+            labels: []
+            createdAt: '2024-01-15T12:00:00.000Z'
+          record: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          embed:
+            images: {}
+          replyCount: 50
+          repostCount: 50
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+        hitsTotal: 50
+    FeedGetFeedResponse200Example:
+      summary: Successful response for feedGetFeed
+      value:
+        feed:
+        - post:
+            uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            author: {}
+            record: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            embed: {}
+            replyCount: 50
+            repostCount: 50
+          reply:
+            root: {}
+            parent: {}
+            grandparentAuthor: {}
+          reason:
+            by: {}
+            indexedAt: {}
+          feedContext: Example text content
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedGetQuotesResponse200Example:
+      summary: Successful response for feedGetQuotes
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        posts:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          author:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            avatar: https://example.com/resource
+            associated: {}
+            viewer: {}
+            labels: []
+            createdAt: '2024-01-15T12:00:00.000Z'
+          record: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          embed:
+            images: {}
+          replyCount: 50
+          repostCount: 50
+        cid: bafyreiabc123example
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedGetRepostedByResponse200Example:
+      summary: Successful response for feedGetRepostedBy
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        repostedBy:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cid: bafyreiabc123example
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedSendInteractionsRequestExample:
+      summary: Example request for feedSendInteractions
+      value:
+        interactions:
+        - item: at://did:plc:example123/app.bsky.feed.post/abc123
+          event: app.bsky.feed.defs#requestLess
+          feedContext: Example text content
+    FeedGetSuggestedFeedsResponse200Example:
+      summary: Successful response for feedGetSuggestedFeeds
+      value:
+        feeds:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          did: did:plc:example123abc
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          displayName: Example Name
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedDescribeFeedGeneratorResponse200Example:
+      summary: Successful response for feedDescribeFeedGenerator
+      value:
+        did: did:plc:example123abc
+        feeds:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        links:
+          privacyPolicy: example-privacyPolicy
+          termsOfService: example-termsOfService
+    FeedSendInteractionsResponse200Example:
+      summary: Successful response for feedSendInteractions
+      value:
+        _unknown_: {}
+    FeedGetTimelineResponse200Example:
+      summary: Successful response for feedGetTimeline
+      value:
+        feed:
+        - post:
+            uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            author: {}
+            record: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            embed: {}
+            replyCount: 50
+            repostCount: 50
+          reply:
+            root: {}
+            parent: {}
+            grandparentAuthor: {}
+          reason:
+            by: {}
+            indexedAt: {}
+          feedContext: Example text content
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedGetAuthorFeedResponse200Example:
+      summary: Successful response for feedGetAuthorFeed
+      value:
+        feed:
+        - post:
+            uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            author: {}
+            record: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            embed: {}
+            replyCount: 50
+            repostCount: 50
+          reply:
+            root: {}
+            parent: {}
+            grandparentAuthor: {}
+          reason:
+            by: {}
+            indexedAt: {}
+          feedContext: Example text content
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedGetFeedSkeletonResponse200Example:
+      summary: Successful response for feedGetFeedSkeleton
+      value:
+        feed:
+        - post: at://did:plc:example123/app.bsky.feed.post/abc123
+          reason:
+            repost: {}
+          feedContext: Example text content
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedGetLikesResponse200Example:
+      summary: Successful response for feedGetLikes
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        likes:
+        - indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+          actor:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+        cid: bafyreiabc123example
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedGetPostThreadResponse200Example:
+      summary: Successful response for feedGetPostThread
+      value:
+        thread:
+          post:
+            uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            author: {}
+            record: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            embed: {}
+            replyCount: 50
+            repostCount: 50
+          parent:
+            post: {}
+            parent: {}
+            replies: {}
+          replies: []
+        threadgate:
+          uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          record: {}
+          lists:
+          - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            name: Example Name
+            purpose: {}
+            avatar: https://example.com/resource
+            listItemCount: 50
+            labels: []
+            viewer: {}
+    FeedGetActorLikesResponse200Example:
+      summary: Successful response for feedGetActorLikes
+      value:
+        feed:
+        - post:
+            uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            author: {}
+            record: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            embed: {}
+            replyCount: 50
+            repostCount: 50
+          reply:
+            root: {}
+            parent: {}
+            grandparentAuthor: {}
+          reason:
+            by: {}
+            indexedAt: {}
+          feedContext: Example text content
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedGetFeedGeneratorResponse200Example:
+      summary: Successful response for feedGetFeedGenerator
+      value:
+        view:
+          uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          did: did:plc:example123abc
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated:
+              lists: {}
+              feedgens: {}
+              starterPacks: {}
+              labeler: {}
+              chat: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          displayName: Example Name
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: []
+        isOnline: true
+        isValid: true
+    FeedGetPostsResponse200Example:
+      summary: Successful response for feedGetPosts
+      value:
+        posts:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          author:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            avatar: https://example.com/resource
+            associated: {}
+            viewer: {}
+            labels: []
+            createdAt: '2024-01-15T12:00:00.000Z'
+          record: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          embed:
+            images: {}
+          replyCount: 50
+          repostCount: 50
+    FeedGetFeedGeneratorsResponse200Example:
+      summary: Successful response for feedGetFeedGenerators
+      value:
+        feeds:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          did: did:plc:example123abc
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          displayName: Example Name
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: {}
+    FeedGetActorFeedsResponse200Example:
+      summary: Successful response for feedGetActorFeeds
+      value:
+        feeds:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          did: did:plc:example123abc
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          displayName: Example Name
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+  schemas:
+    AppBskyFeedDefsBlockedAuthor:
+      type: object
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+    AppBskyFeedDefsBlockedPost:
+      type: object
+      required:
+      - uri
+      - blocked
+      - author
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        blocked:
+          type: boolean
+          default: true
+        author:
+          $ref: '#/components/schemas/AppBskyFeedDefsBlockedAuthor'
+    AppBskyFeedDefsSkeletonReasonRepost:
+      type: object
+      required:
+      - repost
+      properties:
+        repost:
+          type: string
+          format: at-uri
+    AppBskyGraphDefsListViewBasic:
+      type: object
+      required:
+      - uri
+      - cid
+      - name
+      - purpose
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        purpose:
+          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
+        avatar:
+          type: string
+          format: uri
+        listItemCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    ComAtprotoLabelDefsLabel:
+      type: object
+      description: Metadata tag on an atproto resource (eg, repo or record).
+      required:
+      - src
+      - uri
+      - val
+      - cts
+      properties:
+        ver:
+          type: integer
+        src:
+          type: string
+          description: DID of the actor who created this label.
+          format: did
+        uri:
+          type: string
+          description: AT URI of the record, repository (account), or other resource that this label applies to.
+          format: uri
+        cid:
+          type: string
+          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
+          format: cid
+        val:
+          type: string
+          description: The short string name of the value or type of this label.
+          maxLength: 128
+        neg:
+          type: boolean
+          description: If true, this is a negation label, overwriting a previous label.
+        cts:
+          type: string
+          description: Timestamp when this label was created.
+          format: date-time
+        exp:
+          type: string
+          description: Timestamp at which this label expires (no longer applies).
+          format: date-time
+        sig:
+          type: string
+          format: byte
+          description: Signature of dag-cbor encoded label.
+    AppBskyFeedDefsSkeletonFeedPost:
+      type: object
+      required:
+      - post
+      properties:
+        post:
+          type: string
+          format: at-uri
+        reason:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyFeedDefsSkeletonReasonRepost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsSkeletonReasonPin'
+        feedContext:
+          type: string
+          description: Context that will be passed through to client and may be passed to feed generator back alongside interactions.
+          maxLength: 2000
+    AppBskyEmbedImagesView:
+      type: object
+      required:
+      - images
+      properties:
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyEmbedImagesViewImage'
+          maxItems: 4
+    AppBskyEmbedRecordViewBlocked:
+      type: object
+      required:
+      - uri
+      - blocked
+      - author
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        blocked:
+          type: boolean
+          default: true
+        author:
+          $ref: '#/components/schemas/AppBskyFeedDefsBlockedAuthor'
+    AppBskyFeedDefsThreadViewPost:
+      type: object
+      required:
+      - post
+      properties:
+        post:
+          $ref: '#/components/schemas/AppBskyFeedDefsPostView'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyFeedDefsThreadViewPost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
+        replies:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/AppBskyFeedDefsThreadViewPost'
+            - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
+            - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
+    AppBskyRichtextFacetLink:
+      type: object
+      description: Facet feature for a URL. The text URL may have been simplified or truncated, but the facet reference should be a complete URL.
+      required:
+      - uri
+      properties:
+        uri:
+          type: string
+          format: uri
+    AppBskyFeedDescribeFeedGeneratorFeed:
+      type: object
+      required:
+      - uri
+      properties:
+        uri:
+          type: string
+          format: at-uri
+    AppBskyFeedDescribeFeedGeneratorLinks:
+      type: object
+      properties:
+        privacyPolicy:
+          type: string
+        termsOfService:
+          type: string
+    AppBskyActorDefsProfileView:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        description:
+          type: string
+          maxLength: 2560
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyFeedDefsGeneratorViewerState:
+      type: object
+      properties:
+        like:
+          type: string
+          format: at-uri
+    AppBskyRichtextFacetMention:
+      type: object
+      description: Facet feature for mention of another account. The text is usually a handle, including a '@' prefix, but the facet reference is a DID.
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+    AppBskyActorDefsProfileAssociatedChat:
+      type: object
+      required:
+      - allowIncoming
+      properties:
+        allowIncoming:
+          type: string
+          enum:
+          - all
+          - none
+          - following
+    AppBskyFeedDefsThreadgateView:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        record: {}
+        lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+    AppBskyEmbedRecordView:
+      type: object
+      required:
+      - record
+      properties:
+        record:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewRecord'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewNotFound'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewBlocked'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewDetached'
+          - $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
+          - $ref: '#/components/schemas/AppBskyGraphDefsListView'
+          - $ref: '#/components/schemas/AppBskyLabelerDefsLabelerView'
+          - $ref: '#/components/schemas/AppBskyGraphDefsStarterPackViewBasic'
+    AppBskyFeedDefsFeedViewPost:
+      type: object
+      required:
+      - post
+      properties:
+        post:
+          $ref: '#/components/schemas/AppBskyFeedDefsPostView'
+        reply:
+          $ref: '#/components/schemas/AppBskyFeedDefsReplyRef'
+        reason:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyFeedDefsReasonRepost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsReasonPin'
+        feedContext:
+          type: string
+          description: Context provided by feed generator that may be passed back alongside interactions.
+          maxLength: 2000
+    AppBskyActorDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          format: at-uri
+        blockingByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        following:
+          type: string
+          format: at-uri
+        followedBy:
+          type: string
+          format: at-uri
+        knownFollowers:
+          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
+    AppBskyEmbedExternalViewExternal:
+      type: object
+      required:
+      - uri
+      - title
+      - description
+      properties:
+        uri:
+          type: string
+          format: uri
+        title:
+          type: string
+        description:
+          type: string
+        thumb:
+          type: string
+          format: uri
+    AppBskyActorDefsProfileAssociated:
+      type: object
+      properties:
+        lists:
+          type: integer
+        feedgens:
+          type: integer
+        starterPacks:
+          type: integer
+        labeler:
+          type: boolean
+        chat:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
+    AppBskyGraphDefsStarterPackViewBasic:
+      type: object
+      required:
+      - uri
+      - cid
+      - record
+      - creator
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        record: {}
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        listItemCount:
+          type: integer
+          minimum: 0
+        joinedWeekCount:
+          type: integer
+          minimum: 0
+        joinedAllTimeCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyEmbedVideoView:
+      type: object
+      required:
+      - cid
+      - playlist
+      properties:
+        cid:
+          type: string
+          format: cid
+        playlist:
+          type: string
+          format: uri
+        thumbnail:
+          type: string
+          format: uri
+        alt:
+          type: string
+          maxLength: 10000
+        aspectRatio:
+          $ref: '#/components/schemas/AppBskyEmbedDefsAspectRatio'
+    AppBskyActorDefsKnownFollowers:
+      type: object
+      description: The subject's followers whom you also follow
+      required:
+      - count
+      - followers
+      properties:
+        count:
+          type: integer
+        followers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+          maxItems: 5
+    AppBskyGraphDefsListView:
+      type: object
+      required:
+      - uri
+      - cid
+      - creator
+      - name
+      - purpose
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        purpose:
+          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
+        description:
+          type: string
+          maxLength: 3000
+        descriptionFacets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyRichtextFacet'
+        avatar:
+          type: string
+          format: uri
+        listItemCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyActorDefsProfileViewBasic:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        createdAt:
+          type: string
+          format: date-time
+    AppBskyGraphDefsListPurpose:
+      oneOf:
+      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
+    AppBskyLabelerDefsLabelerView:
+      type: object
+      required:
+      - uri
+      - cid
+      - creator
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+        likeCount:
+          type: integer
+          minimum: 0
+        viewer:
+          $ref: '#/components/schemas/AppBskyLabelerDefsLabelerViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyFeedDefsReasonRepost:
+      type: object
+      required:
+      - by
+      - indexedAt
+      properties:
+        by:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyRichtextFacetByteSlice:
+      type: object
+      description: 'Specifies the sub-string range a facet feature applies to. Start index is inclusive, end index is exclusive. Indices are zero-indexed, counting bytes of the UTF-8 encoded text. NOTE: some languages, like Javascript, use UTF-16 or Unicode codepoints for string slice indexing; in these languages, convert to byte arrays before working with facets.'
+      required:
+      - byteStart
+      - byteEnd
+      properties:
+        byteStart:
+          type: integer
+          minimum: 0
+        byteEnd:
+          type: integer
+          minimum: 0
+    AppBskyRichtextFacet:
+      type: object
+      description: Annotation of a sub-string within rich text.
+      required:
+      - index
+      - features
+      properties:
+        index:
+          $ref: '#/components/schemas/AppBskyRichtextFacetByteSlice'
+        features:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/AppBskyRichtextFacetMention'
+            - $ref: '#/components/schemas/AppBskyRichtextFacetLink'
+            - $ref: '#/components/schemas/AppBskyRichtextFacetTag'
+    AppBskyFeedDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject content. Only has meaningful content for authed requests.
+      properties:
+        repost:
+          type: string
+          format: at-uri
+        like:
+          type: string
+          format: at-uri
+        threadMuted:
+          type: boolean
+        replyDisabled:
+          type: boolean
+        embeddingDisabled:
+          type: boolean
+        pinned:
+          type: boolean
+    AppBskyLabelerDefsLabelerViewerState:
+      type: object
+      properties:
+        like:
+          type: string
+          format: at-uri
+    AppBskyEmbedRecordViewRecord:
+      type: object
+      required:
+      - uri
+      - cid
+      - author
+      - value
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        author:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        value: {}
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        replyCount:
+          type: integer
+        repostCount:
+          type: integer
+        likeCount:
+          type: integer
+        quoteCount:
+          type: integer
+        embeds:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/AppBskyEmbedImagesView'
+            - $ref: '#/components/schemas/AppBskyEmbedVideoView'
+            - $ref: '#/components/schemas/AppBskyEmbedExternalView'
+            - $ref: '#/components/schemas/AppBskyEmbedRecordView'
+            - $ref: '#/components/schemas/AppBskyEmbedRecordWithMediaView'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyEmbedImagesViewImage:
+      type: object
+      required:
+      - thumb
+      - fullsize
+      - alt
+      properties:
+        thumb:
+          type: string
+          description: Fully-qualified URL where a thumbnail of the image can be fetched. For example, CDN location provided by the App View.
+          format: uri
+        fullsize:
+          type: string
+          description: Fully-qualified URL where a large version of the image can be fetched. May or may not be the exact original blob. For example, CDN location provided by the App View.
+          format: uri
+        alt:
+          type: string
+          description: Alt text description of the image, for accessibility.
+        aspectRatio:
+          $ref: '#/components/schemas/AppBskyEmbedDefsAspectRatio'
+    AppBskyEmbedRecordViewDetached:
+      type: object
+      required:
+      - uri
+      - detached
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        detached:
+          type: boolean
+          default: true
+    AppBskyFeedDefsPostView:
+      type: object
+      required:
+      - uri
+      - cid
+      - author
+      - record
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        author:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        record: {}
+        embed:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyEmbedImagesView'
+          - $ref: '#/components/schemas/AppBskyEmbedVideoView'
+          - $ref: '#/components/schemas/AppBskyEmbedExternalView'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordView'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordWithMediaView'
+        replyCount:
+          type: integer
+        repostCount:
+          type: integer
+        likeCount:
+          type: integer
+        quoteCount:
+          type: integer
+        indexedAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/AppBskyFeedDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        threadgate:
+          $ref: '#/components/schemas/AppBskyFeedDefsThreadgateView'
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
+    AppBskyEmbedDefsAspectRatio:
+      type: object
+      description: width:height represents an aspect ratio. It may be approximate, and may not correspond to absolute dimensions in any given unit.
+      required:
+      - width
+      - height
+      properties:
+        width:
+          type: integer
+          minimum: 1
+        height:
+          type: integer
+          minimum: 1
+    AppBskyEmbedRecordWithMediaView:
+      type: object
+      required:
+      - record
+      - media
+      properties:
+        record:
+          $ref: '#/components/schemas/AppBskyEmbedRecordView'
+        media:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyEmbedImagesView'
+          - $ref: '#/components/schemas/AppBskyEmbedVideoView'
+          - $ref: '#/components/schemas/AppBskyEmbedExternalView'
+    AppBskyGraphDefsReferencelist:
+      type: string
+      format: token
+      description: A list of actors used for only for reference purposes such as within a starter pack.
+    AppBskyFeedDefsGeneratorView:
+      type: object
+      required:
+      - uri
+      - cid
+      - did
+      - creator
+      - displayName
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        did:
+          type: string
+          format: did
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+        displayName:
+          type: string
+        description:
+          type: string
+          maxLength: 3000
+        descriptionFacets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyRichtextFacet'
+        avatar:
+          type: string
+          format: uri
+        likeCount:
+          type: integer
+          minimum: 0
+        acceptsInteractions:
+          type: boolean
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyFeedDefsGeneratorViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyFeedDefsReasonPin:
+      type: object
+      properties: {}
+    AppBskyFeedDefsSkeletonReasonPin:
+      type: object
+      properties: {}
+    AppBskyGraphDefsModlist:
+      type: string
+      format: token
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyFeedDefsInteraction:
+      type: object
+      properties:
+        item:
+          type: string
+          format: at-uri
+        event:
+          type: string
+          enum:
+          - app.bsky.feed.defs#requestLess
+          - app.bsky.feed.defs#requestMore
+          - app.bsky.feed.defs#clickthroughItem
+          - app.bsky.feed.defs#clickthroughAuthor
+          - app.bsky.feed.defs#clickthroughReposter
+          - app.bsky.feed.defs#clickthroughEmbed
+          - app.bsky.feed.defs#interactionSeen
+          - app.bsky.feed.defs#interactionLike
+          - app.bsky.feed.defs#interactionRepost
+          - app.bsky.feed.defs#interactionReply
+          - app.bsky.feed.defs#interactionQuote
+          - app.bsky.feed.defs#interactionShare
+        feedContext:
+          type: string
+          description: Context on a feed item that was originally supplied by the feed generator on getFeedSkeleton.
+          maxLength: 2000
+    AppBskyRichtextFacetTag:
+      type: object
+      description: Facet feature for a hashtag. The text usually includes a '#' prefix, but the facet reference should not (except in the case of 'double hash tags').
+      required:
+      - tag
+      properties:
+        tag:
+          type: string
+          maxLength: 640
+    AppBskyGraphDefsListViewerState:
+      type: object
+      properties:
+        muted:
+          type: boolean
+        blocked:
+          type: string
+          format: at-uri
+    AppBskyFeedDefsNotFoundPost:
+      type: object
+      required:
+      - uri
+      - notFound
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        notFound:
+          type: boolean
+          default: true
+    AppBskyEmbedExternalView:
+      type: object
+      required:
+      - external
+      properties:
+        external:
+          $ref: '#/components/schemas/AppBskyEmbedExternalViewExternal'
+    AppBskyEmbedRecordViewNotFound:
+      type: object
+      required:
+      - uri
+      - notFound
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        notFound:
+          type: boolean
+          default: true
+    AppBskyFeedDefsReplyRef:
+      type: object
+      required:
+      - root
+      - parent
+      properties:
+        root:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyFeedDefsPostView'
+          - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyFeedDefsPostView'
+          - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
+        grandparentAuthor:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+    AppBskyFeedGetLikesLike:
+      type: object
+      required:
+      - indexedAt
+      - createdAt
+      - actor
+      properties:
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        actor:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

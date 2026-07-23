@@ -1,0 +1,2577 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Social Graph API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Social Graph
+  description: Operations for managing follows, followers, blocks, mutes, and lists.
+paths:
+  /xrpc/app.bsky.graph.getActorStarterPacks:
+    get:
+      operationId: graphGetActorStarterPacks
+      summary: Bluesky Get a list of starter packs created by the actor.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a list of starter packs created by the actor.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: actor
+        in: query
+        required: true
+        schema:
+          type: string
+          format: at-identifier
+        example: user.bsky.social
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - starterPacks
+                properties:
+                  cursor:
+                    type: string
+                  starterPacks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyGraphDefsStarterPackViewBasic'
+              examples:
+                GraphGetActorStarterPacksResponse200Example:
+                  $ref: '#/components/examples/GraphGetActorStarterPacksResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getBlocks:
+    get:
+      operationId: graphGetBlocks
+      summary: Bluesky Enumerates which accounts the requesting account is currently blocking.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Enumerates which accounts the requesting account is currently blocking. Requires auth.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - blocks
+                properties:
+                  cursor:
+                    type: string
+                  blocks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+              examples:
+                GraphGetBlocksResponse200Example:
+                  $ref: '#/components/examples/GraphGetBlocksResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getFollowers:
+    get:
+      operationId: graphGetFollowers
+      summary: Bluesky Enumerates accounts which follow a specified account (actor).
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Enumerates accounts which follow a specified account (actor).'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: actor
+        in: query
+        required: true
+        schema:
+          type: string
+          format: at-identifier
+        example: user.bsky.social
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - subject
+                - followers
+                properties:
+                  subject:
+                    $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+                  cursor:
+                    type: string
+                  followers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+              examples:
+                GraphGetFollowersResponse200Example:
+                  $ref: '#/components/examples/GraphGetFollowersResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getFollows:
+    get:
+      operationId: graphGetFollows
+      summary: Bluesky Enumerates accounts which a specified account (actor) follows.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Enumerates accounts which a specified account (actor) follows.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: actor
+        in: query
+        required: true
+        schema:
+          type: string
+          format: at-identifier
+        example: user.bsky.social
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - subject
+                - follows
+                properties:
+                  subject:
+                    $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+                  cursor:
+                    type: string
+                  follows:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+              examples:
+                GraphGetFollowsResponse200Example:
+                  $ref: '#/components/examples/GraphGetFollowsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getKnownFollowers:
+    get:
+      operationId: graphGetKnownFollowers
+      summary: Bluesky Enumerates accounts which follow a specified account (actor) and are followed by the viewer.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Enumerates accounts which follow a specified account (actor) and are followed by the viewer.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: actor
+        in: query
+        required: true
+        schema:
+          type: string
+          format: at-identifier
+        example: user.bsky.social
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - subject
+                - followers
+                properties:
+                  subject:
+                    $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+                  cursor:
+                    type: string
+                  followers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+              examples:
+                GraphGetKnownFollowersResponse200Example:
+                  $ref: '#/components/examples/GraphGetKnownFollowersResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getList:
+    get:
+      operationId: graphGetList
+      summary: Bluesky Gets a 'view' (with additional context) of a specified list.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Gets a ''view'' (with additional context) of a specified list.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: list
+        in: query
+        description: Reference (AT-URI) of the list record to hydrate.
+        required: true
+        schema:
+          type: string
+          description: Reference (AT-URI) of the list record to hydrate.
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - list
+                - items
+                properties:
+                  cursor:
+                    type: string
+                  list:
+                    $ref: '#/components/schemas/AppBskyGraphDefsListView'
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyGraphDefsListItemView'
+              examples:
+                GraphGetListResponse200Example:
+                  $ref: '#/components/examples/GraphGetListResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getListBlocks:
+    get:
+      operationId: graphGetListBlocks
+      summary: Bluesky Get mod lists that the requesting account (actor) is blocking.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get mod lists that the requesting account (actor) is blocking. Requires auth.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - lists
+                properties:
+                  cursor:
+                    type: string
+                  lists:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyGraphDefsListView'
+              examples:
+                GraphGetListBlocksResponse200Example:
+                  $ref: '#/components/examples/GraphGetListBlocksResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getListMutes:
+    get:
+      operationId: graphGetListMutes
+      summary: Bluesky Enumerates mod lists that the requesting account (actor) currently has muted.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Enumerates mod lists that the requesting account (actor) currently has muted. Requires auth.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - lists
+                properties:
+                  cursor:
+                    type: string
+                  lists:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyGraphDefsListView'
+              examples:
+                GraphGetListMutesResponse200Example:
+                  $ref: '#/components/examples/GraphGetListMutesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getLists:
+    get:
+      operationId: graphGetLists
+      summary: Bluesky Enumerates the lists created by a specified account (actor).
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Enumerates the lists created by a specified account (actor).'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: actor
+        in: query
+        description: The account (actor) to enumerate lists from.
+        required: true
+        schema:
+          type: string
+          description: The account (actor) to enumerate lists from.
+          format: at-identifier
+        example: user.bsky.social
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - lists
+                properties:
+                  cursor:
+                    type: string
+                  lists:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyGraphDefsListView'
+              examples:
+                GraphGetListsResponse200Example:
+                  $ref: '#/components/examples/GraphGetListsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getMutes:
+    get:
+      operationId: graphGetMutes
+      summary: Bluesky Enumerates accounts that the requesting account (actor) currently has muted.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Enumerates accounts that the requesting account (actor) currently has muted. Requires auth.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - mutes
+                properties:
+                  cursor:
+                    type: string
+                  mutes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+              examples:
+                GraphGetMutesResponse200Example:
+                  $ref: '#/components/examples/GraphGetMutesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getRelationships:
+    get:
+      operationId: graphGetRelationships
+      summary: Bluesky Enumerates public relationships between one account, and a list of other accounts.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Enumerates public relationships between one account, and a list of other accounts. Does not require auth.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: actor
+        in: query
+        description: Primary account requesting relationships for.
+        required: true
+        schema:
+          type: string
+          description: Primary account requesting relationships for.
+          format: at-identifier
+        example: user.bsky.social
+      - name: others
+        in: query
+        description: List of 'other' accounts to be related back to the primary.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: at-identifier
+          maxItems: 30
+        example:
+        - user.bsky.social
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - relationships
+                properties:
+                  actor:
+                    type: string
+                    format: did
+                  relationships:
+                    type: array
+                    items:
+                      oneOf:
+                      - $ref: '#/components/schemas/AppBskyGraphDefsRelationship'
+                      - $ref: '#/components/schemas/AppBskyGraphDefsNotFoundActor'
+              examples:
+                GraphGetRelationshipsResponse200Example:
+                  $ref: '#/components/examples/GraphGetRelationshipsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - ActorNotFound
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getStarterPack:
+    get:
+      operationId: graphGetStarterPack
+      summary: Bluesky Gets a view of a starter pack.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Gets a view of a starter pack.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: starterPack
+        in: query
+        description: Reference (AT-URI) of the starter pack record.
+        required: true
+        schema:
+          type: string
+          description: Reference (AT-URI) of the starter pack record.
+          format: at-uri
+        example: at://did:plc:example123/app.bsky.feed.post/abc123
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - starterPack
+                properties:
+                  starterPack:
+                    $ref: '#/components/schemas/AppBskyGraphDefsStarterPackView'
+              examples:
+                GraphGetStarterPackResponse200Example:
+                  $ref: '#/components/examples/GraphGetStarterPackResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getStarterPacks:
+    get:
+      operationId: graphGetStarterPacks
+      summary: Bluesky Get views for a list of starter packs.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get views for a list of starter packs.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: uris
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+            format: at-uri
+          maxItems: 25
+        example:
+        - at://did:plc:example123/app.bsky.feed.post/abc123
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - starterPacks
+                properties:
+                  starterPacks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyGraphDefsStarterPackViewBasic'
+              examples:
+                GraphGetStarterPacksResponse200Example:
+                  $ref: '#/components/examples/GraphGetStarterPacksResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.getSuggestedFollowsByActor:
+    get:
+      operationId: graphGetSuggestedFollowsByActor
+      summary: Bluesky Enumerates follows similar to a given account (actor).
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Enumerates follows similar to a given account (actor). Expected use is to recommend additional accounts immediately after following one account.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: actor
+        in: query
+        required: true
+        schema:
+          type: string
+          format: at-identifier
+        example: user.bsky.social
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - suggestions
+                properties:
+                  suggestions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+                  isFallback:
+                    type: boolean
+                    description: If true, response has fallen-back to generic results, and is not scoped using relativeToDid
+              examples:
+                GraphGetSuggestedFollowsByActorResponse200Example:
+                  $ref: '#/components/examples/GraphGetSuggestedFollowsByActorResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.muteActor:
+    post:
+      operationId: graphMuteActor
+      summary: Bluesky Creates a mute relationship for the specified account.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Creates a mute relationship for the specified account. Mutes are private in Bluesky. Requires auth.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - actor
+              properties:
+                actor:
+                  type: string
+                  format: at-identifier
+            examples:
+              GraphMuteActorRequestExample:
+                $ref: '#/components/examples/GraphMuteActorRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.muteActorList:
+    post:
+      operationId: graphMuteActorList
+      summary: Bluesky Creates a mute relationship for the specified list of accounts.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Creates a mute relationship for the specified list of accounts. Mutes are private in Bluesky. Requires auth.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - list
+              properties:
+                list:
+                  type: string
+                  format: at-uri
+            examples:
+              GraphMuteActorListRequestExample:
+                $ref: '#/components/examples/GraphMuteActorListRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.muteThread:
+    post:
+      operationId: graphMuteThread
+      summary: Bluesky Mutes a thread preventing notifications from the thread and any of its children.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Mutes a thread preventing notifications from the thread and any of its children. Mutes are private in Bluesky. Requires auth.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - root
+              properties:
+                root:
+                  type: string
+                  format: at-uri
+            examples:
+              GraphMuteThreadRequestExample:
+                $ref: '#/components/examples/GraphMuteThreadRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.unmuteActor:
+    post:
+      operationId: graphUnmuteActor
+      summary: Bluesky Unmutes the specified account.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Unmutes the specified account. Requires auth.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - actor
+              properties:
+                actor:
+                  type: string
+                  format: at-identifier
+            examples:
+              GraphUnmuteActorRequestExample:
+                $ref: '#/components/examples/GraphUnmuteActorRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.unmuteActorList:
+    post:
+      operationId: graphUnmuteActorList
+      summary: Bluesky Unmutes the specified list of accounts.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Unmutes the specified list of accounts. Requires auth.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - list
+              properties:
+                list:
+                  type: string
+                  format: at-uri
+            examples:
+              GraphUnmuteActorListRequestExample:
+                $ref: '#/components/examples/GraphUnmuteActorListRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/app.bsky.graph.unmuteThread:
+    post:
+      operationId: graphUnmuteThread
+      summary: Bluesky Unmutes the specified thread.
+      description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Unmutes the specified thread. Requires auth.'
+      tags:
+      - Social Graph
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - root
+              properties:
+                root:
+                  type: string
+                  format: at-uri
+            examples:
+              GraphUnmuteThreadRequestExample:
+                $ref: '#/components/examples/GraphUnmuteThreadRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  schemas:
+    AppBskyGraphDefsListViewBasic:
+      type: object
+      required:
+      - uri
+      - cid
+      - name
+      - purpose
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        purpose:
+          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
+        avatar:
+          type: string
+          format: uri
+        listItemCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyGraphDefsListItemView:
+      type: object
+      required:
+      - uri
+      - subject
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        subject:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+    ComAtprotoLabelDefsLabel:
+      type: object
+      description: Metadata tag on an atproto resource (eg, repo or record).
+      required:
+      - src
+      - uri
+      - val
+      - cts
+      properties:
+        ver:
+          type: integer
+        src:
+          type: string
+          description: DID of the actor who created this label.
+          format: did
+        uri:
+          type: string
+          description: AT URI of the record, repository (account), or other resource that this label applies to.
+          format: uri
+        cid:
+          type: string
+          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
+          format: cid
+        val:
+          type: string
+          description: The short string name of the value or type of this label.
+          maxLength: 128
+        neg:
+          type: boolean
+          description: If true, this is a negation label, overwriting a previous label.
+        cts:
+          type: string
+          description: Timestamp when this label was created.
+          format: date-time
+        exp:
+          type: string
+          description: Timestamp at which this label expires (no longer applies).
+          format: date-time
+        sig:
+          type: string
+          format: byte
+          description: Signature of dag-cbor encoded label.
+    AppBskyRichtextFacetLink:
+      type: object
+      description: Facet feature for a URL. The text URL may have been simplified or truncated, but the facet reference should be a complete URL.
+      required:
+      - uri
+      properties:
+        uri:
+          type: string
+          format: uri
+    AppBskyActorDefsProfileView:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        description:
+          type: string
+          maxLength: 2560
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyFeedDefsGeneratorViewerState:
+      type: object
+      properties:
+        like:
+          type: string
+          format: at-uri
+    AppBskyRichtextFacetMention:
+      type: object
+      description: Facet feature for mention of another account. The text is usually a handle, including a '@' prefix, but the facet reference is a DID.
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+    AppBskyActorDefsProfileAssociatedChat:
+      type: object
+      required:
+      - allowIncoming
+      properties:
+        allowIncoming:
+          type: string
+          enum:
+          - all
+          - none
+          - following
+    AppBskyActorDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          format: at-uri
+        blockingByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        following:
+          type: string
+          format: at-uri
+        followedBy:
+          type: string
+          format: at-uri
+        knownFollowers:
+          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
+    AppBskyActorDefsProfileAssociated:
+      type: object
+      properties:
+        lists:
+          type: integer
+        feedgens:
+          type: integer
+        starterPacks:
+          type: integer
+        labeler:
+          type: boolean
+        chat:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
+    AppBskyGraphDefsStarterPackView:
+      type: object
+      required:
+      - uri
+      - cid
+      - record
+      - creator
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        record: {}
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        list:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        listItemsSample:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyGraphDefsListItemView'
+          maxItems: 12
+        feeds:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
+          maxItems: 3
+        joinedWeekCount:
+          type: integer
+          minimum: 0
+        joinedAllTimeCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyActorDefsKnownFollowers:
+      type: object
+      description: The subject's followers whom you also follow
+      required:
+      - count
+      - followers
+      properties:
+        count:
+          type: integer
+        followers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+          maxItems: 5
+    AppBskyGraphDefsListView:
+      type: object
+      required:
+      - uri
+      - cid
+      - creator
+      - name
+      - purpose
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        purpose:
+          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
+        description:
+          type: string
+          maxLength: 3000
+        descriptionFacets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyRichtextFacet'
+        avatar:
+          type: string
+          format: uri
+        listItemCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyActorDefsProfileViewBasic:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        createdAt:
+          type: string
+          format: date-time
+    AppBskyGraphDefsListPurpose:
+      oneOf:
+      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
+    AppBskyRichtextFacetByteSlice:
+      type: object
+      description: 'Specifies the sub-string range a facet feature applies to. Start index is inclusive, end index is exclusive. Indices are zero-indexed, counting bytes of the UTF-8 encoded text. NOTE: some languages, like Javascript, use UTF-16 or Unicode codepoints for string slice indexing; in these languages, convert to byte arrays before working with facets.'
+      required:
+      - byteStart
+      - byteEnd
+      properties:
+        byteStart:
+          type: integer
+          minimum: 0
+        byteEnd:
+          type: integer
+          minimum: 0
+    AppBskyRichtextFacet:
+      type: object
+      description: Annotation of a sub-string within rich text.
+      required:
+      - index
+      - features
+      properties:
+        index:
+          $ref: '#/components/schemas/AppBskyRichtextFacetByteSlice'
+        features:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/AppBskyRichtextFacetMention'
+            - $ref: '#/components/schemas/AppBskyRichtextFacetLink'
+            - $ref: '#/components/schemas/AppBskyRichtextFacetTag'
+    AppBskyGraphDefsNotFoundActor:
+      type: object
+      description: indicates that a handle or DID could not be resolved
+      required:
+      - actor
+      - notFound
+      properties:
+        actor:
+          type: string
+          format: at-identifier
+        notFound:
+          type: boolean
+          default: true
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
+    AppBskyGraphDefsReferencelist:
+      type: string
+      format: token
+      description: A list of actors used for only for reference purposes such as within a starter pack.
+    AppBskyFeedDefsGeneratorView:
+      type: object
+      required:
+      - uri
+      - cid
+      - did
+      - creator
+      - displayName
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        did:
+          type: string
+          format: did
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+        displayName:
+          type: string
+        description:
+          type: string
+          maxLength: 3000
+        descriptionFacets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyRichtextFacet'
+        avatar:
+          type: string
+          format: uri
+        likeCount:
+          type: integer
+          minimum: 0
+        acceptsInteractions:
+          type: boolean
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyFeedDefsGeneratorViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyGraphDefsRelationship:
+      type: object
+      description: lists the bi-directional graph relationships between one actor (not indicated in the object), and the target actors (the DID included in the object)
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+        following:
+          type: string
+          description: if the actor follows this DID, this is the AT-URI of the follow record
+          format: at-uri
+        followedBy:
+          type: string
+          description: if the actor is followed by this DID, contains the AT-URI of the follow record
+          format: at-uri
+    AppBskyGraphDefsModlist:
+      type: string
+      format: token
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyRichtextFacetTag:
+      type: object
+      description: Facet feature for a hashtag. The text usually includes a '#' prefix, but the facet reference should not (except in the case of 'double hash tags').
+      required:
+      - tag
+      properties:
+        tag:
+          type: string
+          maxLength: 640
+    AppBskyGraphDefsListViewerState:
+      type: object
+      properties:
+        muted:
+          type: boolean
+        blocked:
+          type: string
+          format: at-uri
+    AppBskyGraphDefsStarterPackViewBasic:
+      type: object
+      required:
+      - uri
+      - cid
+      - record
+      - creator
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        record: {}
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        listItemCount:
+          type: integer
+          minimum: 0
+        joinedWeekCount:
+          type: integer
+          minimum: 0
+        joinedAllTimeCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        indexedAt:
+          type: string
+          format: date-time
+  examples:
+    GraphMuteActorListRequestExample:
+      summary: Example request for graphMuteActorList
+      value:
+        list: at://did:plc:example123/app.bsky.feed.post/abc123
+    GraphGetListBlocksResponse200Example:
+      summary: Successful response for graphGetListBlocks
+      value:
+        lists:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          name: Example Name
+          purpose: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetListResponse200Example:
+      summary: Successful response for graphGetList
+      value:
+        list:
+          uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated:
+              lists: {}
+              feedgens: {}
+              starterPacks: {}
+              labeler: {}
+              chat: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          name: Example Name
+          purpose: example-token
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: []
+        items:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          subject:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetSuggestedFollowsByActorResponse200Example:
+      summary: Successful response for graphGetSuggestedFollowsByActor
+      value:
+        suggestions:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        isFallback: true
+    GraphMuteActorRequestExample:
+      summary: Example request for graphMuteActor
+      value:
+        actor: user.bsky.social
+    GraphGetBlocksResponse200Example:
+      summary: Successful response for graphGetBlocks
+      value:
+        blocks:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphUnmuteThreadRequestExample:
+      summary: Example request for graphUnmuteThread
+      value:
+        root: at://did:plc:example123/app.bsky.feed.post/abc123
+    GraphGetListsResponse200Example:
+      summary: Successful response for graphGetLists
+      value:
+        lists:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          name: Example Name
+          purpose: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphUnmuteActorListRequestExample:
+      summary: Example request for graphUnmuteActorList
+      value:
+        list: at://did:plc:example123/app.bsky.feed.post/abc123
+    GraphGetStarterPackResponse200Example:
+      summary: Successful response for graphGetStarterPack
+      value:
+        starterPack:
+          uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          record: {}
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            avatar: https://example.com/resource
+            associated:
+              lists: {}
+              feedgens: {}
+              starterPacks: {}
+              labeler: {}
+              chat: {}
+            viewer:
+              muted: {}
+              mutedByList: {}
+              blockedBy: {}
+              blocking: {}
+              blockingByList: {}
+              following: {}
+              followedBy: {}
+              knownFollowers: {}
+            labels: []
+            createdAt: '2024-01-15T12:00:00.000Z'
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          list:
+            uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            name: Example Name
+            purpose: {}
+            avatar: https://example.com/resource
+            listItemCount: 50
+            labels: []
+            viewer:
+              muted: {}
+              blocked: {}
+          listItemsSample:
+          - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            subject: {}
+          feeds:
+          - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            did: did:plc:example123abc
+            creator: {}
+            displayName: Example Name
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            description: This is an example description.
+            descriptionFacets: []
+    GraphUnmuteActorRequestExample:
+      summary: Example request for graphUnmuteActor
+      value:
+        actor: user.bsky.social
+    GraphGetListMutesResponse200Example:
+      summary: Successful response for graphGetListMutes
+      value:
+        lists:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          name: Example Name
+          purpose: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetFollowsResponse200Example:
+      summary: Successful response for graphGetFollows
+      value:
+        subject:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat:
+              allowIncoming: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        follows:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphMuteThreadRequestExample:
+      summary: Example request for graphMuteThread
+      value:
+        root: at://did:plc:example123/app.bsky.feed.post/abc123
+    GraphGetActorStarterPacksResponse200Example:
+      summary: Successful response for graphGetActorStarterPacks
+      value:
+        starterPacks:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          record: {}
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            avatar: https://example.com/resource
+            associated: {}
+            viewer: {}
+            labels: []
+            createdAt: '2024-01-15T12:00:00.000Z'
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          listItemCount: 50
+          joinedWeekCount: 50
+          joinedAllTimeCount: 50
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetStarterPacksResponse200Example:
+      summary: Successful response for graphGetStarterPacks
+      value:
+        starterPacks:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          record: {}
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            avatar: https://example.com/resource
+            associated: {}
+            viewer: {}
+            labels: []
+            createdAt: '2024-01-15T12:00:00.000Z'
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          listItemCount: 50
+          joinedWeekCount: 50
+          joinedAllTimeCount: 50
+    GraphGetMutesResponse200Example:
+      summary: Successful response for graphGetMutes
+      value:
+        mutes:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetFollowersResponse200Example:
+      summary: Successful response for graphGetFollowers
+      value:
+        subject:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat:
+              allowIncoming: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        followers:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetRelationshipsResponse200Example:
+      summary: Successful response for graphGetRelationships
+      value:
+        relationships:
+        - did: did:plc:example123abc
+          following: at://did:plc:example123/app.bsky.feed.post/abc123
+          followedBy: at://did:plc:example123/app.bsky.feed.post/abc123
+        actor: did:plc:example123abc
+    GraphGetKnownFollowersResponse200Example:
+      summary: Successful response for graphGetKnownFollowers
+      value:
+        subject:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat:
+              allowIncoming: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        followers:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

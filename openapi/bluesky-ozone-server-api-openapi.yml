@@ -1,0 +1,127 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Ozone Server API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Ozone Server
+  description: Ozone server configuration operations.
+paths:
+  /xrpc/tools.ozone.server.getConfig:
+    get:
+      operationId: ozoneServerGetConfig
+      summary: Bluesky Get details about ozone's server configuration.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get details about ozone''s server configuration.'
+      tags:
+      - Ozone Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appview:
+                    $ref: '#/components/schemas/ToolsOzoneServerGetConfigServiceConfig'
+                  pds:
+                    $ref: '#/components/schemas/ToolsOzoneServerGetConfigServiceConfig'
+                  blobDivert:
+                    $ref: '#/components/schemas/ToolsOzoneServerGetConfigServiceConfig'
+                  chat:
+                    $ref: '#/components/schemas/ToolsOzoneServerGetConfigServiceConfig'
+                  viewer:
+                    $ref: '#/components/schemas/ToolsOzoneServerGetConfigViewerConfig'
+              examples:
+                OzoneServerGetConfigResponse200Example:
+                  $ref: '#/components/examples/OzoneServerGetConfigResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  examples:
+    OzoneServerGetConfigResponse200Example:
+      summary: Successful response for ozoneServerGetConfig
+      value:
+        appview:
+          url: https://example.com/resource
+        pds:
+          url: https://example.com/resource
+        blobDivert:
+          url: https://example.com/resource
+        chat:
+          url: https://example.com/resource
+        viewer:
+          role: tools.ozone.team.defs#roleAdmin
+  schemas:
+    ToolsOzoneServerGetConfigViewerConfig:
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+          - tools.ozone.team.defs#roleAdmin
+          - tools.ozone.team.defs#roleModerator
+          - tools.ozone.team.defs#roleTriage
+    ToolsOzoneServerGetConfigServiceConfig:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

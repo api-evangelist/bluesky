@@ -1,0 +1,1210 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Repository API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Repository
+  description: Operations for managing AT Protocol repositories.
+paths:
+  /xrpc/com.atproto.repo.applyWrites:
+    post:
+      operationId: repoApplyWrites
+      summary: Bluesky Apply a batch transaction of repository creates, updates, and deletes.
+      description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Apply a batch transaction of repository creates, updates, and deletes. Requires auth, implemented by PDS.'
+      tags:
+      - Repository
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - repo
+              - writes
+              properties:
+                repo:
+                  type: string
+                  description: The handle or DID of the repo (aka, current account).
+                  format: at-identifier
+                validate:
+                  type: boolean
+                  description: Can be set to 'false' to skip Lexicon schema validation of record data across all operations, 'true' to require it, or leave unset to validate only for known Lexicons.
+                writes:
+                  type: array
+                  items:
+                    oneOf:
+                    - $ref: '#/components/schemas/ComAtprotoRepoApplyWritesCreate'
+                    - $ref: '#/components/schemas/ComAtprotoRepoApplyWritesUpdate'
+                    - $ref: '#/components/schemas/ComAtprotoRepoApplyWritesDelete'
+                swapCommit:
+                  type: string
+                  description: If provided, the entire operation will fail if the current repo commit CID does not match this value. Used to prevent conflicting repo mutations.
+                  format: cid
+            examples:
+              RepoApplyWritesRequestExample:
+                $ref: '#/components/examples/RepoApplyWritesRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: []
+                properties:
+                  commit:
+                    $ref: '#/components/schemas/ComAtprotoRepoDefsCommitMeta'
+                  results:
+                    type: array
+                    items:
+                      oneOf:
+                      - $ref: '#/components/schemas/ComAtprotoRepoApplyWritesCreateResult'
+                      - $ref: '#/components/schemas/ComAtprotoRepoApplyWritesUpdateResult'
+                      - $ref: '#/components/schemas/ComAtprotoRepoApplyWritesDeleteResult'
+              examples:
+                RepoApplyWritesResponse200Example:
+                  $ref: '#/components/examples/RepoApplyWritesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - InvalidSwap
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.repo.createRecord:
+    post:
+      operationId: repoCreateRecord
+      summary: Bluesky Create a single new repository record.
+      description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Create a single new repository record. Requires auth, implemented by PDS.'
+      tags:
+      - Repository
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - repo
+              - collection
+              - record
+              properties:
+                repo:
+                  type: string
+                  description: The handle or DID of the repo (aka, current account).
+                  format: at-identifier
+                collection:
+                  type: string
+                  description: The NSID of the record collection.
+                  format: nsid
+                rkey:
+                  type: string
+                  description: The Record Key.
+                  maxLength: 512
+                validate:
+                  type: boolean
+                  description: Can be set to 'false' to skip Lexicon schema validation of record data, 'true' to require it, or leave unset to validate only for known Lexicons.
+                record: {}
+                swapCommit:
+                  type: string
+                  description: Compare and swap with the previous commit by CID.
+                  format: cid
+            examples:
+              RepoCreateRecordRequestExample:
+                $ref: '#/components/examples/RepoCreateRecordRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - uri
+                - cid
+                properties:
+                  uri:
+                    type: string
+                    format: at-uri
+                  cid:
+                    type: string
+                    format: cid
+                  commit:
+                    $ref: '#/components/schemas/ComAtprotoRepoDefsCommitMeta'
+                  validationStatus:
+                    type: string
+                    enum:
+                    - valid
+                    - unknown
+              examples:
+                RepoCreateRecordResponse200Example:
+                  $ref: '#/components/examples/RepoCreateRecordResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - InvalidSwap
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.repo.deleteRecord:
+    post:
+      operationId: repoDeleteRecord
+      summary: Bluesky Delete a repository record, or ensure it doesn't exist.
+      description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Delete a repository record, or ensure it doesn''t exist. Requires auth, implemented by PDS.'
+      tags:
+      - Repository
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - repo
+              - collection
+              - rkey
+              properties:
+                repo:
+                  type: string
+                  description: The handle or DID of the repo (aka, current account).
+                  format: at-identifier
+                collection:
+                  type: string
+                  description: The NSID of the record collection.
+                  format: nsid
+                rkey:
+                  type: string
+                  description: The Record Key.
+                swapRecord:
+                  type: string
+                  description: Compare and swap with the previous record by CID.
+                  format: cid
+                swapCommit:
+                  type: string
+                  description: Compare and swap with the previous commit by CID.
+                  format: cid
+            examples:
+              RepoDeleteRecordRequestExample:
+                $ref: '#/components/examples/RepoDeleteRecordRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  commit:
+                    $ref: '#/components/schemas/ComAtprotoRepoDefsCommitMeta'
+              examples:
+                RepoDeleteRecordResponse200Example:
+                  $ref: '#/components/examples/RepoDeleteRecordResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - InvalidSwap
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.repo.describeRepo:
+    get:
+      operationId: repoDescribeRepo
+      summary: Bluesky Get information about an account and repository, including the list of collections.
+      description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get information about an account and repository, including the list of collections. Does not require auth.'
+      tags:
+      - Repository
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: repo
+        in: query
+        description: The handle or DID of the repo.
+        required: true
+        schema:
+          type: string
+          description: The handle or DID of the repo.
+          format: at-identifier
+        example: user.bsky.social
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - handle
+                - did
+                - didDoc
+                - collections
+                - handleIsCorrect
+                properties:
+                  handle:
+                    type: string
+                    format: handle
+                  did:
+                    type: string
+                    format: did
+                  didDoc: {}
+                  collections:
+                    type: array
+                    items:
+                      type: string
+                      format: nsid
+                  handleIsCorrect:
+                    type: boolean
+                    description: Indicates if handle is currently valid (resolves bi-directionally)
+              examples:
+                RepoDescribeRepoResponse200Example:
+                  $ref: '#/components/examples/RepoDescribeRepoResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.repo.getRecord:
+    get:
+      operationId: repoGetRecord
+      summary: Bluesky Get a single record from a repository.
+      description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a single record from a repository. Does not require auth.'
+      tags:
+      - Repository
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: repo
+        in: query
+        description: The handle or DID of the repo.
+        required: true
+        schema:
+          type: string
+          description: The handle or DID of the repo.
+          format: at-identifier
+        example: user.bsky.social
+      - name: collection
+        in: query
+        description: The NSID of the record collection.
+        required: true
+        schema:
+          type: string
+          description: The NSID of the record collection.
+          format: nsid
+        example: app.bsky.feed.post
+      - name: rkey
+        in: query
+        description: The Record Key.
+        required: true
+        schema:
+          type: string
+          description: The Record Key.
+        example: example-rkey
+      - name: cid
+        in: query
+        description: The CID of the version of the record. If not specified, then return the most recent version.
+        required: false
+        schema:
+          type: string
+          description: The CID of the version of the record. If not specified, then return the most recent version.
+          format: cid
+        example: bafyreiabc123example
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - uri
+                - value
+                properties:
+                  uri:
+                    type: string
+                    format: at-uri
+                  cid:
+                    type: string
+                    format: cid
+                  value: {}
+              examples:
+                RepoGetRecordResponse200Example:
+                  $ref: '#/components/examples/RepoGetRecordResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - RecordNotFound
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.repo.importRepo:
+    post:
+      operationId: repoImportRepo
+      summary: Bluesky Import a repo in the form of a CAR file.
+      description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Import a repo in the form of a CAR file. Requires Content-Length HTTP header to be set.'
+      tags:
+      - Repository
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/vnd.ipld.car: {}
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.repo.listMissingBlobs:
+    get:
+      operationId: repoListMissingBlobs
+      summary: Bluesky Returns a list of missing blobs for the requesting account.
+      description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Returns a list of missing blobs for the requesting account. Intended to be used in the account migration flow.'
+      tags:
+      - Repository
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 500
+        example: 500
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - blobs
+                properties:
+                  cursor:
+                    type: string
+                  blobs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComAtprotoRepoListMissingBlobsRecordBlob'
+              examples:
+                RepoListMissingBlobsResponse200Example:
+                  $ref: '#/components/examples/RepoListMissingBlobsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.repo.listRecords:
+    get:
+      operationId: repoListRecords
+      summary: Bluesky List a range of records in a repository, matching a specific collection.
+      description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        List a range of records in a repository, matching a specific collection. Does not require auth.'
+      tags:
+      - Repository
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: repo
+        in: query
+        description: The handle or DID of the repo.
+        required: true
+        schema:
+          type: string
+          description: The handle or DID of the repo.
+          format: at-identifier
+        example: user.bsky.social
+      - name: collection
+        in: query
+        description: The NSID of the record type.
+        required: true
+        schema:
+          type: string
+          description: The NSID of the record type.
+          format: nsid
+        example: app.bsky.feed.post
+      - name: limit
+        in: query
+        description: The number of records to return.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      - name: reverse
+        in: query
+        description: Flag to reverse the order of the returned records.
+        required: false
+        schema:
+          type: boolean
+          description: Flag to reverse the order of the returned records.
+        example: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - records
+                properties:
+                  cursor:
+                    type: string
+                  records:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComAtprotoRepoListRecordsRecord'
+              examples:
+                RepoListRecordsResponse200Example:
+                  $ref: '#/components/examples/RepoListRecordsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.repo.putRecord:
+    post:
+      operationId: repoPutRecord
+      summary: Bluesky Write a repository record, creating or updating it as needed.
+      description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Write a repository record, creating or updating it as needed. Requires auth, implemented by PDS.'
+      tags:
+      - Repository
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - repo
+              - collection
+              - rkey
+              - record
+              properties:
+                repo:
+                  type: string
+                  description: The handle or DID of the repo (aka, current account).
+                  format: at-identifier
+                collection:
+                  type: string
+                  description: The NSID of the record collection.
+                  format: nsid
+                rkey:
+                  type: string
+                  description: The Record Key.
+                  maxLength: 512
+                validate:
+                  type: boolean
+                  description: Can be set to 'false' to skip Lexicon schema validation of record data, 'true' to require it, or leave unset to validate only for known Lexicons.
+                record: {}
+                swapRecord:
+                  type: string
+                  description: 'Compare and swap with the previous record by CID. WARNING: nullable and optional field; may cause problems with golang implementation'
+                  format: cid
+                swapCommit:
+                  type: string
+                  description: Compare and swap with the previous commit by CID.
+                  format: cid
+            examples:
+              RepoPutRecordRequestExample:
+                $ref: '#/components/examples/RepoPutRecordRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - uri
+                - cid
+                properties:
+                  uri:
+                    type: string
+                    format: at-uri
+                  cid:
+                    type: string
+                    format: cid
+                  commit:
+                    $ref: '#/components/schemas/ComAtprotoRepoDefsCommitMeta'
+                  validationStatus:
+                    type: string
+                    enum:
+                    - valid
+                    - unknown
+              examples:
+                RepoPutRecordResponse200Example:
+                  $ref: '#/components/examples/RepoPutRecordResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - InvalidSwap
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.repo.uploadBlob:
+    post:
+      operationId: repoUploadBlob
+      summary: Bluesky Upload a new blob, to be referenced from a repository record.
+      description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Upload a new blob, to be referenced from a repository record. The blob will be deleted if it is not referenced within a time window (eg, minutes). Blob restrictions (mimetype, size, etc) are enforced when the reference is created. Requires auth, implemented by PDS.'
+      tags:
+      - Repository
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          '*/*': {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - blob
+                properties:
+                  blob:
+                    type: string
+                    format: binary
+              examples:
+                RepoUploadBlobResponse200Example:
+                  $ref: '#/components/examples/RepoUploadBlobResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  schemas:
+    ComAtprotoRepoApplyWritesUpdate:
+      type: object
+      description: Operation which updates an existing record.
+      required:
+      - collection
+      - rkey
+      - value
+      properties:
+        collection:
+          type: string
+          format: nsid
+        rkey:
+          type: string
+        value: {}
+    ComAtprotoRepoApplyWritesDelete:
+      type: object
+      description: Operation which deletes an existing record.
+      required:
+      - collection
+      - rkey
+      properties:
+        collection:
+          type: string
+          format: nsid
+        rkey:
+          type: string
+    ComAtprotoRepoApplyWritesDeleteResult:
+      type: object
+      required: []
+      properties: {}
+    ComAtprotoRepoApplyWritesCreate:
+      type: object
+      description: Operation which creates a new record.
+      required:
+      - collection
+      - value
+      properties:
+        collection:
+          type: string
+          format: nsid
+        rkey:
+          type: string
+          maxLength: 512
+        value: {}
+    ComAtprotoRepoDefsCommitMeta:
+      type: object
+      required:
+      - cid
+      - rev
+      properties:
+        cid:
+          type: string
+          format: cid
+        rev:
+          type: string
+    ComAtprotoRepoListMissingBlobsRecordBlob:
+      type: object
+      required:
+      - cid
+      - recordUri
+      properties:
+        cid:
+          type: string
+          format: cid
+        recordUri:
+          type: string
+          format: at-uri
+    ComAtprotoRepoApplyWritesCreateResult:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        validationStatus:
+          type: string
+          enum:
+          - valid
+          - unknown
+    ComAtprotoRepoApplyWritesUpdateResult:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        validationStatus:
+          type: string
+          enum:
+          - valid
+          - unknown
+    ComAtprotoRepoListRecordsRecord:
+      type: object
+      required:
+      - uri
+      - cid
+      - value
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        value: {}
+  examples:
+    RepoCreateRecordRequestExample:
+      summary: Example request for repoCreateRecord
+      value:
+        repo: user.bsky.social
+        collection: app.bsky.feed.post
+        record: {}
+        rkey: example-rkey
+        validate: true
+        swapCommit: bafyreiabc123example
+    RepoApplyWritesResponse200Example:
+      summary: Successful response for repoApplyWrites
+      value:
+        commit:
+          cid: bafyreiabc123example
+          rev: example-rev
+        results:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          validationStatus: valid
+    RepoCreateRecordResponse200Example:
+      summary: Successful response for repoCreateRecord
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        cid: bafyreiabc123example
+        commit:
+          cid: bafyreiabc123example
+          rev: example-rev
+        validationStatus: valid
+    RepoDeleteRecordResponse200Example:
+      summary: Successful response for repoDeleteRecord
+      value:
+        commit:
+          cid: bafyreiabc123example
+          rev: example-rev
+    RepoApplyWritesRequestExample:
+      summary: Example request for repoApplyWrites
+      value:
+        repo: user.bsky.social
+        writes:
+        - collection: app.bsky.feed.post
+          value: {}
+          rkey: example-rkey
+        validate: true
+        swapCommit: bafyreiabc123example
+    RepoListMissingBlobsResponse200Example:
+      summary: Successful response for repoListMissingBlobs
+      value:
+        blobs:
+        - cid: bafyreiabc123example
+          recordUri: at://did:plc:example123/app.bsky.feed.post/abc123
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    RepoDescribeRepoResponse200Example:
+      summary: Successful response for repoDescribeRepo
+      value:
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        didDoc: {}
+        collections:
+        - app.bsky.feed.post
+        handleIsCorrect: true
+    RepoGetRecordResponse200Example:
+      summary: Successful response for repoGetRecord
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        value: {}
+        cid: bafyreiabc123example
+    RepoPutRecordRequestExample:
+      summary: Example request for repoPutRecord
+      value:
+        repo: user.bsky.social
+        collection: app.bsky.feed.post
+        rkey: example-rkey
+        record: {}
+        validate: true
+        swapRecord: bafyreiabc123example
+        swapCommit: bafyreiabc123example
+    RepoDeleteRecordRequestExample:
+      summary: Example request for repoDeleteRecord
+      value:
+        repo: user.bsky.social
+        collection: app.bsky.feed.post
+        rkey: example-rkey
+        swapRecord: bafyreiabc123example
+        swapCommit: bafyreiabc123example
+    RepoUploadBlobResponse200Example:
+      summary: Successful response for repoUploadBlob
+      value:
+        blob: example-blob
+    RepoPutRecordResponse200Example:
+      summary: Successful response for repoPutRecord
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        cid: bafyreiabc123example
+        commit:
+          cid: bafyreiabc123example
+          rev: example-rev
+        validationStatus: valid
+    RepoListRecordsResponse200Example:
+      summary: Successful response for repoListRecords
+      value:
+        records:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          value: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

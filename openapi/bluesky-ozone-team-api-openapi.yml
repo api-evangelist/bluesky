@@ -1,0 +1,737 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Ozone Team API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Ozone Team
+  description: Ozone team member management operations.
+paths:
+  /xrpc/tools.ozone.team.addMember:
+    post:
+      operationId: ozoneTeamAddMember
+      summary: Bluesky Add a member to the ozone team.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Add a member to the ozone team. Requires admin role.'
+      tags:
+      - Ozone Team
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - did
+              - role
+              properties:
+                did:
+                  type: string
+                  format: did
+                role:
+                  type: string
+                  enum:
+                  - tools.ozone.team.defs#roleAdmin
+                  - tools.ozone.team.defs#roleModerator
+                  - tools.ozone.team.defs#roleTriage
+            examples:
+              OzoneTeamAddMemberRequestExample:
+                $ref: '#/components/examples/OzoneTeamAddMemberRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsOzoneTeamDefsMember'
+              examples:
+                OzoneTeamAddMemberResponse200Example:
+                  $ref: '#/components/examples/OzoneTeamAddMemberResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - MemberAlreadyExists
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.team.deleteMember:
+    post:
+      operationId: ozoneTeamDeleteMember
+      summary: Bluesky Delete a member from ozone team.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Delete a member from ozone team. Requires admin role.'
+      tags:
+      - Ozone Team
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - did
+              properties:
+                did:
+                  type: string
+                  format: did
+            examples:
+              OzoneTeamDeleteMemberRequestExample:
+                $ref: '#/components/examples/OzoneTeamDeleteMemberRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - MemberNotFound
+                    - CannotDeleteSelf
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.team.listMembers:
+    get:
+      operationId: ozoneTeamListMembers
+      summary: Bluesky List all members with access to the ozone service.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        List all members with access to the ozone service.'
+      tags:
+      - Ozone Team
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        example: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        example: eyJsYXN0SWQiOiIxMjM0NTYifQ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - members
+                properties:
+                  cursor:
+                    type: string
+                  members:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ToolsOzoneTeamDefsMember'
+              examples:
+                OzoneTeamListMembersResponse200Example:
+                  $ref: '#/components/examples/OzoneTeamListMembersResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.team.updateMember:
+    post:
+      operationId: ozoneTeamUpdateMember
+      summary: Bluesky Update a member in the ozone service.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Update a member in the ozone service. Requires admin role.'
+      tags:
+      - Ozone Team
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - did
+              properties:
+                did:
+                  type: string
+                  format: did
+                disabled:
+                  type: boolean
+                role:
+                  type: string
+                  enum:
+                  - tools.ozone.team.defs#roleAdmin
+                  - tools.ozone.team.defs#roleModerator
+                  - tools.ozone.team.defs#roleTriage
+            examples:
+              OzoneTeamUpdateMemberRequestExample:
+                $ref: '#/components/examples/OzoneTeamUpdateMemberRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsOzoneTeamDefsMember'
+              examples:
+                OzoneTeamUpdateMemberResponse200Example:
+                  $ref: '#/components/examples/OzoneTeamUpdateMemberResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - MemberNotFound
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  examples:
+    OzoneTeamUpdateMemberResponse200Example:
+      summary: Successful response for ozoneTeamUpdateMember
+      value:
+        did: did:plc:example123abc
+        role: '#roleAdmin'
+        disabled: true
+        profile:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          banner: https://example.com/resource
+          followersCount: 50
+          followsCount: 50
+        createdAt: '2024-01-15T12:00:00.000Z'
+        updatedAt: '2024-01-15T12:00:00.000Z'
+        lastUpdatedBy: example-lastUpdatedBy
+    OzoneTeamAddMemberResponse200Example:
+      summary: Successful response for ozoneTeamAddMember
+      value:
+        did: did:plc:example123abc
+        role: '#roleAdmin'
+        disabled: true
+        profile:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          banner: https://example.com/resource
+          followersCount: 50
+          followsCount: 50
+        createdAt: '2024-01-15T12:00:00.000Z'
+        updatedAt: '2024-01-15T12:00:00.000Z'
+        lastUpdatedBy: example-lastUpdatedBy
+    OzoneTeamListMembersResponse200Example:
+      summary: Successful response for ozoneTeamListMembers
+      value:
+        members:
+        - did: did:plc:example123abc
+          role: '#roleAdmin'
+          disabled: true
+          profile:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            banner: https://example.com/resource
+            followersCount: 50
+            followsCount: 50
+          createdAt: '2024-01-15T12:00:00.000Z'
+          updatedAt: '2024-01-15T12:00:00.000Z'
+          lastUpdatedBy: example-lastUpdatedBy
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneTeamDeleteMemberRequestExample:
+      summary: Example request for ozoneTeamDeleteMember
+      value:
+        did: did:plc:example123abc
+    OzoneTeamUpdateMemberRequestExample:
+      summary: Example request for ozoneTeamUpdateMember
+      value:
+        did: did:plc:example123abc
+        disabled: true
+        role: tools.ozone.team.defs#roleAdmin
+    OzoneTeamAddMemberRequestExample:
+      summary: Example request for ozoneTeamAddMember
+      value:
+        did: did:plc:example123abc
+        role: tools.ozone.team.defs#roleAdmin
+  schemas:
+    AppBskyGraphDefsListViewBasic:
+      type: object
+      required:
+      - uri
+      - cid
+      - name
+      - purpose
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        purpose:
+          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
+        avatar:
+          type: string
+          format: uri
+        listItemCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    ComAtprotoLabelDefsLabel:
+      type: object
+      description: Metadata tag on an atproto resource (eg, repo or record).
+      required:
+      - src
+      - uri
+      - val
+      - cts
+      properties:
+        ver:
+          type: integer
+        src:
+          type: string
+          description: DID of the actor who created this label.
+          format: did
+        uri:
+          type: string
+          description: AT URI of the record, repository (account), or other resource that this label applies to.
+          format: uri
+        cid:
+          type: string
+          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
+          format: cid
+        val:
+          type: string
+          description: The short string name of the value or type of this label.
+          maxLength: 128
+        neg:
+          type: boolean
+          description: If true, this is a negation label, overwriting a previous label.
+        cts:
+          type: string
+          description: Timestamp when this label was created.
+          format: date-time
+        exp:
+          type: string
+          description: Timestamp at which this label expires (no longer applies).
+          format: date-time
+        sig:
+          type: string
+          format: byte
+          description: Signature of dag-cbor encoded label.
+    AppBskyActorDefsProfileAssociatedChat:
+      type: object
+      required:
+      - allowIncoming
+      properties:
+        allowIncoming:
+          type: string
+          enum:
+          - all
+          - none
+          - following
+    AppBskyActorDefsProfileViewDetailed:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        description:
+          type: string
+          maxLength: 2560
+        avatar:
+          type: string
+          format: uri
+        banner:
+          type: string
+          format: uri
+        followersCount:
+          type: integer
+        followsCount:
+          type: integer
+        postsCount:
+          type: integer
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        joinedViaStarterPack:
+          $ref: '#/components/schemas/AppBskyGraphDefsStarterPackViewBasic'
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        pinnedPost:
+          $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
+    AppBskyActorDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          format: at-uri
+        blockingByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        following:
+          type: string
+          format: at-uri
+        followedBy:
+          type: string
+          format: at-uri
+        knownFollowers:
+          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
+    ComAtprotoRepoStrongRef:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+    AppBskyActorDefsProfileAssociated:
+      type: object
+      properties:
+        lists:
+          type: integer
+        feedgens:
+          type: integer
+        starterPacks:
+          type: integer
+        labeler:
+          type: boolean
+        chat:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
+    AppBskyActorDefsKnownFollowers:
+      type: object
+      description: The subject's followers whom you also follow
+      required:
+      - count
+      - followers
+      properties:
+        count:
+          type: integer
+        followers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+          maxItems: 5
+    AppBskyActorDefsProfileViewBasic:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        createdAt:
+          type: string
+          format: date-time
+    AppBskyGraphDefsListPurpose:
+      oneOf:
+      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
+    ToolsOzoneTeamDefsMember:
+      type: object
+      required:
+      - did
+      - role
+      properties:
+        did:
+          type: string
+          format: did
+        disabled:
+          type: boolean
+        profile:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewDetailed'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        lastUpdatedBy:
+          type: string
+        role:
+          type: string
+          enum:
+          - '#roleAdmin'
+          - '#roleModerator'
+          - '#roleTriage'
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
+    AppBskyGraphDefsReferencelist:
+      type: string
+      format: token
+      description: A list of actors used for only for reference purposes such as within a starter pack.
+    AppBskyGraphDefsModlist:
+      type: string
+      format: token
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyGraphDefsListViewerState:
+      type: object
+      properties:
+        muted:
+          type: boolean
+        blocked:
+          type: string
+          format: at-uri
+    AppBskyGraphDefsStarterPackViewBasic:
+      type: object
+      required:
+      - uri
+      - cid
+      - record
+      - creator
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        record: {}
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        listItemCount:
+          type: integer
+          minimum: 0
+        joinedWeekCount:
+          type: integer
+          minimum: 0
+        joinedAllTimeCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        indexedAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

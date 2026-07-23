@@ -1,0 +1,446 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Ozone Communication API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Ozone Communication
+  description: Ozone moderation tool communication operations.
+paths:
+  /xrpc/tools.ozone.communication.createTemplate:
+    post:
+      operationId: ozoneCommunicationCreateTemplate
+      summary: Bluesky Administrative action to create a new, re-usable communication (email for now) template.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Administrative action to create a new, re-usable communication (email for now) template.'
+      tags:
+      - Ozone Communication
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - subject
+              - contentMarkdown
+              - name
+              properties:
+                name:
+                  type: string
+                  description: Name of the template.
+                contentMarkdown:
+                  type: string
+                  description: Content of the template, markdown supported, can contain variable placeholders.
+                subject:
+                  type: string
+                  description: Subject of the message, used in emails.
+                lang:
+                  type: string
+                  description: Message language.
+                  format: language
+                createdBy:
+                  type: string
+                  description: DID of the user who is creating the template.
+                  format: did
+            examples:
+              OzoneCommunicationCreateTemplateRequestExample:
+                $ref: '#/components/examples/OzoneCommunicationCreateTemplateRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsOzoneCommunicationDefsTemplateView'
+              examples:
+                OzoneCommunicationCreateTemplateResponse200Example:
+                  $ref: '#/components/examples/OzoneCommunicationCreateTemplateResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - DuplicateTemplateName
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.communication.deleteTemplate:
+    post:
+      operationId: ozoneCommunicationDeleteTemplate
+      summary: Bluesky Delete a communication template.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Delete a communication template.'
+      tags:
+      - Ozone Communication
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              properties:
+                id:
+                  type: string
+            examples:
+              OzoneCommunicationDeleteTemplateRequestExample:
+                $ref: '#/components/examples/OzoneCommunicationDeleteTemplateRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.communication.listTemplates:
+    get:
+      operationId: ozoneCommunicationListTemplates
+      summary: Bluesky Get list of all communication templates.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get list of all communication templates.'
+      tags:
+      - Ozone Communication
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - communicationTemplates
+                properties:
+                  communicationTemplates:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ToolsOzoneCommunicationDefsTemplateView'
+              examples:
+                OzoneCommunicationListTemplatesResponse200Example:
+                  $ref: '#/components/examples/OzoneCommunicationListTemplatesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/tools.ozone.communication.updateTemplate:
+    post:
+      operationId: ozoneCommunicationUpdateTemplate
+      summary: Bluesky Administrative action to update an existing communication template.
+      description: '*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user''s PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Administrative action to update an existing communication template. Allows passing partial fields to patch specific fields only.'
+      tags:
+      - Ozone Communication
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              properties:
+                id:
+                  type: string
+                  description: ID of the template to be updated.
+                name:
+                  type: string
+                  description: Name of the template.
+                lang:
+                  type: string
+                  description: Message language.
+                  format: language
+                contentMarkdown:
+                  type: string
+                  description: Content of the template, markdown supported, can contain variable placeholders.
+                subject:
+                  type: string
+                  description: Subject of the message, used in emails.
+                updatedBy:
+                  type: string
+                  description: DID of the user who is updating the template.
+                  format: did
+                disabled:
+                  type: boolean
+            examples:
+              OzoneCommunicationUpdateTemplateRequestExample:
+                $ref: '#/components/examples/OzoneCommunicationUpdateTemplateRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsOzoneCommunicationDefsTemplateView'
+              examples:
+                OzoneCommunicationUpdateTemplateResponse200Example:
+                  $ref: '#/components/examples/OzoneCommunicationUpdateTemplateResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - DuplicateTemplateName
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  schemas:
+    ToolsOzoneCommunicationDefsTemplateView:
+      type: object
+      required:
+      - id
+      - name
+      - contentMarkdown
+      - disabled
+      - lastUpdatedBy
+      - createdAt
+      - updatedAt
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: Name of the template.
+        subject:
+          type: string
+          description: Content of the template, can contain markdown and variable placeholders.
+        contentMarkdown:
+          type: string
+          description: Subject of the message, used in emails.
+        disabled:
+          type: boolean
+        lang:
+          type: string
+          description: Message language.
+          format: language
+        lastUpdatedBy:
+          type: string
+          description: DID of the user who last updated the template.
+          format: did
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+  examples:
+    OzoneCommunicationListTemplatesResponse200Example:
+      summary: Successful response for ozoneCommunicationListTemplates
+      value:
+        communicationTemplates:
+        - id: example-id
+          name: Example Name
+          contentMarkdown: example-contentMarkdown
+          disabled: true
+          lastUpdatedBy: did:plc:example123abc
+          createdAt: '2024-01-15T12:00:00.000Z'
+          updatedAt: '2024-01-15T12:00:00.000Z'
+          subject: at://did:plc:example123/app.bsky.feed.post/abc123
+    OzoneCommunicationUpdateTemplateResponse200Example:
+      summary: Successful response for ozoneCommunicationUpdateTemplate
+      value:
+        id: example-id
+        name: Example Name
+        contentMarkdown: example-contentMarkdown
+        disabled: true
+        lastUpdatedBy: did:plc:example123abc
+        createdAt: '2024-01-15T12:00:00.000Z'
+        updatedAt: '2024-01-15T12:00:00.000Z'
+        subject: at://did:plc:example123/app.bsky.feed.post/abc123
+    OzoneCommunicationCreateTemplateRequestExample:
+      summary: Example request for ozoneCommunicationCreateTemplate
+      value:
+        subject: at://did:plc:example123/app.bsky.feed.post/abc123
+        contentMarkdown: example-contentMarkdown
+        name: Example Name
+        lang: en
+        createdBy: did:plc:example123abc
+    OzoneCommunicationDeleteTemplateRequestExample:
+      summary: Example request for ozoneCommunicationDeleteTemplate
+      value:
+        id: example-id
+    OzoneCommunicationUpdateTemplateRequestExample:
+      summary: Example request for ozoneCommunicationUpdateTemplate
+      value:
+        id: example-id
+        name: Example Name
+        lang: en
+        contentMarkdown: example-contentMarkdown
+        subject: at://did:plc:example123/app.bsky.feed.post/abc123
+        updatedBy: did:plc:example123abc
+        disabled: true
+    OzoneCommunicationCreateTemplateResponse200Example:
+      summary: Successful response for ozoneCommunicationCreateTemplate
+      value:
+        id: example-id
+        name: Example Name
+        contentMarkdown: example-contentMarkdown
+        disabled: true
+        lastUpdatedBy: did:plc:example123abc
+        createdAt: '2024-01-15T12:00:00.000Z'
+        updatedAt: '2024-01-15T12:00:00.000Z'
+        subject: at://did:plc:example123/app.bsky.feed.post/abc123
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer

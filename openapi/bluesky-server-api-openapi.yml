@@ -1,0 +1,2264 @@
+openapi: 3.1.0
+info:
+  title: Bluesky Social Actor Profiles Server API
+  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  version: 1.0.0
+  contact:
+    name: Bluesky Support
+    url: https://bsky.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://bsky.social/xrpc
+  description: Bluesky Social PDS
+- url: https://public.api.bsky.app/xrpc
+  description: Public Bluesky AppView API (unauthenticated endpoints)
+tags:
+- name: Server
+  description: Operations for server management and authentication.
+paths:
+  /xrpc/com.atproto.server.activateAccount:
+    post:
+      operationId: serverActivateAccount
+      summary: Bluesky Activates a currently deactivated account.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Activates a currently deactivated account. Used to finalize account migration after the account''s repo is imported and identity is setup.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.checkAccountStatus:
+    get:
+      operationId: serverCheckAccountStatus
+      summary: Bluesky Returns the status of an account, especially as pertaining to import or recovery.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Returns the status of an account, especially as pertaining to import or recovery. Can be called many times over the course of an account migration. Requires auth and can only be called pertaining to oneself.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - activated
+                - validDid
+                - repoCommit
+                - repoRev
+                - repoBlocks
+                - indexedRecords
+                - privateStateValues
+                - expectedBlobs
+                - importedBlobs
+                properties:
+                  activated:
+                    type: boolean
+                  validDid:
+                    type: boolean
+                  repoCommit:
+                    type: string
+                    format: cid
+                  repoRev:
+                    type: string
+                  repoBlocks:
+                    type: integer
+                  indexedRecords:
+                    type: integer
+                  privateStateValues:
+                    type: integer
+                  expectedBlobs:
+                    type: integer
+                  importedBlobs:
+                    type: integer
+              examples:
+                ServerCheckAccountStatusResponse200Example:
+                  $ref: '#/components/examples/ServerCheckAccountStatusResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.confirmEmail:
+    post:
+      operationId: serverConfirmEmail
+      summary: Bluesky Confirm an email using a token from com.atproto.server.requestEmailConfirmation.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Confirm an email using a token from com.atproto.server.requestEmailConfirmation.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              - token
+              properties:
+                email:
+                  type: string
+                token:
+                  type: string
+            examples:
+              ServerConfirmEmailRequestExample:
+                $ref: '#/components/examples/ServerConfirmEmailRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - AccountNotFound
+                    - ExpiredToken
+                    - InvalidToken
+                    - InvalidEmail
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.createAccount:
+    post:
+      operationId: serverCreateAccount
+      summary: Bluesky Create an account.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Create an account. Implemented by PDS.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - handle
+              properties:
+                email:
+                  type: string
+                handle:
+                  type: string
+                  description: Requested handle for the account.
+                  format: handle
+                did:
+                  type: string
+                  description: Pre-existing atproto DID, being imported to a new account.
+                  format: did
+                inviteCode:
+                  type: string
+                verificationCode:
+                  type: string
+                verificationPhone:
+                  type: string
+                password:
+                  type: string
+                  description: Initial account password. May need to meet instance-specific password strength requirements.
+                recoveryKey:
+                  type: string
+                  description: DID PLC rotation key (aka, recovery key) to be included in PLC creation operation.
+                plcOp: {}
+            examples:
+              ServerCreateAccountRequestExample:
+                $ref: '#/components/examples/ServerCreateAccountRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Account login session returned on successful account creation.
+                required:
+                - accessJwt
+                - refreshJwt
+                - handle
+                - did
+                properties:
+                  accessJwt:
+                    type: string
+                  refreshJwt:
+                    type: string
+                  handle:
+                    type: string
+                    format: handle
+                  did:
+                    type: string
+                    description: The DID of the new account.
+                    format: did
+                  didDoc: {}
+              examples:
+                ServerCreateAccountResponse200Example:
+                  $ref: '#/components/examples/ServerCreateAccountResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - InvalidHandle
+                    - InvalidPassword
+                    - InvalidInviteCode
+                    - HandleNotAvailable
+                    - UnsupportedDomain
+                    - UnresolvableDid
+                    - IncompatibleDidDoc
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.createAppPassword:
+    post:
+      operationId: serverCreateAppPassword
+      summary: Bluesky Create an App Password.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Create an App Password.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: A short name for the App Password, to help distinguish them.
+                privileged:
+                  type: boolean
+                  description: If an app password has 'privileged' access to possibly sensitive account state. Meant for use with trusted clients.
+            examples:
+              ServerCreateAppPasswordRequestExample:
+                $ref: '#/components/examples/ServerCreateAppPasswordRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComAtprotoServerCreateAppPasswordAppPassword'
+              examples:
+                ServerCreateAppPasswordResponse200Example:
+                  $ref: '#/components/examples/ServerCreateAppPasswordResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - AccountTakedown
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.createInviteCode:
+    post:
+      operationId: serverCreateInviteCode
+      summary: Bluesky Create an invite code.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Create an invite code.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - useCount
+              properties:
+                useCount:
+                  type: integer
+                forAccount:
+                  type: string
+                  format: did
+            examples:
+              ServerCreateInviteCodeRequestExample:
+                $ref: '#/components/examples/ServerCreateInviteCodeRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                properties:
+                  code:
+                    type: string
+              examples:
+                ServerCreateInviteCodeResponse200Example:
+                  $ref: '#/components/examples/ServerCreateInviteCodeResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.createInviteCodes:
+    post:
+      operationId: serverCreateInviteCodes
+      summary: Bluesky Create invite codes.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Create invite codes.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - codeCount
+              - useCount
+              properties:
+                codeCount:
+                  type: integer
+                  default: 1
+                useCount:
+                  type: integer
+                forAccounts:
+                  type: array
+                  items:
+                    type: string
+                    format: did
+            examples:
+              ServerCreateInviteCodesRequestExample:
+                $ref: '#/components/examples/ServerCreateInviteCodesRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - codes
+                properties:
+                  codes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComAtprotoServerCreateInviteCodesAccountCodes'
+              examples:
+                ServerCreateInviteCodesResponse200Example:
+                  $ref: '#/components/examples/ServerCreateInviteCodesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.createSession:
+    post:
+      operationId: serverCreateSession
+      summary: Bluesky Create an authentication session.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Create an authentication session.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - identifier
+              - password
+              properties:
+                identifier:
+                  type: string
+                  description: Handle or other identifier supported by the server for the authenticating user.
+                password:
+                  type: string
+                authFactorToken:
+                  type: string
+            examples:
+              ServerCreateSessionRequestExample:
+                $ref: '#/components/examples/ServerCreateSessionRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - accessJwt
+                - refreshJwt
+                - handle
+                - did
+                properties:
+                  accessJwt:
+                    type: string
+                  refreshJwt:
+                    type: string
+                  handle:
+                    type: string
+                    format: handle
+                  did:
+                    type: string
+                    format: did
+                  didDoc: {}
+                  email:
+                    type: string
+                  emailConfirmed:
+                    type: boolean
+                  emailAuthFactor:
+                    type: boolean
+                  active:
+                    type: boolean
+                  status:
+                    type: string
+                    description: If active=false, this optional field indicates a possible reason for why the account is not active. If active=false and no status is supplied, then the host makes no claim for why the repository is no longer being hosted.
+                    enum:
+                    - takendown
+                    - suspended
+                    - deactivated
+              examples:
+                ServerCreateSessionResponse200Example:
+                  $ref: '#/components/examples/ServerCreateSessionResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - AccountTakedown
+                    - AuthFactorTokenRequired
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.deactivateAccount:
+    post:
+      operationId: serverDeactivateAccount
+      summary: Bluesky Deactivates a currently active account.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Deactivates a currently active account. Stops serving of repo, and future writes to repo until reactivated. Used to finalize account migration with the old host after the account has been activated on the new host.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deleteAfter:
+                  type: string
+                  description: A recommendation to server as to how long they should hold onto the deactivated account before deleting.
+                  format: date-time
+            examples:
+              ServerDeactivateAccountRequestExample:
+                $ref: '#/components/examples/ServerDeactivateAccountRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.deleteAccount:
+    post:
+      operationId: serverDeleteAccount
+      summary: Bluesky Delete an actor's account with a token and password.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Delete an actor''s account with a token and password. Can only be called after requesting a deletion token. Requires auth.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - did
+              - password
+              - token
+              properties:
+                did:
+                  type: string
+                  format: did
+                password:
+                  type: string
+                token:
+                  type: string
+            examples:
+              ServerDeleteAccountRequestExample:
+                $ref: '#/components/examples/ServerDeleteAccountRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.deleteSession:
+    post:
+      operationId: serverDeleteSession
+      summary: Bluesky Delete the current session.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Delete the current session. Requires auth.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.describeServer:
+    get:
+      operationId: serverDescribeServer
+      summary: Bluesky Describes the server's account creation requirements and capabilities.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Describes the server''s account creation requirements and capabilities. Implemented by PDS.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - did
+                - availableUserDomains
+                properties:
+                  inviteCodeRequired:
+                    type: boolean
+                    description: If true, an invite code must be supplied to create an account on this instance.
+                  phoneVerificationRequired:
+                    type: boolean
+                    description: If true, a phone verification token must be supplied to create an account on this instance.
+                  availableUserDomains:
+                    type: array
+                    items:
+                      type: string
+                  links:
+                    $ref: '#/components/schemas/ComAtprotoServerDescribeServerLinks'
+                  contact:
+                    $ref: '#/components/schemas/ComAtprotoServerDescribeServerContact'
+                  did:
+                    type: string
+                    format: did
+              examples:
+                ServerDescribeServerResponse200Example:
+                  $ref: '#/components/examples/ServerDescribeServerResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.getAccountInviteCodes:
+    get:
+      operationId: serverGetAccountInviteCodes
+      summary: Bluesky Get all invite codes for the current account.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get all invite codes for the current account. Requires auth.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: includeUsed
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: createAvailable
+        in: query
+        description: Controls whether any new 'earned' but not 'created' invites should be created.
+        required: false
+        schema:
+          type: boolean
+          description: Controls whether any new 'earned' but not 'created' invites should be created.
+          default: true
+        example: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - codes
+                properties:
+                  codes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
+              examples:
+                ServerGetAccountInviteCodesResponse200Example:
+                  $ref: '#/components/examples/ServerGetAccountInviteCodesResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - DuplicateCreate
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.getServiceAuth:
+    get:
+      operationId: serverGetServiceAuth
+      summary: Bluesky Get a signed token on behalf of the requesting DID for the requested service.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get a signed token on behalf of the requesting DID for the requested service.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      parameters:
+      - name: aud
+        in: query
+        description: The DID of the service that the token will be used to authenticate with
+        required: true
+        schema:
+          type: string
+          description: The DID of the service that the token will be used to authenticate with
+          format: did
+        example: did:plc:example123abc
+      - name: exp
+        in: query
+        description: The time in Unix Epoch seconds that the JWT expires. Defaults to 60 seconds in the future. The service may enforce certain time bounds on tokens depending on the requested scope.
+        required: false
+        schema:
+          type: integer
+        example: 50
+      - name: lxm
+        in: query
+        description: Lexicon (XRPC) method to bind the requested token to
+        required: false
+        schema:
+          type: string
+          description: Lexicon (XRPC) method to bind the requested token to
+          format: nsid
+        example: app.bsky.feed.post
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - token
+                properties:
+                  token:
+                    type: string
+              examples:
+                ServerGetServiceAuthResponse200Example:
+                  $ref: '#/components/examples/ServerGetServiceAuthResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - BadExpiration
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.getSession:
+    get:
+      operationId: serverGetSession
+      summary: Bluesky Get information about the current auth session.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Get information about the current auth session. Requires auth.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - handle
+                - did
+                properties:
+                  handle:
+                    type: string
+                    format: handle
+                  did:
+                    type: string
+                    format: did
+                  email:
+                    type: string
+                  emailConfirmed:
+                    type: boolean
+                  emailAuthFactor:
+                    type: boolean
+                  didDoc: {}
+                  active:
+                    type: boolean
+                  status:
+                    type: string
+                    description: If active=false, this optional field indicates a possible reason for why the account is not active. If active=false and no status is supplied, then the host makes no claim for why the repository is no longer being hosted.
+                    enum:
+                    - takendown
+                    - suspended
+                    - deactivated
+              examples:
+                ServerGetSessionResponse200Example:
+                  $ref: '#/components/examples/ServerGetSessionResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.listAppPasswords:
+    get:
+      operationId: serverListAppPasswords
+      summary: Bluesky List all App Passwords.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        List all App Passwords.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - passwords
+                properties:
+                  passwords:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComAtprotoServerListAppPasswordsAppPassword'
+              examples:
+                ServerListAppPasswordsResponse200Example:
+                  $ref: '#/components/examples/ServerListAppPasswordsResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - AccountTakedown
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.refreshSession:
+    post:
+      operationId: serverRefreshSession
+      summary: Bluesky Refresh an authentication session.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Refresh an authentication session. Requires auth using the ''refreshJwt'' (not the ''accessJwt'').'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - accessJwt
+                - refreshJwt
+                - handle
+                - did
+                properties:
+                  accessJwt:
+                    type: string
+                  refreshJwt:
+                    type: string
+                  handle:
+                    type: string
+                    format: handle
+                  did:
+                    type: string
+                    format: did
+                  didDoc: {}
+                  active:
+                    type: boolean
+                  status:
+                    type: string
+                    description: Hosting status of the account. If not specified, then assume 'active'.
+                    enum:
+                    - takendown
+                    - suspended
+                    - deactivated
+              examples:
+                ServerRefreshSessionResponse200Example:
+                  $ref: '#/components/examples/ServerRefreshSessionResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - AccountTakedown
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.requestAccountDelete:
+    post:
+      operationId: serverRequestAccountDelete
+      summary: Bluesky Initiate a user account deletion via email.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Initiate a user account deletion via email.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.requestEmailConfirmation:
+    post:
+      operationId: serverRequestEmailConfirmation
+      summary: Bluesky Request an email with a code to confirm ownership of email.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Request an email with a code to confirm ownership of email.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.requestEmailUpdate:
+    post:
+      operationId: serverRequestEmailUpdate
+      summary: Bluesky Request a token in order to update email.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Request a token in order to update email.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - tokenRequired
+                properties:
+                  tokenRequired:
+                    type: boolean
+              examples:
+                ServerRequestEmailUpdateResponse200Example:
+                  $ref: '#/components/examples/ServerRequestEmailUpdateResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.requestPasswordReset:
+    post:
+      operationId: serverRequestPasswordReset
+      summary: Bluesky Initiate a user account password reset via email.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Initiate a user account password reset via email.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              properties:
+                email:
+                  type: string
+            examples:
+              ServerRequestPasswordResetRequestExample:
+                $ref: '#/components/examples/ServerRequestPasswordResetRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.reserveSigningKey:
+    post:
+      operationId: serverReserveSigningKey
+      summary: Bluesky Reserve a repo signing key, for use with account creation.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Reserve a repo signing key, for use with account creation. Necessary so that a DID PLC update operation can be constructed during an account migraiton. Public and does not require auth; implemented by PDS. NOTE: this endpoint may change when full account migration is implemented.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                did:
+                  type: string
+                  description: The DID to reserve a key for.
+                  format: did
+            examples:
+              ServerReserveSigningKeyRequestExample:
+                $ref: '#/components/examples/ServerReserveSigningKeyRequestExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - signingKey
+                properties:
+                  signingKey:
+                    type: string
+                    description: The public key for the reserved signing key, in did:key serialization.
+              examples:
+                ServerReserveSigningKeyResponse200Example:
+                  $ref: '#/components/examples/ServerReserveSigningKeyResponse200Example'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.resetPassword:
+    post:
+      operationId: serverResetPassword
+      summary: Bluesky Reset a user account password using a token.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Reset a user account password using a token.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - token
+              - password
+              properties:
+                token:
+                  type: string
+                password:
+                  type: string
+            examples:
+              ServerResetPasswordRequestExample:
+                $ref: '#/components/examples/ServerResetPasswordRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.revokeAppPassword:
+    post:
+      operationId: serverRevokeAppPassword
+      summary: Bluesky Revoke an App Password by name.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Revoke an App Password by name.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+            examples:
+              ServerRevokeAppPasswordRequestExample:
+                $ref: '#/components/examples/ServerRevokeAppPasswordRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+  /xrpc/com.atproto.server.updateEmail:
+    post:
+      operationId: serverUpdateEmail
+      summary: Bluesky Update an account's email.
+      description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
+
+
+        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+
+
+        Update an account''s email.'
+      tags:
+      - Server
+      x-microcks-operation:
+        delay: 100
+        dispatcher: FALLBACK
+        dispatcherRules: ''
+      security:
+      - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              properties:
+                email:
+                  type: string
+                emailAuthFactor:
+                  type: boolean
+                token:
+                  type: string
+                  description: Requires a token from com.atproto.sever.requestEmailUpdate if the account's email has been confirmed.
+            examples:
+              ServerUpdateEmailRequestExample:
+                $ref: '#/components/examples/ServerUpdateEmailRequestExample'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - InvalidRequest
+                    - ExpiredToken
+                    - InvalidToken
+                    - ExpiredToken
+                    - InvalidToken
+                    - TokenRequired
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                - message
+                properties:
+                  error:
+                    const: AuthMissing
+                  message:
+                    type: string
+components:
+  schemas:
+    ComAtprotoServerCreateInviteCodesAccountCodes:
+      type: object
+      required:
+      - account
+      - codes
+      properties:
+        account:
+          type: string
+        codes:
+          type: array
+          items:
+            type: string
+    ComAtprotoServerCreateAppPasswordAppPassword:
+      type: object
+      required:
+      - name
+      - password
+      - createdAt
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        privileged:
+          type: boolean
+    ComAtprotoServerDescribeServerLinks:
+      type: object
+      properties:
+        privacyPolicy:
+          type: string
+          format: uri
+        termsOfService:
+          type: string
+          format: uri
+    ComAtprotoServerDefsInviteCode:
+      type: object
+      required:
+      - code
+      - available
+      - disabled
+      - forAccount
+      - createdBy
+      - createdAt
+      - uses
+      properties:
+        code:
+          type: string
+        available:
+          type: integer
+        disabled:
+          type: boolean
+        forAccount:
+          type: string
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        uses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoServerDefsInviteCodeUse'
+    ComAtprotoServerDescribeServerContact:
+      type: object
+      properties:
+        email:
+          type: string
+    ComAtprotoServerListAppPasswordsAppPassword:
+      type: object
+      required:
+      - name
+      - createdAt
+      properties:
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        privileged:
+          type: boolean
+    ComAtprotoServerDefsInviteCodeUse:
+      type: object
+      required:
+      - usedBy
+      - usedAt
+      properties:
+        usedBy:
+          type: string
+          format: did
+        usedAt:
+          type: string
+          format: date-time
+  examples:
+    ServerCreateInviteCodeResponse200Example:
+      summary: Successful response for serverCreateInviteCode
+      value:
+        code: example-code
+    ServerCheckAccountStatusResponse200Example:
+      summary: Successful response for serverCheckAccountStatus
+      value:
+        activated: true
+        validDid: true
+        repoCommit: bafyreiabc123example
+        repoRev: example-repoRev
+        repoBlocks: 50
+        indexedRecords: 50
+        privateStateValues: 50
+        expectedBlobs: 50
+        importedBlobs: 50
+    ServerCreateAppPasswordResponse200Example:
+      summary: Successful response for serverCreateAppPassword
+      value:
+        name: Example Name
+        password: example-password
+        createdAt: '2024-01-15T12:00:00.000Z'
+        privileged: true
+    ServerListAppPasswordsResponse200Example:
+      summary: Successful response for serverListAppPasswords
+      value:
+        passwords:
+        - name: Example Name
+          createdAt: '2024-01-15T12:00:00.000Z'
+          privileged: true
+    ServerCreateInviteCodesResponse200Example:
+      summary: Successful response for serverCreateInviteCodes
+      value:
+        codes:
+        - account: example-account
+          codes:
+          - example-codes
+    ServerConfirmEmailRequestExample:
+      summary: Example request for serverConfirmEmail
+      value:
+        email: user@example.com
+        token: example-token
+    ServerRequestPasswordResetRequestExample:
+      summary: Example request for serverRequestPasswordReset
+      value:
+        email: user@example.com
+    ServerDescribeServerResponse200Example:
+      summary: Successful response for serverDescribeServer
+      value:
+        did: did:plc:example123abc
+        availableUserDomains:
+        - example-availableUserDomains
+        inviteCodeRequired: true
+        phoneVerificationRequired: true
+        links:
+          privacyPolicy: https://example.com/resource
+          termsOfService: https://example.com/resource
+        contact:
+          email: user@example.com
+    ServerDeleteAccountRequestExample:
+      summary: Example request for serverDeleteAccount
+      value:
+        did: did:plc:example123abc
+        password: example-password
+        token: example-token
+    ServerReserveSigningKeyResponse200Example:
+      summary: Successful response for serverReserveSigningKey
+      value:
+        signingKey: example-signingKey
+    ServerCreateAccountResponse200Example:
+      summary: Successful response for serverCreateAccount
+      value:
+        accessJwt: example-accessJwt
+        refreshJwt: example-refreshJwt
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        didDoc: {}
+    ServerUpdateEmailRequestExample:
+      summary: Example request for serverUpdateEmail
+      value:
+        email: user@example.com
+        emailAuthFactor: true
+        token: example-token
+    ServerCreateInviteCodesRequestExample:
+      summary: Example request for serverCreateInviteCodes
+      value:
+        codeCount: 1
+        useCount: 50
+        forAccounts:
+        - did:plc:example123abc
+    ServerReserveSigningKeyRequestExample:
+      summary: Example request for serverReserveSigningKey
+      value:
+        did: did:plc:example123abc
+    ServerGetSessionResponse200Example:
+      summary: Successful response for serverGetSession
+      value:
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        email: user@example.com
+        emailConfirmed: true
+        emailAuthFactor: true
+        didDoc: {}
+        active: true
+        status: takendown
+    ServerResetPasswordRequestExample:
+      summary: Example request for serverResetPassword
+      value:
+        token: example-token
+        password: example-password
+    ServerRefreshSessionResponse200Example:
+      summary: Successful response for serverRefreshSession
+      value:
+        accessJwt: example-accessJwt
+        refreshJwt: example-refreshJwt
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        didDoc: {}
+        active: true
+        status: takendown
+    ServerCreateSessionRequestExample:
+      summary: Example request for serverCreateSession
+      value:
+        identifier: example-identifier
+        password: example-password
+        authFactorToken: example-authFactorToken
+    ServerDeactivateAccountRequestExample:
+      summary: Example request for serverDeactivateAccount
+      value:
+        deleteAfter: '2024-01-15T12:00:00.000Z'
+    ServerGetAccountInviteCodesResponse200Example:
+      summary: Successful response for serverGetAccountInviteCodes
+      value:
+        codes:
+        - code: example-code
+          available: 50
+          disabled: true
+          forAccount: example-forAccount
+          createdBy: example-createdBy
+          createdAt: '2024-01-15T12:00:00.000Z'
+          uses:
+          - usedBy: {}
+            usedAt: {}
+    ServerCreateSessionResponse200Example:
+      summary: Successful response for serverCreateSession
+      value:
+        accessJwt: example-accessJwt
+        refreshJwt: example-refreshJwt
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        didDoc: {}
+        email: user@example.com
+        emailConfirmed: true
+        emailAuthFactor: true
+    ServerCreateInviteCodeRequestExample:
+      summary: Example request for serverCreateInviteCode
+      value:
+        useCount: 50
+        forAccount: did:plc:example123abc
+    ServerCreateAccountRequestExample:
+      summary: Example request for serverCreateAccount
+      value:
+        handle: user.bsky.social
+        email: user@example.com
+        did: did:plc:example123abc
+        inviteCode: example-inviteCode
+        verificationCode: example-verificationCode
+        verificationPhone: example-verificationPhone
+        password: example-password
+        recoveryKey: example-recoveryKey
+    ServerGetServiceAuthResponse200Example:
+      summary: Successful response for serverGetServiceAuth
+      value:
+        token: example-token
+    ServerRequestEmailUpdateResponse200Example:
+      summary: Successful response for serverRequestEmailUpdate
+      value:
+        tokenRequired: true
+    ServerCreateAppPasswordRequestExample:
+      summary: Example request for serverCreateAppPassword
+      value:
+        name: Example Name
+        privileged: true
+    ServerRevokeAppPasswordRequestExample:
+      summary: Example request for serverRevokeAppPassword
+      value:
+        name: Example Name
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
