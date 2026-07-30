@@ -1,69 +1,783 @@
 aid: bluesky
 url: https://raw.githubusercontent.com/api-search/bluesky/refs/heads/main/apis.yml
 apis:
-  - aid: bluesky:bluesky-api
-    name: Bluesky API
-    tags:
-      - Social Networks
-    humanURL: https://docs.bsky.app/
-    properties:
-      - url: https://docs.bsky.app/
-        type: Documentation
-      - url: openapi/bluesky-openapi.yml
-        type: OpenAPI
-      - url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
-        type: PostmanCollection
-      - url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
-        type: APIReference
-      - url: https://docs.bsky.app/docs/category/http-reference
-        type: HTTPReference
-      - url: https://docs.bsky.app/docs/advanced-guides/api-directory
-        type: APIDirectory
-      - url: https://docs.bsky.app/docs/advanced-guides/oauth-client
-        type: Authentication
-      - url: https://docs.bsky.app/docs/advanced-guides/rate-limits
-        type: RateLimits
-      - url: https://docs.bsky.app/docs/advanced-guides/firehose
-        type: Firehose
-      - url: asyncapi/bluesky-asyncapi.yml
-        type: AsyncAPI
-      - url: https://docs.bsky.app/docs/advanced-guides/moderation
-        type: Moderation
-      - url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
-        type: Identity
-      - data:
-          numberOfAPITags: 1
-          numberOfAPIGetMethods: 93
-          numberOfAPIOperations: 168
-          numberOfAPIParameters: 2
-          numberOfAPIProperties: 4
-          numberOfAPIPutMethods: 0
-          numberOfAPIPostMethods: 75
-          numberOfAPIPatchMethods: 0
-          numberOfAPIDeleteMethods: 0
-          numberOfAPIOptionMethods: 0
-        type: Summary
-    description: >-
-      The Bluesky API allows you to work programmatically with actors, feeds, graph, conversations, and other resources
-      available for the the Bluesky app and social network.
-  - aid: bluesky:bluesky-jetstream
-    name: Bluesky Jetstream
-    tags:
-      - Events
-      - Social Networks
-      - Streaming
-    humanURL: https://docs.bsky.app/blog/jetstream
-    properties:
-      - url: https://docs.bsky.app/blog/jetstream
-        type: Documentation
-      - url: https://github.com/bluesky-social/jetstream
-        type: GitHubRepository
-      - url: asyncapi/bluesky-asyncapi.yml
-        type: AsyncAPI
-    description: >-
-      Jetstream is a simplified JSON event stream for the AT Protocol that converts CBOR-encoded MST blocks from the
-      firehose into JSON objects over WebSocket connections, making it easier to consume real-time Bluesky network
-      events for building feed generators, bots, and search engines.
+- aid: bluesky:bluesky-jetstream
+  name: Bluesky Jetstream
+  tags:
+  - Events
+  - Social Networks
+  - Streaming
+  humanURL: https://docs.bsky.app/blog/jetstream
+  properties:
+  - url: https://docs.bsky.app/blog/jetstream
+    type: Documentation
+  - url: https://github.com/bluesky-social/jetstream
+    type: GitHubRepository
+  - url: asyncapi/bluesky-asyncapi.yml
+    type: AsyncAPI
+  description: >-
+    Jetstream is a simplified JSON event stream for the AT Protocol that converts CBOR-encoded MST blocks
+    from the firehose into JSON objects over WebSocket connections, making it easier to consume real-time
+    Bluesky network events for building feed generators, bots, and search engines.
+- aid: bluesky:bluesky-actor-profiles-api
+  name: Bluesky Actor Profiles API
+  description: Operations for managing user profiles, preferences, and actor information.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Actor Profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-actor-profiles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-administration-api
+  name: Bluesky Administration API
+  description: Administrative operations for managing accounts and invites.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Administration
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-administration-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-chat-actors-api
+  name: Bluesky Chat Actors API
+  description: Operations for managing chat actor settings and declarations.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Chat Actors
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-chat-actors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-chat-moderation-api
+  name: Bluesky Chat Moderation API
+  description: Operations for moderating chat content.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Chat Moderation
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-chat-moderation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-content-labels-api
+  name: Bluesky Content Labels API
+  description: Operations for managing content labelers and label subscriptions.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Content Labels
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-content-labels-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-conversations-api
+  name: Bluesky Conversations API
+  description: Operations for managing direct message conversations.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Conversations
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-conversations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-feeds-api
+  name: Bluesky Feeds API
+  description: Operations for managing feeds, posts, likes, and reposts.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Feeds
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-feeds-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-identity-api
+  name: Bluesky Identity API
+  description: Operations for identity management and DID resolution.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Identity
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-identity-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-labels-api
+  name: Bluesky Labels API
+  description: Operations for content labeling and moderation.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Labels
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-labels-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-moderation-api
+  name: Bluesky Moderation API
+  description: Operations for content moderation reporting.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Moderation
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-moderation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-notifications-api
+  name: Bluesky Notifications API
+  description: Operations for managing user notifications.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-notifications-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-ozone-communication-api
+  name: Bluesky Ozone Communication API
+  description: Ozone moderation tool communication operations.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Ozone Communication
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-ozone-communication-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-ozone-moderation-api
+  name: Bluesky Ozone Moderation API
+  description: Ozone moderation tool operations.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Ozone Moderation
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-ozone-moderation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-ozone-server-api
+  name: Bluesky Ozone Server API
+  description: Ozone server configuration operations.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Ozone Server
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-ozone-server-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-ozone-sets-api
+  name: Bluesky Ozone Sets API
+  description: Ozone set management operations.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Ozone Sets
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-ozone-sets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-ozone-settings-api
+  name: Bluesky Ozone Settings API
+  description: Ozone settings management operations.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Ozone Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-ozone-settings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-ozone-signatures-api
+  name: Bluesky Ozone Signatures API
+  description: Ozone signature and threat analysis operations.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Ozone Signatures
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-ozone-signatures-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-ozone-team-api
+  name: Bluesky Ozone Team API
+  description: Ozone team member management operations.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Ozone Team
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-ozone-team-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-repository-api
+  name: Bluesky Repository API
+  description: Operations for managing AT Protocol repositories.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Repository
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-repository-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-server-api
+  name: Bluesky Server API
+  description: Operations for server management and authentication.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Server
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-server-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-social-graph-api
+  name: Bluesky Social Graph API
+  description: Operations for managing follows, followers, blocks, mutes, and lists.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Social Graph
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-social-graph-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-sync-api
+  name: Bluesky Sync API
+  description: Operations for repository synchronization.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Sync
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-sync-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
+- aid: bluesky:bluesky-video-api
+  name: Bluesky Video API
+  description: Operations for video upload and processing.
+  humanURL: https://docs.bsky.app/
+  tags:
+  - Video
+  properties:
+  - type: OpenAPI
+    url: openapi/bluesky-video-api-openapi.yml
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: PostmanCollection
+    url: https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api
+  - type: APIReference
+    url: https://docs.bsky.app/docs/api/at-protocol-xrpc-api
+  - type: HTTPReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: APIDirectory
+    url: https://docs.bsky.app/docs/advanced-guides/api-directory
+  - type: Authentication
+    url: https://docs.bsky.app/docs/advanced-guides/oauth-client
+  - type: RateLimits
+    url: https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - type: Firehose
+    url: https://docs.bsky.app/docs/advanced-guides/firehose
+  - type: AsyncAPI
+    url: asyncapi/bluesky-asyncapi.yml
+  - type: Moderation
+    url: https://docs.bsky.app/docs/advanced-guides/moderation
+  - type: Identity
+    url: https://docs.bsky.app/docs/advanced-guides/resolving-identities
+  - type: Summary
+    url: null
 name: Bluesky
 tags:
   - At-Protocol
@@ -73,7 +787,20 @@ tags:
   - Social Networks
   - Social-Media
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bluesky.png
 access: 3rd-Party
 common:
   - type: AgenticAccess
