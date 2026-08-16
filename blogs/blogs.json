@@ -3,26 +3,20 @@
   "feeds": [
     {
       "source": "https://docs.bsky.app/blog/atom.xml",
-      "feed_url": "https://docs.bsky.app/blog/atom.xml",
-      "title": "",
-      "saved": 0,
-      "method": "feed"
+      "error": "HTTPError"
     },
     {
       "source": "https://docs.bsky.app/blog/rss.xml",
-      "feed_url": "https://docs.bsky.app/blog/rss.xml",
-      "title": "",
-      "saved": 0,
-      "method": "feed"
+      "error": "HTTPError"
     },
     {
       "source": "https://docs.bsky.app/blog",
-      "feed_url": "https://docs.bsky.app/blog/rss.xml",
+      "feed_url": "https://docs.bsky.app/blog",
       "title": "",
       "saved": 0,
-      "method": "discovered"
+      "method": "none"
     }
   ],
   "post_count": 24,
-  "fetched": "2026-08-06T14:08:46Z"
+  "fetched": "2026-08-15T12:22:01Z"
 }
