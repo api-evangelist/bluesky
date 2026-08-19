@@ -906,4 +906,4 @@ maintainers:
   - name: Bluesky Social PBC
     email: support@bsky.app
     url: https://bsky.social
-specificationVersion: '0.19'
+specificationVersion: '0.23'
