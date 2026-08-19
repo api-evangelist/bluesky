@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Social Actor Profiles Labels API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Labels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bluesky Find labels relevant to the provided AT-URI patterns.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.label.queryLabels",
+            "params": [
+              {
+                "name": "uriPatterns",
+                "value": "example-uriPatterns",
+                "type": "query",
+                "description": "List of AT URI patterns to match (boolean 'OR'). Each may be a prefix (ending with '*'; will match inclusive of the string leading to '*'), or a full URI."
+              },
+              {
+                "name": "sources",
+                "value": "did:plc:example123abc",
+                "type": "query",
+                "description": "Optional list of label sources (DIDs) to filter on."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nFind labels relevant to the provided AT-URI patterns. Public endpoint for moderation services, though may return different or additional results with auth."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

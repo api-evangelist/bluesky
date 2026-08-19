@@ -1,0 +1,476 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Social Actor Profiles Ozone Moderation API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ozone Moderation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bluesky Take a moderation action on an actor.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.moderation.emitEvent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nTake a mo"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get details about a moderation event.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.moderation.getEvent",
+            "params": [
+              {
+                "name": "id",
+                "value": "50",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet detai"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get details about a record.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.moderation.getRecord",
+            "params": [
+              {
+                "name": "uri",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query"
+              },
+              {
+                "name": "cid",
+                "value": "bafyreiabc123example",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet detai"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get details about some records.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.moderation.getRecords",
+            "params": [
+              {
+                "name": "uris",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet detai"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get details about a repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.moderation.getRepo",
+            "params": [
+              {
+                "name": "did",
+                "value": "did:plc:example123abc",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet detai"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get details about some repositories.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.moderation.getRepos",
+            "params": [
+              {
+                "name": "dids",
+                "value": "did:plc:example123abc",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet detai"
+        },
+        {
+          "info": {
+            "name": "Bluesky List moderation events related to a subject.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.moderation.queryEvents",
+            "params": [
+              {
+                "name": "types",
+                "value": "example-types",
+                "type": "query",
+                "description": "The types of events (fully qualified string in the format of tools.ozone.moderation.defs#modEvent<name>) to filter by. If not specified, all events are returned."
+              },
+              {
+                "name": "createdBy",
+                "value": "did:plc:example123abc",
+                "type": "query"
+              },
+              {
+                "name": "sortDirection",
+                "value": "example-sortDirection",
+                "type": "query",
+                "description": "Sort direction for the events. Defaults to descending order of created at timestamp."
+              },
+              {
+                "name": "createdAfter",
+                "value": "2024-01-15T12:00:00.000Z",
+                "type": "query",
+                "description": "Retrieve events created after a given timestamp"
+              },
+              {
+                "name": "createdBefore",
+                "value": "2024-01-15T12:00:00.000Z",
+                "type": "query",
+                "description": "Retrieve events created before a given timestamp"
+              },
+              {
+                "name": "subject",
+                "value": "https://example.com/resource",
+                "type": "query"
+              },
+              {
+                "name": "collections",
+                "value": "app.bsky.feed.post",
+                "type": "query",
+                "description": "If specified, only events where the subject belongs to the given collections will be returned. When subjectType is set to 'account', this will be ignored."
+              },
+              {
+                "name": "subjectType",
+                "value": "account",
+                "type": "query",
+                "description": "If specified, only events where the subject is of the given type (account or record) will be returned. When this is set to 'account' the 'collections' parameter will be ignored. When includeAllUserRecords or subject is set, this will be ignored."
+              },
+              {
+                "name": "includeAllUserRecords",
+                "value": "true",
+                "type": "query",
+                "description": "If true, events on all record types (posts, lists, profile etc.) or records from given 'collections' param, owned by the did are returned."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "hasComment",
+                "value": "true",
+                "type": "query",
+                "description": "If true, only events with comments are returned"
+              },
+              {
+                "name": "comment",
+                "value": "example-comment",
+                "type": "query",
+                "description": "If specified, only events with comments containing the keyword are returned"
+              },
+              {
+                "name": "addedLabels",
+                "value": "example-addedLabels",
+                "type": "query",
+                "description": "If specified, only events where all of these labels were added are returned"
+              },
+              {
+                "name": "removedLabels",
+                "value": "example-removedLabels",
+                "type": "query",
+                "description": "If specified, only events where all of these labels were removed are returned"
+              },
+              {
+                "name": "addedTags",
+                "value": "example-addedTags",
+                "type": "query",
+                "description": "If specified, only events where all of these tags were added are returned"
+              },
+              {
+                "name": "removedTags",
+                "value": "example-removedTags",
+                "type": "query",
+                "description": "If specified, only events where all of these tags were removed are returned"
+              },
+              {
+                "name": "reportTypes",
+                "value": "example-reportTypes",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nList mode"
+        },
+        {
+          "info": {
+            "name": "Bluesky View moderation statuses of subjects (record or repo).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.moderation.queryStatuses",
+            "params": [
+              {
+                "name": "includeAllUserRecords",
+                "value": "true",
+                "type": "query",
+                "description": "All subjects, or subjects from given 'collections' param, belonging to the account specified in the 'subject' param will be returned."
+              },
+              {
+                "name": "subject",
+                "value": "https://example.com/resource",
+                "type": "query",
+                "description": "The subject to get the status for."
+              },
+              {
+                "name": "comment",
+                "value": "example-comment",
+                "type": "query",
+                "description": "Search subjects by keyword from comments"
+              },
+              {
+                "name": "reportedAfter",
+                "value": "2024-01-15T12:00:00.000Z",
+                "type": "query",
+                "description": "Search subjects reported after a given timestamp"
+              },
+              {
+                "name": "reportedBefore",
+                "value": "2024-01-15T12:00:00.000Z",
+                "type": "query",
+                "description": "Search subjects reported before a given timestamp"
+              },
+              {
+                "name": "reviewedAfter",
+                "value": "2024-01-15T12:00:00.000Z",
+                "type": "query",
+                "description": "Search subjects reviewed after a given timestamp"
+              },
+              {
+                "name": "hostingDeletedAfter",
+                "value": "2024-01-15T12:00:00.000Z",
+                "type": "query",
+                "description": "Search subjects where the associated record/account was deleted after a given timestamp"
+              },
+              {
+                "name": "hostingDeletedBefore",
+                "value": "2024-01-15T12:00:00.000Z",
+                "type": "query",
+                "description": "Search subjects where the associated record/account was deleted before a given timestamp"
+              },
+              {
+                "name": "hostingUpdatedAfter",
+                "value": "2024-01-15T12:00:00.000Z",
+                "type": "query",
+                "description": "Search subjects where the associated record/account was updated after a given timestamp"
+              },
+              {
+                "name": "hostingUpdatedBefore",
+                "value": "2024-01-15T12:00:00.000Z",
+                "type": "query",
+                "description": "Search subjects where the associated record/account was updated before a given timestamp"
+              },
+              {
+                "name": "hostingStatuses",
+                "value": "example-hostingStatuses",
+                "type": "query",
+                "description": "Search subjects by the status of the associated record/account"
+              },
+              {
+                "name": "reviewedBefore",
+                "value": "2024-01-15T12:00:00.000Z",
+                "type": "query",
+                "description": "Search subjects reviewed before a given timestamp"
+              },
+              {
+                "name": "includeMuted",
+                "value": "true",
+                "type": "query",
+                "description": "By default, we don't include muted subjects in the results. Set this to true to include them."
+              },
+              {
+                "name": "onlyMuted",
+                "value": "true",
+                "type": "query",
+                "description": "When set to true, only muted subjects and reporters will be returned."
+              },
+              {
+                "name": "reviewState",
+                "value": "example-reviewState",
+                "type": "query",
+                "description": "Specify when fetching subjects in a certain state"
+              },
+              {
+                "name": "ignoreSubjects",
+                "value": "https://example.com/resource",
+                "type": "query"
+              },
+              {
+                "name": "lastReviewedBy",
+                "value": "did:plc:example123abc",
+                "type": "query",
+                "description": "Get all subject statuses that were reviewed by a specific moderator"
+              },
+              {
+                "name": "sortField",
+                "value": "example-sortField",
+                "type": "query"
+              },
+              {
+                "name": "sortDirection",
+                "value": "example-sortDirection",
+                "type": "query"
+              },
+              {
+                "name": "takendown",
+                "value": "true",
+                "type": "query",
+                "description": "Get subjects that were taken down"
+              },
+              {
+                "name": "appealed",
+                "value": "true",
+                "type": "query",
+                "description": "Get subjects in unresolved appealed status"
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "tags",
+                "value": "example-tags",
+                "type": "query"
+              },
+              {
+                "name": "excludeTags",
+                "value": "example-excludeTags",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              },
+              {
+                "name": "collections",
+                "value": "app.bsky.feed.post",
+                "type": "query",
+                "description": "If specified, subjects belonging to the given collections will be returned. When subjectType is set to 'account', this will be ignored."
+              },
+              {
+                "name": "subjectType",
+                "value": "account",
+                "type": "query",
+                "description": "If specified, subjects of the given type (account or record) will be returned. When this is set to 'account' the 'collections' parameter will be ignored. When includeAllUserRecords or subject is set, this will be ignored."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nView mode"
+        },
+        {
+          "info": {
+            "name": "Bluesky Find repositories based on a search term.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.moderation.searchRepos",
+            "params": [
+              {
+                "name": "q",
+                "value": "example-q",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nFind repo"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

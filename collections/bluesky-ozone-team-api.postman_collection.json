@@ -1,0 +1,881 @@
+{
+  "item": [
+    {
+      "id": "2ef669a8-ffdf-4bbb-80c3-7882dfaa52ce",
+      "name": "Ozone Team",
+      "description": {
+        "content": "Ozone team member management operations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dbb9501a-de9e-4e7c-a4d4-35a1c0303e99",
+          "name": "Bluesky Add a member to the ozone team.",
+          "request": {
+            "name": "Bluesky Add a member to the ozone team.",
+            "description": {
+              "content": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nAdd a member to the ozone team. Requires admin role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "xrpc",
+                "tools.ozone.team.addMember"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"did\": \"<did>\",\n  \"role\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "431480f9-eab3-4ecd-9e46-d6346e432baa",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.addMember"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"did\": \"did:plc:example123abc\",\n  \"role\": \"tools.ozone.team.defs#roleAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"did\": \"did:plc:example123abc\",\n  \"role\": \"#roleAdmin\",\n  \"disabled\": true,\n  \"profile\": {\n    \"did\": \"did:plc:example123abc\",\n    \"handle\": \"user.bsky.social\",\n    \"displayName\": \"Example Name\",\n    \"description\": \"This is an example description.\",\n    \"avatar\": \"https://example.com/resource\",\n    \"banner\": \"https://example.com/resource\",\n    \"followersCount\": 50,\n    \"followsCount\": 50\n  },\n  \"createdAt\": \"2024-01-15T12:00:00.000Z\",\n  \"updatedAt\": \"2024-01-15T12:00:00.000Z\",\n  \"lastUpdatedBy\": \"example-lastUpdatedBy\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30fca495-6b5a-4e95-aea3-028db1f9f4d0",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.addMember"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"did\": \"did:plc:example123abc\",\n  \"role\": \"tools.ozone.team.defs#roleAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"InvalidRequest\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d74f4d44-760e-40ae-b176-6a3401026c51",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.addMember"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"did\": \"did:plc:example123abc\",\n  \"role\": \"tools.ozone.team.defs#roleAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {},\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c8abbf4-3229-4884-8b47-7bdc9e1c4d23",
+          "name": "Bluesky Delete a member from ozone team.",
+          "request": {
+            "name": "Bluesky Delete a member from ozone team.",
+            "description": {
+              "content": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nDelete a member from ozone team. Requires admin role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "xrpc",
+                "tools.ozone.team.deleteMember"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"did\": \"<did>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d730537-d3ae-4ec1-96ba-8baece9c7699",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.deleteMember"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"did\": \"did:plc:example123abc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ab16017c-e1b5-4ac1-bd1d-4dedce40ba78",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.deleteMember"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"did\": \"did:plc:example123abc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"InvalidToken\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1933f8b4-1acd-4503-8c4e-2a1018bb6705",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.deleteMember"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"did\": \"did:plc:example123abc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {},\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1c88114-697f-4a9e-a984-a8bf8c7f892b",
+          "name": "Bluesky List all members with access to the ozone service.",
+          "request": {
+            "name": "Bluesky List all members with access to the ozone service.",
+            "description": {
+              "content": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nList all members with access to the ozone service.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "xrpc",
+                "tools.ozone.team.listMembers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5c2286c5-73c6-4634-b7fb-c18fef4c9838",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.listMembers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"members\": [\n    {\n      \"did\": \"did:plc:example123abc\",\n      \"role\": \"#roleAdmin\",\n      \"disabled\": true,\n      \"profile\": {\n        \"did\": \"did:plc:example123abc\",\n        \"handle\": \"user.bsky.social\",\n        \"displayName\": \"Example Name\",\n        \"description\": \"This is an example description.\",\n        \"avatar\": \"https://example.com/resource\",\n        \"banner\": \"https://example.com/resource\",\n        \"followersCount\": 50,\n        \"followsCount\": 50\n      },\n      \"createdAt\": \"2024-01-15T12:00:00.000Z\",\n      \"updatedAt\": \"2024-01-15T12:00:00.000Z\",\n      \"lastUpdatedBy\": \"example-lastUpdatedBy\"\n    }\n  ],\n  \"cursor\": \"eyJsYXN0SWQiOiIxMjM0NTYifQ\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4c2fb2c-d1db-4197-a062-5b1d0d321026",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.listMembers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"InvalidToken\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d26757f5-1212-4d2d-9da5-a601860548bc",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.listMembers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {},\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c0c340d0-227d-4264-9828-6f778d85f018",
+          "name": "Bluesky Update a member in the ozone service.",
+          "request": {
+            "name": "Bluesky Update a member in the ozone service.",
+            "description": {
+              "content": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nUpdate a member in the ozone service. Requires admin role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "xrpc",
+                "tools.ozone.team.updateMember"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"did\": \"<did>\",\n  \"disabled\": \"<boolean>\",\n  \"role\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "801f2a73-b30c-479a-ae05-60e70be14aa3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.updateMember"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"did\": \"did:plc:example123abc\",\n  \"disabled\": true,\n  \"role\": \"tools.ozone.team.defs#roleAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"did\": \"did:plc:example123abc\",\n  \"role\": \"#roleAdmin\",\n  \"disabled\": true,\n  \"profile\": {\n    \"did\": \"did:plc:example123abc\",\n    \"handle\": \"user.bsky.social\",\n    \"displayName\": \"Example Name\",\n    \"description\": \"This is an example description.\",\n    \"avatar\": \"https://example.com/resource\",\n    \"banner\": \"https://example.com/resource\",\n    \"followersCount\": 50,\n    \"followsCount\": 50\n  },\n  \"createdAt\": \"2024-01-15T12:00:00.000Z\",\n  \"updatedAt\": \"2024-01-15T12:00:00.000Z\",\n  \"lastUpdatedBy\": \"example-lastUpdatedBy\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ec0ad9f-9444-4b3d-acb9-afa18fb1cf35",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.updateMember"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"did\": \"did:plc:example123abc\",\n  \"disabled\": true,\n  \"role\": \"tools.ozone.team.defs#roleAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"ExpiredToken\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db75b770-bdc1-4ab0-a981-fafb08ff26b4",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xrpc",
+                    "tools.ozone.team.updateMember"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"did\": \"did:plc:example123abc\",\n  \"disabled\": true,\n  \"role\": \"tools.ozone.team.defs#roleAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {},\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://bsky.social/xrpc",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f904f0f7-f4eb-45ae-bf5c-837942e3748f",
+    "name": "Bluesky Social Actor Profiles Ozone Team API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app).\n\nContact Support:\n Name: Bluesky Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Social Actor Profiles Chat Moderation API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Chat Moderation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bluesky Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/chat.bsky.moderation.getActorMetadata",
+            "params": [
+              {
+                "name": "actor",
+                "value": "did:plc:example123abc",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky Chat (DMs) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the single central chat service by setting the appropriate service DID (`did:web:api.bsky.chat`) in the service proxying header.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*"
+        },
+        {
+          "info": {
+            "name": "Bluesky Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/chat.bsky.moderation.getMessageContext",
+            "params": [
+              {
+                "name": "convoId",
+                "value": "example-convoId",
+                "type": "query",
+                "description": "Conversation that the message is from. NOTE: this field will eventually be required."
+              },
+              {
+                "name": "messageId",
+                "value": "example-messageId",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "5",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "5",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky Chat (DMs) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the single central chat service by setting the appropriate service DID (`did:web:api.bsky.chat`) in the service proxying header.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*"
+        },
+        {
+          "info": {
+            "name": "Bluesky Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/chat.bsky.moderation.updateActorAccess",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky Chat (DMs) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the single central chat service by setting the appropriate service DID (`did:web:api.bsky.chat`) in the service proxying header.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

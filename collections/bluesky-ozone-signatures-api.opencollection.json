@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Social Actor Profiles Ozone Signatures API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ozone Signatures",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bluesky Find all correlated threat signatures between 2 or more accounts.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.signature.findCorrelation",
+            "params": [
+              {
+                "name": "dids",
+                "value": "did:plc:example123abc",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nFind all "
+        },
+        {
+          "info": {
+            "name": "Bluesky Get accounts that share some matching threat signatures with the root account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.signature.findRelatedAccounts",
+            "params": [
+              {
+                "name": "did",
+                "value": "did:plc:example123abc",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet accou"
+        },
+        {
+          "info": {
+            "name": "Bluesky Search for accounts that match one or more threat signature values.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/tools.ozone.signature.searchAccounts",
+            "params": [
+              {
+                "name": "values",
+                "value": "example-values",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the [Ozone moderation service](https://ozone.tools/) APIs. Requests usually require authentication, are directed to the user's PDS intance, and proxied to the Ozone instance indicated by the DID in the service proxying header. Admin authenentication may also be possible, with request sent directly to the Ozone instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nSearch fo"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

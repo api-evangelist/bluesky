@@ -1,0 +1,261 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Social Actor Profiles Repository API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Repository",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bluesky Apply a batch transaction of repository creates, updates, and deletes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.repo.applyWrites",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user's own PDS instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nApply a batch transaction of repository creates, updates, and deletes. Requires auth, implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Bluesky Create a single new repository record.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.repo.createRecord",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user's own PDS instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nCreate a single new repository record. Requires auth, implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Bluesky Delete a repository record, or ensure it doesn't exist.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.repo.deleteRecord",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user's own PDS instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nDelete a repository record, or ensure it doesn't exist. Requires auth, implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Bluesky Get information about an account and repository, including the list of collections.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.repo.describeRepo",
+            "params": [
+              {
+                "name": "repo",
+                "value": "user.bsky.social",
+                "type": "query",
+                "description": "The handle or DID of the repo."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user's own PDS instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet information about an account and repository, including the list of collections. Does not require auth."
+        },
+        {
+          "info": {
+            "name": "Bluesky Get a single record from a repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.repo.getRecord",
+            "params": [
+              {
+                "name": "repo",
+                "value": "user.bsky.social",
+                "type": "query",
+                "description": "The handle or DID of the repo."
+              },
+              {
+                "name": "collection",
+                "value": "app.bsky.feed.post",
+                "type": "query",
+                "description": "The NSID of the record collection."
+              },
+              {
+                "name": "rkey",
+                "value": "example-rkey",
+                "type": "query",
+                "description": "The Record Key."
+              },
+              {
+                "name": "cid",
+                "value": "bafyreiabc123example",
+                "type": "query",
+                "description": "The CID of the version of the record. If not specified, then return the most recent version."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user's own PDS instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet a single record from a repository. Does not require auth."
+        },
+        {
+          "info": {
+            "name": "Bluesky Import a repo in the form of a CAR file.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.repo.importRepo",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user's own PDS instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nImport a repo in the form of a CAR file. Requires Content-Length HTTP header to be set."
+        },
+        {
+          "info": {
+            "name": "Bluesky Returns a list of missing blobs for the requesting account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.repo.listMissingBlobs",
+            "params": [
+              {
+                "name": "limit",
+                "value": "500",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user's own PDS instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nReturns a list of missing blobs for the requesting account. Intended to be used in the account migration flow."
+        },
+        {
+          "info": {
+            "name": "Bluesky List a range of records in a repository, matching a specific collection.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.repo.listRecords",
+            "params": [
+              {
+                "name": "repo",
+                "value": "user.bsky.social",
+                "type": "query",
+                "description": "The handle or DID of the repo."
+              },
+              {
+                "name": "collection",
+                "value": "app.bsky.feed.post",
+                "type": "query",
+                "description": "The NSID of the record type."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query",
+                "description": "The number of records to return."
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              },
+              {
+                "name": "reverse",
+                "value": "true",
+                "type": "query",
+                "description": "Flag to reverse the order of the returned records."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user's own PDS instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nList a range of records in a repository, matching a specific collection. Does not require auth."
+        },
+        {
+          "info": {
+            "name": "Bluesky Write a repository record, creating or updating it as needed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.repo.putRecord",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user's own PDS instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nWrite a repository record, creating or updating it as needed. Requires auth, implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Bluesky Upload a new blob, to be referenced from a repository record.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.repo.uploadBlob",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user's own PDS instance.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nUpload a new blob, to be referenced from a repository record. The blob will be deleted if it is not referenced within a time window (eg, minutes). B"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

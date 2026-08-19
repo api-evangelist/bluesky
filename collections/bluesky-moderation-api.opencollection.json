@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Social Actor Profiles Moderation API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Moderation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bluesky Submit a moderation report regarding an atproto account or record.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.moderation.createReport",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nSubmit a moderation report regarding an atproto account or record. Implemented by moderation services (with PDS proxying), and requires auth."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

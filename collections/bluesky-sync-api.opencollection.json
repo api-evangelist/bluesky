@@ -1,0 +1,288 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Social Actor Profiles Sync API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sync",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bluesky This endpoint is part of the atproto repository synchronization APIs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.sync.getBlob",
+            "params": [
+              {
+                "name": "did",
+                "value": "did:plc:example123abc",
+                "type": "query",
+                "description": "The DID of the account."
+              },
+              {
+                "name": "cid",
+                "value": "bafyreiabc123example",
+                "type": "query",
+                "description": "The CID of the blob to fetch"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is part of the atproto repository synchronization APIs. Requests usually do not require authentication, and can be made to PDS intances or Relay instances.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet a blob associated with a given account. Returns the full blob as originally uploaded. Does not require auth; implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Bluesky This endpoint is part of the atproto repository synchronization APIs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.sync.getBlocks",
+            "params": [
+              {
+                "name": "did",
+                "value": "did:plc:example123abc",
+                "type": "query",
+                "description": "The DID of the repo."
+              },
+              {
+                "name": "cids",
+                "value": "bafyreiabc123example",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is part of the atproto repository synchronization APIs. Requests usually do not require authentication, and can be made to PDS intances or Relay instances.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet data blocks from a given repo, by CID. For example, intermediate MST nodes, or records. Does not require auth; implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Bluesky This endpoint is part of the atproto repository synchronization APIs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.sync.getLatestCommit",
+            "params": [
+              {
+                "name": "did",
+                "value": "did:plc:example123abc",
+                "type": "query",
+                "description": "The DID of the repo."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is part of the atproto repository synchronization APIs. Requests usually do not require authentication, and can be made to PDS intances or Relay instances.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet the current commit CID & revision of the specified repo. Does not require auth."
+        },
+        {
+          "info": {
+            "name": "Bluesky This endpoint is part of the atproto repository synchronization APIs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.sync.getRecord",
+            "params": [
+              {
+                "name": "did",
+                "value": "did:plc:example123abc",
+                "type": "query",
+                "description": "The DID of the repo."
+              },
+              {
+                "name": "collection",
+                "value": "app.bsky.feed.post",
+                "type": "query"
+              },
+              {
+                "name": "rkey",
+                "value": "example-rkey",
+                "type": "query",
+                "description": "Record Key"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is part of the atproto repository synchronization APIs. Requests usually do not require authentication, and can be made to PDS intances or Relay instances.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet data blocks needed to prove the existence or non-existence of record in the current version of repo. Does not require auth."
+        },
+        {
+          "info": {
+            "name": "Bluesky This endpoint is part of the atproto repository synchronization APIs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.sync.getRepo",
+            "params": [
+              {
+                "name": "did",
+                "value": "did:plc:example123abc",
+                "type": "query",
+                "description": "The DID of the repo."
+              },
+              {
+                "name": "since",
+                "value": "example-since",
+                "type": "query",
+                "description": "The revision ('rev') of the repo to create a diff from."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is part of the atproto repository synchronization APIs. Requests usually do not require authentication, and can be made to PDS intances or Relay instances.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nDownload a repository export as CAR file. Optionally only a 'diff' since a previous revision. Does not require auth; implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Bluesky This endpoint is part of the atproto repository synchronization APIs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.sync.getRepoStatus",
+            "params": [
+              {
+                "name": "did",
+                "value": "did:plc:example123abc",
+                "type": "query",
+                "description": "The DID of the repo."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is part of the atproto repository synchronization APIs. Requests usually do not require authentication, and can be made to PDS intances or Relay instances.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nGet the hosting status for a repository, on this server. Expected to be implemented by PDS and Relay."
+        },
+        {
+          "info": {
+            "name": "Bluesky This endpoint is part of the atproto repository synchronization APIs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.sync.listBlobs",
+            "params": [
+              {
+                "name": "did",
+                "value": "did:plc:example123abc",
+                "type": "query",
+                "description": "The DID of the repo."
+              },
+              {
+                "name": "since",
+                "value": "example-since",
+                "type": "query",
+                "description": "Optional revision of the repo to list blobs since."
+              },
+              {
+                "name": "limit",
+                "value": "500",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is part of the atproto repository synchronization APIs. Requests usually do not require authentication, and can be made to PDS intances or Relay instances.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nList blob CIDs for an account, since some repo revision. Does not require auth; implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Bluesky This endpoint is part of the atproto repository synchronization APIs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.sync.listRepos",
+            "params": [
+              {
+                "name": "limit",
+                "value": "500",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is part of the atproto repository synchronization APIs. Requests usually do not require authentication, and can be made to PDS intances or Relay instances.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nEnumerates all the DID, rev, and commit CID for all repos hosted by this service. Does not require auth; implemented by PDS and Relay."
+        },
+        {
+          "info": {
+            "name": "Bluesky This endpoint is part of the atproto repository synchronization APIs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.sync.notifyOfUpdate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is part of the atproto repository synchronization APIs. Requests usually do not require authentication, and can be made to PDS intances or Relay instances.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nNotify a crawling service of a recent update, and that crawling should resume. Intended use is after a gap between repo stream events caused the crawling service to disconnect. Does not r"
+        },
+        {
+          "info": {
+            "name": "Bluesky This endpoint is part of the atproto repository synchronization APIs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/com.atproto.sync.requestCrawl",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is part of the atproto repository synchronization APIs. Requests usually do not require authentication, and can be made to PDS intances or Relay instances.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*\n\nRequest a service to persistently crawl hosted repos. Expected use is new PDS instances declaring their existence to Relays. Does not require auth."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

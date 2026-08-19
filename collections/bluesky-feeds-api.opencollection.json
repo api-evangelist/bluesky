@@ -1,0 +1,625 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Social Actor Profiles Feeds API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Feeds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bluesky Get information about a feed generator, including policies and offered feed URIs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.describeFeedGenerator",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get a list of feeds (feed generator records) created by the actor (in the actor's repo).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getActorFeeds",
+            "params": [
+              {
+                "name": "actor",
+                "value": "user.bsky.social",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get a list of posts liked by an actor.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getActorLikes",
+            "params": [
+              {
+                "name": "actor",
+                "value": "user.bsky.social",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get a view of an actor's 'author feed' (post and reposts by the author).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getAuthorFeed",
+            "params": [
+              {
+                "name": "actor",
+                "value": "user.bsky.social",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "posts_with_replies",
+                "type": "query",
+                "description": "Combinations of post/repost types to include in response."
+              },
+              {
+                "name": "includePins",
+                "value": "true",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get a hydrated feed from an actor's selected feed generator.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getFeed",
+            "params": [
+              {
+                "name": "feed",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get information about a feed generator.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getFeedGenerator",
+            "params": [
+              {
+                "name": "feed",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query",
+                "description": "AT-URI of the feed generator record."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get information about a list of feed generators.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getFeedGenerators",
+            "params": [
+              {
+                "name": "feeds",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get a skeleton of a feed provided by a feed generator.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getFeedSkeleton",
+            "params": [
+              {
+                "name": "feed",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query",
+                "description": "Reference to feed generator record describing the specific feed being requested."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get like records which reference a subject (by AT-URI and CID).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getLikes",
+            "params": [
+              {
+                "name": "uri",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query",
+                "description": "AT-URI of the subject (eg, a post record)."
+              },
+              {
+                "name": "cid",
+                "value": "bafyreiabc123example",
+                "type": "query",
+                "description": "CID of the subject record (aka, specific version of record), to filter likes."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get a feed of recent posts from a list (posts and reposts from any actors on the list).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getListFeed",
+            "params": [
+              {
+                "name": "list",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query",
+                "description": "Reference (AT-URI) to the list record."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get posts in a thread.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getPostThread",
+            "params": [
+              {
+                "name": "uri",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query",
+                "description": "Reference (AT-URI) to post record."
+              },
+              {
+                "name": "depth",
+                "value": "6",
+                "type": "query",
+                "description": "How many levels of reply depth should be included in response."
+              },
+              {
+                "name": "parentHeight",
+                "value": "80",
+                "type": "query",
+                "description": "How many levels of parent (and grandparent, etc) post to include."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Gets post views for a specified list of posts (by AT-URI).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getPosts",
+            "params": [
+              {
+                "name": "uris",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query",
+                "description": "List of post AT-URIs to return hydrated views for."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get a list of quotes for a given post.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getQuotes",
+            "params": [
+              {
+                "name": "uri",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query",
+                "description": "Reference (AT-URI) of post record"
+              },
+              {
+                "name": "cid",
+                "value": "bafyreiabc123example",
+                "type": "query",
+                "description": "If supplied, filters to quotes of specific version (by CID) of the post record."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get a list of reposts for a given post.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getRepostedBy",
+            "params": [
+              {
+                "name": "uri",
+                "value": "at://did:plc:example123/app.bsky.feed.post/abc123",
+                "type": "query",
+                "description": "Reference (AT-URI) of post record"
+              },
+              {
+                "name": "cid",
+                "value": "bafyreiabc123example",
+                "type": "query",
+                "description": "If supplied, filters to reposts of specific version (by CID) of the post record."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get a list of suggested feeds (feed generators) for the requesting account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getSuggestedFeeds",
+            "params": [
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Get a view of the requesting account's home timeline.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.getTimeline",
+            "params": [
+              {
+                "name": "algorithm",
+                "value": "example-algorithm",
+                "type": "query",
+                "description": "Variant 'algorithm' for timeline. Implementation-specific. NOTE: most feed flexibility has been moved to feed generator mechanism."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Find posts matching search criteria, returning views of those posts.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.searchPosts",
+            "params": [
+              {
+                "name": "q",
+                "value": "example-q",
+                "type": "query",
+                "description": "Search query string; syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended."
+              },
+              {
+                "name": "sort",
+                "value": "top",
+                "type": "query",
+                "description": "Specifies the ranking order of results."
+              },
+              {
+                "name": "since",
+                "value": "example-since",
+                "type": "query",
+                "description": "Filter results for posts after the indicated datetime (inclusive). Expected to use 'sortAt' timestamp, which may not match 'createdAt'. Can be a datetime, or just an ISO date (YYYY-MM-DD)."
+              },
+              {
+                "name": "until",
+                "value": "example-until",
+                "type": "query",
+                "description": "Filter results for posts before the indicated datetime (not inclusive). Expected to use 'sortAt' timestamp, which may not match 'createdAt'. Can be a datetime, or just an ISO date (YYY-MM-DD)."
+              },
+              {
+                "name": "mentions",
+                "value": "user.bsky.social",
+                "type": "query",
+                "description": "Filter to posts which mention the given account. Handles are resolved to DID before query-time. Only matches rich-text facet mentions."
+              },
+              {
+                "name": "author",
+                "value": "user.bsky.social",
+                "type": "query",
+                "description": "Filter to posts by the given account. Handles are resolved to DID before query-time."
+              },
+              {
+                "name": "lang",
+                "value": "en",
+                "type": "query",
+                "description": "Filter to posts in the given language. Expected to be based on post language field, though server may override language detection."
+              },
+              {
+                "name": "domain",
+                "value": "example-domain",
+                "type": "query",
+                "description": "Filter to posts with URLs (facet links or embeds) linking to the given domain (hostname). Server may apply hostname normalization."
+              },
+              {
+                "name": "url",
+                "value": "https://example.com/resource",
+                "type": "query",
+                "description": "Filter to posts with links (facet links or embeds) pointing to this URL. Server may apply URL normalization or fuzzy matching."
+              },
+              {
+                "name": "tag",
+                "value": "example-tag",
+                "type": "query",
+                "description": "Filter to posts with the given tag (hashtag), based on rich-text facet or tag field. Do not include the hash (#) prefix. Multiple tags can be specified, with 'AND' matching."
+              },
+              {
+                "name": "limit",
+                "value": "25",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "eyJsYXN0SWQiOiIxMjM0NTYifQ",
+                "type": "query",
+                "description": "Optional pagination mechanism; may not necessarily allow scrolling through entire result set."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        },
+        {
+          "info": {
+            "name": "Bluesky Send information about interactions with feed items back to the feed generator that served them.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://bsky.social/xrpc/xrpc/app.bsky.feed.sendInteractions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advance"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
