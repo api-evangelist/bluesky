@@ -4,6 +4,10 @@ apis:
 - aid: bluesky:bluesky-jetstream
   name: Bluesky Jetstream
   tags:
+  - Event
+  - Social Networks
+  - Streaming
+  tags_raw:
   - Events
   - Social Networks
   - Streaming
@@ -354,6 +358,8 @@ apis:
   description: Operations for managing user notifications.
   humanURL: https://docs.bsky.app/
   tags:
+  - Notification
+  tags_raw:
   - Notifications
   properties:
   - type: OpenAPI
