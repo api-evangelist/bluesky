@@ -2,14 +2,6 @@
   "repo": "bluesky",
   "feeds": [
     {
-      "source": "https://docs.bsky.app/blog/atom.xml",
-      "error": "HTTPError"
-    },
-    {
-      "source": "https://docs.bsky.app/blog/rss.xml",
-      "error": "HTTPError"
-    },
-    {
       "source": "https://docs.bsky.app/blog",
       "feed_url": "https://docs.bsky.app/blog",
       "title": "",
@@ -18,5 +10,5 @@
     }
   ],
   "post_count": 24,
-  "fetched": "2026-08-15T12:22:01Z"
+  "fetched": "2026-08-22T20:20:02Z"
 }
