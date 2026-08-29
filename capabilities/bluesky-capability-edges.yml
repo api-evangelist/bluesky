@@ -1,0 +1,46 @@
+slug: bluesky
+provider: Bluesky
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Media, Entertainment & Telecom Content
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Moderation
+  spec_file: bluesky-moderation-api-openapi.yml
+  capability_id: BC-3780.40
+  capability_id_l1: BC-3780
+  capability_name: User-Generated Content Moderation
+  confidence: 0.92
+  evidence: moderationCreateReport  Bluesky Submit a moderation report regarding an atproto account or
+    record.
+  reason: Report submission with reason types (ReasonSpam, ReasonSexual, ReasonViolation) is exactly the
+    reporting/triage entry point of user-generated content moderation.
+- tag: Ozone Moderation
+  spec_file: bluesky-ozone-moderation-api-openapi.yml
+  capability_id: BC-3780.40
+  capability_id_l1: BC-3780
+  capability_name: User-Generated Content Moderation
+  confidence: 0.9
+  evidence: ozoneModerationEmitEvent  Bluesky Take a moderation action on an actor. ... queryStatuses  View
+    moderation statuses of subjects (record or repo).
+  reason: Moderator tooling for taking actions, reviewing moderation events and tracking subject statuses
+    (ModEventLabel, ModEventMute, ResolveAppeal) is the human-review workflow of user-generated content
+    moderation.
+- tag: Chat Moderation
+  spec_file: bluesky-chat-moderation-api-openapi.yml
+  capability_id: BC-3780.40
+  capability_id_l1: BC-3780
+  capability_name: User-Generated Content Moderation
+  confidence: 0.78
+  evidence: GET /xrpc/chat.bsky.moderation.getMessageContext ... POST /xrpc/chat.bsky.moderation.updateActorAccess
+  reason: Operations expose moderator views of user chat messages and the ability to restrict an actor's
+    access — moderation of user-generated content on a social platform, matching User-Generated Content
+    Moderation. Slightly reduced confidence because the surface is small and DM-specific.

@@ -822,6 +822,9 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bluesky.png
 access: 3rd-Party
 common:
+  - type: CapabilityMap
+    url: capabilities/bluesky-capability-edges.yml
+    name: Bluesky Business Capability Map
   - type: AgenticAccess
     url: agentic-access/bluesky-agentic-access.yml
   - type: VulnerabilityDisclosure
