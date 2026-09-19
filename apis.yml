@@ -5,7 +5,7 @@ apis:
   name: Bluesky Jetstream
   tags:
   - Event
-  - Social Networks
+  - Social Network
   - Streaming
   tags_raw:
   - Events
@@ -226,6 +226,8 @@ apis:
   description: Operations for managing feeds, posts, likes, and reposts.
   humanURL: https://docs.bsky.app/
   tags:
+  - Feed
+  tags_raw:
   - Feeds
   properties:
   - type: OpenAPI
@@ -657,6 +659,8 @@ apis:
   description: Operations for server management and authentication.
   humanURL: https://docs.bsky.app/
   tags:
+  - Servers
+  tags_raw:
   - Server
   properties:
   - type: OpenAPI
@@ -786,6 +790,13 @@ apis:
     url: null
 name: Bluesky
 tags:
+  - At-Protocol
+  - Decentralized
+  - Federated
+  - Open-Source
+  - Social Network
+  - Social-Media
+tags_raw:
   - At-Protocol
   - Decentralized
   - Federated
