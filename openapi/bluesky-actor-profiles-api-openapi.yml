@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Bluesky Social Actor Profiles API
-  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  description: The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol.
   version: 1.0.0
   contact:
     name: Bluesky Support
@@ -21,11 +21,11 @@ paths:
   /xrpc/app.bsky.actor.getPreferences:
     get:
       operationId: actorGetPreferences
-      summary: Bluesky Get private preferences attached to the current account.
+      summary: Bluesky Get private preferences attached to the current account
       description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Get private preferences attached to the current account. Expected use is synchronization between multiple devices, and import/export during account migration. Requires auth.'
@@ -87,11 +87,11 @@ paths:
   /xrpc/app.bsky.actor.getProfile:
     get:
       operationId: actorGetProfile
-      summary: Bluesky Get detailed profile view of an actor.
+      summary: Bluesky Get detailed profile view of an actor
       description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Get detailed profile view of an actor. Does not require auth, but contains relevant metadata with auth.'
@@ -158,11 +158,11 @@ paths:
   /xrpc/app.bsky.actor.getProfiles:
     get:
       operationId: actorGetProfiles
-      summary: Bluesky Get detailed profile views of multiple actors.
+      summary: Bluesky Get detailed profile views of multiple actors
       description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Get detailed profile views of multiple actors.'
@@ -238,11 +238,11 @@ paths:
   /xrpc/app.bsky.actor.getSuggestions:
     get:
       operationId: actorGetSuggestions
-      summary: Bluesky Get a list of suggested actors.
+      summary: Bluesky Get a list of suggested actors
       description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Get a list of suggested actors. Expected use is discovery of accounts to follow during new account onboarding.'
@@ -324,11 +324,11 @@ paths:
   /xrpc/app.bsky.actor.putPreferences:
     post:
       operationId: actorPutPreferences
-      summary: Bluesky Set the private preferences attached to the account.
+      summary: Bluesky Set the private preferences attached to the account
       description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Set the private preferences attached to the account.'
@@ -392,11 +392,11 @@ paths:
   /xrpc/app.bsky.actor.searchActors:
     get:
       operationId: actorSearchActors
-      summary: Bluesky Find actors (profiles) matching search criteria.
+      summary: Bluesky Find actors (profiles) matching search criteria
       description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Find actors (profiles) matching search criteria. Does not require auth.'
@@ -486,11 +486,11 @@ paths:
   /xrpc/app.bsky.actor.searchActorsTypeahead:
     get:
       operationId: actorSearchActorsTypeahead
-      summary: Bluesky Find actor suggestions for a prefix search term.
+      summary: Bluesky Find actor suggestions for a prefix search term
       description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Find actor suggestions for a prefix search term. Expected use is for auto-completion during text field entry. Does not require auth.'
@@ -571,6 +571,65 @@ paths:
                     type: string
 components:
   schemas:
+    AppBskyActorDefsPersonalDetailsPref:
+      type: object
+      properties:
+        birthDate:
+          type: string
+          description: The birth date of account owner.
+          format: date-time
+    AppBskyActorDefsBskyAppProgressGuide:
+      type: object
+      description: If set, an active progress guide. Once completed, can be set to undefined. Should have unspecced fields tracking progress.
+      required:
+      - guide
+      properties:
+        guide:
+          type: string
+          maxLength: 100
+    AppBskyActorDefsProfileAssociated:
+      type: object
+      properties:
+        lists:
+          type: integer
+        feedgens:
+          type: integer
+        starterPacks:
+          type: integer
+        labeler:
+          type: boolean
+        chat:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
+    AppBskyActorDefsAdultContentPref:
+      type: object
+      required:
+      - enabled
+      properties:
+        enabled:
+          type: boolean
+    AppBskyActorDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          format: at-uri
+        blockingByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        following:
+          type: string
+          format: at-uri
+        followedBy:
+          type: string
+          format: at-uri
+        knownFollowers:
+          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
     AppBskyActorDefsLabelersPref:
       type: object
       required:
@@ -580,6 +639,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AppBskyActorDefsLabelerPrefItem'
+    AppBskyActorDefsHiddenPostsPref:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+            format: at-uri
     AppBskyGraphDefsListViewBasic:
       type: object
       required:
@@ -615,80 +684,44 @@ components:
         indexedAt:
           type: string
           format: date-time
-    ComAtprotoLabelDefsLabel:
+    AppBskyGraphDefsStarterPackViewBasic:
       type: object
-      description: Metadata tag on an atproto resource (eg, repo or record).
       required:
-      - src
       - uri
-      - val
-      - cts
+      - cid
+      - record
+      - creator
+      - indexedAt
       properties:
-        ver:
-          type: integer
-        src:
-          type: string
-          description: DID of the actor who created this label.
-          format: did
         uri:
           type: string
-          description: AT URI of the record, repository (account), or other resource that this label applies to.
-          format: uri
+          format: at-uri
         cid:
           type: string
-          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
           format: cid
-        val:
-          type: string
-          description: The short string name of the value or type of this label.
-          maxLength: 128
-        neg:
-          type: boolean
-          description: If true, this is a negation label, overwriting a previous label.
-        cts:
-          type: string
-          description: Timestamp when this label was created.
-          format: date-time
-        exp:
-          type: string
-          description: Timestamp at which this label expires (no longer applies).
-          format: date-time
-        sig:
-          type: string
-          format: byte
-          description: Signature of dag-cbor encoded label.
-    AppBskyActorDefsBskyAppProgressGuide:
-      type: object
-      description: If set, an active progress guide. Once completed, can be set to undefined. Should have unspecced fields tracking progress.
-      required:
-      - guide
-      properties:
-        guide:
-          type: string
-          maxLength: 100
-    AppBskyActorDefsFeedViewPref:
-      type: object
-      required:
-      - feed
-      properties:
-        feed:
-          type: string
-          description: The URI of the feed, or an identifier which describes the feed.
-        hideReplies:
-          type: boolean
-          description: Hide replies in the feed.
-        hideRepliesByUnfollowed:
-          type: boolean
-          description: Hide replies in the feed if they are not by followed users.
-          default: true
-        hideRepliesByLikeCount:
+        record: {}
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        listItemCount:
           type: integer
-        hideReposts:
-          type: boolean
-          description: Hide reposts in the feed.
-        hideQuotePosts:
-          type: boolean
-          description: Hide quote posts in the feed.
+          minimum: 0
+        joinedWeekCount:
+          type: integer
+          minimum: 0
+        joinedAllTimeCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyGraphDefsModlist:
+      type: string
+      format: token
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
     AppBskyActorDefsSavedFeedsPrefV2:
       type: object
       required:
@@ -733,6 +766,52 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyActorDefsBskyAppStatePref:
+      type: object
+      description: A grab bag of state that's specific to the bsky.app program. Third-party apps shouldn't use this.
+      properties:
+        activeProgressGuide:
+          $ref: '#/components/schemas/AppBskyActorDefsBskyAppProgressGuide'
+        queuedNudges:
+          type: array
+          items:
+            type: string
+            maxLength: 100
+          maxItems: 1000
+        nuxs:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsNux'
+          maxItems: 100
+    AppBskyActorDefsProfileViewBasic:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        createdAt:
+          type: string
+          format: date-time
     AppBskyActorDefsContentLabelPref:
       type: object
       required:
@@ -752,6 +831,247 @@ components:
           - show
           - warn
           - hide
+    AppBskyGraphDefsListViewerState:
+      type: object
+      properties:
+        muted:
+          type: boolean
+        blocked:
+          type: string
+          format: at-uri
+    AppBskyActorDefsProfileAssociatedChat:
+      type: object
+      required:
+      - allowIncoming
+      properties:
+        allowIncoming:
+          type: string
+          enum:
+          - all
+          - none
+          - following
+    ComAtprotoLabelDefsLabel:
+      type: object
+      description: Metadata tag on an atproto resource (eg, repo or record).
+      required:
+      - src
+      - uri
+      - val
+      - cts
+      properties:
+        ver:
+          type: integer
+        src:
+          type: string
+          description: DID of the actor who created this label.
+          format: did
+        uri:
+          type: string
+          description: AT URI of the record, repository (account), or other resource that this label applies to.
+          format: uri
+        cid:
+          type: string
+          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
+          format: cid
+        val:
+          type: string
+          description: The short string name of the value or type of this label.
+          maxLength: 128
+        neg:
+          type: boolean
+          description: If true, this is a negation label, overwriting a previous label.
+        cts:
+          type: string
+          description: Timestamp when this label was created.
+          format: date-time
+        exp:
+          type: string
+          description: Timestamp at which this label expires (no longer applies).
+          format: date-time
+        sig:
+          type: string
+          format: byte
+          description: Signature of dag-cbor encoded label.
+    AppBskyActorDefsThreadViewPref:
+      type: object
+      properties:
+        sort:
+          type: string
+          description: Sorting mode for threads.
+          enum:
+          - oldest
+          - newest
+          - most-likes
+          - random
+        prioritizeFollowedUsers:
+          type: boolean
+          description: Show followed users at the top of all replies.
+    AppBskyActorDefsInterestsPref:
+      type: object
+      required:
+      - tags
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+            maxLength: 640
+          maxItems: 100
+    AppBskyGraphDefsListPurpose:
+      oneOf:
+      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
+    AppBskyActorDefsLabelerPrefItem:
+      type: object
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+    AppBskyActorDefsSavedFeedsPref:
+      type: object
+      required:
+      - pinned
+      - saved
+      properties:
+        pinned:
+          type: array
+          items:
+            type: string
+            format: at-uri
+        saved:
+          type: array
+          items:
+            type: string
+            format: at-uri
+        timelineIndex:
+          type: integer
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
+    AppBskyActorDefsKnownFollowers:
+      type: object
+      description: The subject's followers whom you also follow
+      required:
+      - count
+      - followers
+      properties:
+        count:
+          type: integer
+        followers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+          maxItems: 5
+    AppBskyActorDefsFeedViewPref:
+      type: object
+      required:
+      - feed
+      properties:
+        feed:
+          type: string
+          description: The URI of the feed, or an identifier which describes the feed.
+        hideReplies:
+          type: boolean
+          description: Hide replies in the feed.
+        hideRepliesByUnfollowed:
+          type: boolean
+          description: Hide replies in the feed if they are not by followed users.
+          default: true
+        hideRepliesByLikeCount:
+          type: integer
+        hideReposts:
+          type: boolean
+          description: Hide reposts in the feed.
+        hideQuotePosts:
+          type: boolean
+          description: Hide quote posts in the feed.
+    AppBskyActorDefsMutedWordTarget:
+      type: string
+      maxLength: 640
+      enum:
+      - content
+      - tag
+    AppBskyActorDefsMutedWordsPref:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsMutedWord'
+    ComAtprotoRepoStrongRef:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+    AppBskyActorDefsNux:
+      type: object
+      description: A new user experiences (NUX) storage object
+      required:
+      - id
+      - completed
+      properties:
+        id:
+          type: string
+          maxLength: 100
+        completed:
+          type: boolean
+        data:
+          type: string
+          description: Arbitrary data for the NUX. The structure is defined by the NUX itself. Limited to 300 characters.
+          maxLength: 3000
+        expiresAt:
+          type: string
+          description: The date and time at which the NUX will expire and should be considered completed.
+          format: date-time
+    AppBskyActorDefsPreferences:
+      type: array
+      items:
+        oneOf:
+        - $ref: '#/components/schemas/AppBskyActorDefsAdultContentPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsContentLabelPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsSavedFeedsPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsSavedFeedsPrefV2'
+        - $ref: '#/components/schemas/AppBskyActorDefsPersonalDetailsPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsFeedViewPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsThreadViewPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsInterestsPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsMutedWordsPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsHiddenPostsPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsBskyAppStatePref'
+        - $ref: '#/components/schemas/AppBskyActorDefsLabelersPref'
+    AppBskyActorDefsSavedFeed:
+      type: object
+      required:
+      - id
+      - type
+      - value
+      - pinned
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - feed
+          - list
+          - timeline
+        value:
+          type: string
+        pinned:
+          type: boolean
     AppBskyActorDefsMutedWord:
       type: object
       description: A word that the account owner has muted.
@@ -780,17 +1100,10 @@ components:
           type: string
           description: The date and time at which the muted word will expire and no longer be applied.
           format: date-time
-    AppBskyActorDefsProfileAssociatedChat:
-      type: object
-      required:
-      - allowIncoming
-      properties:
-        allowIncoming:
-          type: string
-          enum:
-          - all
-          - none
-          - following
+    AppBskyGraphDefsReferencelist:
+      type: string
+      format: token
+      description: A list of actors used for only for reference purposes such as within a starter pack.
     AppBskyActorDefsProfileViewDetailed:
       type: object
       required:
@@ -839,353 +1152,12 @@ components:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
         pinnedPost:
           $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
-    AppBskyActorDefsViewerState:
-      type: object
-      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
-      properties:
-        muted:
-          type: boolean
-        mutedByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        blockedBy:
-          type: boolean
-        blocking:
-          type: string
-          format: at-uri
-        blockingByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        following:
-          type: string
-          format: at-uri
-        followedBy:
-          type: string
-          format: at-uri
-        knownFollowers:
-          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
-    ComAtprotoRepoStrongRef:
-      type: object
-      required:
-      - uri
-      - cid
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-    AppBskyActorDefsSavedFeedsPref:
-      type: object
-      required:
-      - pinned
-      - saved
-      properties:
-        pinned:
-          type: array
-          items:
-            type: string
-            format: at-uri
-        saved:
-          type: array
-          items:
-            type: string
-            format: at-uri
-        timelineIndex:
-          type: integer
-    AppBskyActorDefsProfileAssociated:
-      type: object
-      properties:
-        lists:
-          type: integer
-        feedgens:
-          type: integer
-        starterPacks:
-          type: integer
-        labeler:
-          type: boolean
-        chat:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
-    AppBskyActorDefsKnownFollowers:
-      type: object
-      description: The subject's followers whom you also follow
-      required:
-      - count
-      - followers
-      properties:
-        count:
-          type: integer
-        followers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-          maxItems: 5
-    AppBskyActorDefsProfileViewBasic:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
-          type: string
-          format: did
-        handle:
-          type: string
-          format: handle
-        displayName:
-          type: string
-          maxLength: 640
-        avatar:
-          type: string
-          format: uri
-        associated:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        createdAt:
-          type: string
-          format: date-time
-    AppBskyGraphDefsListPurpose:
-      oneOf:
-      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
-    AppBskyActorDefsHiddenPostsPref:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            type: string
-            format: at-uri
-    AppBskyActorDefsBskyAppStatePref:
-      type: object
-      description: A grab bag of state that's specific to the bsky.app program. Third-party apps shouldn't use this.
-      properties:
-        activeProgressGuide:
-          $ref: '#/components/schemas/AppBskyActorDefsBskyAppProgressGuide'
-        queuedNudges:
-          type: array
-          items:
-            type: string
-            maxLength: 100
-          maxItems: 1000
-        nuxs:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsNux'
-          maxItems: 100
-    AppBskyActorDefsPersonalDetailsPref:
-      type: object
-      properties:
-        birthDate:
-          type: string
-          description: The birth date of account owner.
-          format: date-time
-    AppBskyActorDefsMutedWordsPref:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsMutedWord'
-    AppBskyActorDefsLabelerPrefItem:
-      type: object
-      required:
-      - did
-      properties:
-        did:
-          type: string
-          format: did
-    AppBskyGraphDefsCuratelist:
-      type: string
-      format: token
-      description: A list of actors used for curation purposes such as list feeds or interaction gating.
-    AppBskyActorDefsNux:
-      type: object
-      description: A new user experiences (NUX) storage object
-      required:
-      - id
-      - completed
-      properties:
-        id:
-          type: string
-          maxLength: 100
-        completed:
-          type: boolean
-        data:
-          type: string
-          description: Arbitrary data for the NUX. The structure is defined by the NUX itself. Limited to 300 characters.
-          maxLength: 3000
-        expiresAt:
-          type: string
-          description: The date and time at which the NUX will expire and should be considered completed.
-          format: date-time
-    AppBskyActorDefsThreadViewPref:
-      type: object
-      properties:
-        sort:
-          type: string
-          description: Sorting mode for threads.
-          enum:
-          - oldest
-          - newest
-          - most-likes
-          - random
-        prioritizeFollowedUsers:
-          type: boolean
-          description: Show followed users at the top of all replies.
-    AppBskyGraphDefsReferencelist:
-      type: string
-      format: token
-      description: A list of actors used for only for reference purposes such as within a starter pack.
-    AppBskyActorDefsMutedWordTarget:
-      type: string
-      maxLength: 640
-      enum:
-      - content
-      - tag
-    AppBskyGraphDefsModlist:
-      type: string
-      format: token
-      description: A list of actors to apply an aggregate moderation action (mute/block) on.
-    AppBskyActorDefsAdultContentPref:
-      type: object
-      required:
-      - enabled
-      properties:
-        enabled:
-          type: boolean
-    AppBskyActorDefsInterestsPref:
-      type: object
-      required:
-      - tags
-      properties:
-        tags:
-          type: array
-          items:
-            type: string
-            maxLength: 640
-          maxItems: 100
-    AppBskyGraphDefsListViewerState:
-      type: object
-      properties:
-        muted:
-          type: boolean
-        blocked:
-          type: string
-          format: at-uri
-    AppBskyActorDefsSavedFeed:
-      type: object
-      required:
-      - id
-      - type
-      - value
-      - pinned
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - feed
-          - list
-          - timeline
-        value:
-          type: string
-        pinned:
-          type: boolean
-    AppBskyGraphDefsStarterPackViewBasic:
-      type: object
-      required:
-      - uri
-      - cid
-      - record
-      - creator
-      - indexedAt
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        record: {}
-        creator:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-        listItemCount:
-          type: integer
-          minimum: 0
-        joinedWeekCount:
-          type: integer
-          minimum: 0
-        joinedAllTimeCount:
-          type: integer
-          minimum: 0
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        indexedAt:
-          type: string
-          format: date-time
-    AppBskyActorDefsPreferences:
-      type: array
-      items:
-        oneOf:
-        - $ref: '#/components/schemas/AppBskyActorDefsAdultContentPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsContentLabelPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsSavedFeedsPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsSavedFeedsPrefV2'
-        - $ref: '#/components/schemas/AppBskyActorDefsPersonalDetailsPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsFeedViewPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsThreadViewPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsInterestsPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsMutedWordsPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsHiddenPostsPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsBskyAppStatePref'
-        - $ref: '#/components/schemas/AppBskyActorDefsLabelersPref'
   examples:
     ActorGetPreferencesResponse200Example:
       summary: Successful response for actorGetPreferences
       value:
         preferences:
         - enabled: true
-    ActorGetProfilesResponse200Example:
-      summary: Successful response for actorGetProfiles
-      value:
-        profiles:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          banner: https://example.com/resource
-          followersCount: 50
-          followsCount: 50
-    ActorPutPreferencesRequestExample:
-      summary: Example request for actorPutPreferences
-      value:
-        preferences:
-        - enabled: true
-    ActorGetProfileResponse200Example:
-      summary: Successful response for actorGetProfile
-      value:
-        did: did:plc:example123abc
-        handle: user.bsky.social
-        displayName: Example Name
-        description: This is an example description.
-        avatar: https://example.com/resource
-        banner: https://example.com/resource
-        followersCount: 50
-        followsCount: 50
     ActorSearchActorsResponse200Example:
       summary: Successful response for actorSearchActors
       value:
@@ -1204,6 +1176,17 @@ components:
           indexedAt: '2024-01-15T12:00:00.000Z'
           createdAt: '2024-01-15T12:00:00.000Z'
         cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    ActorGetProfileResponse200Example:
+      summary: Successful response for actorGetProfile
+      value:
+        did: did:plc:example123abc
+        handle: user.bsky.social
+        displayName: Example Name
+        description: This is an example description.
+        avatar: https://example.com/resource
+        banner: https://example.com/resource
+        followersCount: 50
+        followsCount: 50
     ActorSearchActorsTypeaheadResponse200Example:
       summary: Successful response for actorSearchActorsTypeahead
       value:
@@ -1237,6 +1220,18 @@ components:
             neg: {}
             exp: {}
           createdAt: '2024-01-15T12:00:00.000Z'
+    ActorGetProfilesResponse200Example:
+      summary: Successful response for actorGetProfiles
+      value:
+        profiles:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          banner: https://example.com/resource
+          followersCount: 50
+          followsCount: 50
     ActorGetSuggestionsResponse200Example:
       summary: Successful response for actorGetSuggestions
       value:
@@ -1255,6 +1250,11 @@ components:
           indexedAt: '2024-01-15T12:00:00.000Z'
           createdAt: '2024-01-15T12:00:00.000Z'
         cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    ActorPutPreferencesRequestExample:
+      summary: Example request for actorPutPreferences
+      value:
+        preferences:
+        - enabled: true
   securitySchemes:
     Bearer:
       type: http

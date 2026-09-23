@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Bluesky Social Actor Profiles Repository API
-  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  title: Bluesky Social Repository API
+  description: The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol.
   version: 1.0.0
   contact:
     name: Bluesky Support
@@ -21,11 +21,11 @@ paths:
   /xrpc/com.atproto.repo.applyWrites:
     post:
       operationId: repoApplyWrites
-      summary: Bluesky Apply a batch transaction of repository creates, updates, and deletes.
+      summary: Bluesky Apply a batch transaction of repository creates, updates, and deletes
       description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Apply a batch transaction of repository creates, updates, and deletes. Requires auth, implemented by PDS.'
@@ -125,11 +125,11 @@ paths:
   /xrpc/com.atproto.repo.createRecord:
     post:
       operationId: repoCreateRecord
-      summary: Bluesky Create a single new repository record.
+      summary: Bluesky Create a single new repository record
       description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Create a single new repository record. Requires auth, implemented by PDS.'
@@ -238,11 +238,11 @@ paths:
   /xrpc/com.atproto.repo.deleteRecord:
     post:
       operationId: repoDeleteRecord
-      summary: Bluesky Delete a repository record, or ensure it doesn't exist.
+      summary: Bluesky Delete a repository record, or ensure it doesn't exist
       description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Delete a repository record, or ensure it doesn''t exist. Requires auth, implemented by PDS.'
@@ -336,11 +336,11 @@ paths:
   /xrpc/com.atproto.repo.describeRepo:
     get:
       operationId: repoDescribeRepo
-      summary: Bluesky Get information about an account and repository, including the list of collections.
+      summary: Bluesky Get information about an account and repository, including the list of…
       description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Get information about an account and repository, including the list of collections. Does not require auth.'
@@ -429,11 +429,11 @@ paths:
   /xrpc/com.atproto.repo.getRecord:
     get:
       operationId: repoGetRecord
-      summary: Bluesky Get a single record from a repository.
+      summary: Bluesky Get a single record from a repository
       description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Get a single record from a repository. Does not require auth.'
@@ -538,11 +538,11 @@ paths:
   /xrpc/com.atproto.repo.importRepo:
     post:
       operationId: repoImportRepo
-      summary: Bluesky Import a repo in the form of a CAR file.
+      summary: Bluesky Import a repo in the form of a CAR file
       description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Import a repo in the form of a CAR file. Requires Content-Length HTTP header to be set.'
@@ -596,11 +596,11 @@ paths:
   /xrpc/com.atproto.repo.listMissingBlobs:
     get:
       operationId: repoListMissingBlobs
-      summary: Bluesky Returns a list of missing blobs for the requesting account.
+      summary: Bluesky Returns a list of missing blobs for the requesting account
       description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Returns a list of missing blobs for the requesting account. Intended to be used in the account migration flow.'
@@ -682,11 +682,11 @@ paths:
   /xrpc/com.atproto.repo.listRecords:
     get:
       operationId: repoListRecords
-      summary: Bluesky List a range of records in a repository, matching a specific collection.
+      summary: Bluesky List a range of records in a repository, matching a specific collection
       description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         List a range of records in a repository, matching a specific collection. Does not require auth.'
@@ -795,11 +795,11 @@ paths:
   /xrpc/com.atproto.repo.putRecord:
     post:
       operationId: repoPutRecord
-      summary: Bluesky Write a repository record, creating or updating it as needed.
+      summary: Bluesky Write a repository record, creating or updating it as needed
       description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Write a repository record, creating or updating it as needed. Requires auth, implemented by PDS.'
@@ -913,11 +913,11 @@ paths:
   /xrpc/com.atproto.repo.uploadBlob:
     post:
       operationId: repoUploadBlob
-      summary: Bluesky Upload a new blob, to be referenced from a repository record.
+      summary: Bluesky Upload a new blob, to be referenced from a repository record
       description: '*This endpoint is part of the atproto PDS repository management APIs. Requests usually require authentication (unlike the `com.atproto.sync.*` endpoints), and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Upload a new blob, to be referenced from a repository record. The blob will be deleted if it is not referenced within a time window (eg, minutes). Blob restrictions (mimetype, size, etc) are enforced when the reference is created. Requires auth, implemented by PDS.'
@@ -983,20 +983,21 @@ paths:
                     type: string
 components:
   schemas:
-    ComAtprotoRepoApplyWritesUpdate:
+    ComAtprotoRepoDefsCommitMeta:
       type: object
-      description: Operation which updates an existing record.
       required:
-      - collection
-      - rkey
-      - value
+      - cid
+      - rev
       properties:
-        collection:
+        cid:
           type: string
-          format: nsid
-        rkey:
+          format: cid
+        rev:
           type: string
-        value: {}
+    ComAtprotoRepoApplyWritesDeleteResult:
+      type: object
+      required: []
+      properties: {}
     ComAtprotoRepoApplyWritesDelete:
       type: object
       description: Operation which deletes an existing record.
@@ -1008,35 +1009,6 @@ components:
           type: string
           format: nsid
         rkey:
-          type: string
-    ComAtprotoRepoApplyWritesDeleteResult:
-      type: object
-      required: []
-      properties: {}
-    ComAtprotoRepoApplyWritesCreate:
-      type: object
-      description: Operation which creates a new record.
-      required:
-      - collection
-      - value
-      properties:
-        collection:
-          type: string
-          format: nsid
-        rkey:
-          type: string
-          maxLength: 512
-        value: {}
-    ComAtprotoRepoDefsCommitMeta:
-      type: object
-      required:
-      - cid
-      - rev
-      properties:
-        cid:
-          type: string
-          format: cid
-        rev:
           type: string
     ComAtprotoRepoListMissingBlobsRecordBlob:
       type: object
@@ -1067,6 +1039,48 @@ components:
           enum:
           - valid
           - unknown
+    ComAtprotoRepoListRecordsRecord:
+      type: object
+      required:
+      - uri
+      - cid
+      - value
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        value: {}
+    ComAtprotoRepoApplyWritesCreate:
+      type: object
+      description: Operation which creates a new record.
+      required:
+      - collection
+      - value
+      properties:
+        collection:
+          type: string
+          format: nsid
+        rkey:
+          type: string
+          maxLength: 512
+        value: {}
+    ComAtprotoRepoApplyWritesUpdate:
+      type: object
+      description: Operation which updates an existing record.
+      required:
+      - collection
+      - rkey
+      - value
+      properties:
+        collection:
+          type: string
+          format: nsid
+        rkey:
+          type: string
+        value: {}
     ComAtprotoRepoApplyWritesUpdateResult:
       type: object
       required:
@@ -1084,21 +1098,52 @@ components:
           enum:
           - valid
           - unknown
-    ComAtprotoRepoListRecordsRecord:
-      type: object
-      required:
-      - uri
-      - cid
-      - value
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        value: {}
   examples:
+    RepoGetRecordResponse200Example:
+      summary: Successful response for repoGetRecord
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        value: {}
+        cid: bafyreiabc123example
+    RepoDeleteRecordRequestExample:
+      summary: Example request for repoDeleteRecord
+      value:
+        repo: user.bsky.social
+        collection: app.bsky.feed.post
+        rkey: example-rkey
+        swapRecord: bafyreiabc123example
+        swapCommit: bafyreiabc123example
+    RepoPutRecordResponse200Example:
+      summary: Successful response for repoPutRecord
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        cid: bafyreiabc123example
+        commit:
+          cid: bafyreiabc123example
+          rev: example-rev
+        validationStatus: valid
+    RepoCreateRecordResponse200Example:
+      summary: Successful response for repoCreateRecord
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        cid: bafyreiabc123example
+        commit:
+          cid: bafyreiabc123example
+          rev: example-rev
+        validationStatus: valid
+    RepoUploadBlobResponse200Example:
+      summary: Successful response for repoUploadBlob
+      value:
+        blob: example-blob
+    RepoDescribeRepoResponse200Example:
+      summary: Successful response for repoDescribeRepo
+      value:
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        didDoc: {}
+        collections:
+        - app.bsky.feed.post
+        handleIsCorrect: true
     RepoCreateRecordRequestExample:
       summary: Example request for repoCreateRecord
       value:
@@ -1118,21 +1163,13 @@ components:
         - uri: at://did:plc:example123/app.bsky.feed.post/abc123
           cid: bafyreiabc123example
           validationStatus: valid
-    RepoCreateRecordResponse200Example:
-      summary: Successful response for repoCreateRecord
+    RepoListMissingBlobsResponse200Example:
+      summary: Successful response for repoListMissingBlobs
       value:
-        uri: at://did:plc:example123/app.bsky.feed.post/abc123
-        cid: bafyreiabc123example
-        commit:
-          cid: bafyreiabc123example
-          rev: example-rev
-        validationStatus: valid
-    RepoDeleteRecordResponse200Example:
-      summary: Successful response for repoDeleteRecord
-      value:
-        commit:
-          cid: bafyreiabc123example
-          rev: example-rev
+        blobs:
+        - cid: bafyreiabc123example
+          recordUri: at://did:plc:example123/app.bsky.feed.post/abc123
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
     RepoApplyWritesRequestExample:
       summary: Example request for repoApplyWrites
       value:
@@ -1143,28 +1180,14 @@ components:
           rkey: example-rkey
         validate: true
         swapCommit: bafyreiabc123example
-    RepoListMissingBlobsResponse200Example:
-      summary: Successful response for repoListMissingBlobs
+    RepoListRecordsResponse200Example:
+      summary: Successful response for repoListRecords
       value:
-        blobs:
-        - cid: bafyreiabc123example
-          recordUri: at://did:plc:example123/app.bsky.feed.post/abc123
+        records:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          value: {}
         cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    RepoDescribeRepoResponse200Example:
-      summary: Successful response for repoDescribeRepo
-      value:
-        handle: user.bsky.social
-        did: did:plc:example123abc
-        didDoc: {}
-        collections:
-        - app.bsky.feed.post
-        handleIsCorrect: true
-    RepoGetRecordResponse200Example:
-      summary: Successful response for repoGetRecord
-      value:
-        uri: at://did:plc:example123/app.bsky.feed.post/abc123
-        value: {}
-        cid: bafyreiabc123example
     RepoPutRecordRequestExample:
       summary: Example request for repoPutRecord
       value:
@@ -1175,35 +1198,12 @@ components:
         validate: true
         swapRecord: bafyreiabc123example
         swapCommit: bafyreiabc123example
-    RepoDeleteRecordRequestExample:
-      summary: Example request for repoDeleteRecord
+    RepoDeleteRecordResponse200Example:
+      summary: Successful response for repoDeleteRecord
       value:
-        repo: user.bsky.social
-        collection: app.bsky.feed.post
-        rkey: example-rkey
-        swapRecord: bafyreiabc123example
-        swapCommit: bafyreiabc123example
-    RepoUploadBlobResponse200Example:
-      summary: Successful response for repoUploadBlob
-      value:
-        blob: example-blob
-    RepoPutRecordResponse200Example:
-      summary: Successful response for repoPutRecord
-      value:
-        uri: at://did:plc:example123/app.bsky.feed.post/abc123
-        cid: bafyreiabc123example
         commit:
           cid: bafyreiabc123example
           rev: example-rev
-        validationStatus: valid
-    RepoListRecordsResponse200Example:
-      summary: Successful response for repoListRecords
-      value:
-        records:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          value: {}
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
   securitySchemes:
     Bearer:
       type: http

@@ -1,29 +1,7 @@
 {
   "provider": "bluesky",
   "sources": [
-    "bluesky-actor-profiles-api-openapi.yml",
-    "bluesky-administration-api-openapi.yml",
-    "bluesky-chat-actors-api-openapi.yml",
-    "bluesky-chat-moderation-api-openapi.yml",
-    "bluesky-content-labels-api-openapi.yml",
-    "bluesky-conversations-api-openapi.yml",
-    "bluesky-feeds-api-openapi.yml",
-    "bluesky-identity-api-openapi.yml",
-    "bluesky-labels-api-openapi.yml",
-    "bluesky-moderation-api-openapi.yml",
-    "bluesky-notifications-api-openapi.yml",
-    "bluesky-ozone-communication-api-openapi.yml",
-    "bluesky-ozone-moderation-api-openapi.yml",
-    "bluesky-ozone-server-api-openapi.yml",
-    "bluesky-ozone-sets-api-openapi.yml",
-    "bluesky-ozone-settings-api-openapi.yml",
-    "bluesky-ozone-signatures-api-openapi.yml",
-    "bluesky-ozone-team-api-openapi.yml",
-    "bluesky-repository-api-openapi.yml",
-    "bluesky-server-api-openapi.yml",
-    "bluesky-social-graph-api-openapi.yml",
-    "bluesky-sync-api-openapi.yml",
-    "bluesky-video-api-openapi.yml"
+    "_original/bluesky-openapi.yml"
   ],
   "outputs": [
     "bluesky-actor-profiles-api-openapi.yml",
@@ -53,6 +31,34 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "bluesky-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "bluesky-actor-profiles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-administration-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-chat-actors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-chat-moderation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-content-labels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-conversations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-feeds-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-identity-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-labels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-moderation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-notifications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-ozone-communication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-ozone-moderation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-ozone-server-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-ozone-sets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-ozone-settings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-ozone-signatures-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-ozone-team-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-repository-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-server-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-social-graph-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-sync-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bluesky-video-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

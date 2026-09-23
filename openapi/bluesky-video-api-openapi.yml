@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Bluesky Social Actor Profiles Video API
-  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  title: Bluesky Social Video API
+  description: The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol.
   version: 1.0.0
   contact:
     name: Bluesky Support
@@ -21,11 +21,11 @@ paths:
   /xrpc/app.bsky.video.getJobStatus:
     get:
       operationId: videoGetJobStatus
-      summary: Bluesky Get status details for a video processing job.
+      summary: Bluesky Get status details for a video processing job
       description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Get status details for a video processing job.'
@@ -94,11 +94,11 @@ paths:
   /xrpc/app.bsky.video.getUploadLimits:
     get:
       operationId: videoGetUploadLimits
-      summary: Bluesky Get video upload limits for the authenticated user.
+      summary: Bluesky Get video upload limits for the authenticated user
       description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Get video upload limits for the authenticated user.'
@@ -168,11 +168,11 @@ paths:
   /xrpc/app.bsky.video.uploadVideo:
     post:
       operationId: videoUploadVideo
-      summary: Bluesky Upload a video to be processed then stored on the PDS.
+      summary: Bluesky Upload a video to be processed then stored on the PDS
       description: '*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). Public endpoints which don''t require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app. Authenticated requests are usually made to the user''s PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Upload a video to be processed then stored on the PDS.'
@@ -248,6 +248,14 @@ components:
           blob: example-blob
           error: example-error
           message: example-message
+    VideoGetUploadLimitsResponse200Example:
+      summary: Successful response for videoGetUploadLimits
+      value:
+        canUpload: true
+        remainingDailyVideos: 50
+        remainingDailyBytes: 50
+        message: example-message
+        error: example-error
     VideoUploadVideoResponse200Example:
       summary: Successful response for videoUploadVideo
       value:
@@ -259,14 +267,6 @@ components:
           blob: example-blob
           error: example-error
           message: example-message
-    VideoGetUploadLimitsResponse200Example:
-      summary: Successful response for videoGetUploadLimits
-      value:
-        canUpload: true
-        remainingDailyVideos: 50
-        remainingDailyBytes: 50
-        message: example-message
-        error: example-error
   schemas:
     AppBskyVideoDefsJobStatus:
       type: object

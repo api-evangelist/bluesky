@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Bluesky Social Actor Profiles Server API
-  description: "The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol. \n\nThis API enables developers to:\n- Manage user profiles and preferences\n- Create, read, and interact with posts and feeds\n- Handle social graph operations (follows, blocks, mutes)\n- Process notifications and conversations\n- Moderate content and manage labels\n- Synchronize repository data\n\nAuthentication is handled via Bearer tokens. Public endpoints can be accessed directly at https://public.api.bsky.app, while authenticated requests should be made to the user's Personal Data Server (PDS).\n\nFor more information, visit the [Bluesky API Documentation](https://docs.bsky.app)."
+  title: Bluesky Social Server API
+  description: The Bluesky Social API provides programmatic access to the Bluesky social network built on the AT Protocol.
   version: 1.0.0
   contact:
     name: Bluesky Support
@@ -21,11 +21,11 @@ paths:
   /xrpc/com.atproto.server.activateAccount:
     post:
       operationId: serverActivateAccount
-      summary: Bluesky Activates a currently deactivated account.
+      summary: Bluesky Activates a currently deactivated account
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Activates a currently deactivated account. Used to finalize account migration after the account''s repo is imported and identity is setup.'
@@ -75,11 +75,11 @@ paths:
   /xrpc/com.atproto.server.checkAccountStatus:
     get:
       operationId: serverCheckAccountStatus
-      summary: Bluesky Returns the status of an account, especially as pertaining to import or recovery.
+      summary: Bluesky Returns the status of an account, especially as pertaining to import or…
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Returns the status of an account, especially as pertaining to import or recovery. Can be called many times over the course of an account migration. Requires auth and can only be called pertaining to oneself.'
@@ -166,11 +166,11 @@ paths:
   /xrpc/com.atproto.server.confirmEmail:
     post:
       operationId: serverConfirmEmail
-      summary: Bluesky Confirm an email using a token from com.atproto.server.requestEmailConfirmation.
+      summary: Bluesky Confirm an email using a token from…
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Confirm an email using a token from com.atproto.server.requestEmailConfirmation.'
@@ -241,11 +241,11 @@ paths:
   /xrpc/com.atproto.server.createAccount:
     post:
       operationId: serverCreateAccount
-      summary: Bluesky Create an account.
+      summary: Bluesky Create an account
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Create an account. Implemented by PDS.'
@@ -363,11 +363,11 @@ paths:
   /xrpc/com.atproto.server.createAppPassword:
     post:
       operationId: serverCreateAppPassword
-      summary: Bluesky Create an App Password.
+      summary: Bluesky Create an App Password
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Create an App Password.'
@@ -443,11 +443,11 @@ paths:
   /xrpc/com.atproto.server.createInviteCode:
     post:
       operationId: serverCreateInviteCode
-      summary: Bluesky Create an invite code.
+      summary: Bluesky Create an invite code
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Create an invite code.'
@@ -526,11 +526,11 @@ paths:
   /xrpc/com.atproto.server.createInviteCodes:
     post:
       operationId: serverCreateInviteCodes
-      summary: Bluesky Create invite codes.
+      summary: Bluesky Create invite codes
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Create invite codes.'
@@ -617,11 +617,11 @@ paths:
   /xrpc/com.atproto.server.createSession:
     post:
       operationId: serverCreateSession
-      summary: Bluesky Create an authentication session.
+      summary: Bluesky Create an authentication session
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Create an authentication session.'
@@ -732,11 +732,11 @@ paths:
   /xrpc/com.atproto.server.deactivateAccount:
     post:
       operationId: serverDeactivateAccount
-      summary: Bluesky Deactivates a currently active account.
+      summary: Bluesky Deactivates a currently active account
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Deactivates a currently active account. Stops serving of repo, and future writes to repo until reactivated. Used to finalize account migration with the old host after the account has been activated on the new host.'
@@ -800,11 +800,11 @@ paths:
   /xrpc/com.atproto.server.deleteAccount:
     post:
       operationId: serverDeleteAccount
-      summary: Bluesky Delete an actor's account with a token and password.
+      summary: Bluesky Delete an actor's account with a token and password
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Delete an actor''s account with a token and password. Can only be called after requesting a deletion token. Requires auth.'
@@ -877,11 +877,11 @@ paths:
   /xrpc/com.atproto.server.deleteSession:
     post:
       operationId: serverDeleteSession
-      summary: Bluesky Delete the current session.
+      summary: Bluesky Delete the current session
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Delete the current session. Requires auth.'
@@ -931,11 +931,11 @@ paths:
   /xrpc/com.atproto.server.describeServer:
     get:
       operationId: serverDescribeServer
-      summary: Bluesky Describes the server's account creation requirements and capabilities.
+      summary: Bluesky Describes the server's account creation requirements and capabilities
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Describes the server''s account creation requirements and capabilities. Implemented by PDS.'
@@ -1013,11 +1013,11 @@ paths:
   /xrpc/com.atproto.server.getAccountInviteCodes:
     get:
       operationId: serverGetAccountInviteCodes
-      summary: Bluesky Get all invite codes for the current account.
+      summary: Bluesky Get all invite codes for the current account
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Get all invite codes for the current account. Requires auth.'
@@ -1099,11 +1099,11 @@ paths:
   /xrpc/com.atproto.server.getServiceAuth:
     get:
       operationId: serverGetServiceAuth
-      summary: Bluesky Get a signed token on behalf of the requesting DID for the requested service.
+      summary: Bluesky Get a signed token on behalf of the requesting DID for the requested…
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Get a signed token on behalf of the requesting DID for the requested service.'
@@ -1192,11 +1192,11 @@ paths:
   /xrpc/com.atproto.server.getSession:
     get:
       operationId: serverGetSession
-      summary: Bluesky Get information about the current auth session.
+      summary: Bluesky Get information about the current auth session
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Get information about the current auth session. Requires auth.'
@@ -1279,11 +1279,11 @@ paths:
   /xrpc/com.atproto.server.listAppPasswords:
     get:
       operationId: serverListAppPasswords
-      summary: Bluesky List all App Passwords.
+      summary: Bluesky List all App Passwords
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         List all App Passwords.'
@@ -1348,11 +1348,11 @@ paths:
   /xrpc/com.atproto.server.refreshSession:
     post:
       operationId: serverRefreshSession
-      summary: Bluesky Refresh an authentication session.
+      summary: Bluesky Refresh an authentication session
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Refresh an authentication session. Requires auth using the ''refreshJwt'' (not the ''accessJwt'').'
@@ -1436,11 +1436,11 @@ paths:
   /xrpc/com.atproto.server.requestAccountDelete:
     post:
       operationId: serverRequestAccountDelete
-      summary: Bluesky Initiate a user account deletion via email.
+      summary: Bluesky Initiate a user account deletion via email
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Initiate a user account deletion via email.'
@@ -1490,11 +1490,11 @@ paths:
   /xrpc/com.atproto.server.requestEmailConfirmation:
     post:
       operationId: serverRequestEmailConfirmation
-      summary: Bluesky Request an email with a code to confirm ownership of email.
+      summary: Bluesky Request an email with a code to confirm ownership of email
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Request an email with a code to confirm ownership of email.'
@@ -1544,11 +1544,11 @@ paths:
   /xrpc/com.atproto.server.requestEmailUpdate:
     post:
       operationId: serverRequestEmailUpdate
-      summary: Bluesky Request a token in order to update email.
+      summary: Bluesky Request a token in order to update email
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Request a token in order to update email.'
@@ -1610,11 +1610,11 @@ paths:
   /xrpc/com.atproto.server.requestPasswordReset:
     post:
       operationId: serverRequestPasswordReset
-      summary: Bluesky Initiate a user account password reset via email.
+      summary: Bluesky Initiate a user account password reset via email
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Initiate a user account password reset via email.'
@@ -1678,11 +1678,11 @@ paths:
   /xrpc/com.atproto.server.reserveSigningKey:
     post:
       operationId: serverReserveSigningKey
-      summary: Bluesky Reserve a repo signing key, for use with account creation.
+      summary: Bluesky Reserve a repo signing key, for use with account creation
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Reserve a repo signing key, for use with account creation. Necessary so that a DID PLC update operation can be constructed during an account migraiton. Public and does not require auth; implemented by PDS. NOTE: this endpoint may change when full account migration is implemented.'
@@ -1759,11 +1759,11 @@ paths:
   /xrpc/com.atproto.server.resetPassword:
     post:
       operationId: serverResetPassword
-      summary: Bluesky Reset a user account password using a token.
+      summary: Bluesky Reset a user account password using a token
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Reset a user account password using a token.'
@@ -1832,11 +1832,11 @@ paths:
   /xrpc/com.atproto.server.revokeAppPassword:
     post:
       operationId: serverRevokeAppPassword
-      summary: Bluesky Revoke an App Password by name.
+      summary: Bluesky Revoke an App Password by name
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Revoke an App Password by name.'
@@ -1900,11 +1900,11 @@ paths:
   /xrpc/com.atproto.server.updateEmail:
     post:
       operationId: serverUpdateEmail
-      summary: Bluesky Update an account's email.
+      summary: Bluesky Update an account's email
       description: '*This endpoint is part of the atproto PDS server and account management APIs. Requests often require authentication and are made directly to the user''s own PDS instance.*
 
 
-        *To learn more about calling atproto API endpoints like this one, see the [API Hosts and Auth](/docs/advanced-guides/api-directory) guide.*
+        *To learn more about calling atproto API endpoints like this one, see the API Hosts and Auth guide.*
 
 
         Update an account''s email.'
@@ -1974,19 +1974,195 @@ paths:
                   message:
                     type: string
 components:
-  schemas:
-    ComAtprotoServerCreateInviteCodesAccountCodes:
-      type: object
-      required:
-      - account
-      - codes
-      properties:
-        account:
-          type: string
+  examples:
+    ServerCreateSessionResponse200Example:
+      summary: Successful response for serverCreateSession
+      value:
+        accessJwt: example-accessJwt
+        refreshJwt: example-refreshJwt
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        didDoc: {}
+        email: user@example.com
+        emailConfirmed: true
+        emailAuthFactor: true
+    ServerCreateAppPasswordRequestExample:
+      summary: Example request for serverCreateAppPassword
+      value:
+        name: Example Name
+        privileged: true
+    ServerConfirmEmailRequestExample:
+      summary: Example request for serverConfirmEmail
+      value:
+        email: user@example.com
+        token: example-token
+    ServerDeactivateAccountRequestExample:
+      summary: Example request for serverDeactivateAccount
+      value:
+        deleteAfter: '2024-01-15T12:00:00.000Z'
+    ServerResetPasswordRequestExample:
+      summary: Example request for serverResetPassword
+      value:
+        token: example-token
+        password: example-password
+    ServerReserveSigningKeyResponse200Example:
+      summary: Successful response for serverReserveSigningKey
+      value:
+        signingKey: example-signingKey
+    ServerGetSessionResponse200Example:
+      summary: Successful response for serverGetSession
+      value:
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        email: user@example.com
+        emailConfirmed: true
+        emailAuthFactor: true
+        didDoc: {}
+        active: true
+        status: takendown
+    ServerCreateInviteCodesResponse200Example:
+      summary: Successful response for serverCreateInviteCodes
+      value:
         codes:
-          type: array
-          items:
-            type: string
+        - account: example-account
+          codes:
+          - example-codes
+    ServerCreateInviteCodeResponse200Example:
+      summary: Successful response for serverCreateInviteCode
+      value:
+        code: example-code
+    ServerCreateSessionRequestExample:
+      summary: Example request for serverCreateSession
+      value:
+        identifier: example-identifier
+        password: example-password
+        authFactorToken: example-authFactorToken
+    ServerUpdateEmailRequestExample:
+      summary: Example request for serverUpdateEmail
+      value:
+        email: user@example.com
+        emailAuthFactor: true
+        token: example-token
+    ServerReserveSigningKeyRequestExample:
+      summary: Example request for serverReserveSigningKey
+      value:
+        did: did:plc:example123abc
+    ServerCheckAccountStatusResponse200Example:
+      summary: Successful response for serverCheckAccountStatus
+      value:
+        activated: true
+        validDid: true
+        repoCommit: bafyreiabc123example
+        repoRev: example-repoRev
+        repoBlocks: 50
+        indexedRecords: 50
+        privateStateValues: 50
+        expectedBlobs: 50
+        importedBlobs: 50
+    ServerRefreshSessionResponse200Example:
+      summary: Successful response for serverRefreshSession
+      value:
+        accessJwt: example-accessJwt
+        refreshJwt: example-refreshJwt
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        didDoc: {}
+        active: true
+        status: takendown
+    ServerGetAccountInviteCodesResponse200Example:
+      summary: Successful response for serverGetAccountInviteCodes
+      value:
+        codes:
+        - code: example-code
+          available: 50
+          disabled: true
+          forAccount: example-forAccount
+          createdBy: example-createdBy
+          createdAt: '2024-01-15T12:00:00.000Z'
+          uses:
+          - usedBy: {}
+            usedAt: {}
+    ServerGetServiceAuthResponse200Example:
+      summary: Successful response for serverGetServiceAuth
+      value:
+        token: example-token
+    ServerDescribeServerResponse200Example:
+      summary: Successful response for serverDescribeServer
+      value:
+        did: did:plc:example123abc
+        availableUserDomains:
+        - example-availableUserDomains
+        inviteCodeRequired: true
+        phoneVerificationRequired: true
+        links:
+          privacyPolicy: https://example.com/resource
+          termsOfService: https://example.com/resource
+        contact:
+          email: user@example.com
+    ServerCreateInviteCodeRequestExample:
+      summary: Example request for serverCreateInviteCode
+      value:
+        useCount: 50
+        forAccount: did:plc:example123abc
+    ServerRequestPasswordResetRequestExample:
+      summary: Example request for serverRequestPasswordReset
+      value:
+        email: user@example.com
+    ServerCreateAccountResponse200Example:
+      summary: Successful response for serverCreateAccount
+      value:
+        accessJwt: example-accessJwt
+        refreshJwt: example-refreshJwt
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        didDoc: {}
+    ServerRevokeAppPasswordRequestExample:
+      summary: Example request for serverRevokeAppPassword
+      value:
+        name: Example Name
+    ServerDeleteAccountRequestExample:
+      summary: Example request for serverDeleteAccount
+      value:
+        did: did:plc:example123abc
+        password: example-password
+        token: example-token
+    ServerRequestEmailUpdateResponse200Example:
+      summary: Successful response for serverRequestEmailUpdate
+      value:
+        tokenRequired: true
+    ServerCreateInviteCodesRequestExample:
+      summary: Example request for serverCreateInviteCodes
+      value:
+        codeCount: 1
+        useCount: 50
+        forAccounts:
+        - did:plc:example123abc
+    ServerCreateAccountRequestExample:
+      summary: Example request for serverCreateAccount
+      value:
+        handle: user.bsky.social
+        email: user@example.com
+        did: did:plc:example123abc
+        inviteCode: example-inviteCode
+        verificationCode: example-verificationCode
+        verificationPhone: example-verificationPhone
+        password: example-password
+        recoveryKey: example-recoveryKey
+    ServerCreateAppPasswordResponse200Example:
+      summary: Successful response for serverCreateAppPassword
+      value:
+        name: Example Name
+        password: example-password
+        createdAt: '2024-01-15T12:00:00.000Z'
+        privileged: true
+    ServerListAppPasswordsResponse200Example:
+      summary: Successful response for serverListAppPasswords
+      value:
+        passwords:
+        - name: Example Name
+          createdAt: '2024-01-15T12:00:00.000Z'
+          privileged: true
+  schemas:
     ComAtprotoServerCreateAppPasswordAppPassword:
       type: object
       required:
@@ -2003,15 +2179,23 @@ components:
           format: date-time
         privileged:
           type: boolean
-    ComAtprotoServerDescribeServerLinks:
+    ComAtprotoServerDefsInviteCodeUse:
+      type: object
+      required:
+      - usedBy
+      - usedAt
+      properties:
+        usedBy:
+          type: string
+          format: did
+        usedAt:
+          type: string
+          format: date-time
+    ComAtprotoServerDescribeServerContact:
       type: object
       properties:
-        privacyPolicy:
+        email:
           type: string
-          format: uri
-        termsOfService:
-          type: string
-          format: uri
     ComAtprotoServerDefsInviteCode:
       type: object
       required:
@@ -2040,11 +2224,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoServerDefsInviteCodeUse'
-    ComAtprotoServerDescribeServerContact:
-      type: object
-      properties:
-        email:
-          type: string
     ComAtprotoServerListAppPasswordsAppPassword:
       type: object
       required:
@@ -2058,206 +2237,27 @@ components:
           format: date-time
         privileged:
           type: boolean
-    ComAtprotoServerDefsInviteCodeUse:
+    ComAtprotoServerDescribeServerLinks:
+      type: object
+      properties:
+        privacyPolicy:
+          type: string
+          format: uri
+        termsOfService:
+          type: string
+          format: uri
+    ComAtprotoServerCreateInviteCodesAccountCodes:
       type: object
       required:
-      - usedBy
-      - usedAt
+      - account
+      - codes
       properties:
-        usedBy:
+        account:
           type: string
-          format: did
-        usedAt:
-          type: string
-          format: date-time
-  examples:
-    ServerCreateInviteCodeResponse200Example:
-      summary: Successful response for serverCreateInviteCode
-      value:
-        code: example-code
-    ServerCheckAccountStatusResponse200Example:
-      summary: Successful response for serverCheckAccountStatus
-      value:
-        activated: true
-        validDid: true
-        repoCommit: bafyreiabc123example
-        repoRev: example-repoRev
-        repoBlocks: 50
-        indexedRecords: 50
-        privateStateValues: 50
-        expectedBlobs: 50
-        importedBlobs: 50
-    ServerCreateAppPasswordResponse200Example:
-      summary: Successful response for serverCreateAppPassword
-      value:
-        name: Example Name
-        password: example-password
-        createdAt: '2024-01-15T12:00:00.000Z'
-        privileged: true
-    ServerListAppPasswordsResponse200Example:
-      summary: Successful response for serverListAppPasswords
-      value:
-        passwords:
-        - name: Example Name
-          createdAt: '2024-01-15T12:00:00.000Z'
-          privileged: true
-    ServerCreateInviteCodesResponse200Example:
-      summary: Successful response for serverCreateInviteCodes
-      value:
         codes:
-        - account: example-account
-          codes:
-          - example-codes
-    ServerConfirmEmailRequestExample:
-      summary: Example request for serverConfirmEmail
-      value:
-        email: user@example.com
-        token: example-token
-    ServerRequestPasswordResetRequestExample:
-      summary: Example request for serverRequestPasswordReset
-      value:
-        email: user@example.com
-    ServerDescribeServerResponse200Example:
-      summary: Successful response for serverDescribeServer
-      value:
-        did: did:plc:example123abc
-        availableUserDomains:
-        - example-availableUserDomains
-        inviteCodeRequired: true
-        phoneVerificationRequired: true
-        links:
-          privacyPolicy: https://example.com/resource
-          termsOfService: https://example.com/resource
-        contact:
-          email: user@example.com
-    ServerDeleteAccountRequestExample:
-      summary: Example request for serverDeleteAccount
-      value:
-        did: did:plc:example123abc
-        password: example-password
-        token: example-token
-    ServerReserveSigningKeyResponse200Example:
-      summary: Successful response for serverReserveSigningKey
-      value:
-        signingKey: example-signingKey
-    ServerCreateAccountResponse200Example:
-      summary: Successful response for serverCreateAccount
-      value:
-        accessJwt: example-accessJwt
-        refreshJwt: example-refreshJwt
-        handle: user.bsky.social
-        did: did:plc:example123abc
-        didDoc: {}
-    ServerUpdateEmailRequestExample:
-      summary: Example request for serverUpdateEmail
-      value:
-        email: user@example.com
-        emailAuthFactor: true
-        token: example-token
-    ServerCreateInviteCodesRequestExample:
-      summary: Example request for serverCreateInviteCodes
-      value:
-        codeCount: 1
-        useCount: 50
-        forAccounts:
-        - did:plc:example123abc
-    ServerReserveSigningKeyRequestExample:
-      summary: Example request for serverReserveSigningKey
-      value:
-        did: did:plc:example123abc
-    ServerGetSessionResponse200Example:
-      summary: Successful response for serverGetSession
-      value:
-        handle: user.bsky.social
-        did: did:plc:example123abc
-        email: user@example.com
-        emailConfirmed: true
-        emailAuthFactor: true
-        didDoc: {}
-        active: true
-        status: takendown
-    ServerResetPasswordRequestExample:
-      summary: Example request for serverResetPassword
-      value:
-        token: example-token
-        password: example-password
-    ServerRefreshSessionResponse200Example:
-      summary: Successful response for serverRefreshSession
-      value:
-        accessJwt: example-accessJwt
-        refreshJwt: example-refreshJwt
-        handle: user.bsky.social
-        did: did:plc:example123abc
-        didDoc: {}
-        active: true
-        status: takendown
-    ServerCreateSessionRequestExample:
-      summary: Example request for serverCreateSession
-      value:
-        identifier: example-identifier
-        password: example-password
-        authFactorToken: example-authFactorToken
-    ServerDeactivateAccountRequestExample:
-      summary: Example request for serverDeactivateAccount
-      value:
-        deleteAfter: '2024-01-15T12:00:00.000Z'
-    ServerGetAccountInviteCodesResponse200Example:
-      summary: Successful response for serverGetAccountInviteCodes
-      value:
-        codes:
-        - code: example-code
-          available: 50
-          disabled: true
-          forAccount: example-forAccount
-          createdBy: example-createdBy
-          createdAt: '2024-01-15T12:00:00.000Z'
-          uses:
-          - usedBy: {}
-            usedAt: {}
-    ServerCreateSessionResponse200Example:
-      summary: Successful response for serverCreateSession
-      value:
-        accessJwt: example-accessJwt
-        refreshJwt: example-refreshJwt
-        handle: user.bsky.social
-        did: did:plc:example123abc
-        didDoc: {}
-        email: user@example.com
-        emailConfirmed: true
-        emailAuthFactor: true
-    ServerCreateInviteCodeRequestExample:
-      summary: Example request for serverCreateInviteCode
-      value:
-        useCount: 50
-        forAccount: did:plc:example123abc
-    ServerCreateAccountRequestExample:
-      summary: Example request for serverCreateAccount
-      value:
-        handle: user.bsky.social
-        email: user@example.com
-        did: did:plc:example123abc
-        inviteCode: example-inviteCode
-        verificationCode: example-verificationCode
-        verificationPhone: example-verificationPhone
-        password: example-password
-        recoveryKey: example-recoveryKey
-    ServerGetServiceAuthResponse200Example:
-      summary: Successful response for serverGetServiceAuth
-      value:
-        token: example-token
-    ServerRequestEmailUpdateResponse200Example:
-      summary: Successful response for serverRequestEmailUpdate
-      value:
-        tokenRequired: true
-    ServerCreateAppPasswordRequestExample:
-      summary: Example request for serverCreateAppPassword
-      value:
-        name: Example Name
-        privileged: true
-    ServerRevokeAppPasswordRequestExample:
-      summary: Example request for serverRevokeAppPassword
-      value:
-        name: Example Name
+          type: array
+          items:
+            type: string
   securitySchemes:
     Bearer:
       type: http
