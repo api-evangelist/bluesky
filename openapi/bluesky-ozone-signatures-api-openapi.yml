@@ -286,57 +286,6 @@ paths:
                   message:
                     type: string
 components:
-  examples:
-    OzoneSignatureFindCorrelationResponse200Example:
-      summary: Successful response for ozoneSignatureFindCorrelation
-      value:
-        details:
-        - property: example-property
-          value: example-value
-    OzoneSignatureSearchAccountsResponse200Example:
-      summary: Successful response for ozoneSignatureSearchAccounts
-      value:
-        accounts:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          email: user@example.com
-          relatedRecords: []
-          invitedBy:
-            code: example-code
-            available: 50
-            disabled: true
-            forAccount: example-forAccount
-            createdBy: example-createdBy
-            createdAt: '2024-01-15T12:00:00.000Z'
-            uses: []
-          invites:
-          - code: {}
-            available: {}
-            disabled: {}
-            forAccount: {}
-            createdBy: {}
-            createdAt: {}
-            uses: {}
-          invitesDisabled: true
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    OzoneSignatureFindRelatedAccountsResponse200Example:
-      summary: Successful response for ozoneSignatureFindRelatedAccounts
-      value:
-        accounts:
-        - account:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            email: user@example.com
-            relatedRecords: []
-            invitedBy: {}
-            invites: []
-            invitesDisabled: true
-          similarities:
-          - property: {}
-            value: {}
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
   schemas:
     ToolsOzoneSignatureFindRelatedAccountsRelatedAccount:
       type: object
@@ -349,7 +298,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ToolsOzoneSignatureDefsSigDetail'
-    ToolsOzoneSignatureDefsSigDetail:
+    ComAtprotoAdminDefsThreatSignature:
       type: object
       required:
       - property
@@ -399,16 +348,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoServerDefsInviteCodeUse'
-    ComAtprotoAdminDefsThreatSignature:
-      type: object
-      required:
-      - property
-      - value
-      properties:
-        property:
-          type: string
-        value:
-          type: string
     ComAtprotoAdminDefsAccountView:
       type: object
       required:
@@ -450,6 +389,67 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoAdminDefsThreatSignature'
+    ToolsOzoneSignatureDefsSigDetail:
+      type: object
+      required:
+      - property
+      - value
+      properties:
+        property:
+          type: string
+        value:
+          type: string
+  examples:
+    OzoneSignatureFindRelatedAccountsResponse200Example:
+      summary: Successful response for ozoneSignatureFindRelatedAccounts
+      value:
+        accounts:
+        - account:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            email: user@example.com
+            relatedRecords: []
+            invitedBy: {}
+            invites: []
+            invitesDisabled: true
+          similarities:
+          - property: {}
+            value: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneSignatureFindCorrelationResponse200Example:
+      summary: Successful response for ozoneSignatureFindCorrelation
+      value:
+        details:
+        - property: example-property
+          value: example-value
+    OzoneSignatureSearchAccountsResponse200Example:
+      summary: Successful response for ozoneSignatureSearchAccounts
+      value:
+        accounts:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          email: user@example.com
+          relatedRecords: []
+          invitedBy:
+            code: example-code
+            available: 50
+            disabled: true
+            forAccount: example-forAccount
+            createdBy: example-createdBy
+            createdAt: '2024-01-15T12:00:00.000Z'
+            uses: []
+          invites:
+          - code: {}
+            available: {}
+            disabled: {}
+            forAccount: {}
+            createdBy: {}
+            createdAt: {}
+            uses: {}
+          invitesDisabled: true
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
   securitySchemes:
     Bearer:
       type: http

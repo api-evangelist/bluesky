@@ -1137,15 +1137,297 @@ paths:
                   message:
                     type: string
 components:
+  examples:
+    OzoneModerationEmitEventResponse200Example:
+      summary: Successful response for ozoneModerationEmitEvent
+      value:
+        id: 50
+        event:
+          comment: example-comment
+          durationInHours: 50
+          acknowledgeAccountSubjects: true
+        subject:
+          did: did:plc:example123abc
+        subjectBlobCids:
+        - at://did:plc:example123/app.bsky.feed.post/abc123
+        createdBy: did:plc:example123abc
+        createdAt: '2024-01-15T12:00:00.000Z'
+        creatorHandle: example-creatorHandle
+        subjectHandle: at://did:plc:example123/app.bsky.feed.post/abc123
+    OzoneModerationGetEventResponse200Example:
+      summary: Successful response for ozoneModerationGetEvent
+      value:
+        id: 50
+        event:
+          comment: example-comment
+          durationInHours: 50
+          acknowledgeAccountSubjects: true
+        subject:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          relatedRecords: []
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          moderation:
+            subjectStatus: {}
+          email: user@example.com
+          invitedBy:
+            code: {}
+            available: {}
+            disabled: {}
+            forAccount: {}
+            createdBy: {}
+            createdAt: {}
+            uses: {}
+          invitesDisabled: true
+        subjectBlobs:
+        - cid: bafyreiabc123example
+          mimeType: example-mimeType
+          size: 50
+          createdAt: '2024-01-15T12:00:00.000Z'
+          details: {}
+          moderation:
+            subjectStatus: {}
+        createdBy: did:plc:example123abc
+        createdAt: '2024-01-15T12:00:00.000Z'
+    OzoneModerationGetRepoResponse200Example:
+      summary: Successful response for ozoneModerationGetRepo
+      value:
+        did: did:plc:example123abc
+        handle: user.bsky.social
+        relatedRecords: []
+        indexedAt: '2024-01-15T12:00:00.000Z'
+        moderation:
+          subjectStatus:
+            id: 50
+            subject: {}
+            createdAt: '2024-01-15T12:00:00.000Z'
+            updatedAt: '2024-01-15T12:00:00.000Z'
+            reviewState: {}
+            hosting: {}
+            subjectBlobCids: []
+            subjectRepoHandle: at://did:plc:example123/app.bsky.feed.post/abc123
+        email: user@example.com
+        labels:
+        - src: did:plc:example123abc
+          uri: https://example.com/resource
+          val: example-val
+          cts: '2024-01-15T12:00:00.000Z'
+          ver: 50
+          cid: bafyreiabc123example
+          neg: true
+          exp: '2024-01-15T12:00:00.000Z'
+        invitedBy:
+          code: example-code
+          available: 50
+          disabled: true
+          forAccount: example-forAccount
+          createdBy: example-createdBy
+          createdAt: '2024-01-15T12:00:00.000Z'
+          uses:
+          - usedBy: {}
+            usedAt: {}
+    OzoneModerationGetReposResponse200Example:
+      summary: Successful response for ozoneModerationGetRepos
+      value:
+        repos:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          relatedRecords: []
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          moderation:
+            subjectStatus: {}
+          email: user@example.com
+          labels: []
+          invitedBy:
+            code: {}
+            available: {}
+            disabled: {}
+            forAccount: {}
+            createdBy: {}
+            createdAt: {}
+            uses: {}
+    OzoneModerationQueryStatusesResponse200Example:
+      summary: Successful response for ozoneModerationQueryStatuses
+      value:
+        subjectStatuses:
+        - id: 50
+          subject:
+            did: {}
+          createdAt: '2024-01-15T12:00:00.000Z'
+          updatedAt: '2024-01-15T12:00:00.000Z'
+          reviewState: '#reviewOpen'
+          hosting:
+            status: {}
+            updatedAt: {}
+            createdAt: {}
+            deletedAt: {}
+            deactivatedAt: {}
+            reactivatedAt: {}
+          subjectBlobCids:
+          - bafyreiabc123example
+          subjectRepoHandle: at://did:plc:example123/app.bsky.feed.post/abc123
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneModerationSearchReposResponse200Example:
+      summary: Successful response for ozoneModerationSearchRepos
+      value:
+        repos:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          relatedRecords: []
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          moderation:
+            subjectStatus: {}
+          email: user@example.com
+          invitedBy:
+            code: example-code
+            available: 50
+            disabled: true
+            forAccount: example-forAccount
+            createdBy: example-createdBy
+            createdAt: '2024-01-15T12:00:00.000Z'
+            uses: []
+          invitesDisabled: true
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneModerationGetRecordsResponse200Example:
+      summary: Successful response for ozoneModerationGetRecords
+      value:
+        records:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          value: {}
+          blobs: []
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          moderation:
+            subjectStatus: {}
+          repo:
+            did: {}
+            handle: {}
+            relatedRecords: {}
+            indexedAt: {}
+            moderation: {}
+            email: {}
+            invitedBy: {}
+            invitesDisabled: {}
+          labels: []
+    OzoneModerationGetRecordResponse200Example:
+      summary: Successful response for ozoneModerationGetRecord
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        cid: bafyreiabc123example
+        value: {}
+        blobs:
+        - cid: bafyreiabc123example
+          mimeType: example-mimeType
+          size: 50
+          createdAt: '2024-01-15T12:00:00.000Z'
+          details: {}
+          moderation:
+            subjectStatus: {}
+        indexedAt: '2024-01-15T12:00:00.000Z'
+        moderation:
+          subjectStatus:
+            id: 50
+            subject: {}
+            createdAt: '2024-01-15T12:00:00.000Z'
+            updatedAt: '2024-01-15T12:00:00.000Z'
+            reviewState: {}
+            hosting: {}
+            subjectBlobCids: []
+            subjectRepoHandle: at://did:plc:example123/app.bsky.feed.post/abc123
+        repo:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          relatedRecords: []
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          moderation:
+            subjectStatus: {}
+          email: user@example.com
+          invitedBy:
+            code: example-code
+            available: 50
+            disabled: true
+            forAccount: example-forAccount
+            createdBy: example-createdBy
+            createdAt: '2024-01-15T12:00:00.000Z'
+            uses: []
+          invitesDisabled: true
+        labels:
+        - src: did:plc:example123abc
+          uri: https://example.com/resource
+          val: example-val
+          cts: '2024-01-15T12:00:00.000Z'
+          ver: 50
+          cid: bafyreiabc123example
+          neg: true
+          exp: '2024-01-15T12:00:00.000Z'
+    OzoneModerationQueryEventsResponse200Example:
+      summary: Successful response for ozoneModerationQueryEvents
+      value:
+        events:
+        - id: 50
+          event:
+            comment: {}
+            durationInHours: {}
+            acknowledgeAccountSubjects: {}
+          subject:
+            did: {}
+          subjectBlobCids:
+          - at://did:plc:example123/app.bsky.feed.post/abc123
+          createdBy: did:plc:example123abc
+          createdAt: '2024-01-15T12:00:00.000Z'
+          creatorHandle: example-creatorHandle
+          subjectHandle: at://did:plc:example123/app.bsky.feed.post/abc123
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneModerationEmitEventRequestExample:
+      summary: Example request for ozoneModerationEmitEvent
+      value:
+        event:
+          comment: example-comment
+          durationInHours: 50
+          acknowledgeAccountSubjects: true
+        subject:
+          did: did:plc:example123abc
+        createdBy: did:plc:example123abc
+        subjectBlobCids:
+        - bafyreiabc123example
   schemas:
-    ComAtprotoAdminDefsRepoRef:
+    ToolsOzoneModerationDefsBlobView:
       type: object
       required:
-      - did
+      - cid
+      - mimeType
+      - size
+      - createdAt
       properties:
-        did:
+        cid:
           type: string
-          format: did
+          format: cid
+        mimeType:
+          type: string
+        size:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsImageDetails'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsVideoDetails'
+        moderation:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsModeration'
+    ToolsOzoneModerationDefsVideoDetails:
+      type: object
+      required:
+      - width
+      - height
+      - length
+      properties:
+        width:
+          type: integer
+        height:
+          type: integer
+        length:
+          type: integer
     ToolsOzoneModerationDefsRecordView:
       type: object
       required:
@@ -1176,11 +1458,40 @@ components:
           $ref: '#/components/schemas/ToolsOzoneModerationDefsModeration'
         repo:
           $ref: '#/components/schemas/ToolsOzoneModerationDefsRepoView'
-    ToolsOzoneModerationDefsModEventAcknowledge:
+    ComAtprotoModerationDefsReasonType:
+      oneOf:
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSpam'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonViolation'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonMisleading'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSexual'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonRude'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonOther'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonAppeal'
+    ComAtprotoAdminDefsThreatSignature:
       type: object
+      required:
+      - property
+      - value
+      properties:
+        property:
+          type: string
+        value:
+          type: string
+    ToolsOzoneModerationDefsModEventTakedown:
+      type: object
+      description: Take down a subject permanently or temporarily
       properties:
         comment:
           type: string
+        durationInHours:
+          type: integer
+        acknowledgeAccountSubjects:
+          type: boolean
+          description: If true, all other reports on content authored by this account will be resolved (acknowledged).
+    ComAtprotoModerationDefsReasonAppeal:
+      type: string
+      format: token
+      description: 'Appeal: appeal a previously taken moderation action'
     ToolsOzoneModerationDefsAccountHosting:
       type: object
       required:
@@ -1209,11 +1520,300 @@ components:
         reactivatedAt:
           type: string
           format: date-time
-    ToolsOzoneModerationDefsModeration:
+    ToolsOzoneModerationDefsModEventEmail:
+      type: object
+      description: Keep a log of outgoing email to a user
+      required:
+      - subjectLine
+      properties:
+        subjectLine:
+          type: string
+          description: The subject line of the email sent to the user.
+        content:
+          type: string
+          description: The content of the email sent to the user.
+        comment:
+          type: string
+          description: Additional comment about the outgoing comm.
+    ToolsOzoneModerationDefsImageDetails:
+      type: object
+      required:
+      - width
+      - height
+      properties:
+        width:
+          type: integer
+        height:
+          type: integer
+    ToolsOzoneModerationDefsModEventMute:
+      type: object
+      description: Mute incoming reports on a subject
+      required:
+      - durationInHours
+      properties:
+        comment:
+          type: string
+        durationInHours:
+          type: integer
+    ToolsOzoneModerationDefsModEventView:
+      type: object
+      required:
+      - id
+      - event
+      - subject
+      - subjectBlobCids
+      - createdBy
+      - createdAt
+      properties:
+        id:
+          type: integer
+        event:
+          oneOf:
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventTakedown'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventReverseTakedown'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventComment'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventReport'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventLabel'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventAcknowledge'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventEscalate'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventMute'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventUnmute'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventMuteReporter'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventUnmuteReporter'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventEmail'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventResolveAppeal'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventDivert'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventTag'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsAccountEvent'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsIdentityEvent'
+          - $ref: '#/components/schemas/ToolsOzoneModerationDefsRecordEvent'
+        subject:
+          oneOf:
+          - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoRef'
+          - $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
+          - $ref: '#/components/schemas/ChatBskyConvoDefsMessageRef'
+        subjectBlobCids:
+          type: array
+          items:
+            type: string
+        createdBy:
+          type: string
+          format: did
+        createdAt:
+          type: string
+          format: date-time
+        creatorHandle:
+          type: string
+        subjectHandle:
+          type: string
+    ToolsOzoneModerationDefsModEventReverseTakedown:
+      type: object
+      description: Revert take down action on a subject
+      properties:
+        comment:
+          type: string
+          description: Describe reasoning behind the reversal.
+    ToolsOzoneModerationDefsModEventReport:
+      type: object
+      description: Report a subject
+      required:
+      - reportType
+      properties:
+        comment:
+          type: string
+        isReporterMuted:
+          type: boolean
+          description: Set to true if the reporter was muted from reporting at the time of the event. These reports won't impact the reviewState of the subject.
+        reportType:
+          $ref: '#/components/schemas/ComAtprotoModerationDefsReasonType'
+    ComAtprotoModerationDefsReasonViolation:
+      type: string
+      format: token
+      description: Direct violation of server rules, laws, terms of service
+    ToolsOzoneModerationDefsRecordHosting:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          type: string
+          enum:
+          - deleted
+          - unknown
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+    ToolsOzoneModerationDefsModEventLabel:
+      type: object
+      description: Apply/Negate labels on a subject
+      required:
+      - createLabelVals
+      - negateLabelVals
+      properties:
+        comment:
+          type: string
+        createLabelVals:
+          type: array
+          items:
+            type: string
+        negateLabelVals:
+          type: array
+          items:
+            type: string
+    ToolsOzoneModerationDefsModEventMuteReporter:
+      type: object
+      description: Mute incoming reports from an account
+      properties:
+        comment:
+          type: string
+        durationInHours:
+          type: integer
+    ToolsOzoneModerationDefsModEventUnmuteReporter:
+      type: object
+      description: Unmute incoming reports from an account
+      properties:
+        comment:
+          type: string
+          description: Describe reasoning behind the reversal.
+    ToolsOzoneModerationDefsRepoViewNotFound:
+      type: object
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+    ToolsOzoneModerationDefsModEventTag:
+      type: object
+      description: Add/Remove a tag on a subject
+      required:
+      - add
+      - remove
+      properties:
+        add:
+          type: array
+          items:
+            type: string
+        remove:
+          type: array
+          items:
+            type: string
+        comment:
+          type: string
+          description: Additional comment about added/removed tags.
+    ComAtprotoModerationDefsReasonSpam:
+      type: string
+      format: token
+      description: 'Spam: frequent unwanted promotion, replies, mentions'
+    ToolsOzoneModerationDefsModEventAcknowledge:
       type: object
       properties:
-        subjectStatus:
-          $ref: '#/components/schemas/ToolsOzoneModerationDefsSubjectStatusView'
+        comment:
+          type: string
+    ToolsOzoneModerationDefsRepoViewDetail:
+      type: object
+      required:
+      - did
+      - handle
+      - relatedRecords
+      - indexedAt
+      - moderation
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        email:
+          type: string
+        relatedRecords:
+          type: array
+          items: {}
+        indexedAt:
+          type: string
+          format: date-time
+        moderation:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsModerationDetail'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        invitedBy:
+          $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
+        invites:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
+        invitesDisabled:
+          type: boolean
+        inviteNote:
+          type: string
+        emailConfirmedAt:
+          type: string
+          format: date-time
+        deactivatedAt:
+          type: string
+          format: date-time
+        threatSignatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoAdminDefsThreatSignature'
+    ToolsOzoneModerationDefsModEventResolveAppeal:
+      type: object
+      description: Resolve appeal on a subject
+      properties:
+        comment:
+          type: string
+          description: Describe resolution.
+    ToolsOzoneModerationDefsRecordViewNotFound:
+      type: object
+      required:
+      - uri
+      properties:
+        uri:
+          type: string
+          format: at-uri
+    ToolsOzoneModerationDefsModEventDivert:
+      type: object
+      description: Divert a record's blobs to a 3rd party service for further scanning/tagging
+      properties:
+        comment:
+          type: string
+    ComAtprotoAdminDefsRepoRef:
+      type: object
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+    ComAtprotoModerationDefsReasonSexual:
+      type: string
+      format: token
+      description: Unwanted or mislabeled sexual content
+    ComAtprotoModerationDefsReasonMisleading:
+      type: string
+      format: token
+      description: Misleading identity, affiliation, or content
+    ComAtprotoServerDefsInviteCodeUse:
+      type: object
+      required:
+      - usedBy
+      - usedAt
+      properties:
+        usedBy:
+          type: string
+          format: did
+        usedAt:
+          type: string
+          format: date-time
     ToolsOzoneModerationDefsSubjectStatusView:
       type: object
       required:
@@ -1284,19 +1884,37 @@ components:
           type: array
           items:
             type: string
-    ComAtprotoServerDefsInviteCodeUse:
+    ComAtprotoRepoStrongRef:
       type: object
       required:
-      - usedBy
-      - usedAt
+      - uri
+      - cid
       properties:
-        usedBy:
+        uri:
           type: string
-          format: did
-        usedAt:
+          format: at-uri
+        cid:
           type: string
-          format: date-time
-    ToolsOzoneModerationDefsRepoViewDetail:
+          format: cid
+    ToolsOzoneModerationDefsModEventUnmute:
+      type: object
+      description: Unmute action on a subject
+      properties:
+        comment:
+          type: string
+          description: Describe reasoning behind the reversal.
+    ToolsOzoneModerationDefsModEventComment:
+      type: object
+      description: Add a comment to a subject
+      required:
+      - comment
+      properties:
+        comment:
+          type: string
+        sticky:
+          type: boolean
+          description: Make the comment persistent on the subject
+    ToolsOzoneModerationDefsRepoView:
       type: object
       required:
       - did
@@ -1320,24 +1938,13 @@ components:
           type: string
           format: date-time
         moderation:
-          $ref: '#/components/schemas/ToolsOzoneModerationDefsModerationDetail'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsModeration'
         invitedBy:
           $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
-        invites:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
         invitesDisabled:
           type: boolean
         inviteNote:
           type: string
-        emailConfirmedAt:
-          type: string
-          format: date-time
         deactivatedAt:
           type: string
           format: date-time
@@ -1345,39 +1952,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoAdminDefsThreatSignature'
-    ComAtprotoModerationDefsReasonOther:
-      type: string
-      format: token
-      description: 'Other: reports not falling under another report category'
-    ToolsOzoneModerationDefsVideoDetails:
-      type: object
-      required:
-      - width
-      - height
-      - length
-      properties:
-        width:
-          type: integer
-        height:
-          type: integer
-        length:
-          type: integer
-    ToolsOzoneModerationDefsModerationDetail:
-      type: object
-      properties:
-        subjectStatus:
-          $ref: '#/components/schemas/ToolsOzoneModerationDefsSubjectStatusView'
-    ComAtprotoModerationDefsReasonViolation:
-      type: string
-      format: token
-      description: Direct violation of server rules, laws, terms of service
-    ToolsOzoneModerationDefsModEventReverseTakedown:
-      type: object
-      description: Revert take down action on a subject
-      properties:
-        comment:
-          type: string
-          description: Describe reasoning behind the reversal.
     ToolsOzoneModerationDefsRecordViewDetail:
       type: object
       required:
@@ -1411,14 +1985,6 @@ components:
           $ref: '#/components/schemas/ToolsOzoneModerationDefsModerationDetail'
         repo:
           $ref: '#/components/schemas/ToolsOzoneModerationDefsRepoView'
-    ToolsOzoneModerationDefsModEventMuteReporter:
-      type: object
-      description: Mute incoming reports from an account
-      properties:
-        comment:
-          type: string
-        durationInHours:
-          type: integer
     ToolsOzoneModerationDefsIdentityEvent:
       type: object
       description: Logs identity related events on a repo subject. Normally captured by automod from the firehose and emitted to ozone for historical tracking.
@@ -1438,109 +2004,6 @@ components:
         timestamp:
           type: string
           format: date-time
-    ToolsOzoneModerationDefsRecordHosting:
-      type: object
-      required:
-      - status
-      properties:
-        status:
-          type: string
-          enum:
-          - deleted
-          - unknown
-        updatedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        deletedAt:
-          type: string
-          format: date-time
-    ComAtprotoModerationDefsReasonType:
-      oneOf:
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSpam'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonViolation'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonMisleading'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSexual'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonRude'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonOther'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonAppeal'
-    ComAtprotoModerationDefsReasonAppeal:
-      type: string
-      format: token
-      description: 'Appeal: appeal a previously taken moderation action'
-    ToolsOzoneModerationDefsModEventTakedown:
-      type: object
-      description: Take down a subject permanently or temporarily
-      properties:
-        comment:
-          type: string
-        durationInHours:
-          type: integer
-        acknowledgeAccountSubjects:
-          type: boolean
-          description: If true, all other reports on content authored by this account will be resolved (acknowledged).
-    ToolsOzoneModerationDefsSubjectReviewState:
-      type: string
-      enum:
-      - '#reviewOpen'
-      - '#reviewEscalated'
-      - '#reviewClosed'
-      - '#reviewNone'
-    ComAtprotoModerationDefsReasonSpam:
-      type: string
-      format: token
-      description: 'Spam: frequent unwanted promotion, replies, mentions'
-    ComAtprotoServerDefsInviteCode:
-      type: object
-      required:
-      - code
-      - available
-      - disabled
-      - forAccount
-      - createdBy
-      - createdAt
-      - uses
-      properties:
-        code:
-          type: string
-        available:
-          type: integer
-        disabled:
-          type: boolean
-        forAccount:
-          type: string
-        createdBy:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        uses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoServerDefsInviteCodeUse'
-    ChatBskyConvoDefsMessageRef:
-      type: object
-      required:
-      - did
-      - messageId
-      - convoId
-      properties:
-        did:
-          type: string
-          format: did
-        convoId:
-          type: string
-        messageId:
-          type: string
-    ToolsOzoneModerationDefsModEventUnmute:
-      type: object
-      description: Unmute action on a subject
-      properties:
-        comment:
-          type: string
-          description: Describe reasoning behind the reversal.
     ComAtprotoLabelDefsLabel:
       type: object
       description: Metadata tag on an atproto resource (eg, repo or record).
@@ -1583,282 +2046,6 @@ components:
           type: string
           format: byte
           description: Signature of dag-cbor encoded label.
-    ComAtprotoModerationDefsReasonMisleading:
-      type: string
-      format: token
-      description: Misleading identity, affiliation, or content
-    ToolsOzoneModerationDefsModEventLabel:
-      type: object
-      description: Apply/Negate labels on a subject
-      required:
-      - createLabelVals
-      - negateLabelVals
-      properties:
-        comment:
-          type: string
-        createLabelVals:
-          type: array
-          items:
-            type: string
-        negateLabelVals:
-          type: array
-          items:
-            type: string
-    ComAtprotoModerationDefsReasonRude:
-      type: string
-      format: token
-      description: Rude, harassing, explicit, or otherwise unwelcoming behavior
-    ToolsOzoneModerationDefsModEventComment:
-      type: object
-      description: Add a comment to a subject
-      required:
-      - comment
-      properties:
-        comment:
-          type: string
-        sticky:
-          type: boolean
-          description: Make the comment persistent on the subject
-    ComAtprotoModerationDefsReasonSexual:
-      type: string
-      format: token
-      description: Unwanted or mislabeled sexual content
-    ToolsOzoneModerationDefsModEventResolveAppeal:
-      type: object
-      description: Resolve appeal on a subject
-      properties:
-        comment:
-          type: string
-          description: Describe resolution.
-    ToolsOzoneModerationDefsModEventDivert:
-      type: object
-      description: Divert a record's blobs to a 3rd party service for further scanning/tagging
-      properties:
-        comment:
-          type: string
-    ToolsOzoneModerationDefsBlobView:
-      type: object
-      required:
-      - cid
-      - mimeType
-      - size
-      - createdAt
-      properties:
-        cid:
-          type: string
-          format: cid
-        mimeType:
-          type: string
-        size:
-          type: integer
-        createdAt:
-          type: string
-          format: date-time
-        details:
-          oneOf:
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsImageDetails'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsVideoDetails'
-        moderation:
-          $ref: '#/components/schemas/ToolsOzoneModerationDefsModeration'
-    ToolsOzoneModerationDefsModEventReport:
-      type: object
-      description: Report a subject
-      required:
-      - reportType
-      properties:
-        comment:
-          type: string
-        isReporterMuted:
-          type: boolean
-          description: Set to true if the reporter was muted from reporting at the time of the event. These reports won't impact the reviewState of the subject.
-        reportType:
-          $ref: '#/components/schemas/ComAtprotoModerationDefsReasonType'
-    ToolsOzoneModerationDefsRepoViewNotFound:
-      type: object
-      required:
-      - did
-      properties:
-        did:
-          type: string
-          format: did
-    ToolsOzoneModerationDefsModEventView:
-      type: object
-      required:
-      - id
-      - event
-      - subject
-      - subjectBlobCids
-      - createdBy
-      - createdAt
-      properties:
-        id:
-          type: integer
-        event:
-          oneOf:
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventTakedown'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventReverseTakedown'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventComment'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventReport'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventLabel'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventAcknowledge'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventEscalate'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventMute'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventUnmute'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventMuteReporter'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventUnmuteReporter'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventEmail'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventResolveAppeal'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventDivert'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsModEventTag'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsAccountEvent'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsIdentityEvent'
-          - $ref: '#/components/schemas/ToolsOzoneModerationDefsRecordEvent'
-        subject:
-          oneOf:
-          - $ref: '#/components/schemas/ComAtprotoAdminDefsRepoRef'
-          - $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
-          - $ref: '#/components/schemas/ChatBskyConvoDefsMessageRef'
-        subjectBlobCids:
-          type: array
-          items:
-            type: string
-        createdBy:
-          type: string
-          format: did
-        createdAt:
-          type: string
-          format: date-time
-        creatorHandle:
-          type: string
-        subjectHandle:
-          type: string
-    ToolsOzoneModerationDefsModEventMute:
-      type: object
-      description: Mute incoming reports on a subject
-      required:
-      - durationInHours
-      properties:
-        comment:
-          type: string
-        durationInHours:
-          type: integer
-    ToolsOzoneModerationDefsAccountEvent:
-      type: object
-      description: Logs account status related events on a repo subject. Normally captured by automod from the firehose and emitted to ozone for historical tracking.
-      required:
-      - timestamp
-      - active
-      properties:
-        comment:
-          type: string
-        active:
-          type: boolean
-          description: Indicates that the account has a repository which can be fetched from the host that emitted this event.
-        status:
-          type: string
-          enum:
-          - unknown
-          - deactivated
-          - deleted
-          - takendown
-          - suspended
-          - tombstoned
-        timestamp:
-          type: string
-          format: date-time
-    ToolsOzoneModerationDefsModEventTag:
-      type: object
-      description: Add/Remove a tag on a subject
-      required:
-      - add
-      - remove
-      properties:
-        add:
-          type: array
-          items:
-            type: string
-        remove:
-          type: array
-          items:
-            type: string
-        comment:
-          type: string
-          description: Additional comment about added/removed tags.
-    ComAtprotoRepoStrongRef:
-      type: object
-      required:
-      - uri
-      - cid
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-    ToolsOzoneModerationDefsRepoView:
-      type: object
-      required:
-      - did
-      - handle
-      - relatedRecords
-      - indexedAt
-      - moderation
-      properties:
-        did:
-          type: string
-          format: did
-        handle:
-          type: string
-          format: handle
-        email:
-          type: string
-        relatedRecords:
-          type: array
-          items: {}
-        indexedAt:
-          type: string
-          format: date-time
-        moderation:
-          $ref: '#/components/schemas/ToolsOzoneModerationDefsModeration'
-        invitedBy:
-          $ref: '#/components/schemas/ComAtprotoServerDefsInviteCode'
-        invitesDisabled:
-          type: boolean
-        inviteNote:
-          type: string
-        deactivatedAt:
-          type: string
-          format: date-time
-        threatSignatures:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoAdminDefsThreatSignature'
-    ToolsOzoneModerationDefsModEventUnmuteReporter:
-      type: object
-      description: Unmute incoming reports from an account
-      properties:
-        comment:
-          type: string
-          description: Describe reasoning behind the reversal.
-    ToolsOzoneModerationDefsImageDetails:
-      type: object
-      required:
-      - width
-      - height
-      properties:
-        width:
-          type: integer
-        height:
-          type: integer
-    ToolsOzoneModerationDefsRecordViewNotFound:
-      type: object
-      required:
-      - uri
-      properties:
-        uri:
-          type: string
-          format: at-uri
     ToolsOzoneModerationDefsRecordEvent:
       type: object
       description: Logs lifecycle event on a record subject. Normally captured by automod from the firehose and emitted to ozone for historical tracking.
@@ -1880,36 +2067,30 @@ components:
         timestamp:
           type: string
           format: date-time
-    ComAtprotoAdminDefsThreatSignature:
+    ToolsOzoneModerationDefsModerationDetail:
+      type: object
+      properties:
+        subjectStatus:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsSubjectStatusView'
+    ChatBskyConvoDefsMessageRef:
       type: object
       required:
-      - property
-      - value
+      - did
+      - messageId
+      - convoId
       properties:
-        property:
+        did:
           type: string
-        value:
+          format: did
+        convoId:
           type: string
-    ToolsOzoneModerationDefsModEventEmail:
-      type: object
-      description: Keep a log of outgoing email to a user
-      required:
-      - subjectLine
-      properties:
-        subjectLine:
+        messageId:
           type: string
-          description: The subject line of the email sent to the user.
-        content:
-          type: string
-          description: The content of the email sent to the user.
-        comment:
-          type: string
-          description: Additional comment about the outgoing comm.
-    ToolsOzoneModerationDefsModEventEscalate:
+    ToolsOzoneModerationDefsModeration:
       type: object
       properties:
-        comment:
-          type: string
+        subjectStatus:
+          $ref: '#/components/schemas/ToolsOzoneModerationDefsSubjectStatusView'
     ToolsOzoneModerationDefsModEventViewDetail:
       type: object
       required:
@@ -1958,259 +2139,78 @@ components:
         createdAt:
           type: string
           format: date-time
-  examples:
-    OzoneModerationEmitEventResponse200Example:
-      summary: Successful response for ozoneModerationEmitEvent
-      value:
-        id: 50
-        event:
-          comment: example-comment
-          durationInHours: 50
-          acknowledgeAccountSubjects: true
-        subject:
-          did: did:plc:example123abc
-        subjectBlobCids:
-        - at://did:plc:example123/app.bsky.feed.post/abc123
-        createdBy: did:plc:example123abc
-        createdAt: '2024-01-15T12:00:00.000Z'
-        creatorHandle: example-creatorHandle
-        subjectHandle: at://did:plc:example123/app.bsky.feed.post/abc123
-    OzoneModerationGetReposResponse200Example:
-      summary: Successful response for ozoneModerationGetRepos
-      value:
-        repos:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          relatedRecords: []
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          moderation:
-            subjectStatus: {}
-          email: user@example.com
-          labels: []
-          invitedBy:
-            code: {}
-            available: {}
-            disabled: {}
-            forAccount: {}
-            createdBy: {}
-            createdAt: {}
-            uses: {}
-    OzoneModerationEmitEventRequestExample:
-      summary: Example request for ozoneModerationEmitEvent
-      value:
-        event:
-          comment: example-comment
-          durationInHours: 50
-          acknowledgeAccountSubjects: true
-        subject:
-          did: did:plc:example123abc
-        createdBy: did:plc:example123abc
-        subjectBlobCids:
-        - bafyreiabc123example
-    OzoneModerationSearchReposResponse200Example:
-      summary: Successful response for ozoneModerationSearchRepos
-      value:
-        repos:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          relatedRecords: []
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          moderation:
-            subjectStatus: {}
-          email: user@example.com
-          invitedBy:
-            code: example-code
-            available: 50
-            disabled: true
-            forAccount: example-forAccount
-            createdBy: example-createdBy
-            createdAt: '2024-01-15T12:00:00.000Z'
-            uses: []
-          invitesDisabled: true
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    OzoneModerationGetRepoResponse200Example:
-      summary: Successful response for ozoneModerationGetRepo
-      value:
-        did: did:plc:example123abc
-        handle: user.bsky.social
-        relatedRecords: []
-        indexedAt: '2024-01-15T12:00:00.000Z'
-        moderation:
-          subjectStatus:
-            id: 50
-            subject: {}
-            createdAt: '2024-01-15T12:00:00.000Z'
-            updatedAt: '2024-01-15T12:00:00.000Z'
-            reviewState: {}
-            hosting: {}
-            subjectBlobCids: []
-            subjectRepoHandle: at://did:plc:example123/app.bsky.feed.post/abc123
-        email: user@example.com
-        labels:
-        - src: did:plc:example123abc
-          uri: https://example.com/resource
-          val: example-val
-          cts: '2024-01-15T12:00:00.000Z'
-          ver: 50
-          cid: bafyreiabc123example
-          neg: true
-          exp: '2024-01-15T12:00:00.000Z'
-        invitedBy:
-          code: example-code
-          available: 50
-          disabled: true
-          forAccount: example-forAccount
-          createdBy: example-createdBy
-          createdAt: '2024-01-15T12:00:00.000Z'
-          uses:
-          - usedBy: {}
-            usedAt: {}
-    OzoneModerationGetRecordResponse200Example:
-      summary: Successful response for ozoneModerationGetRecord
-      value:
-        uri: at://did:plc:example123/app.bsky.feed.post/abc123
-        cid: bafyreiabc123example
-        value: {}
-        blobs:
-        - cid: bafyreiabc123example
-          mimeType: example-mimeType
-          size: 50
-          createdAt: '2024-01-15T12:00:00.000Z'
-          details: {}
-          moderation:
-            subjectStatus: {}
-        indexedAt: '2024-01-15T12:00:00.000Z'
-        moderation:
-          subjectStatus:
-            id: 50
-            subject: {}
-            createdAt: '2024-01-15T12:00:00.000Z'
-            updatedAt: '2024-01-15T12:00:00.000Z'
-            reviewState: {}
-            hosting: {}
-            subjectBlobCids: []
-            subjectRepoHandle: at://did:plc:example123/app.bsky.feed.post/abc123
-        repo:
-          did: did:plc:example123abc
-          handle: user.bsky.social
-          relatedRecords: []
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          moderation:
-            subjectStatus: {}
-          email: user@example.com
-          invitedBy:
-            code: example-code
-            available: 50
-            disabled: true
-            forAccount: example-forAccount
-            createdBy: example-createdBy
-            createdAt: '2024-01-15T12:00:00.000Z'
-            uses: []
-          invitesDisabled: true
-        labels:
-        - src: did:plc:example123abc
-          uri: https://example.com/resource
-          val: example-val
-          cts: '2024-01-15T12:00:00.000Z'
-          ver: 50
-          cid: bafyreiabc123example
-          neg: true
-          exp: '2024-01-15T12:00:00.000Z'
-    OzoneModerationGetEventResponse200Example:
-      summary: Successful response for ozoneModerationGetEvent
-      value:
-        id: 50
-        event:
-          comment: example-comment
-          durationInHours: 50
-          acknowledgeAccountSubjects: true
-        subject:
-          did: did:plc:example123abc
-          handle: user.bsky.social
-          relatedRecords: []
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          moderation:
-            subjectStatus: {}
-          email: user@example.com
-          invitedBy:
-            code: {}
-            available: {}
-            disabled: {}
-            forAccount: {}
-            createdBy: {}
-            createdAt: {}
-            uses: {}
-          invitesDisabled: true
-        subjectBlobs:
-        - cid: bafyreiabc123example
-          mimeType: example-mimeType
-          size: 50
-          createdAt: '2024-01-15T12:00:00.000Z'
-          details: {}
-          moderation:
-            subjectStatus: {}
-        createdBy: did:plc:example123abc
-        createdAt: '2024-01-15T12:00:00.000Z'
-    OzoneModerationQueryEventsResponse200Example:
-      summary: Successful response for ozoneModerationQueryEvents
-      value:
-        events:
-        - id: 50
-          event:
-            comment: {}
-            durationInHours: {}
-            acknowledgeAccountSubjects: {}
-          subject:
-            did: {}
-          subjectBlobCids:
-          - at://did:plc:example123/app.bsky.feed.post/abc123
-          createdBy: did:plc:example123abc
-          createdAt: '2024-01-15T12:00:00.000Z'
-          creatorHandle: example-creatorHandle
-          subjectHandle: at://did:plc:example123/app.bsky.feed.post/abc123
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    OzoneModerationQueryStatusesResponse200Example:
-      summary: Successful response for ozoneModerationQueryStatuses
-      value:
-        subjectStatuses:
-        - id: 50
-          subject:
-            did: {}
-          createdAt: '2024-01-15T12:00:00.000Z'
-          updatedAt: '2024-01-15T12:00:00.000Z'
-          reviewState: '#reviewOpen'
-          hosting:
-            status: {}
-            updatedAt: {}
-            createdAt: {}
-            deletedAt: {}
-            deactivatedAt: {}
-            reactivatedAt: {}
-          subjectBlobCids:
-          - bafyreiabc123example
-          subjectRepoHandle: at://did:plc:example123/app.bsky.feed.post/abc123
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    OzoneModerationGetRecordsResponse200Example:
-      summary: Successful response for ozoneModerationGetRecords
-      value:
-        records:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          value: {}
-          blobs: []
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          moderation:
-            subjectStatus: {}
-          repo:
-            did: {}
-            handle: {}
-            relatedRecords: {}
-            indexedAt: {}
-            moderation: {}
-            email: {}
-            invitedBy: {}
-            invitesDisabled: {}
-          labels: []
+    ToolsOzoneModerationDefsModEventEscalate:
+      type: object
+      properties:
+        comment:
+          type: string
+    ToolsOzoneModerationDefsAccountEvent:
+      type: object
+      description: Logs account status related events on a repo subject. Normally captured by automod from the firehose and emitted to ozone for historical tracking.
+      required:
+      - timestamp
+      - active
+      properties:
+        comment:
+          type: string
+        active:
+          type: boolean
+          description: Indicates that the account has a repository which can be fetched from the host that emitted this event.
+        status:
+          type: string
+          enum:
+          - unknown
+          - deactivated
+          - deleted
+          - takendown
+          - suspended
+          - tombstoned
+        timestamp:
+          type: string
+          format: date-time
+    ComAtprotoModerationDefsReasonOther:
+      type: string
+      format: token
+      description: 'Other: reports not falling under another report category'
+    ComAtprotoModerationDefsReasonRude:
+      type: string
+      format: token
+      description: Rude, harassing, explicit, or otherwise unwelcoming behavior
+    ComAtprotoServerDefsInviteCode:
+      type: object
+      required:
+      - code
+      - available
+      - disabled
+      - forAccount
+      - createdBy
+      - createdAt
+      - uses
+      properties:
+        code:
+          type: string
+        available:
+          type: integer
+        disabled:
+          type: boolean
+        forAccount:
+          type: string
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        uses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoServerDefsInviteCodeUse'
+    ToolsOzoneModerationDefsSubjectReviewState:
+      type: string
+      enum:
+      - '#reviewOpen'
+      - '#reviewEscalated'
+      - '#reviewClosed'
+      - '#reviewNone'
   securitySchemes:
     Bearer:
       type: http

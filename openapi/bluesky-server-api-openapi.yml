@@ -1975,139 +1975,18 @@ paths:
                     type: string
 components:
   examples:
-    ServerCreateSessionResponse200Example:
-      summary: Successful response for serverCreateSession
+    ServerListAppPasswordsResponse200Example:
+      summary: Successful response for serverListAppPasswords
       value:
-        accessJwt: example-accessJwt
-        refreshJwt: example-refreshJwt
-        handle: user.bsky.social
-        did: did:plc:example123abc
-        didDoc: {}
-        email: user@example.com
-        emailConfirmed: true
-        emailAuthFactor: true
-    ServerCreateAppPasswordRequestExample:
-      summary: Example request for serverCreateAppPassword
-      value:
-        name: Example Name
-        privileged: true
+        passwords:
+        - name: Example Name
+          createdAt: '2024-01-15T12:00:00.000Z'
+          privileged: true
     ServerConfirmEmailRequestExample:
       summary: Example request for serverConfirmEmail
       value:
         email: user@example.com
         token: example-token
-    ServerDeactivateAccountRequestExample:
-      summary: Example request for serverDeactivateAccount
-      value:
-        deleteAfter: '2024-01-15T12:00:00.000Z'
-    ServerResetPasswordRequestExample:
-      summary: Example request for serverResetPassword
-      value:
-        token: example-token
-        password: example-password
-    ServerReserveSigningKeyResponse200Example:
-      summary: Successful response for serverReserveSigningKey
-      value:
-        signingKey: example-signingKey
-    ServerGetSessionResponse200Example:
-      summary: Successful response for serverGetSession
-      value:
-        handle: user.bsky.social
-        did: did:plc:example123abc
-        email: user@example.com
-        emailConfirmed: true
-        emailAuthFactor: true
-        didDoc: {}
-        active: true
-        status: takendown
-    ServerCreateInviteCodesResponse200Example:
-      summary: Successful response for serverCreateInviteCodes
-      value:
-        codes:
-        - account: example-account
-          codes:
-          - example-codes
-    ServerCreateInviteCodeResponse200Example:
-      summary: Successful response for serverCreateInviteCode
-      value:
-        code: example-code
-    ServerCreateSessionRequestExample:
-      summary: Example request for serverCreateSession
-      value:
-        identifier: example-identifier
-        password: example-password
-        authFactorToken: example-authFactorToken
-    ServerUpdateEmailRequestExample:
-      summary: Example request for serverUpdateEmail
-      value:
-        email: user@example.com
-        emailAuthFactor: true
-        token: example-token
-    ServerReserveSigningKeyRequestExample:
-      summary: Example request for serverReserveSigningKey
-      value:
-        did: did:plc:example123abc
-    ServerCheckAccountStatusResponse200Example:
-      summary: Successful response for serverCheckAccountStatus
-      value:
-        activated: true
-        validDid: true
-        repoCommit: bafyreiabc123example
-        repoRev: example-repoRev
-        repoBlocks: 50
-        indexedRecords: 50
-        privateStateValues: 50
-        expectedBlobs: 50
-        importedBlobs: 50
-    ServerRefreshSessionResponse200Example:
-      summary: Successful response for serverRefreshSession
-      value:
-        accessJwt: example-accessJwt
-        refreshJwt: example-refreshJwt
-        handle: user.bsky.social
-        did: did:plc:example123abc
-        didDoc: {}
-        active: true
-        status: takendown
-    ServerGetAccountInviteCodesResponse200Example:
-      summary: Successful response for serverGetAccountInviteCodes
-      value:
-        codes:
-        - code: example-code
-          available: 50
-          disabled: true
-          forAccount: example-forAccount
-          createdBy: example-createdBy
-          createdAt: '2024-01-15T12:00:00.000Z'
-          uses:
-          - usedBy: {}
-            usedAt: {}
-    ServerGetServiceAuthResponse200Example:
-      summary: Successful response for serverGetServiceAuth
-      value:
-        token: example-token
-    ServerDescribeServerResponse200Example:
-      summary: Successful response for serverDescribeServer
-      value:
-        did: did:plc:example123abc
-        availableUserDomains:
-        - example-availableUserDomains
-        inviteCodeRequired: true
-        phoneVerificationRequired: true
-        links:
-          privacyPolicy: https://example.com/resource
-          termsOfService: https://example.com/resource
-        contact:
-          email: user@example.com
-    ServerCreateInviteCodeRequestExample:
-      summary: Example request for serverCreateInviteCode
-      value:
-        useCount: 50
-        forAccount: did:plc:example123abc
-    ServerRequestPasswordResetRequestExample:
-      summary: Example request for serverRequestPasswordReset
-      value:
-        email: user@example.com
     ServerCreateAccountResponse200Example:
       summary: Successful response for serverCreateAccount
       value:
@@ -2116,27 +1995,6 @@ components:
         handle: user.bsky.social
         did: did:plc:example123abc
         didDoc: {}
-    ServerRevokeAppPasswordRequestExample:
-      summary: Example request for serverRevokeAppPassword
-      value:
-        name: Example Name
-    ServerDeleteAccountRequestExample:
-      summary: Example request for serverDeleteAccount
-      value:
-        did: did:plc:example123abc
-        password: example-password
-        token: example-token
-    ServerRequestEmailUpdateResponse200Example:
-      summary: Successful response for serverRequestEmailUpdate
-      value:
-        tokenRequired: true
-    ServerCreateInviteCodesRequestExample:
-      summary: Example request for serverCreateInviteCodes
-      value:
-        codeCount: 1
-        useCount: 50
-        forAccounts:
-        - did:plc:example123abc
     ServerCreateAccountRequestExample:
       summary: Example request for serverCreateAccount
       value:
@@ -2155,13 +2013,155 @@ components:
         password: example-password
         createdAt: '2024-01-15T12:00:00.000Z'
         privileged: true
-    ServerListAppPasswordsResponse200Example:
-      summary: Successful response for serverListAppPasswords
+    ServerGetServiceAuthResponse200Example:
+      summary: Successful response for serverGetServiceAuth
       value:
-        passwords:
-        - name: Example Name
+        token: example-token
+    ServerCreateInviteCodeRequestExample:
+      summary: Example request for serverCreateInviteCode
+      value:
+        useCount: 50
+        forAccount: did:plc:example123abc
+    ServerRequestPasswordResetRequestExample:
+      summary: Example request for serverRequestPasswordReset
+      value:
+        email: user@example.com
+    ServerReserveSigningKeyResponse200Example:
+      summary: Successful response for serverReserveSigningKey
+      value:
+        signingKey: example-signingKey
+    ServerCreateSessionRequestExample:
+      summary: Example request for serverCreateSession
+      value:
+        identifier: example-identifier
+        password: example-password
+        authFactorToken: example-authFactorToken
+    ServerRefreshSessionResponse200Example:
+      summary: Successful response for serverRefreshSession
+      value:
+        accessJwt: example-accessJwt
+        refreshJwt: example-refreshJwt
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        didDoc: {}
+        active: true
+        status: takendown
+    ServerCreateInviteCodesResponse200Example:
+      summary: Successful response for serverCreateInviteCodes
+      value:
+        codes:
+        - account: example-account
+          codes:
+          - example-codes
+    ServerCheckAccountStatusResponse200Example:
+      summary: Successful response for serverCheckAccountStatus
+      value:
+        activated: true
+        validDid: true
+        repoCommit: bafyreiabc123example
+        repoRev: example-repoRev
+        repoBlocks: 50
+        indexedRecords: 50
+        privateStateValues: 50
+        expectedBlobs: 50
+        importedBlobs: 50
+    ServerUpdateEmailRequestExample:
+      summary: Example request for serverUpdateEmail
+      value:
+        email: user@example.com
+        emailAuthFactor: true
+        token: example-token
+    ServerRevokeAppPasswordRequestExample:
+      summary: Example request for serverRevokeAppPassword
+      value:
+        name: Example Name
+    ServerDeleteAccountRequestExample:
+      summary: Example request for serverDeleteAccount
+      value:
+        did: did:plc:example123abc
+        password: example-password
+        token: example-token
+    ServerCreateAppPasswordRequestExample:
+      summary: Example request for serverCreateAppPassword
+      value:
+        name: Example Name
+        privileged: true
+    ServerGetSessionResponse200Example:
+      summary: Successful response for serverGetSession
+      value:
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        email: user@example.com
+        emailConfirmed: true
+        emailAuthFactor: true
+        didDoc: {}
+        active: true
+        status: takendown
+    ServerCreateInviteCodeResponse200Example:
+      summary: Successful response for serverCreateInviteCode
+      value:
+        code: example-code
+    ServerResetPasswordRequestExample:
+      summary: Example request for serverResetPassword
+      value:
+        token: example-token
+        password: example-password
+    ServerRequestEmailUpdateResponse200Example:
+      summary: Successful response for serverRequestEmailUpdate
+      value:
+        tokenRequired: true
+    ServerGetAccountInviteCodesResponse200Example:
+      summary: Successful response for serverGetAccountInviteCodes
+      value:
+        codes:
+        - code: example-code
+          available: 50
+          disabled: true
+          forAccount: example-forAccount
+          createdBy: example-createdBy
           createdAt: '2024-01-15T12:00:00.000Z'
-          privileged: true
+          uses:
+          - usedBy: {}
+            usedAt: {}
+    ServerCreateSessionResponse200Example:
+      summary: Successful response for serverCreateSession
+      value:
+        accessJwt: example-accessJwt
+        refreshJwt: example-refreshJwt
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        didDoc: {}
+        email: user@example.com
+        emailConfirmed: true
+        emailAuthFactor: true
+    ServerCreateInviteCodesRequestExample:
+      summary: Example request for serverCreateInviteCodes
+      value:
+        codeCount: 1
+        useCount: 50
+        forAccounts:
+        - did:plc:example123abc
+    ServerDescribeServerResponse200Example:
+      summary: Successful response for serverDescribeServer
+      value:
+        did: did:plc:example123abc
+        availableUserDomains:
+        - example-availableUserDomains
+        inviteCodeRequired: true
+        phoneVerificationRequired: true
+        links:
+          privacyPolicy: https://example.com/resource
+          termsOfService: https://example.com/resource
+        contact:
+          email: user@example.com
+    ServerReserveSigningKeyRequestExample:
+      summary: Example request for serverReserveSigningKey
+      value:
+        did: did:plc:example123abc
+    ServerDeactivateAccountRequestExample:
+      summary: Example request for serverDeactivateAccount
+      value:
+        deleteAfter: '2024-01-15T12:00:00.000Z'
   schemas:
     ComAtprotoServerCreateAppPasswordAppPassword:
       type: object
@@ -2179,6 +2179,40 @@ components:
           format: date-time
         privileged:
           type: boolean
+    ComAtprotoServerListAppPasswordsAppPassword:
+      type: object
+      required:
+      - name
+      - createdAt
+      properties:
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        privileged:
+          type: boolean
+    ComAtprotoServerDescribeServerLinks:
+      type: object
+      properties:
+        privacyPolicy:
+          type: string
+          format: uri
+        termsOfService:
+          type: string
+          format: uri
+    ComAtprotoServerCreateInviteCodesAccountCodes:
+      type: object
+      required:
+      - account
+      - codes
+      properties:
+        account:
+          type: string
+        codes:
+          type: array
+          items:
+            type: string
     ComAtprotoServerDefsInviteCodeUse:
       type: object
       required:
@@ -2224,40 +2258,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoServerDefsInviteCodeUse'
-    ComAtprotoServerListAppPasswordsAppPassword:
-      type: object
-      required:
-      - name
-      - createdAt
-      properties:
-        name:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        privileged:
-          type: boolean
-    ComAtprotoServerDescribeServerLinks:
-      type: object
-      properties:
-        privacyPolicy:
-          type: string
-          format: uri
-        termsOfService:
-          type: string
-          format: uri
-    ComAtprotoServerCreateInviteCodesAccountCodes:
-      type: object
-      required:
-      - account
-      - codes
-      properties:
-        account:
-          type: string
-        codes:
-          type: array
-          items:
-            type: string
   securitySchemes:
     Bearer:
       type: http

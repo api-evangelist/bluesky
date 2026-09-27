@@ -1682,6 +1682,394 @@ paths:
                   message:
                     type: string
 components:
+  examples:
+    GraphGetRelationshipsResponse200Example:
+      summary: Successful response for graphGetRelationships
+      value:
+        relationships:
+        - did: did:plc:example123abc
+          following: at://did:plc:example123/app.bsky.feed.post/abc123
+          followedBy: at://did:plc:example123/app.bsky.feed.post/abc123
+        actor: did:plc:example123abc
+    GraphMuteThreadRequestExample:
+      summary: Example request for graphMuteThread
+      value:
+        root: at://did:plc:example123/app.bsky.feed.post/abc123
+    GraphGetListsResponse200Example:
+      summary: Successful response for graphGetLists
+      value:
+        lists:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          name: Example Name
+          purpose: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphUnmuteActorRequestExample:
+      summary: Example request for graphUnmuteActor
+      value:
+        actor: user.bsky.social
+    GraphUnmuteActorListRequestExample:
+      summary: Example request for graphUnmuteActorList
+      value:
+        list: at://did:plc:example123/app.bsky.feed.post/abc123
+    GraphGetSuggestedFollowsByActorResponse200Example:
+      summary: Successful response for graphGetSuggestedFollowsByActor
+      value:
+        suggestions:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        isFallback: true
+    GraphGetBlocksResponse200Example:
+      summary: Successful response for graphGetBlocks
+      value:
+        blocks:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetListBlocksResponse200Example:
+      summary: Successful response for graphGetListBlocks
+      value:
+        lists:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          name: Example Name
+          purpose: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetFollowsResponse200Example:
+      summary: Successful response for graphGetFollows
+      value:
+        subject:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat:
+              allowIncoming: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        follows:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetStarterPacksResponse200Example:
+      summary: Successful response for graphGetStarterPacks
+      value:
+        starterPacks:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          record: {}
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            avatar: https://example.com/resource
+            associated: {}
+            viewer: {}
+            labels: []
+            createdAt: '2024-01-15T12:00:00.000Z'
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          listItemCount: 50
+          joinedWeekCount: 50
+          joinedAllTimeCount: 50
+    GraphGetListMutesResponse200Example:
+      summary: Successful response for graphGetListMutes
+      value:
+        lists:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          name: Example Name
+          purpose: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetListResponse200Example:
+      summary: Successful response for graphGetList
+      value:
+        list:
+          uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated:
+              lists: {}
+              feedgens: {}
+              starterPacks: {}
+              labeler: {}
+              chat: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          name: Example Name
+          purpose: example-token
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: []
+        items:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          subject:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphUnmuteThreadRequestExample:
+      summary: Example request for graphUnmuteThread
+      value:
+        root: at://did:plc:example123/app.bsky.feed.post/abc123
+    GraphGetKnownFollowersResponse200Example:
+      summary: Successful response for graphGetKnownFollowers
+      value:
+        subject:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat:
+              allowIncoming: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        followers:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetStarterPackResponse200Example:
+      summary: Successful response for graphGetStarterPack
+      value:
+        starterPack:
+          uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          record: {}
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            avatar: https://example.com/resource
+            associated:
+              lists: {}
+              feedgens: {}
+              starterPacks: {}
+              labeler: {}
+              chat: {}
+            viewer:
+              muted: {}
+              mutedByList: {}
+              blockedBy: {}
+              blocking: {}
+              blockingByList: {}
+              following: {}
+              followedBy: {}
+              knownFollowers: {}
+            labels: []
+            createdAt: '2024-01-15T12:00:00.000Z'
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          list:
+            uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            name: Example Name
+            purpose: {}
+            avatar: https://example.com/resource
+            listItemCount: 50
+            labels: []
+            viewer:
+              muted: {}
+              blocked: {}
+          listItemsSample:
+          - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            subject: {}
+          feeds:
+          - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            did: did:plc:example123abc
+            creator: {}
+            displayName: Example Name
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            description: This is an example description.
+            descriptionFacets: []
+    GraphMuteActorRequestExample:
+      summary: Example request for graphMuteActor
+      value:
+        actor: user.bsky.social
+    GraphMuteActorListRequestExample:
+      summary: Example request for graphMuteActorList
+      value:
+        list: at://did:plc:example123/app.bsky.feed.post/abc123
+    GraphGetMutesResponse200Example:
+      summary: Successful response for graphGetMutes
+      value:
+        mutes:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetFollowersResponse200Example:
+      summary: Successful response for graphGetFollowers
+      value:
+        subject:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat:
+              allowIncoming: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        followers:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    GraphGetActorStarterPacksResponse200Example:
+      summary: Successful response for graphGetActorStarterPacks
+      value:
+        starterPacks:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          record: {}
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            avatar: https://example.com/resource
+            associated: {}
+            viewer: {}
+            labels: []
+            createdAt: '2024-01-15T12:00:00.000Z'
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          listItemCount: 50
+          joinedWeekCount: 50
+          joinedAllTimeCount: 50
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
   schemas:
     AppBskyFeedDefsGeneratorViewerState:
       type: object
@@ -1689,93 +2077,6 @@ components:
         like:
           type: string
           format: at-uri
-    AppBskyActorDefsProfileAssociated:
-      type: object
-      properties:
-        lists:
-          type: integer
-        feedgens:
-          type: integer
-        starterPacks:
-          type: integer
-        labeler:
-          type: boolean
-        chat:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
-    AppBskyActorDefsViewerState:
-      type: object
-      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
-      properties:
-        muted:
-          type: boolean
-        mutedByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        blockedBy:
-          type: boolean
-        blocking:
-          type: string
-          format: at-uri
-        blockingByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        following:
-          type: string
-          format: at-uri
-        followedBy:
-          type: string
-          format: at-uri
-        knownFollowers:
-          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
-    AppBskyRichtextFacet:
-      type: object
-      description: Annotation of a sub-string within rich text.
-      required:
-      - index
-      - features
-      properties:
-        index:
-          $ref: '#/components/schemas/AppBskyRichtextFacetByteSlice'
-        features:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/AppBskyRichtextFacetMention'
-            - $ref: '#/components/schemas/AppBskyRichtextFacetLink'
-            - $ref: '#/components/schemas/AppBskyRichtextFacetTag'
-    AppBskyGraphDefsListViewBasic:
-      type: object
-      required:
-      - uri
-      - cid
-      - name
-      - purpose
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        name:
-          type: string
-          minLength: 1
-          maxLength: 64
-        purpose:
-          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
-        avatar:
-          type: string
-          format: uri
-        listItemCount:
-          type: integer
-          minimum: 0
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        viewer:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
-        indexedAt:
-          type: string
-          format: date-time
     AppBskyGraphDefsStarterPackViewBasic:
       type: object
       required:
@@ -1810,10 +2111,136 @@ components:
         indexedAt:
           type: string
           format: date-time
-    AppBskyGraphDefsModlist:
-      type: string
-      format: token
-      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyGraphDefsListPurpose:
+      oneOf:
+      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
+    AppBskyRichtextFacetByteSlice:
+      type: object
+      description: 'Specifies the sub-string range a facet feature applies to. Start index is inclusive, end index is exclusive. Indices are zero-indexed, counting bytes of the UTF-8 encoded text. NOTE: some languages, like Javascript, use UTF-16 or Unicode codepoints for string slice indexing; in these languages, convert to byte arrays before working with facets.'
+      required:
+      - byteStart
+      - byteEnd
+      properties:
+        byteStart:
+          type: integer
+          minimum: 0
+        byteEnd:
+          type: integer
+          minimum: 0
+    AppBskyGraphDefsStarterPackView:
+      type: object
+      required:
+      - uri
+      - cid
+      - record
+      - creator
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        record: {}
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        list:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        listItemsSample:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyGraphDefsListItemView'
+          maxItems: 12
+        feeds:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
+          maxItems: 3
+        joinedWeekCount:
+          type: integer
+          minimum: 0
+        joinedAllTimeCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyGraphDefsListItemView:
+      type: object
+      required:
+      - uri
+      - subject
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        subject:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+    AppBskyGraphDefsRelationship:
+      type: object
+      description: lists the bi-directional graph relationships between one actor (not indicated in the object), and the target actors (the DID included in the object)
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+        following:
+          type: string
+          description: if the actor follows this DID, this is the AT-URI of the follow record
+          format: at-uri
+        followedBy:
+          type: string
+          description: if the actor is followed by this DID, contains the AT-URI of the follow record
+          format: at-uri
+    AppBskyActorDefsProfileAssociatedChat:
+      type: object
+      required:
+      - allowIncoming
+      properties:
+        allowIncoming:
+          type: string
+          enum:
+          - all
+          - none
+          - following
+    AppBskyActorDefsKnownFollowers:
+      type: object
+      description: The subject's followers whom you also follow
+      required:
+      - count
+      - followers
+      properties:
+        count:
+          type: integer
+        followers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+          maxItems: 5
+    AppBskyRichtextFacet:
+      type: object
+      description: Annotation of a sub-string within rich text.
+      required:
+      - index
+      - features
+      properties:
+        index:
+          $ref: '#/components/schemas/AppBskyRichtextFacetByteSlice'
+        features:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/AppBskyRichtextFacetMention'
+            - $ref: '#/components/schemas/AppBskyRichtextFacetLink'
+            - $ref: '#/components/schemas/AppBskyRichtextFacetTag'
     AppBskyActorDefsProfileView:
       type: object
       required:
@@ -1849,35 +2276,35 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-    AppBskyActorDefsProfileViewBasic:
+    AppBskyGraphDefsModlist:
+      type: string
+      format: token
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyRichtextFacetMention:
       type: object
+      description: Facet feature for mention of another account. The text is usually a handle, including a '@' prefix, but the facet reference is a DID.
       required:
       - did
-      - handle
       properties:
         did:
           type: string
           format: did
-        handle:
+    AppBskyGraphDefsReferencelist:
+      type: string
+      format: token
+      description: A list of actors used for only for reference purposes such as within a starter pack.
+    AppBskyGraphDefsListViewerState:
+      type: object
+      properties:
+        muted:
+          type: boolean
+        blocked:
           type: string
-          format: handle
-        displayName:
-          type: string
-          maxLength: 640
-        avatar:
-          type: string
-          format: uri
-        associated:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        createdAt:
-          type: string
-          format: date-time
+          format: at-uri
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
     AppBskyRichtextFacetLink:
       type: object
       description: Facet feature for a URL. The text URL may have been simplified or truncated, but the facet reference should be a complete URL.
@@ -1887,25 +2314,137 @@ components:
         uri:
           type: string
           format: uri
-    AppBskyGraphDefsListViewerState:
+    AppBskyGraphDefsNotFoundActor:
       type: object
+      description: indicates that a handle or DID could not be resolved
+      required:
+      - actor
+      - notFound
+      properties:
+        actor:
+          type: string
+          format: at-identifier
+        notFound:
+          type: boolean
+          default: true
+    AppBskyActorDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
       properties:
         muted:
           type: boolean
-        blocked:
+        mutedByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        blockedBy:
+          type: boolean
+        blocking:
           type: string
           format: at-uri
-    AppBskyActorDefsProfileAssociatedChat:
+        blockingByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        following:
+          type: string
+          format: at-uri
+        followedBy:
+          type: string
+          format: at-uri
+        knownFollowers:
+          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
+    AppBskyFeedDefsGeneratorView:
       type: object
       required:
-      - allowIncoming
+      - uri
+      - cid
+      - did
+      - creator
+      - displayName
+      - indexedAt
       properties:
-        allowIncoming:
+        uri:
           type: string
-          enum:
-          - all
-          - none
-          - following
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        did:
+          type: string
+          format: did
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+        displayName:
+          type: string
+        description:
+          type: string
+          maxLength: 3000
+        descriptionFacets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyRichtextFacet'
+        avatar:
+          type: string
+          format: uri
+        likeCount:
+          type: integer
+          minimum: 0
+        acceptsInteractions:
+          type: boolean
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyFeedDefsGeneratorViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyGraphDefsListViewBasic:
+      type: object
+      required:
+      - uri
+      - cid
+      - name
+      - purpose
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        purpose:
+          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
+        avatar:
+          type: string
+          format: uri
+        listItemCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyActorDefsProfileAssociated:
+      type: object
+      properties:
+        lists:
+          type: integer
+        feedgens:
+          type: integer
+        starterPacks:
+          type: integer
+        labeler:
+          type: boolean
+        chat:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
     AppBskyGraphDefsListView:
       type: object
       required:
@@ -1994,19 +2533,6 @@ components:
           type: string
           format: byte
           description: Signature of dag-cbor encoded label.
-    AppBskyGraphDefsNotFoundActor:
-      type: object
-      description: indicates that a handle or DID could not be resolved
-      required:
-      - actor
-      - notFound
-      properties:
-        actor:
-          type: string
-          format: at-identifier
-        notFound:
-          type: boolean
-          default: true
     AppBskyRichtextFacetTag:
       type: object
       description: Facet feature for a hashtag. The text usually includes a '#' prefix, but the facet reference should not (except in the case of 'double hash tags').
@@ -2016,561 +2542,35 @@ components:
         tag:
           type: string
           maxLength: 640
-    AppBskyFeedDefsGeneratorView:
+    AppBskyActorDefsProfileViewBasic:
       type: object
       required:
-      - uri
-      - cid
       - did
-      - creator
-      - displayName
-      - indexedAt
+      - handle
       properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
         did:
           type: string
           format: did
-        creator:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+        handle:
+          type: string
+          format: handle
         displayName:
           type: string
-        description:
-          type: string
-          maxLength: 3000
-        descriptionFacets:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyRichtextFacet'
+          maxLength: 640
         avatar:
           type: string
           format: uri
-        likeCount:
-          type: integer
-          minimum: 0
-        acceptsInteractions:
-          type: boolean
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
         viewer:
-          $ref: '#/components/schemas/AppBskyFeedDefsGeneratorViewerState'
-        indexedAt:
-          type: string
-          format: date-time
-    AppBskyGraphDefsListPurpose:
-      oneOf:
-      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
-    AppBskyGraphDefsCuratelist:
-      type: string
-      format: token
-      description: A list of actors used for curation purposes such as list feeds or interaction gating.
-    AppBskyActorDefsKnownFollowers:
-      type: object
-      description: The subject's followers whom you also follow
-      required:
-      - count
-      - followers
-      properties:
-        count:
-          type: integer
-        followers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-          maxItems: 5
-    AppBskyGraphDefsListItemView:
-      type: object
-      required:
-      - uri
-      - subject
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        subject:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
-    AppBskyGraphDefsRelationship:
-      type: object
-      description: lists the bi-directional graph relationships between one actor (not indicated in the object), and the target actors (the DID included in the object)
-      required:
-      - did
-      properties:
-        did:
-          type: string
-          format: did
-        following:
-          type: string
-          description: if the actor follows this DID, this is the AT-URI of the follow record
-          format: at-uri
-        followedBy:
-          type: string
-          description: if the actor is followed by this DID, contains the AT-URI of the follow record
-          format: at-uri
-    AppBskyGraphDefsStarterPackView:
-      type: object
-      required:
-      - uri
-      - cid
-      - record
-      - creator
-      - indexedAt
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        record: {}
-        creator:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-        list:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        listItemsSample:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyGraphDefsListItemView'
-          maxItems: 12
-        feeds:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
-          maxItems: 3
-        joinedWeekCount:
-          type: integer
-          minimum: 0
-        joinedAllTimeCount:
-          type: integer
-          minimum: 0
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
         labels:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        indexedAt:
+        createdAt:
           type: string
           format: date-time
-    AppBskyRichtextFacetMention:
-      type: object
-      description: Facet feature for mention of another account. The text is usually a handle, including a '@' prefix, but the facet reference is a DID.
-      required:
-      - did
-      properties:
-        did:
-          type: string
-          format: did
-    AppBskyRichtextFacetByteSlice:
-      type: object
-      description: 'Specifies the sub-string range a facet feature applies to. Start index is inclusive, end index is exclusive. Indices are zero-indexed, counting bytes of the UTF-8 encoded text. NOTE: some languages, like Javascript, use UTF-16 or Unicode codepoints for string slice indexing; in these languages, convert to byte arrays before working with facets.'
-      required:
-      - byteStart
-      - byteEnd
-      properties:
-        byteStart:
-          type: integer
-          minimum: 0
-        byteEnd:
-          type: integer
-          minimum: 0
-    AppBskyGraphDefsReferencelist:
-      type: string
-      format: token
-      description: A list of actors used for only for reference purposes such as within a starter pack.
-  examples:
-    GraphGetListsResponse200Example:
-      summary: Successful response for graphGetLists
-      value:
-        lists:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          creator:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            description: This is an example description.
-            avatar: https://example.com/resource
-            associated: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            createdAt: '2024-01-15T12:00:00.000Z'
-          name: Example Name
-          purpose: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          description: This is an example description.
-          descriptionFacets:
-          - index: {}
-            features: {}
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    GraphGetMutesResponse200Example:
-      summary: Successful response for graphGetMutes
-      value:
-        mutes:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          associated:
-            lists: 50
-            feedgens: 50
-            starterPacks: 50
-            labeler: true
-            chat: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          createdAt: '2024-01-15T12:00:00.000Z'
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    GraphGetRelationshipsResponse200Example:
-      summary: Successful response for graphGetRelationships
-      value:
-        relationships:
-        - did: did:plc:example123abc
-          following: at://did:plc:example123/app.bsky.feed.post/abc123
-          followedBy: at://did:plc:example123/app.bsky.feed.post/abc123
-        actor: did:plc:example123abc
-    GraphMuteActorListRequestExample:
-      summary: Example request for graphMuteActorList
-      value:
-        list: at://did:plc:example123/app.bsky.feed.post/abc123
-    GraphGetListMutesResponse200Example:
-      summary: Successful response for graphGetListMutes
-      value:
-        lists:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          creator:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            description: This is an example description.
-            avatar: https://example.com/resource
-            associated: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            createdAt: '2024-01-15T12:00:00.000Z'
-          name: Example Name
-          purpose: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          description: This is an example description.
-          descriptionFacets:
-          - index: {}
-            features: {}
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    GraphUnmuteActorRequestExample:
-      summary: Example request for graphUnmuteActor
-      value:
-        actor: user.bsky.social
-    GraphMuteActorRequestExample:
-      summary: Example request for graphMuteActor
-      value:
-        actor: user.bsky.social
-    GraphGetBlocksResponse200Example:
-      summary: Successful response for graphGetBlocks
-      value:
-        blocks:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          associated:
-            lists: 50
-            feedgens: 50
-            starterPacks: 50
-            labeler: true
-            chat: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          createdAt: '2024-01-15T12:00:00.000Z'
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    GraphGetListBlocksResponse200Example:
-      summary: Successful response for graphGetListBlocks
-      value:
-        lists:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          creator:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            description: This is an example description.
-            avatar: https://example.com/resource
-            associated: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            createdAt: '2024-01-15T12:00:00.000Z'
-          name: Example Name
-          purpose: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          description: This is an example description.
-          descriptionFacets:
-          - index: {}
-            features: {}
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    GraphGetSuggestedFollowsByActorResponse200Example:
-      summary: Successful response for graphGetSuggestedFollowsByActor
-      value:
-        suggestions:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          associated:
-            lists: 50
-            feedgens: 50
-            starterPacks: 50
-            labeler: true
-            chat: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          createdAt: '2024-01-15T12:00:00.000Z'
-        isFallback: true
-    GraphGetStarterPacksResponse200Example:
-      summary: Successful response for graphGetStarterPacks
-      value:
-        starterPacks:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          record: {}
-          creator:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            avatar: https://example.com/resource
-            associated: {}
-            viewer: {}
-            labels: []
-            createdAt: '2024-01-15T12:00:00.000Z'
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          listItemCount: 50
-          joinedWeekCount: 50
-          joinedAllTimeCount: 50
-    GraphGetFollowersResponse200Example:
-      summary: Successful response for graphGetFollowers
-      value:
-        subject:
-          did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          associated:
-            lists: 50
-            feedgens: 50
-            starterPacks: 50
-            labeler: true
-            chat:
-              allowIncoming: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          createdAt: '2024-01-15T12:00:00.000Z'
-        followers:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          associated:
-            lists: 50
-            feedgens: 50
-            starterPacks: 50
-            labeler: true
-            chat: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          createdAt: '2024-01-15T12:00:00.000Z'
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    GraphGetFollowsResponse200Example:
-      summary: Successful response for graphGetFollows
-      value:
-        subject:
-          did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          associated:
-            lists: 50
-            feedgens: 50
-            starterPacks: 50
-            labeler: true
-            chat:
-              allowIncoming: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          createdAt: '2024-01-15T12:00:00.000Z'
-        follows:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          associated:
-            lists: 50
-            feedgens: 50
-            starterPacks: 50
-            labeler: true
-            chat: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          createdAt: '2024-01-15T12:00:00.000Z'
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    GraphMuteThreadRequestExample:
-      summary: Example request for graphMuteThread
-      value:
-        root: at://did:plc:example123/app.bsky.feed.post/abc123
-    GraphGetStarterPackResponse200Example:
-      summary: Successful response for graphGetStarterPack
-      value:
-        starterPack:
-          uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          record: {}
-          creator:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            avatar: https://example.com/resource
-            associated:
-              lists: {}
-              feedgens: {}
-              starterPacks: {}
-              labeler: {}
-              chat: {}
-            viewer:
-              muted: {}
-              mutedByList: {}
-              blockedBy: {}
-              blocking: {}
-              blockingByList: {}
-              following: {}
-              followedBy: {}
-              knownFollowers: {}
-            labels: []
-            createdAt: '2024-01-15T12:00:00.000Z'
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          list:
-            uri: at://did:plc:example123/app.bsky.feed.post/abc123
-            cid: bafyreiabc123example
-            name: Example Name
-            purpose: {}
-            avatar: https://example.com/resource
-            listItemCount: 50
-            labels: []
-            viewer:
-              muted: {}
-              blocked: {}
-          listItemsSample:
-          - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-            subject: {}
-          feeds:
-          - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-            cid: bafyreiabc123example
-            did: did:plc:example123abc
-            creator: {}
-            displayName: Example Name
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            description: This is an example description.
-            descriptionFacets: []
-    GraphUnmuteActorListRequestExample:
-      summary: Example request for graphUnmuteActorList
-      value:
-        list: at://did:plc:example123/app.bsky.feed.post/abc123
-    GraphGetListResponse200Example:
-      summary: Successful response for graphGetList
-      value:
-        list:
-          uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          creator:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            description: This is an example description.
-            avatar: https://example.com/resource
-            associated:
-              lists: {}
-              feedgens: {}
-              starterPacks: {}
-              labeler: {}
-              chat: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            createdAt: '2024-01-15T12:00:00.000Z'
-          name: Example Name
-          purpose: example-token
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          description: This is an example description.
-          descriptionFacets:
-          - index: {}
-            features: []
-        items:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          subject:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            description: This is an example description.
-            avatar: https://example.com/resource
-            associated: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            createdAt: '2024-01-15T12:00:00.000Z'
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    GraphUnmuteThreadRequestExample:
-      summary: Example request for graphUnmuteThread
-      value:
-        root: at://did:plc:example123/app.bsky.feed.post/abc123
-    GraphGetActorStarterPacksResponse200Example:
-      summary: Successful response for graphGetActorStarterPacks
-      value:
-        starterPacks:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          record: {}
-          creator:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            avatar: https://example.com/resource
-            associated: {}
-            viewer: {}
-            labels: []
-            createdAt: '2024-01-15T12:00:00.000Z'
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          listItemCount: 50
-          joinedWeekCount: 50
-          joinedAllTimeCount: 50
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    GraphGetKnownFollowersResponse200Example:
-      summary: Successful response for graphGetKnownFollowers
-      value:
-        subject:
-          did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          associated:
-            lists: 50
-            feedgens: 50
-            starterPacks: 50
-            labeler: true
-            chat:
-              allowIncoming: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          createdAt: '2024-01-15T12:00:00.000Z'
-        followers:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          associated:
-            lists: 50
-            feedgens: 50
-            starterPacks: 50
-            labeler: true
-            chat: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          createdAt: '2024-01-15T12:00:00.000Z'
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
   securitySchemes:
     Bearer:
       type: http

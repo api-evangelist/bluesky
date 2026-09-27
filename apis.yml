@@ -796,9 +796,11 @@ tags:
   - At-Protocol
   - Decentralized
   - Federated
-  - Open-Source
+  - Open Source
   - Social Network
-  - Social-Media
+  - Social Media
+  - Real-Time
+  - Social
 tags_raw:
   - At-Protocol
   - Decentralized
@@ -806,19 +808,27 @@ tags_raw:
   - Open-Source
   - Social Networks
   - Social-Media
+  - Real-Time
+  - Social
 type: Index
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - bluesky-social/atproto
+    - bluesky-social/feed-generator
+    - bluesky-social/jetstream
+    - bluesky-social/ozone
   open_source: unknown
   commercial: true
   callable_host: true
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - openapi
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium

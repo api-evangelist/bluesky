@@ -1138,7 +1138,205 @@ paths:
                   message:
                     type: string
 components:
+  examples:
+    AdminSendEmailRequestExample:
+      summary: Example request for adminSendEmail
+      value:
+        recipientDid: did:plc:example123abc
+        content: example-content
+        senderDid: did:plc:example123abc
+        subject: at://did:plc:example123/app.bsky.feed.post/abc123
+        comment: example-comment
+    AdminUpdateAccountHandleRequestExample:
+      summary: Example request for adminUpdateAccountHandle
+      value:
+        did: did:plc:example123abc
+        handle: user.bsky.social
+    AdminDisableInviteCodesRequestExample:
+      summary: Example request for adminDisableInviteCodes
+      value:
+        codes:
+        - example-codes
+        accounts:
+        - example-accounts
+    AdminGetInviteCodesResponse200Example:
+      summary: Successful response for adminGetInviteCodes
+      value:
+        codes:
+        - code: example-code
+          available: 50
+          disabled: true
+          forAccount: example-forAccount
+          createdBy: example-createdBy
+          createdAt: '2024-01-15T12:00:00.000Z'
+          uses:
+          - usedBy: {}
+            usedAt: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    AdminSearchAccountsResponse200Example:
+      summary: Successful response for adminSearchAccounts
+      value:
+        accounts:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          email: user@example.com
+          relatedRecords: []
+          invitedBy:
+            code: example-code
+            available: 50
+            disabled: true
+            forAccount: example-forAccount
+            createdBy: example-createdBy
+            createdAt: '2024-01-15T12:00:00.000Z'
+            uses: []
+          invites:
+          - code: {}
+            available: {}
+            disabled: {}
+            forAccount: {}
+            createdBy: {}
+            createdAt: {}
+            uses: {}
+          invitesDisabled: true
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    AdminUpdateSubjectStatusRequestExample:
+      summary: Example request for adminUpdateSubjectStatus
+      value:
+        subject:
+          did: did:plc:example123abc
+        takedown:
+          applied: true
+          ref: example-ref
+        deactivated:
+          applied: true
+          ref: example-ref
+    AdminDeleteAccountRequestExample:
+      summary: Example request for adminDeleteAccount
+      value:
+        did: did:plc:example123abc
+    AdminUpdateSubjectStatusResponse200Example:
+      summary: Successful response for adminUpdateSubjectStatus
+      value:
+        subject:
+          did: did:plc:example123abc
+        takedown:
+          applied: true
+          ref: example-ref
+    AdminUpdateAccountEmailRequestExample:
+      summary: Example request for adminUpdateAccountEmail
+      value:
+        account: user.bsky.social
+        email: user@example.com
+    AdminSendEmailResponse200Example:
+      summary: Successful response for adminSendEmail
+      value:
+        sent: true
+    AdminUpdateAccountPasswordRequestExample:
+      summary: Example request for adminUpdateAccountPassword
+      value:
+        did: did:plc:example123abc
+        password: example-password
+    AdminDisableAccountInvitesRequestExample:
+      summary: Example request for adminDisableAccountInvites
+      value:
+        account: did:plc:example123abc
+        note: example-note
+    AdminEnableAccountInvitesRequestExample:
+      summary: Example request for adminEnableAccountInvites
+      value:
+        account: did:plc:example123abc
+        note: example-note
+    AdminGetAccountInfosResponse200Example:
+      summary: Successful response for adminGetAccountInfos
+      value:
+        infos:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          email: user@example.com
+          relatedRecords: []
+          invitedBy:
+            code: example-code
+            available: 50
+            disabled: true
+            forAccount: example-forAccount
+            createdBy: example-createdBy
+            createdAt: '2024-01-15T12:00:00.000Z'
+            uses: []
+          invites:
+          - code: {}
+            available: {}
+            disabled: {}
+            forAccount: {}
+            createdBy: {}
+            createdAt: {}
+            uses: {}
+          invitesDisabled: true
+    AdminGetSubjectStatusResponse200Example:
+      summary: Successful response for adminGetSubjectStatus
+      value:
+        subject:
+          did: did:plc:example123abc
+        takedown:
+          applied: true
+          ref: example-ref
+        deactivated:
+          applied: true
+          ref: example-ref
+    AdminGetAccountInfoResponse200Example:
+      summary: Successful response for adminGetAccountInfo
+      value:
+        did: did:plc:example123abc
+        handle: user.bsky.social
+        indexedAt: '2024-01-15T12:00:00.000Z'
+        email: user@example.com
+        relatedRecords: []
+        invitedBy:
+          code: example-code
+          available: 50
+          disabled: true
+          forAccount: example-forAccount
+          createdBy: example-createdBy
+          createdAt: '2024-01-15T12:00:00.000Z'
+          uses:
+          - usedBy: {}
+            usedAt: {}
+        invites:
+        - code: example-code
+          available: 50
+          disabled: true
+          forAccount: example-forAccount
+          createdBy: example-createdBy
+          createdAt: '2024-01-15T12:00:00.000Z'
+          uses: []
+        invitesDisabled: true
   schemas:
+    ComAtprotoAdminDefsThreatSignature:
+      type: object
+      required:
+      - property
+      - value
+      properties:
+        property:
+          type: string
+        value:
+          type: string
+    ComAtprotoAdminDefsRepoBlobRef:
+      type: object
+      required:
+      - did
+      - cid
+      properties:
+        did:
+          type: string
+          format: did
+        cid:
+          type: string
+          format: cid
+        recordUri:
+          type: string
+          format: at-uri
     ComAtprotoAdminDefsRepoRef:
       type: object
       required:
@@ -1147,15 +1345,6 @@ components:
         did:
           type: string
           format: did
-    ComAtprotoAdminDefsStatusAttr:
-      type: object
-      required:
-      - applied
-      properties:
-        applied:
-          type: boolean
-        ref:
-          type: string
     ComAtprotoServerDefsInviteCodeUse:
       type: object
       required:
@@ -1168,34 +1357,18 @@ components:
         usedAt:
           type: string
           format: date-time
-    ComAtprotoServerDefsInviteCode:
+    ComAtprotoRepoStrongRef:
       type: object
       required:
-      - code
-      - available
-      - disabled
-      - forAccount
-      - createdBy
-      - createdAt
-      - uses
+      - uri
+      - cid
       properties:
-        code:
+        uri:
           type: string
-        available:
-          type: integer
-        disabled:
-          type: boolean
-        forAccount:
+          format: at-uri
+        cid:
           type: string
-        createdBy:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        uses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoServerDefsInviteCodeUse'
+          format: cid
     ComAtprotoAdminDefsAccountView:
       type: object
       required:
@@ -1237,216 +1410,43 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoAdminDefsThreatSignature'
-    ComAtprotoAdminDefsRepoBlobRef:
+    ComAtprotoAdminDefsStatusAttr:
       type: object
       required:
-      - did
-      - cid
+      - applied
       properties:
-        did:
+        applied:
+          type: boolean
+        ref:
           type: string
-          format: did
-        cid:
-          type: string
-          format: cid
-        recordUri:
-          type: string
-          format: at-uri
-    ComAtprotoRepoStrongRef:
+    ComAtprotoServerDefsInviteCode:
       type: object
       required:
-      - uri
-      - cid
+      - code
+      - available
+      - disabled
+      - forAccount
+      - createdBy
+      - createdAt
+      - uses
       properties:
-        uri:
+        code:
           type: string
-          format: at-uri
-        cid:
+        available:
+          type: integer
+        disabled:
+          type: boolean
+        forAccount:
           type: string
-          format: cid
-    ComAtprotoAdminDefsThreatSignature:
-      type: object
-      required:
-      - property
-      - value
-      properties:
-        property:
+        createdBy:
           type: string
-        value:
+        createdAt:
           type: string
-  examples:
-    AdminGetInviteCodesResponse200Example:
-      summary: Successful response for adminGetInviteCodes
-      value:
-        codes:
-        - code: example-code
-          available: 50
-          disabled: true
-          forAccount: example-forAccount
-          createdBy: example-createdBy
-          createdAt: '2024-01-15T12:00:00.000Z'
-          uses:
-          - usedBy: {}
-            usedAt: {}
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    AdminGetAccountInfoResponse200Example:
-      summary: Successful response for adminGetAccountInfo
-      value:
-        did: did:plc:example123abc
-        handle: user.bsky.social
-        indexedAt: '2024-01-15T12:00:00.000Z'
-        email: user@example.com
-        relatedRecords: []
-        invitedBy:
-          code: example-code
-          available: 50
-          disabled: true
-          forAccount: example-forAccount
-          createdBy: example-createdBy
-          createdAt: '2024-01-15T12:00:00.000Z'
-          uses:
-          - usedBy: {}
-            usedAt: {}
-        invites:
-        - code: example-code
-          available: 50
-          disabled: true
-          forAccount: example-forAccount
-          createdBy: example-createdBy
-          createdAt: '2024-01-15T12:00:00.000Z'
-          uses: []
-        invitesDisabled: true
-    AdminUpdateSubjectStatusResponse200Example:
-      summary: Successful response for adminUpdateSubjectStatus
-      value:
-        subject:
-          did: did:plc:example123abc
-        takedown:
-          applied: true
-          ref: example-ref
-    AdminDeleteAccountRequestExample:
-      summary: Example request for adminDeleteAccount
-      value:
-        did: did:plc:example123abc
-    AdminGetSubjectStatusResponse200Example:
-      summary: Successful response for adminGetSubjectStatus
-      value:
-        subject:
-          did: did:plc:example123abc
-        takedown:
-          applied: true
-          ref: example-ref
-        deactivated:
-          applied: true
-          ref: example-ref
-    AdminUpdateAccountEmailRequestExample:
-      summary: Example request for adminUpdateAccountEmail
-      value:
-        account: user.bsky.social
-        email: user@example.com
-    AdminSendEmailResponse200Example:
-      summary: Successful response for adminSendEmail
-      value:
-        sent: true
-    AdminEnableAccountInvitesRequestExample:
-      summary: Example request for adminEnableAccountInvites
-      value:
-        account: did:plc:example123abc
-        note: example-note
-    AdminGetAccountInfosResponse200Example:
-      summary: Successful response for adminGetAccountInfos
-      value:
-        infos:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          email: user@example.com
-          relatedRecords: []
-          invitedBy:
-            code: example-code
-            available: 50
-            disabled: true
-            forAccount: example-forAccount
-            createdBy: example-createdBy
-            createdAt: '2024-01-15T12:00:00.000Z'
-            uses: []
-          invites:
-          - code: {}
-            available: {}
-            disabled: {}
-            forAccount: {}
-            createdBy: {}
-            createdAt: {}
-            uses: {}
-          invitesDisabled: true
-    AdminUpdateAccountPasswordRequestExample:
-      summary: Example request for adminUpdateAccountPassword
-      value:
-        did: did:plc:example123abc
-        password: example-password
-    AdminDisableAccountInvitesRequestExample:
-      summary: Example request for adminDisableAccountInvites
-      value:
-        account: did:plc:example123abc
-        note: example-note
-    AdminUpdateAccountHandleRequestExample:
-      summary: Example request for adminUpdateAccountHandle
-      value:
-        did: did:plc:example123abc
-        handle: user.bsky.social
-    AdminUpdateSubjectStatusRequestExample:
-      summary: Example request for adminUpdateSubjectStatus
-      value:
-        subject:
-          did: did:plc:example123abc
-        takedown:
-          applied: true
-          ref: example-ref
-        deactivated:
-          applied: true
-          ref: example-ref
-    AdminDisableInviteCodesRequestExample:
-      summary: Example request for adminDisableInviteCodes
-      value:
-        codes:
-        - example-codes
-        accounts:
-        - example-accounts
-    AdminSearchAccountsResponse200Example:
-      summary: Successful response for adminSearchAccounts
-      value:
-        accounts:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          email: user@example.com
-          relatedRecords: []
-          invitedBy:
-            code: example-code
-            available: 50
-            disabled: true
-            forAccount: example-forAccount
-            createdBy: example-createdBy
-            createdAt: '2024-01-15T12:00:00.000Z'
-            uses: []
-          invites:
-          - code: {}
-            available: {}
-            disabled: {}
-            forAccount: {}
-            createdBy: {}
-            createdAt: {}
-            uses: {}
-          invitesDisabled: true
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    AdminSendEmailRequestExample:
-      summary: Example request for adminSendEmail
-      value:
-        recipientDid: did:plc:example123abc
-        content: example-content
-        senderDid: did:plc:example123abc
-        subject: at://did:plc:example123/app.bsky.feed.post/abc123
-        comment: example-comment
+          format: date-time
+        uses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoServerDefsInviteCodeUse'
   securitySchemes:
     Bearer:
       type: http

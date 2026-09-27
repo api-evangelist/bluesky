@@ -852,10 +852,21 @@ paths:
                     type: string
 components:
   examples:
+    SyncListBlobsResponse200Example:
+      summary: Successful response for syncListBlobs
+      value:
+        cids:
+        - bafyreiabc123example
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
     SyncRequestCrawlRequestExample:
       summary: Example request for syncRequestCrawl
       value:
         hostname: Example Name
+    SyncGetLatestCommitResponse200Example:
+      summary: Successful response for syncGetLatestCommit
+      value:
+        cid: bafyreiabc123example
+        rev: example-rev
     SyncGetRepoStatusResponse200Example:
       summary: Successful response for syncGetRepoStatus
       value:
@@ -863,21 +874,10 @@ components:
         active: true
         status: takendown
         rev: example-rev
-    SyncGetLatestCommitResponse200Example:
-      summary: Successful response for syncGetLatestCommit
-      value:
-        cid: bafyreiabc123example
-        rev: example-rev
     SyncNotifyOfUpdateRequestExample:
       summary: Example request for syncNotifyOfUpdate
       value:
         hostname: Example Name
-    SyncListBlobsResponse200Example:
-      summary: Successful response for syncListBlobs
-      value:
-        cids:
-        - bafyreiabc123example
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
     SyncListReposResponse200Example:
       summary: Successful response for syncListRepos
       value:

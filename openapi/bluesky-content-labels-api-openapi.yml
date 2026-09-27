@@ -107,115 +107,117 @@ paths:
                     type: string
 components:
   schemas:
-    AppBskyActorDefsProfileAssociated:
+    ComAtprotoLabelDefsLabelValueDefinitionStrings:
       type: object
-      properties:
-        lists:
-          type: integer
-        feedgens:
-          type: integer
-        starterPacks:
-          type: integer
-        labeler:
-          type: boolean
-        chat:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
-    AppBskyActorDefsViewerState:
-      type: object
-      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
-      properties:
-        muted:
-          type: boolean
-        mutedByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        blockedBy:
-          type: boolean
-        blocking:
-          type: string
-          format: at-uri
-        blockingByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        following:
-          type: string
-          format: at-uri
-        followedBy:
-          type: string
-          format: at-uri
-        knownFollowers:
-          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
-    AppBskyGraphDefsListViewBasic:
-      type: object
+      description: Strings which describe the label in the UI, localized into a specific language.
       required:
-      - uri
-      - cid
+      - lang
       - name
-      - purpose
+      - description
       properties:
-        uri:
+        lang:
           type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
+          description: The code of the language these strings are written in.
+          format: language
         name:
           type: string
-          minLength: 1
-          maxLength: 64
-        purpose:
-          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
-        avatar:
+          description: A short human-readable name for the label.
+          maxLength: 640
+        description:
           type: string
-          format: uri
-        listItemCount:
-          type: integer
-          minimum: 0
-        labels:
+          description: A longer description of what the label means and why it might be applied.
+          maxLength: 100000
+    ComAtprotoLabelDefsLabelValueDefinition:
+      type: object
+      description: Declares a label value and its expected interpretations and behaviors.
+      required:
+      - identifier
+      - severity
+      - blurs
+      - locales
+      properties:
+        identifier:
+          type: string
+          description: The value of the label being defined. Must only include lowercase ascii and the '-' character ([a-z-]+).
+          maxLength: 100
+        severity:
+          type: string
+          description: How should a client visually convey this label? 'inform' means neutral and informational; 'alert' means negative and warning; 'none' means show nothing.
+          enum:
+          - inform
+          - alert
+          - none
+        blurs:
+          type: string
+          description: What should this label hide in the UI, if applied? 'content' hides all of the target; 'media' hides the images/video/audio; 'none' hides nothing.
+          enum:
+          - content
+          - media
+          - none
+        defaultSetting:
+          type: string
+          description: The default setting for this label.
+          default: warn
+          enum:
+          - ignore
+          - warn
+          - hide
+        adultOnly:
+          type: boolean
+          description: Does the user need to have adult content enabled in order to configure this label?
+        locales:
           type: array
           items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        viewer:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
-        indexedAt:
-          type: string
-          format: date-time
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabelValueDefinitionStrings'
     AppBskyLabelerDefsLabelerViewerState:
       type: object
       properties:
         like:
           type: string
           format: at-uri
-    AppBskyGraphDefsModlist:
-      type: string
-      format: token
-      description: A list of actors to apply an aggregate moderation action (mute/block) on.
-    AppBskyLabelerDefsLabelerView:
+    AppBskyGraphDefsListPurpose:
+      oneOf:
+      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
+    AppBskyActorDefsProfileAssociatedChat:
       type: object
       required:
-      - uri
-      - cid
-      - creator
-      - indexedAt
+      - allowIncoming
       properties:
-        uri:
+        allowIncoming:
           type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        creator:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
-        likeCount:
+          enum:
+          - all
+          - none
+          - following
+    AppBskyActorDefsKnownFollowers:
+      type: object
+      description: The subject's followers whom you also follow
+      required:
+      - count
+      - followers
+      properties:
+        count:
           type: integer
-          minimum: 0
-        viewer:
-          $ref: '#/components/schemas/AppBskyLabelerDefsLabelerViewerState'
-        indexedAt:
-          type: string
-          format: date-time
-        labels:
+        followers:
           type: array
           items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+          maxItems: 5
+    AppBskyLabelerDefsLabelerPolicies:
+      type: object
+      required:
+      - labelValues
+      properties:
+        labelValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabelValue'
+        labelValueDefinitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabelValueDefinition'
     AppBskyActorDefsProfileView:
       type: object
       required:
@@ -251,46 +253,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-    AppBskyActorDefsProfileViewBasic:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
-          type: string
-          format: did
-        handle:
-          type: string
-          format: handle
-        displayName:
-          type: string
-          maxLength: 640
-        avatar:
-          type: string
-          format: uri
-        associated:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        createdAt:
-          type: string
-          format: date-time
-    AppBskyActorDefsProfileAssociatedChat:
-      type: object
-      required:
-      - allowIncoming
-      properties:
-        allowIncoming:
-          type: string
-          enum:
-          - all
-          - none
-          - following
+    AppBskyGraphDefsModlist:
+      type: string
+      format: token
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyGraphDefsReferencelist:
+      type: string
+      format: token
+      description: A list of actors used for only for reference purposes such as within a starter pack.
     AppBskyGraphDefsListViewerState:
       type: object
       properties:
@@ -299,6 +269,109 @@ components:
         blocked:
           type: string
           format: at-uri
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
+    AppBskyActorDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          format: at-uri
+        blockingByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        following:
+          type: string
+          format: at-uri
+        followedBy:
+          type: string
+          format: at-uri
+        knownFollowers:
+          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
+    AppBskyLabelerDefsLabelerView:
+      type: object
+      required:
+      - uri
+      - cid
+      - creator
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+        likeCount:
+          type: integer
+          minimum: 0
+        viewer:
+          $ref: '#/components/schemas/AppBskyLabelerDefsLabelerViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyGraphDefsListViewBasic:
+      type: object
+      required:
+      - uri
+      - cid
+      - name
+      - purpose
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        purpose:
+          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
+        avatar:
+          type: string
+          format: uri
+        listItemCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyActorDefsProfileAssociated:
+      type: object
+      properties:
+        lists:
+          type: integer
+        feedgens:
+          type: integer
+        starterPacks:
+          type: integer
+        labeler:
+          type: boolean
+        chat:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
     ComAtprotoLabelDefsLabel:
       type: object
       description: Metadata tag on an atproto resource (eg, repo or record).
@@ -372,104 +445,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-    AppBskyGraphDefsListPurpose:
-      oneOf:
-      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
-    ComAtprotoLabelDefsLabelValueDefinition:
-      type: object
-      description: Declares a label value and its expected interpretations and behaviors.
-      required:
-      - identifier
-      - severity
-      - blurs
-      - locales
-      properties:
-        identifier:
-          type: string
-          description: The value of the label being defined. Must only include lowercase ascii and the '-' character ([a-z-]+).
-          maxLength: 100
-        severity:
-          type: string
-          description: How should a client visually convey this label? 'inform' means neutral and informational; 'alert' means negative and warning; 'none' means show nothing.
-          enum:
-          - inform
-          - alert
-          - none
-        blurs:
-          type: string
-          description: What should this label hide in the UI, if applied? 'content' hides all of the target; 'media' hides the images/video/audio; 'none' hides nothing.
-          enum:
-          - content
-          - media
-          - none
-        defaultSetting:
-          type: string
-          description: The default setting for this label.
-          default: warn
-          enum:
-          - ignore
-          - warn
-          - hide
-        adultOnly:
-          type: boolean
-          description: Does the user need to have adult content enabled in order to configure this label?
-        locales:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabelValueDefinitionStrings'
-    AppBskyGraphDefsCuratelist:
-      type: string
-      format: token
-      description: A list of actors used for curation purposes such as list feeds or interaction gating.
-    ComAtprotoLabelDefsLabelValueDefinitionStrings:
-      type: object
-      description: Strings which describe the label in the UI, localized into a specific language.
-      required:
-      - lang
-      - name
-      - description
-      properties:
-        lang:
-          type: string
-          description: The code of the language these strings are written in.
-          format: language
-        name:
-          type: string
-          description: A short human-readable name for the label.
-          maxLength: 640
-        description:
-          type: string
-          description: A longer description of what the label means and why it might be applied.
-          maxLength: 100000
-    AppBskyActorDefsKnownFollowers:
-      type: object
-      description: The subject's followers whom you also follow
-      required:
-      - count
-      - followers
-      properties:
-        count:
-          type: integer
-        followers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-          maxItems: 5
-    AppBskyLabelerDefsLabelerPolicies:
-      type: object
-      required:
-      - labelValues
-      properties:
-        labelValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabelValue'
-        labelValueDefinitions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabelValueDefinition'
     ComAtprotoLabelDefsLabelValue:
       type: string
       enum:
@@ -484,10 +459,35 @@ components:
       - nudity
       - nsfl
       - gore
-    AppBskyGraphDefsReferencelist:
-      type: string
-      format: token
-      description: A list of actors used for only for reference purposes such as within a starter pack.
+    AppBskyActorDefsProfileViewBasic:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        createdAt:
+          type: string
+          format: date-time
   examples:
     LabelerGetServicesResponse200Example:
       summary: Successful response for labelerGetServices

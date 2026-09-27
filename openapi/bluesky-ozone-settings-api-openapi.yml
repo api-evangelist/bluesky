@@ -317,20 +317,18 @@ paths:
                     type: string
 components:
   examples:
-    OzoneSettingRemoveOptionsRequestExample:
-      summary: Example request for ozoneSettingRemoveOptions
+    OzoneSettingUpsertOptionResponse200Example:
+      summary: Successful response for ozoneSettingUpsertOption
       value:
-        keys:
-        - app.bsky.feed.post
-        scope: instance
-    OzoneSettingUpsertOptionRequestExample:
-      summary: Example request for ozoneSettingUpsertOption
-      value:
-        key: app.bsky.feed.post
-        scope: instance
-        value: {}
-        description: This is an example description.
-        managerRole: tools.ozone.team.defs#roleModerator
+        option:
+          key: app.bsky.feed.post
+          value: {}
+          did: did:plc:example123abc
+          scope: instance
+          createdBy: did:plc:example123abc
+          lastUpdatedBy: did:plc:example123abc
+          description: This is an example description.
+          createdAt: '2024-01-15T12:00:00.000Z'
     OzoneSettingListOptionsResponse200Example:
       summary: Successful response for ozoneSettingListOptions
       value:
@@ -344,18 +342,20 @@ components:
           description: This is an example description.
           createdAt: '2024-01-15T12:00:00.000Z'
         cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    OzoneSettingUpsertOptionResponse200Example:
-      summary: Successful response for ozoneSettingUpsertOption
+    OzoneSettingUpsertOptionRequestExample:
+      summary: Example request for ozoneSettingUpsertOption
       value:
-        option:
-          key: app.bsky.feed.post
-          value: {}
-          did: did:plc:example123abc
-          scope: instance
-          createdBy: did:plc:example123abc
-          lastUpdatedBy: did:plc:example123abc
-          description: This is an example description.
-          createdAt: '2024-01-15T12:00:00.000Z'
+        key: app.bsky.feed.post
+        scope: instance
+        value: {}
+        description: This is an example description.
+        managerRole: tools.ozone.team.defs#roleModerator
+    OzoneSettingRemoveOptionsRequestExample:
+      summary: Example request for ozoneSettingRemoveOptions
+      value:
+        keys:
+        - app.bsky.feed.post
+        scope: instance
   schemas:
     ToolsOzoneSettingDefsOption:
       type: object

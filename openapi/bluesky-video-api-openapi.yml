@@ -237,6 +237,17 @@ paths:
                     type: string
 components:
   examples:
+    VideoUploadVideoResponse200Example:
+      summary: Successful response for videoUploadVideo
+      value:
+        jobStatus:
+          jobId: example-jobId
+          did: did:plc:example123abc
+          state: JOB_STATE_COMPLETED
+          progress: 50
+          blob: example-blob
+          error: example-error
+          message: example-message
     VideoGetJobStatusResponse200Example:
       summary: Successful response for videoGetJobStatus
       value:
@@ -256,17 +267,6 @@ components:
         remainingDailyBytes: 50
         message: example-message
         error: example-error
-    VideoUploadVideoResponse200Example:
-      summary: Successful response for videoUploadVideo
-      value:
-        jobStatus:
-          jobId: example-jobId
-          did: did:plc:example123abc
-          state: JOB_STATE_COMPLETED
-          progress: 50
-          blob: example-blob
-          error: example-error
-          message: example-message
   schemas:
     AppBskyVideoDefsJobStatus:
       type: object

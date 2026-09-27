@@ -345,18 +345,17 @@ paths:
                     type: string
 components:
   examples:
-    OzoneCommunicationListTemplatesResponse200Example:
-      summary: Successful response for ozoneCommunicationListTemplates
+    OzoneCommunicationCreateTemplateResponse200Example:
+      summary: Successful response for ozoneCommunicationCreateTemplate
       value:
-        communicationTemplates:
-        - id: example-id
-          name: Example Name
-          contentMarkdown: example-contentMarkdown
-          disabled: true
-          lastUpdatedBy: did:plc:example123abc
-          createdAt: '2024-01-15T12:00:00.000Z'
-          updatedAt: '2024-01-15T12:00:00.000Z'
-          subject: at://did:plc:example123/app.bsky.feed.post/abc123
+        id: example-id
+        name: Example Name
+        contentMarkdown: example-contentMarkdown
+        disabled: true
+        lastUpdatedBy: did:plc:example123abc
+        createdAt: '2024-01-15T12:00:00.000Z'
+        updatedAt: '2024-01-15T12:00:00.000Z'
+        subject: at://did:plc:example123/app.bsky.feed.post/abc123
     OzoneCommunicationDeleteTemplateRequestExample:
       summary: Example request for ozoneCommunicationDeleteTemplate
       value:
@@ -371,6 +370,26 @@ components:
         subject: at://did:plc:example123/app.bsky.feed.post/abc123
         updatedBy: did:plc:example123abc
         disabled: true
+    OzoneCommunicationListTemplatesResponse200Example:
+      summary: Successful response for ozoneCommunicationListTemplates
+      value:
+        communicationTemplates:
+        - id: example-id
+          name: Example Name
+          contentMarkdown: example-contentMarkdown
+          disabled: true
+          lastUpdatedBy: did:plc:example123abc
+          createdAt: '2024-01-15T12:00:00.000Z'
+          updatedAt: '2024-01-15T12:00:00.000Z'
+          subject: at://did:plc:example123/app.bsky.feed.post/abc123
+    OzoneCommunicationCreateTemplateRequestExample:
+      summary: Example request for ozoneCommunicationCreateTemplate
+      value:
+        subject: at://did:plc:example123/app.bsky.feed.post/abc123
+        contentMarkdown: example-contentMarkdown
+        name: Example Name
+        lang: en
+        createdBy: did:plc:example123abc
     OzoneCommunicationUpdateTemplateResponse200Example:
       summary: Successful response for ozoneCommunicationUpdateTemplate
       value:
@@ -382,25 +401,6 @@ components:
         createdAt: '2024-01-15T12:00:00.000Z'
         updatedAt: '2024-01-15T12:00:00.000Z'
         subject: at://did:plc:example123/app.bsky.feed.post/abc123
-    OzoneCommunicationCreateTemplateResponse200Example:
-      summary: Successful response for ozoneCommunicationCreateTemplate
-      value:
-        id: example-id
-        name: Example Name
-        contentMarkdown: example-contentMarkdown
-        disabled: true
-        lastUpdatedBy: did:plc:example123abc
-        createdAt: '2024-01-15T12:00:00.000Z'
-        updatedAt: '2024-01-15T12:00:00.000Z'
-        subject: at://did:plc:example123/app.bsky.feed.post/abc123
-    OzoneCommunicationCreateTemplateRequestExample:
-      summary: Example request for ozoneCommunicationCreateTemplate
-      value:
-        subject: at://did:plc:example123/app.bsky.feed.post/abc123
-        contentMarkdown: example-contentMarkdown
-        name: Example Name
-        lang: en
-        createdBy: did:plc:example123abc
   schemas:
     ToolsOzoneCommunicationDefsTemplateView:
       type: object
