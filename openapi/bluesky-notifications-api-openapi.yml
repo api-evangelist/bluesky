@@ -422,158 +422,7 @@ paths:
                   message:
                     type: string
 components:
-  examples:
-    NotificationUpdateSeenRequestExample:
-      summary: Example request for notificationUpdateSeen
-      value:
-        seenAt: '2024-01-15T12:00:00.000Z'
-    NotificationRegisterPushRequestExample:
-      summary: Example request for notificationRegisterPush
-      value:
-        serviceDid: did:plc:example123abc
-        token: example-token
-        platform: ios
-        appId: example-appId
-    NotificationPutPreferencesRequestExample:
-      summary: Example request for notificationPutPreferences
-      value:
-        priority: true
-    NotificationListNotificationsResponse200Example:
-      summary: Successful response for notificationListNotifications
-      value:
-        notifications:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          author:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            description: This is an example description.
-            avatar: https://example.com/resource
-            associated: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            createdAt: '2024-01-15T12:00:00.000Z'
-          reason: like
-          record: {}
-          isRead: true
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          reasonSubject: at://did:plc:example123/app.bsky.feed.post/abc123
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-        priority: true
-        seenAt: '2024-01-15T12:00:00.000Z'
-    NotificationGetUnreadCountResponse200Example:
-      summary: Successful response for notificationGetUnreadCount
-      value:
-        count: 50
   schemas:
-    AppBskyGraphDefsListPurpose:
-      oneOf:
-      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
-    AppBskyActorDefsProfileAssociatedChat:
-      type: object
-      required:
-      - allowIncoming
-      properties:
-        allowIncoming:
-          type: string
-          enum:
-          - all
-          - none
-          - following
-    AppBskyActorDefsKnownFollowers:
-      type: object
-      description: The subject's followers whom you also follow
-      required:
-      - count
-      - followers
-      properties:
-        count:
-          type: integer
-        followers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-          maxItems: 5
-    AppBskyActorDefsProfileView:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
-          type: string
-          format: did
-        handle:
-          type: string
-          format: handle
-        displayName:
-          type: string
-          maxLength: 640
-        description:
-          type: string
-          maxLength: 2560
-        avatar:
-          type: string
-          format: uri
-        associated:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-    AppBskyGraphDefsModlist:
-      type: string
-      format: token
-      description: A list of actors to apply an aggregate moderation action (mute/block) on.
-    AppBskyGraphDefsReferencelist:
-      type: string
-      format: token
-      description: A list of actors used for only for reference purposes such as within a starter pack.
-    AppBskyGraphDefsListViewerState:
-      type: object
-      properties:
-        muted:
-          type: boolean
-        blocked:
-          type: string
-          format: at-uri
-    AppBskyGraphDefsCuratelist:
-      type: string
-      format: token
-      description: A list of actors used for curation purposes such as list feeds or interaction gating.
-    AppBskyActorDefsViewerState:
-      type: object
-      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
-      properties:
-        muted:
-          type: boolean
-        mutedByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        blockedBy:
-          type: boolean
-        blocking:
-          type: string
-          format: at-uri
-        blockingByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        following:
-          type: string
-          format: at-uri
-        followedBy:
-          type: string
-          format: at-uri
-        knownFollowers:
-          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
     AppBskyNotificationListNotificationsNotification:
       type: object
       required:
@@ -617,6 +466,88 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyGraphDefsModlist:
+      type: string
+      format: token
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyActorDefsProfileViewBasic:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        createdAt:
+          type: string
+          format: date-time
+    AppBskyActorDefsKnownFollowers:
+      type: object
+      description: The subject's followers whom you also follow
+      required:
+      - count
+      - followers
+      properties:
+        count:
+          type: integer
+        followers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+          maxItems: 5
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
+    AppBskyGraphDefsListViewerState:
+      type: object
+      properties:
+        muted:
+          type: boolean
+        blocked:
+          type: string
+          format: at-uri
+    AppBskyActorDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          format: at-uri
+        blockingByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        following:
+          type: string
+          format: at-uri
+        followedBy:
+          type: string
+          format: at-uri
+        knownFollowers:
+          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
     ComAtprotoLabelDefsLabel:
       type: object
       description: Metadata tag on an atproto resource (eg, repo or record).
@@ -707,7 +638,22 @@ components:
         indexedAt:
           type: string
           format: date-time
-    AppBskyActorDefsProfileViewBasic:
+    AppBskyActorDefsProfileAssociatedChat:
+      type: object
+      required:
+      - allowIncoming
+      properties:
+        allowIncoming:
+          type: string
+          enum:
+          - all
+          - none
+          - following
+    AppBskyGraphDefsReferencelist:
+      type: string
+      format: token
+      description: A list of actors used for only for reference purposes such as within a starter pack.
+    AppBskyActorDefsProfileView:
       type: object
       required:
       - did
@@ -722,20 +668,74 @@ components:
         displayName:
           type: string
           maxLength: 640
+        description:
+          type: string
+          maxLength: 2560
         avatar:
           type: string
           format: uri
         associated:
           $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
         viewer:
           $ref: '#/components/schemas/AppBskyActorDefsViewerState'
         labels:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        createdAt:
-          type: string
-          format: date-time
+    AppBskyGraphDefsListPurpose:
+      oneOf:
+      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
+  examples:
+    NotificationGetUnreadCountResponse200Example:
+      summary: Successful response for notificationGetUnreadCount
+      value:
+        count: 50
+    NotificationRegisterPushRequestExample:
+      summary: Example request for notificationRegisterPush
+      value:
+        serviceDid: did:plc:example123abc
+        token: example-token
+        platform: ios
+        appId: example-appId
+    NotificationListNotificationsResponse200Example:
+      summary: Successful response for notificationListNotifications
+      value:
+        notifications:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          author:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          reason: like
+          record: {}
+          isRead: true
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          reasonSubject: at://did:plc:example123/app.bsky.feed.post/abc123
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+        priority: true
+        seenAt: '2024-01-15T12:00:00.000Z'
+    NotificationUpdateSeenRequestExample:
+      summary: Example request for notificationUpdateSeen
+      value:
+        seenAt: '2024-01-15T12:00:00.000Z'
+    NotificationPutPreferencesRequestExample:
+      summary: Example request for notificationPutPreferences
+      value:
+        priority: true
   securitySchemes:
     Bearer:
       type: http

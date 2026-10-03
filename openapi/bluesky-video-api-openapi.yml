@@ -237,8 +237,8 @@ paths:
                     type: string
 components:
   examples:
-    VideoUploadVideoResponse200Example:
-      summary: Successful response for videoUploadVideo
+    VideoGetJobStatusResponse200Example:
+      summary: Successful response for videoGetJobStatus
       value:
         jobStatus:
           jobId: example-jobId
@@ -248,8 +248,8 @@ components:
           blob: example-blob
           error: example-error
           message: example-message
-    VideoGetJobStatusResponse200Example:
-      summary: Successful response for videoGetJobStatus
+    VideoUploadVideoResponse200Example:
+      summary: Successful response for videoUploadVideo
       value:
         jobStatus:
           jobId: example-jobId

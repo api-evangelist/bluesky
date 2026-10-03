@@ -982,135 +982,17 @@ paths:
                   message:
                     type: string
 components:
-  examples:
-    RepoDeleteRecordRequestExample:
-      summary: Example request for repoDeleteRecord
-      value:
-        repo: user.bsky.social
-        collection: app.bsky.feed.post
-        rkey: example-rkey
-        swapRecord: bafyreiabc123example
-        swapCommit: bafyreiabc123example
-    RepoPutRecordRequestExample:
-      summary: Example request for repoPutRecord
-      value:
-        repo: user.bsky.social
-        collection: app.bsky.feed.post
-        rkey: example-rkey
-        record: {}
-        validate: true
-        swapRecord: bafyreiabc123example
-        swapCommit: bafyreiabc123example
-    RepoListRecordsResponse200Example:
-      summary: Successful response for repoListRecords
-      value:
-        records:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          value: {}
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    RepoGetRecordResponse200Example:
-      summary: Successful response for repoGetRecord
-      value:
-        uri: at://did:plc:example123/app.bsky.feed.post/abc123
-        value: {}
-        cid: bafyreiabc123example
-    RepoCreateRecordResponse200Example:
-      summary: Successful response for repoCreateRecord
-      value:
-        uri: at://did:plc:example123/app.bsky.feed.post/abc123
-        cid: bafyreiabc123example
-        commit:
-          cid: bafyreiabc123example
-          rev: example-rev
-        validationStatus: valid
-    RepoPutRecordResponse200Example:
-      summary: Successful response for repoPutRecord
-      value:
-        uri: at://did:plc:example123/app.bsky.feed.post/abc123
-        cid: bafyreiabc123example
-        commit:
-          cid: bafyreiabc123example
-          rev: example-rev
-        validationStatus: valid
-    RepoListMissingBlobsResponse200Example:
-      summary: Successful response for repoListMissingBlobs
-      value:
-        blobs:
-        - cid: bafyreiabc123example
-          recordUri: at://did:plc:example123/app.bsky.feed.post/abc123
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    RepoUploadBlobResponse200Example:
-      summary: Successful response for repoUploadBlob
-      value:
-        blob: example-blob
-    RepoApplyWritesRequestExample:
-      summary: Example request for repoApplyWrites
-      value:
-        repo: user.bsky.social
-        writes:
-        - collection: app.bsky.feed.post
-          value: {}
-          rkey: example-rkey
-        validate: true
-        swapCommit: bafyreiabc123example
-    RepoDescribeRepoResponse200Example:
-      summary: Successful response for repoDescribeRepo
-      value:
-        handle: user.bsky.social
-        did: did:plc:example123abc
-        didDoc: {}
-        collections:
-        - app.bsky.feed.post
-        handleIsCorrect: true
-    RepoDeleteRecordResponse200Example:
-      summary: Successful response for repoDeleteRecord
-      value:
-        commit:
-          cid: bafyreiabc123example
-          rev: example-rev
-    RepoApplyWritesResponse200Example:
-      summary: Successful response for repoApplyWrites
-      value:
-        commit:
-          cid: bafyreiabc123example
-          rev: example-rev
-        results:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          validationStatus: valid
-    RepoCreateRecordRequestExample:
-      summary: Example request for repoCreateRecord
-      value:
-        repo: user.bsky.social
-        collection: app.bsky.feed.post
-        record: {}
-        rkey: example-rkey
-        validate: true
-        swapCommit: bafyreiabc123example
   schemas:
-    ComAtprotoRepoApplyWritesCreateResult:
+    ComAtprotoRepoApplyWritesDeleteResult:
       type: object
-      required:
-      - uri
-      - cid
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        validationStatus:
-          type: string
-          enum:
-          - valid
-          - unknown
-    ComAtprotoRepoApplyWritesCreate:
+      required: []
+      properties: {}
+    ComAtprotoRepoApplyWritesUpdate:
       type: object
-      description: Operation which creates a new record.
+      description: Operation which updates an existing record.
       required:
       - collection
+      - rkey
       - value
       properties:
         collection:
@@ -1118,19 +1000,7 @@ components:
           format: nsid
         rkey:
           type: string
-          maxLength: 512
         value: {}
-    ComAtprotoRepoDefsCommitMeta:
-      type: object
-      required:
-      - cid
-      - rev
-      properties:
-        cid:
-          type: string
-          format: cid
-        rev:
-          type: string
     ComAtprotoRepoListMissingBlobsRecordBlob:
       type: object
       required:
@@ -1143,24 +1013,6 @@ components:
         recordUri:
           type: string
           format: at-uri
-    ComAtprotoRepoApplyWritesDeleteResult:
-      type: object
-      required: []
-      properties: {}
-    ComAtprotoRepoListRecordsRecord:
-      type: object
-      required:
-      - uri
-      - cid
-      - value
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        value: {}
     ComAtprotoRepoApplyWritesUpdateResult:
       type: object
       required:
@@ -1178,20 +1030,34 @@ components:
           enum:
           - valid
           - unknown
-    ComAtprotoRepoApplyWritesUpdate:
+    ComAtprotoRepoApplyWritesCreateResult:
       type: object
-      description: Operation which updates an existing record.
       required:
-      - collection
-      - rkey
-      - value
+      - uri
+      - cid
       properties:
-        collection:
+        uri:
           type: string
-          format: nsid
-        rkey:
+          format: at-uri
+        cid:
           type: string
-        value: {}
+          format: cid
+        validationStatus:
+          type: string
+          enum:
+          - valid
+          - unknown
+    ComAtprotoRepoDefsCommitMeta:
+      type: object
+      required:
+      - cid
+      - rev
+      properties:
+        cid:
+          type: string
+          format: cid
+        rev:
+          type: string
     ComAtprotoRepoApplyWritesDelete:
       type: object
       description: Operation which deletes an existing record.
@@ -1204,6 +1070,140 @@ components:
           format: nsid
         rkey:
           type: string
+    ComAtprotoRepoListRecordsRecord:
+      type: object
+      required:
+      - uri
+      - cid
+      - value
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        value: {}
+    ComAtprotoRepoApplyWritesCreate:
+      type: object
+      description: Operation which creates a new record.
+      required:
+      - collection
+      - value
+      properties:
+        collection:
+          type: string
+          format: nsid
+        rkey:
+          type: string
+          maxLength: 512
+        value: {}
+  examples:
+    RepoApplyWritesRequestExample:
+      summary: Example request for repoApplyWrites
+      value:
+        repo: user.bsky.social
+        writes:
+        - collection: app.bsky.feed.post
+          value: {}
+          rkey: example-rkey
+        validate: true
+        swapCommit: bafyreiabc123example
+    RepoCreateRecordResponse200Example:
+      summary: Successful response for repoCreateRecord
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        cid: bafyreiabc123example
+        commit:
+          cid: bafyreiabc123example
+          rev: example-rev
+        validationStatus: valid
+    RepoApplyWritesResponse200Example:
+      summary: Successful response for repoApplyWrites
+      value:
+        commit:
+          cid: bafyreiabc123example
+          rev: example-rev
+        results:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          validationStatus: valid
+    RepoListRecordsResponse200Example:
+      summary: Successful response for repoListRecords
+      value:
+        records:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          value: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    RepoDescribeRepoResponse200Example:
+      summary: Successful response for repoDescribeRepo
+      value:
+        handle: user.bsky.social
+        did: did:plc:example123abc
+        didDoc: {}
+        collections:
+        - app.bsky.feed.post
+        handleIsCorrect: true
+    RepoDeleteRecordRequestExample:
+      summary: Example request for repoDeleteRecord
+      value:
+        repo: user.bsky.social
+        collection: app.bsky.feed.post
+        rkey: example-rkey
+        swapRecord: bafyreiabc123example
+        swapCommit: bafyreiabc123example
+    RepoCreateRecordRequestExample:
+      summary: Example request for repoCreateRecord
+      value:
+        repo: user.bsky.social
+        collection: app.bsky.feed.post
+        record: {}
+        rkey: example-rkey
+        validate: true
+        swapCommit: bafyreiabc123example
+    RepoPutRecordRequestExample:
+      summary: Example request for repoPutRecord
+      value:
+        repo: user.bsky.social
+        collection: app.bsky.feed.post
+        rkey: example-rkey
+        record: {}
+        validate: true
+        swapRecord: bafyreiabc123example
+        swapCommit: bafyreiabc123example
+    RepoGetRecordResponse200Example:
+      summary: Successful response for repoGetRecord
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        value: {}
+        cid: bafyreiabc123example
+    RepoUploadBlobResponse200Example:
+      summary: Successful response for repoUploadBlob
+      value:
+        blob: example-blob
+    RepoDeleteRecordResponse200Example:
+      summary: Successful response for repoDeleteRecord
+      value:
+        commit:
+          cid: bafyreiabc123example
+          rev: example-rev
+    RepoPutRecordResponse200Example:
+      summary: Successful response for repoPutRecord
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        cid: bafyreiabc123example
+        commit:
+          cid: bafyreiabc123example
+          rev: example-rev
+        validationStatus: valid
+    RepoListMissingBlobsResponse200Example:
+      summary: Successful response for repoListMissingBlobs
+      value:
+        blobs:
+        - cid: bafyreiabc123example
+          recordUri: at://did:plc:example123/app.bsky.feed.post/abc123
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
   securitySchemes:
     Bearer:
       type: http

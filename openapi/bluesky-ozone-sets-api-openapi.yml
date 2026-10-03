@@ -525,10 +525,6 @@ paths:
                     type: string
 components:
   examples:
-    OzoneSetDeleteSetRequestExample:
-      summary: Example request for ozoneSetDeleteSet
-      value:
-        name: Example Name
     OzoneSetUpsertSetResponse200Example:
       summary: Successful response for ozoneSetUpsertSet
       value:
@@ -537,31 +533,19 @@ components:
         createdAt: '2024-01-15T12:00:00.000Z'
         updatedAt: '2024-01-15T12:00:00.000Z'
         description: This is an example description.
+    OzoneSetDeleteSetResponse200Example:
+      summary: Successful response for ozoneSetDeleteSet
+      value:
+        _unknown_: {}
+    OzoneSetDeleteSetRequestExample:
+      summary: Example request for ozoneSetDeleteSet
+      value:
+        name: Example Name
     OzoneSetUpsertSetRequestExample:
       summary: Example request for ozoneSetUpsertSet
       value:
         name: Example Name
         description: This is an example description.
-    OzoneSetQuerySetsResponse200Example:
-      summary: Successful response for ozoneSetQuerySets
-      value:
-        sets:
-        - name: Example Name
-          setSize: 50
-          createdAt: '2024-01-15T12:00:00.000Z'
-          updatedAt: '2024-01-15T12:00:00.000Z'
-          description: This is an example description.
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    OzoneSetDeleteValuesRequestExample:
-      summary: Example request for ozoneSetDeleteValues
-      value:
-        name: Example Name
-        values:
-        - example-values
-    OzoneSetDeleteSetResponse200Example:
-      summary: Successful response for ozoneSetDeleteSet
-      value:
-        _unknown_: {}
     OzoneSetGetValuesResponse200Example:
       summary: Successful response for ozoneSetGetValues
       value:
@@ -580,6 +564,22 @@ components:
         name: Example Name
         values:
         - example-values
+    OzoneSetDeleteValuesRequestExample:
+      summary: Example request for ozoneSetDeleteValues
+      value:
+        name: Example Name
+        values:
+        - example-values
+    OzoneSetQuerySetsResponse200Example:
+      summary: Successful response for ozoneSetQuerySets
+      value:
+        sets:
+        - name: Example Name
+          setSize: 50
+          createdAt: '2024-01-15T12:00:00.000Z'
+          updatedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
   schemas:
     ToolsOzoneSetDefsSetView:
       type: object

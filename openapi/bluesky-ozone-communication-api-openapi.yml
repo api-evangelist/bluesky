@@ -356,10 +356,6 @@ components:
         createdAt: '2024-01-15T12:00:00.000Z'
         updatedAt: '2024-01-15T12:00:00.000Z'
         subject: at://did:plc:example123/app.bsky.feed.post/abc123
-    OzoneCommunicationDeleteTemplateRequestExample:
-      summary: Example request for ozoneCommunicationDeleteTemplate
-      value:
-        id: example-id
     OzoneCommunicationUpdateTemplateRequestExample:
       summary: Example request for ozoneCommunicationUpdateTemplate
       value:
@@ -370,6 +366,10 @@ components:
         subject: at://did:plc:example123/app.bsky.feed.post/abc123
         updatedBy: did:plc:example123abc
         disabled: true
+    OzoneCommunicationDeleteTemplateRequestExample:
+      summary: Example request for ozoneCommunicationDeleteTemplate
+      value:
+        id: example-id
     OzoneCommunicationListTemplatesResponse200Example:
       summary: Successful response for ozoneCommunicationListTemplates
       value:

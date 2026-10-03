@@ -858,24 +858,12 @@ components:
         cids:
         - bafyreiabc123example
         cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    SyncRequestCrawlRequestExample:
-      summary: Example request for syncRequestCrawl
-      value:
-        hostname: Example Name
-    SyncGetLatestCommitResponse200Example:
-      summary: Successful response for syncGetLatestCommit
-      value:
-        cid: bafyreiabc123example
-        rev: example-rev
-    SyncGetRepoStatusResponse200Example:
-      summary: Successful response for syncGetRepoStatus
-      value:
-        did: did:plc:example123abc
-        active: true
-        status: takendown
-        rev: example-rev
     SyncNotifyOfUpdateRequestExample:
       summary: Example request for syncNotifyOfUpdate
+      value:
+        hostname: Example Name
+    SyncRequestCrawlRequestExample:
+      summary: Example request for syncRequestCrawl
       value:
         hostname: Example Name
     SyncListReposResponse200Example:
@@ -888,6 +876,18 @@ components:
           active: true
           status: takendown
         cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    SyncGetLatestCommitResponse200Example:
+      summary: Successful response for syncGetLatestCommit
+      value:
+        cid: bafyreiabc123example
+        rev: example-rev
+    SyncGetRepoStatusResponse200Example:
+      summary: Successful response for syncGetRepoStatus
+      value:
+        did: did:plc:example123abc
+        active: true
+        status: takendown
+        rev: example-rev
   schemas:
     ComAtprotoSyncListReposRepo:
       type: object

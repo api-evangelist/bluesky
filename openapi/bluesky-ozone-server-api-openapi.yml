@@ -91,20 +91,6 @@ paths:
                   message:
                     type: string
 components:
-  examples:
-    OzoneServerGetConfigResponse200Example:
-      summary: Successful response for ozoneServerGetConfig
-      value:
-        appview:
-          url: https://example.com/resource
-        pds:
-          url: https://example.com/resource
-        blobDivert:
-          url: https://example.com/resource
-        chat:
-          url: https://example.com/resource
-        viewer:
-          role: tools.ozone.team.defs#roleAdmin
   schemas:
     ToolsOzoneServerGetConfigServiceConfig:
       type: object
@@ -121,6 +107,20 @@ components:
           - tools.ozone.team.defs#roleAdmin
           - tools.ozone.team.defs#roleModerator
           - tools.ozone.team.defs#roleTriage
+  examples:
+    OzoneServerGetConfigResponse200Example:
+      summary: Successful response for ozoneServerGetConfig
+      value:
+        appview:
+          url: https://example.com/resource
+        pds:
+          url: https://example.com/resource
+        blobDivert:
+          url: https://example.com/resource
+        chat:
+          url: https://example.com/resource
+        viewer:
+          role: tools.ozone.team.defs#roleAdmin
   securitySchemes:
     Bearer:
       type: http

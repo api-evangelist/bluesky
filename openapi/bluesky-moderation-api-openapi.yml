@@ -125,27 +125,6 @@ paths:
                     type: string
 components:
   schemas:
-    ComAtprotoModerationDefsReasonSpam:
-      type: string
-      format: token
-      description: 'Spam: frequent unwanted promotion, replies, mentions'
-    ComAtprotoModerationDefsReasonType:
-      oneOf:
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSpam'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonViolation'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonMisleading'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSexual'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonRude'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonOther'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonAppeal'
-    ComAtprotoModerationDefsReasonSexual:
-      type: string
-      format: token
-      description: Unwanted or mislabeled sexual content
-    ComAtprotoModerationDefsReasonMisleading:
-      type: string
-      format: token
-      description: Misleading identity, affiliation, or content
     ComAtprotoModerationDefsReasonViolation:
       type: string
       format: token
@@ -158,6 +137,18 @@ components:
         did:
           type: string
           format: did
+    ComAtprotoModerationDefsReasonOther:
+      type: string
+      format: token
+      description: 'Other: reports not falling under another report category'
+    ComAtprotoModerationDefsReasonAppeal:
+      type: string
+      format: token
+      description: 'Appeal: appeal a previously taken moderation action'
+    ComAtprotoModerationDefsReasonRude:
+      type: string
+      format: token
+      description: Rude, harassing, explicit, or otherwise unwelcoming behavior
     ComAtprotoRepoStrongRef:
       type: object
       required:
@@ -170,18 +161,27 @@ components:
         cid:
           type: string
           format: cid
-    ComAtprotoModerationDefsReasonRude:
+    ComAtprotoModerationDefsReasonSpam:
       type: string
       format: token
-      description: Rude, harassing, explicit, or otherwise unwelcoming behavior
-    ComAtprotoModerationDefsReasonOther:
+      description: 'Spam: frequent unwanted promotion, replies, mentions'
+    ComAtprotoModerationDefsReasonMisleading:
       type: string
       format: token
-      description: 'Other: reports not falling under another report category'
-    ComAtprotoModerationDefsReasonAppeal:
+      description: Misleading identity, affiliation, or content
+    ComAtprotoModerationDefsReasonSexual:
       type: string
       format: token
-      description: 'Appeal: appeal a previously taken moderation action'
+      description: Unwanted or mislabeled sexual content
+    ComAtprotoModerationDefsReasonType:
+      oneOf:
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSpam'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonViolation'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonMisleading'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSexual'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonRude'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonOther'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonAppeal'
   examples:
     ModerationCreateReportResponse200Example:
       summary: Successful response for moderationCreateReport

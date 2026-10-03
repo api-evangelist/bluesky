@@ -571,76 +571,6 @@ paths:
                     type: string
 components:
   schemas:
-    AppBskyActorDefsPreferences:
-      type: array
-      items:
-        oneOf:
-        - $ref: '#/components/schemas/AppBskyActorDefsAdultContentPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsContentLabelPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsSavedFeedsPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsSavedFeedsPrefV2'
-        - $ref: '#/components/schemas/AppBskyActorDefsPersonalDetailsPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsFeedViewPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsThreadViewPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsInterestsPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsMutedWordsPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsHiddenPostsPref'
-        - $ref: '#/components/schemas/AppBskyActorDefsBskyAppStatePref'
-        - $ref: '#/components/schemas/AppBskyActorDefsLabelersPref'
-    AppBskyActorDefsNux:
-      type: object
-      description: A new user experiences (NUX) storage object
-      required:
-      - id
-      - completed
-      properties:
-        id:
-          type: string
-          maxLength: 100
-        completed:
-          type: boolean
-        data:
-          type: string
-          description: Arbitrary data for the NUX. The structure is defined by the NUX itself. Limited to 300 characters.
-          maxLength: 3000
-        expiresAt:
-          type: string
-          description: The date and time at which the NUX will expire and should be considered completed.
-          format: date-time
-    AppBskyActorDefsMutedWord:
-      type: object
-      description: A word that the account owner has muted.
-      required:
-      - value
-      - targets
-      properties:
-        id:
-          type: string
-        value:
-          type: string
-          description: The muted word itself.
-          maxLength: 10000
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsMutedWordTarget'
-        actorTarget:
-          type: string
-          description: Groups of users to apply the muted word to. If undefined, applies to all users.
-          default: all
-          enum:
-          - all
-          - exclude-following
-        expiresAt:
-          type: string
-          description: The date and time at which the muted word will expire and no longer be applied.
-          format: date-time
-    AppBskyActorDefsMutedWordTarget:
-      type: string
-      maxLength: 640
-      enum:
-      - content
-      - tag
     AppBskyGraphDefsStarterPackViewBasic:
       type: object
       required:
@@ -675,25 +605,6 @@ components:
         indexedAt:
           type: string
           format: date-time
-    AppBskyActorDefsContentLabelPref:
-      type: object
-      required:
-      - label
-      - visibility
-      properties:
-        labelerDid:
-          type: string
-          description: Which labeler does this preference apply to? If undefined, applies globally.
-          format: did
-        label:
-          type: string
-        visibility:
-          type: string
-          enum:
-          - ignore
-          - show
-          - warn
-          - hide
     AppBskyActorDefsSavedFeed:
       type: object
       required:
@@ -714,25 +625,79 @@ components:
           type: string
         pinned:
           type: boolean
-    AppBskyGraphDefsListPurpose:
-      oneOf:
-      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
-    AppBskyActorDefsPersonalDetailsPref:
+    AppBskyActorDefsMutedWord:
       type: object
+      description: A word that the account owner has muted.
+      required:
+      - value
+      - targets
       properties:
-        birthDate:
+        id:
           type: string
-          description: The birth date of account owner.
+        value:
+          type: string
+          description: The muted word itself.
+          maxLength: 10000
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsMutedWordTarget'
+        actorTarget:
+          type: string
+          description: Groups of users to apply the muted word to. If undefined, applies to all users.
+          default: all
+          enum:
+          - all
+          - exclude-following
+        expiresAt:
+          type: string
+          description: The date and time at which the muted word will expire and no longer be applied.
           format: date-time
-    AppBskyActorDefsAdultContentPref:
+    AppBskyGraphDefsModlist:
+      type: string
+      format: token
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyActorDefsInterestsPref:
       type: object
       required:
-      - enabled
+      - tags
       properties:
-        enabled:
+        tags:
+          type: array
+          items:
+            type: string
+            maxLength: 640
+          maxItems: 100
+    AppBskyActorDefsThreadViewPref:
+      type: object
+      properties:
+        sort:
+          type: string
+          description: Sorting mode for threads.
+          enum:
+          - oldest
+          - newest
+          - most-likes
+          - random
+        prioritizeFollowedUsers:
           type: boolean
+          description: Show followed users at the top of all replies.
+    AppBskyActorDefsPreferences:
+      type: array
+      items:
+        oneOf:
+        - $ref: '#/components/schemas/AppBskyActorDefsAdultContentPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsContentLabelPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsSavedFeedsPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsSavedFeedsPrefV2'
+        - $ref: '#/components/schemas/AppBskyActorDefsPersonalDetailsPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsFeedViewPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsThreadViewPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsInterestsPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsMutedWordsPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsHiddenPostsPref'
+        - $ref: '#/components/schemas/AppBskyActorDefsBskyAppStatePref'
+        - $ref: '#/components/schemas/AppBskyActorDefsLabelersPref'
     AppBskyActorDefsLabelersPref:
       type: object
       required:
@@ -742,54 +707,43 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AppBskyActorDefsLabelerPrefItem'
-    AppBskyActorDefsProfileAssociatedChat:
+    AppBskyActorDefsLabelerPrefItem:
       type: object
       required:
-      - allowIncoming
+      - did
       properties:
-        allowIncoming:
+        did:
           type: string
-          enum:
-          - all
-          - none
-          - following
-    AppBskyActorDefsFeedViewPref:
+          format: did
+    AppBskyActorDefsProfileViewBasic:
       type: object
       required:
-      - feed
+      - did
+      - handle
       properties:
-        feed:
+        did:
           type: string
-          description: The URI of the feed, or an identifier which describes the feed.
-        hideReplies:
-          type: boolean
-          description: Hide replies in the feed.
-        hideRepliesByUnfollowed:
-          type: boolean
-          description: Hide replies in the feed if they are not by followed users.
-          default: true
-        hideRepliesByLikeCount:
-          type: integer
-        hideReposts:
-          type: boolean
-          description: Hide reposts in the feed.
-        hideQuotePosts:
-          type: boolean
-          description: Hide quote posts in the feed.
-    AppBskyActorDefsKnownFollowers:
-      type: object
-      description: The subject's followers whom you also follow
-      required:
-      - count
-      - followers
-      properties:
-        count:
-          type: integer
-        followers:
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
           type: array
           items:
-            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-          maxItems: 5
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        createdAt:
+          type: string
+          format: date-time
     AppBskyActorDefsSavedFeedsPref:
       type: object
       required:
@@ -808,148 +762,43 @@ components:
             format: at-uri
         timelineIndex:
           type: integer
-    AppBskyActorDefsProfileViewDetailed:
+    AppBskyActorDefsKnownFollowers:
       type: object
+      description: The subject's followers whom you also follow
       required:
-      - did
-      - handle
+      - count
+      - followers
       properties:
-        did:
-          type: string
-          format: did
-        handle:
-          type: string
-          format: handle
-        displayName:
-          type: string
-          maxLength: 640
-        description:
-          type: string
-          maxLength: 2560
-        avatar:
-          type: string
-          format: uri
-        banner:
-          type: string
-          format: uri
-        followersCount:
+        count:
           type: integer
-        followsCount:
-          type: integer
-        postsCount:
-          type: integer
-        associated:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        joinedViaStarterPack:
-          $ref: '#/components/schemas/AppBskyGraphDefsStarterPackViewBasic'
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-        labels:
+        followers:
           type: array
           items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        pinnedPost:
-          $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
-    AppBskyActorDefsInterestsPref:
+            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+          maxItems: 5
+    AppBskyActorDefsContentLabelPref:
       type: object
       required:
-      - tags
+      - label
+      - visibility
       properties:
-        tags:
-          type: array
-          items:
-            type: string
-            maxLength: 640
-          maxItems: 100
-    AppBskyActorDefsProfileView:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
+        labelerDid:
           type: string
+          description: Which labeler does this preference apply to? If undefined, applies globally.
           format: did
-        handle:
+        label:
           type: string
-          format: handle
-        displayName:
+        visibility:
           type: string
-          maxLength: 640
-        description:
-          type: string
-          maxLength: 2560
-        avatar:
-          type: string
-          format: uri
-        associated:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-    AppBskyGraphDefsModlist:
-      type: string
-      format: token
-      description: A list of actors to apply an aggregate moderation action (mute/block) on.
-    AppBskyActorDefsBskyAppProgressGuide:
-      type: object
-      description: If set, an active progress guide. Once completed, can be set to undefined. Should have unspecced fields tracking progress.
-      required:
-      - guide
-      properties:
-        guide:
-          type: string
-          maxLength: 100
-    AppBskyGraphDefsReferencelist:
-      type: string
-      format: token
-      description: A list of actors used for only for reference purposes such as within a starter pack.
-    AppBskyActorDefsLabelerPrefItem:
-      type: object
-      required:
-      - did
-      properties:
-        did:
-          type: string
-          format: did
-    AppBskyActorDefsMutedWordsPref:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsMutedWord'
-    AppBskyActorDefsThreadViewPref:
-      type: object
-      properties:
-        sort:
-          type: string
-          description: Sorting mode for threads.
           enum:
-          - oldest
-          - newest
-          - most-likes
-          - random
-        prioritizeFollowedUsers:
-          type: boolean
-          description: Show followed users at the top of all replies.
+          - ignore
+          - show
+          - warn
+          - hide
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
     AppBskyGraphDefsListViewerState:
       type: object
       properties:
@@ -958,58 +807,6 @@ components:
         blocked:
           type: string
           format: at-uri
-    AppBskyGraphDefsCuratelist:
-      type: string
-      format: token
-      description: A list of actors used for curation purposes such as list feeds or interaction gating.
-    AppBskyActorDefsHiddenPostsPref:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            type: string
-            format: at-uri
-    AppBskyActorDefsSavedFeedsPrefV2:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsSavedFeed'
-    ComAtprotoRepoStrongRef:
-      type: object
-      required:
-      - uri
-      - cid
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-    AppBskyActorDefsBskyAppStatePref:
-      type: object
-      description: A grab bag of state that's specific to the bsky.app program. Third-party apps shouldn't use this.
-      properties:
-        activeProgressGuide:
-          $ref: '#/components/schemas/AppBskyActorDefsBskyAppProgressGuide'
-        queuedNudges:
-          type: array
-          items:
-            type: string
-            maxLength: 100
-          maxItems: 1000
-        nuxs:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsNux'
-          maxItems: 100
     AppBskyActorDefsViewerState:
       type: object
       description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
@@ -1075,6 +872,29 @@ components:
           type: string
           format: byte
           description: Signature of dag-cbor encoded label.
+    AppBskyActorDefsMutedWordTarget:
+      type: string
+      maxLength: 640
+      enum:
+      - content
+      - tag
+    AppBskyActorDefsPersonalDetailsPref:
+      type: object
+      properties:
+        birthDate:
+          type: string
+          description: The birth date of account owner.
+          format: date-time
+    AppBskyActorDefsHiddenPostsPref:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+            format: at-uri
     AppBskyActorDefsProfileAssociated:
       type: object
       properties:
@@ -1088,6 +908,25 @@ components:
           type: boolean
         chat:
           $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
+    AppBskyActorDefsAdultContentPref:
+      type: object
+      required:
+      - enabled
+      properties:
+        enabled:
+          type: boolean
+    ComAtprotoRepoStrongRef:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
     AppBskyGraphDefsListViewBasic:
       type: object
       required:
@@ -1123,7 +962,92 @@ components:
         indexedAt:
           type: string
           format: date-time
-    AppBskyActorDefsProfileViewBasic:
+    AppBskyActorDefsProfileAssociatedChat:
+      type: object
+      required:
+      - allowIncoming
+      properties:
+        allowIncoming:
+          type: string
+          enum:
+          - all
+          - none
+          - following
+    AppBskyActorDefsBskyAppProgressGuide:
+      type: object
+      description: If set, an active progress guide. Once completed, can be set to undefined. Should have unspecced fields tracking progress.
+      required:
+      - guide
+      properties:
+        guide:
+          type: string
+          maxLength: 100
+    AppBskyActorDefsMutedWordsPref:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsMutedWord'
+    AppBskyActorDefsSavedFeedsPrefV2:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsSavedFeed'
+    AppBskyActorDefsNux:
+      type: object
+      description: A new user experiences (NUX) storage object
+      required:
+      - id
+      - completed
+      properties:
+        id:
+          type: string
+          maxLength: 100
+        completed:
+          type: boolean
+        data:
+          type: string
+          description: Arbitrary data for the NUX. The structure is defined by the NUX itself. Limited to 300 characters.
+          maxLength: 3000
+        expiresAt:
+          type: string
+          description: The date and time at which the NUX will expire and should be considered completed.
+          format: date-time
+    AppBskyGraphDefsReferencelist:
+      type: string
+      format: token
+      description: A list of actors used for only for reference purposes such as within a starter pack.
+    AppBskyActorDefsFeedViewPref:
+      type: object
+      required:
+      - feed
+      properties:
+        feed:
+          type: string
+          description: The URI of the feed, or an identifier which describes the feed.
+        hideReplies:
+          type: boolean
+          description: Hide replies in the feed.
+        hideRepliesByUnfollowed:
+          type: boolean
+          description: Hide replies in the feed if they are not by followed users.
+          default: true
+        hideRepliesByLikeCount:
+          type: integer
+        hideReposts:
+          type: boolean
+          description: Hide reposts in the feed.
+        hideQuotePosts:
+          type: boolean
+          description: Hide quote posts in the feed.
+    AppBskyActorDefsProfileView:
       type: object
       required:
       - did
@@ -1138,20 +1062,96 @@ components:
         displayName:
           type: string
           maxLength: 640
+        description:
+          type: string
+          maxLength: 2560
         avatar:
           type: string
           format: uri
         associated:
           $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
         viewer:
           $ref: '#/components/schemas/AppBskyActorDefsViewerState'
         labels:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyActorDefsProfileViewDetailed:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        description:
+          type: string
+          maxLength: 2560
+        avatar:
+          type: string
+          format: uri
+        banner:
+          type: string
+          format: uri
+        followersCount:
+          type: integer
+        followsCount:
+          type: integer
+        postsCount:
+          type: integer
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        joinedViaStarterPack:
+          $ref: '#/components/schemas/AppBskyGraphDefsStarterPackViewBasic'
+        indexedAt:
+          type: string
+          format: date-time
         createdAt:
           type: string
           format: date-time
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        pinnedPost:
+          $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
+    AppBskyGraphDefsListPurpose:
+      oneOf:
+      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
+    AppBskyActorDefsBskyAppStatePref:
+      type: object
+      description: A grab bag of state that's specific to the bsky.app program. Third-party apps shouldn't use this.
+      properties:
+        activeProgressGuide:
+          $ref: '#/components/schemas/AppBskyActorDefsBskyAppProgressGuide'
+        queuedNudges:
+          type: array
+          items:
+            type: string
+            maxLength: 100
+          maxItems: 1000
+        nuxs:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsNux'
+          maxItems: 100
   examples:
     ActorGetProfileResponse200Example:
       summary: Successful response for actorGetProfile
@@ -1164,8 +1164,25 @@ components:
         banner: https://example.com/resource
         followersCount: 50
         followsCount: 50
-    ActorSearchActorsResponse200Example:
-      summary: Successful response for actorSearchActors
+    ActorGetProfilesResponse200Example:
+      summary: Successful response for actorGetProfiles
+      value:
+        profiles:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          banner: https://example.com/resource
+          followersCount: 50
+          followsCount: 50
+    ActorGetPreferencesResponse200Example:
+      summary: Successful response for actorGetPreferences
+      value:
+        preferences:
+        - enabled: true
+    ActorGetSuggestionsResponse200Example:
+      summary: Successful response for actorGetSuggestions
       value:
         actors:
         - did: did:plc:example123abc
@@ -1187,20 +1204,8 @@ components:
       value:
         preferences:
         - enabled: true
-    ActorGetProfilesResponse200Example:
-      summary: Successful response for actorGetProfiles
-      value:
-        profiles:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          banner: https://example.com/resource
-          followersCount: 50
-          followsCount: 50
-    ActorGetSuggestionsResponse200Example:
-      summary: Successful response for actorGetSuggestions
+    ActorSearchActorsResponse200Example:
+      summary: Successful response for actorSearchActors
       value:
         actors:
         - did: did:plc:example123abc
@@ -1217,11 +1222,6 @@ components:
           indexedAt: '2024-01-15T12:00:00.000Z'
           createdAt: '2024-01-15T12:00:00.000Z'
         cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    ActorGetPreferencesResponse200Example:
-      summary: Successful response for actorGetPreferences
-      value:
-        preferences:
-        - enabled: true
     ActorSearchActorsTypeaheadResponse200Example:
       summary: Successful response for actorSearchActorsTypeahead
       value:

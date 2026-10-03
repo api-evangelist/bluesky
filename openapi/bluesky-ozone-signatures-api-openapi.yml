@@ -287,39 +287,6 @@ paths:
                     type: string
 components:
   schemas:
-    ToolsOzoneSignatureFindRelatedAccountsRelatedAccount:
-      type: object
-      required:
-      - account
-      properties:
-        account:
-          $ref: '#/components/schemas/ComAtprotoAdminDefsAccountView'
-        similarities:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolsOzoneSignatureDefsSigDetail'
-    ComAtprotoAdminDefsThreatSignature:
-      type: object
-      required:
-      - property
-      - value
-      properties:
-        property:
-          type: string
-        value:
-          type: string
-    ComAtprotoServerDefsInviteCodeUse:
-      type: object
-      required:
-      - usedBy
-      - usedAt
-      properties:
-        usedBy:
-          type: string
-          format: did
-        usedAt:
-          type: string
-          format: date-time
     ComAtprotoServerDefsInviteCode:
       type: object
       required:
@@ -389,6 +356,28 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoAdminDefsThreatSignature'
+    ComAtprotoServerDefsInviteCodeUse:
+      type: object
+      required:
+      - usedBy
+      - usedAt
+      properties:
+        usedBy:
+          type: string
+          format: did
+        usedAt:
+          type: string
+          format: date-time
+    ComAtprotoAdminDefsThreatSignature:
+      type: object
+      required:
+      - property
+      - value
+      properties:
+        property:
+          type: string
+        value:
+          type: string
     ToolsOzoneSignatureDefsSigDetail:
       type: object
       required:
@@ -399,6 +388,17 @@ components:
           type: string
         value:
           type: string
+    ToolsOzoneSignatureFindRelatedAccountsRelatedAccount:
+      type: object
+      required:
+      - account
+      properties:
+        account:
+          $ref: '#/components/schemas/ComAtprotoAdminDefsAccountView'
+        similarities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolsOzoneSignatureDefsSigDetail'
   examples:
     OzoneSignatureFindRelatedAccountsResponse200Example:
       summary: Successful response for ozoneSignatureFindRelatedAccounts

@@ -345,78 +345,6 @@ paths:
                   message:
                     type: string
 components:
-  examples:
-    OzoneTeamAddMemberResponse200Example:
-      summary: Successful response for ozoneTeamAddMember
-      value:
-        did: did:plc:example123abc
-        role: '#roleAdmin'
-        disabled: true
-        profile:
-          did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          banner: https://example.com/resource
-          followersCount: 50
-          followsCount: 50
-        createdAt: '2024-01-15T12:00:00.000Z'
-        updatedAt: '2024-01-15T12:00:00.000Z'
-        lastUpdatedBy: example-lastUpdatedBy
-    OzoneTeamUpdateMemberRequestExample:
-      summary: Example request for ozoneTeamUpdateMember
-      value:
-        did: did:plc:example123abc
-        disabled: true
-        role: tools.ozone.team.defs#roleAdmin
-    OzoneTeamDeleteMemberRequestExample:
-      summary: Example request for ozoneTeamDeleteMember
-      value:
-        did: did:plc:example123abc
-    OzoneTeamUpdateMemberResponse200Example:
-      summary: Successful response for ozoneTeamUpdateMember
-      value:
-        did: did:plc:example123abc
-        role: '#roleAdmin'
-        disabled: true
-        profile:
-          did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          banner: https://example.com/resource
-          followersCount: 50
-          followsCount: 50
-        createdAt: '2024-01-15T12:00:00.000Z'
-        updatedAt: '2024-01-15T12:00:00.000Z'
-        lastUpdatedBy: example-lastUpdatedBy
-    OzoneTeamAddMemberRequestExample:
-      summary: Example request for ozoneTeamAddMember
-      value:
-        did: did:plc:example123abc
-        role: tools.ozone.team.defs#roleAdmin
-    OzoneTeamListMembersResponse200Example:
-      summary: Successful response for ozoneTeamListMembers
-      value:
-        members:
-        - did: did:plc:example123abc
-          role: '#roleAdmin'
-          disabled: true
-          profile:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            description: This is an example description.
-            avatar: https://example.com/resource
-            banner: https://example.com/resource
-            followersCount: 50
-            followsCount: 50
-          createdAt: '2024-01-15T12:00:00.000Z'
-          updatedAt: '2024-01-15T12:00:00.000Z'
-          lastUpdatedBy: example-lastUpdatedBy
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
   schemas:
     AppBskyGraphDefsStarterPackViewBasic:
       type: object
@@ -452,22 +380,39 @@ components:
         indexedAt:
           type: string
           format: date-time
-    AppBskyGraphDefsListPurpose:
-      oneOf:
-      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
-    AppBskyActorDefsProfileAssociatedChat:
+    AppBskyGraphDefsModlist:
+      type: string
+      format: token
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyActorDefsProfileViewBasic:
       type: object
       required:
-      - allowIncoming
+      - did
+      - handle
       properties:
-        allowIncoming:
+        did:
           type: string
-          enum:
-          - all
-          - none
-          - following
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        createdAt:
+          type: string
+          format: date-time
     AppBskyActorDefsKnownFollowers:
       type: object
       description: The subject's followers whom you also follow
@@ -482,6 +427,158 @@ components:
           items:
             $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
           maxItems: 5
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
+    AppBskyGraphDefsListViewerState:
+      type: object
+      properties:
+        muted:
+          type: boolean
+        blocked:
+          type: string
+          format: at-uri
+    AppBskyActorDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          format: at-uri
+        blockingByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        following:
+          type: string
+          format: at-uri
+        followedBy:
+          type: string
+          format: at-uri
+        knownFollowers:
+          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
+    ComAtprotoLabelDefsLabel:
+      type: object
+      description: Metadata tag on an atproto resource (eg, repo or record).
+      required:
+      - src
+      - uri
+      - val
+      - cts
+      properties:
+        ver:
+          type: integer
+        src:
+          type: string
+          description: DID of the actor who created this label.
+          format: did
+        uri:
+          type: string
+          description: AT URI of the record, repository (account), or other resource that this label applies to.
+          format: uri
+        cid:
+          type: string
+          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
+          format: cid
+        val:
+          type: string
+          description: The short string name of the value or type of this label.
+          maxLength: 128
+        neg:
+          type: boolean
+          description: If true, this is a negation label, overwriting a previous label.
+        cts:
+          type: string
+          description: Timestamp when this label was created.
+          format: date-time
+        exp:
+          type: string
+          description: Timestamp at which this label expires (no longer applies).
+          format: date-time
+        sig:
+          type: string
+          format: byte
+          description: Signature of dag-cbor encoded label.
+    AppBskyActorDefsProfileAssociated:
+      type: object
+      properties:
+        lists:
+          type: integer
+        feedgens:
+          type: integer
+        starterPacks:
+          type: integer
+        labeler:
+          type: boolean
+        chat:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
+    ComAtprotoRepoStrongRef:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+    AppBskyGraphDefsListViewBasic:
+      type: object
+      required:
+      - uri
+      - cid
+      - name
+      - purpose
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        purpose:
+          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
+        avatar:
+          type: string
+          format: uri
+        listItemCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyActorDefsProfileAssociatedChat:
+      type: object
+      required:
+      - allowIncoming
+      properties:
+        allowIncoming:
+          type: string
+          enum:
+          - all
+          - none
+          - following
+    AppBskyGraphDefsReferencelist:
+      type: string
+      format: token
+      description: A list of actors used for only for reference purposes such as within a starter pack.
     AppBskyActorDefsProfileViewDetailed:
       type: object
       required:
@@ -530,151 +627,11 @@ components:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
         pinnedPost:
           $ref: '#/components/schemas/ComAtprotoRepoStrongRef'
-    AppBskyGraphDefsModlist:
-      type: string
-      format: token
-      description: A list of actors to apply an aggregate moderation action (mute/block) on.
-    AppBskyGraphDefsReferencelist:
-      type: string
-      format: token
-      description: A list of actors used for only for reference purposes such as within a starter pack.
-    AppBskyGraphDefsListViewerState:
-      type: object
-      properties:
-        muted:
-          type: boolean
-        blocked:
-          type: string
-          format: at-uri
-    AppBskyGraphDefsCuratelist:
-      type: string
-      format: token
-      description: A list of actors used for curation purposes such as list feeds or interaction gating.
-    ComAtprotoRepoStrongRef:
-      type: object
-      required:
-      - uri
-      - cid
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-    AppBskyActorDefsViewerState:
-      type: object
-      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
-      properties:
-        muted:
-          type: boolean
-        mutedByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        blockedBy:
-          type: boolean
-        blocking:
-          type: string
-          format: at-uri
-        blockingByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        following:
-          type: string
-          format: at-uri
-        followedBy:
-          type: string
-          format: at-uri
-        knownFollowers:
-          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
-    AppBskyGraphDefsListViewBasic:
-      type: object
-      required:
-      - uri
-      - cid
-      - name
-      - purpose
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        name:
-          type: string
-          minLength: 1
-          maxLength: 64
-        purpose:
-          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
-        avatar:
-          type: string
-          format: uri
-        listItemCount:
-          type: integer
-          minimum: 0
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        viewer:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
-        indexedAt:
-          type: string
-          format: date-time
-    AppBskyActorDefsProfileAssociated:
-      type: object
-      properties:
-        lists:
-          type: integer
-        feedgens:
-          type: integer
-        starterPacks:
-          type: integer
-        labeler:
-          type: boolean
-        chat:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
-    ComAtprotoLabelDefsLabel:
-      type: object
-      description: Metadata tag on an atproto resource (eg, repo or record).
-      required:
-      - src
-      - uri
-      - val
-      - cts
-      properties:
-        ver:
-          type: integer
-        src:
-          type: string
-          description: DID of the actor who created this label.
-          format: did
-        uri:
-          type: string
-          description: AT URI of the record, repository (account), or other resource that this label applies to.
-          format: uri
-        cid:
-          type: string
-          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
-          format: cid
-        val:
-          type: string
-          description: The short string name of the value or type of this label.
-          maxLength: 128
-        neg:
-          type: boolean
-          description: If true, this is a negation label, overwriting a previous label.
-        cts:
-          type: string
-          description: Timestamp when this label was created.
-          format: date-time
-        exp:
-          type: string
-          description: Timestamp at which this label expires (no longer applies).
-          format: date-time
-        sig:
-          type: string
-          format: byte
-          description: Signature of dag-cbor encoded label.
+    AppBskyGraphDefsListPurpose:
+      oneOf:
+      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
     ToolsOzoneTeamDefsMember:
       type: object
       required:
@@ -702,35 +659,78 @@ components:
           - '#roleAdmin'
           - '#roleModerator'
           - '#roleTriage'
-    AppBskyActorDefsProfileViewBasic:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
-          type: string
-          format: did
-        handle:
-          type: string
-          format: handle
-        displayName:
-          type: string
-          maxLength: 640
-        avatar:
-          type: string
-          format: uri
-        associated:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        createdAt:
-          type: string
-          format: date-time
+  examples:
+    OzoneTeamAddMemberRequestExample:
+      summary: Example request for ozoneTeamAddMember
+      value:
+        did: did:plc:example123abc
+        role: tools.ozone.team.defs#roleAdmin
+    OzoneTeamUpdateMemberRequestExample:
+      summary: Example request for ozoneTeamUpdateMember
+      value:
+        did: did:plc:example123abc
+        disabled: true
+        role: tools.ozone.team.defs#roleAdmin
+    OzoneTeamDeleteMemberRequestExample:
+      summary: Example request for ozoneTeamDeleteMember
+      value:
+        did: did:plc:example123abc
+    OzoneTeamAddMemberResponse200Example:
+      summary: Successful response for ozoneTeamAddMember
+      value:
+        did: did:plc:example123abc
+        role: '#roleAdmin'
+        disabled: true
+        profile:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          banner: https://example.com/resource
+          followersCount: 50
+          followsCount: 50
+        createdAt: '2024-01-15T12:00:00.000Z'
+        updatedAt: '2024-01-15T12:00:00.000Z'
+        lastUpdatedBy: example-lastUpdatedBy
+    OzoneTeamListMembersResponse200Example:
+      summary: Successful response for ozoneTeamListMembers
+      value:
+        members:
+        - did: did:plc:example123abc
+          role: '#roleAdmin'
+          disabled: true
+          profile:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            banner: https://example.com/resource
+            followersCount: 50
+            followsCount: 50
+          createdAt: '2024-01-15T12:00:00.000Z'
+          updatedAt: '2024-01-15T12:00:00.000Z'
+          lastUpdatedBy: example-lastUpdatedBy
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneTeamUpdateMemberResponse200Example:
+      summary: Successful response for ozoneTeamUpdateMember
+      value:
+        did: did:plc:example123abc
+        role: '#roleAdmin'
+        disabled: true
+        profile:
+          did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          banner: https://example.com/resource
+          followersCount: 50
+          followsCount: 50
+        createdAt: '2024-01-15T12:00:00.000Z'
+        updatedAt: '2024-01-15T12:00:00.000Z'
+        lastUpdatedBy: example-lastUpdatedBy
   securitySchemes:
     Bearer:
       type: http

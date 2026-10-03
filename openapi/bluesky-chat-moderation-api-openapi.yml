@@ -264,48 +264,6 @@ paths:
                     type: string
 components:
   schemas:
-    AppBskyFeedDefsGeneratorViewerState:
-      type: object
-      properties:
-        like:
-          type: string
-          format: at-uri
-    AppBskyLabelerDefsLabelerViewerState:
-      type: object
-      properties:
-        like:
-          type: string
-          format: at-uri
-    ChatBskyConvoDefsDeletedMessageView:
-      type: object
-      required:
-      - id
-      - rev
-      - sender
-      - sentAt
-      properties:
-        id:
-          type: string
-        rev:
-          type: string
-        sender:
-          $ref: '#/components/schemas/ChatBskyConvoDefsMessageViewSender'
-        sentAt:
-          type: string
-          format: date-time
-    AppBskyEmbedDefsAspectRatio:
-      type: object
-      description: width:height represents an aspect ratio. It may be approximate, and may not correspond to absolute dimensions in any given unit.
-      required:
-      - width
-      - height
-      properties:
-        width:
-          type: integer
-          minimum: 1
-        height:
-          type: integer
-          minimum: 1
     AppBskyGraphDefsStarterPackViewBasic:
       type: object
       required:
@@ -340,21 +298,48 @@ components:
         indexedAt:
           type: string
           format: date-time
-    AppBskyGraphDefsListPurpose:
-      oneOf:
-      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
-    AppBskyEmbedRecordViewDetached:
+    AppBskyLabelerDefsLabelerViewerState:
+      type: object
+      properties:
+        like:
+          type: string
+          format: at-uri
+    AppBskyRichtextFacetMention:
+      type: object
+      description: Facet feature for mention of another account. The text is usually a handle, including a '@' prefix, but the facet reference is a DID.
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+    AppBskyEmbedExternalViewExternal:
       type: object
       required:
       - uri
-      - detached
+      - title
+      - description
+      properties:
+        uri:
+          type: string
+          format: uri
+        title:
+          type: string
+        description:
+          type: string
+        thumb:
+          type: string
+          format: uri
+    AppBskyEmbedRecordViewNotFound:
+      type: object
+      required:
+      - uri
+      - notFound
       properties:
         uri:
           type: string
           format: at-uri
-        detached:
+        notFound:
           type: boolean
           default: true
     AppBskyRichtextFacetByteSlice:
@@ -370,99 +355,77 @@ components:
         byteEnd:
           type: integer
           minimum: 0
-    ChatBskyModerationGetActorMetadataMetadata:
+    AppBskyGraphDefsModlist:
+      type: string
+      format: token
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyEmbedDefsAspectRatio:
+      type: object
+      description: width:height represents an aspect ratio. It may be approximate, and may not correspond to absolute dimensions in any given unit.
+      required:
+      - width
+      - height
+      properties:
+        width:
+          type: integer
+          minimum: 1
+        height:
+          type: integer
+          minimum: 1
+    AppBskyEmbedImagesViewImage:
       type: object
       required:
-      - messagesSent
-      - messagesReceived
-      - convos
-      - convosStarted
+      - thumb
+      - fullsize
+      - alt
       properties:
-        messagesSent:
-          type: integer
-        messagesReceived:
-          type: integer
-        convos:
-          type: integer
-        convosStarted:
-          type: integer
-    AppBskyEmbedRecordWithMediaView:
-      type: object
-      required:
-      - record
-      - media
-      properties:
-        record:
-          $ref: '#/components/schemas/AppBskyEmbedRecordView'
-        media:
-          oneOf:
-          - $ref: '#/components/schemas/AppBskyEmbedImagesView'
-          - $ref: '#/components/schemas/AppBskyEmbedVideoView'
-          - $ref: '#/components/schemas/AppBskyEmbedExternalView'
-    AppBskyEmbedRecordViewBlocked:
+        thumb:
+          type: string
+          description: Fully-qualified URL where a thumbnail of the image can be fetched. For example, CDN location provided by the App View.
+          format: uri
+        fullsize:
+          type: string
+          description: Fully-qualified URL where a large version of the image can be fetched. May or may not be the exact original blob. For example, CDN location provided by the App View.
+          format: uri
+        alt:
+          type: string
+          description: Alt text description of the image, for accessibility.
+        aspectRatio:
+          $ref: '#/components/schemas/AppBskyEmbedDefsAspectRatio'
+    AppBskyEmbedRecordViewDetached:
       type: object
       required:
       - uri
-      - blocked
-      - author
+      - detached
       properties:
         uri:
           type: string
           format: at-uri
-        blocked:
+        detached:
           type: boolean
           default: true
-        author:
-          $ref: '#/components/schemas/AppBskyFeedDefsBlockedAuthor'
-    AppBskyEmbedExternalView:
+    AppBskyFeedDefsGeneratorViewerState:
       type: object
-      required:
-      - external
       properties:
-        external:
-          $ref: '#/components/schemas/AppBskyEmbedExternalViewExternal'
-    AppBskyActorDefsProfileAssociatedChat:
-      type: object
-      required:
-      - allowIncoming
-      properties:
-        allowIncoming:
+        like:
           type: string
-          enum:
-          - all
-          - none
-          - following
-    AppBskyActorDefsKnownFollowers:
+          format: at-uri
+    AppBskyEmbedRecordView:
       type: object
-      description: The subject's followers whom you also follow
       required:
-      - count
-      - followers
+      - record
       properties:
-        count:
-          type: integer
-        followers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-          maxItems: 5
-    AppBskyRichtextFacet:
-      type: object
-      description: Annotation of a sub-string within rich text.
-      required:
-      - index
-      - features
-      properties:
-        index:
-          $ref: '#/components/schemas/AppBskyRichtextFacetByteSlice'
-        features:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/AppBskyRichtextFacetMention'
-            - $ref: '#/components/schemas/AppBskyRichtextFacetLink'
-            - $ref: '#/components/schemas/AppBskyRichtextFacetTag'
-    AppBskyActorDefsProfileView:
+        record:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewRecord'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewNotFound'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewBlocked'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewDetached'
+          - $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
+          - $ref: '#/components/schemas/AppBskyGraphDefsListView'
+          - $ref: '#/components/schemas/AppBskyLabelerDefsLabelerView'
+          - $ref: '#/components/schemas/AppBskyGraphDefsStarterPackViewBasic'
+    AppBskyActorDefsProfileViewBasic:
       type: object
       required:
       - did
@@ -477,39 +440,71 @@ components:
         displayName:
           type: string
           maxLength: 640
-        description:
-          type: string
-          maxLength: 2560
         avatar:
           type: string
           format: uri
         associated:
           $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
         viewer:
           $ref: '#/components/schemas/AppBskyActorDefsViewerState'
         labels:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-    AppBskyGraphDefsModlist:
-      type: string
-      format: token
-      description: A list of actors to apply an aggregate moderation action (mute/block) on.
-    AppBskyRichtextFacetMention:
-      type: object
-      description: Facet feature for mention of another account. The text is usually a handle, including a '@' prefix, but the facet reference is a DID.
-      required:
-      - did
-      properties:
-        did:
+        createdAt:
           type: string
-          format: did
+          format: date-time
+    AppBskyEmbedRecordViewRecord:
+      type: object
+      required:
+      - uri
+      - cid
+      - author
+      - value
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        author:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        value: {}
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        replyCount:
+          type: integer
+        repostCount:
+          type: integer
+        likeCount:
+          type: integer
+        quoteCount:
+          type: integer
+        embeds:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/AppBskyEmbedImagesView'
+            - $ref: '#/components/schemas/AppBskyEmbedVideoView'
+            - $ref: '#/components/schemas/AppBskyEmbedExternalView'
+            - $ref: '#/components/schemas/AppBskyEmbedRecordView'
+            - $ref: '#/components/schemas/AppBskyEmbedRecordWithMediaView'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyRichtextFacetTag:
+      type: object
+      description: Facet feature for a hashtag. The text usually includes a '#' prefix, but the facet reference should not (except in the case of 'double hash tags').
+      required:
+      - tag
+      properties:
+        tag:
+          type: string
+          maxLength: 640
     AppBskyEmbedVideoView:
       type: object
       required:
@@ -530,76 +525,36 @@ components:
           maxLength: 10000
         aspectRatio:
           $ref: '#/components/schemas/AppBskyEmbedDefsAspectRatio'
-    AppBskyGraphDefsReferencelist:
-      type: string
-      format: token
-      description: A list of actors used for only for reference purposes such as within a starter pack.
-    ChatBskyConvoDefsMessageViewSender:
+    AppBskyActorDefsKnownFollowers:
       type: object
+      description: The subject's followers whom you also follow
       required:
-      - did
+      - count
+      - followers
       properties:
-        did:
-          type: string
-          format: did
-    AppBskyFeedDefsBlockedAuthor:
-      type: object
-      required:
-      - did
-      properties:
-        did:
-          type: string
-          format: did
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-    AppBskyEmbedImagesView:
-      type: object
-      required:
-      - images
-      properties:
-        images:
+        count:
+          type: integer
+        followers:
           type: array
           items:
-            $ref: '#/components/schemas/AppBskyEmbedImagesViewImage'
-          maxItems: 4
-    AppBskyGraphDefsListViewerState:
-      type: object
-      properties:
-        muted:
-          type: boolean
-        blocked:
-          type: string
-          format: at-uri
-    AppBskyGraphDefsCuratelist:
-      type: string
-      format: token
-      description: A list of actors used for curation purposes such as list feeds or interaction gating.
-    AppBskyRichtextFacetLink:
-      type: object
-      description: Facet feature for a URL. The text URL may have been simplified or truncated, but the facet reference should be a complete URL.
-      required:
-      - uri
-      properties:
-        uri:
-          type: string
-          format: uri
-    AppBskyEmbedExternalViewExternal:
+            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+          maxItems: 5
+    ChatBskyModerationGetActorMetadataMetadata:
       type: object
       required:
-      - uri
-      - title
-      - description
+      - messagesSent
+      - messagesReceived
+      - convos
+      - convosStarted
       properties:
-        uri:
-          type: string
-          format: uri
-        title:
-          type: string
-        description:
-          type: string
-        thumb:
-          type: string
-          format: uri
+        messagesSent:
+          type: integer
+        messagesReceived:
+          type: integer
+        convos:
+          type: integer
+        convosStarted:
+          type: integer
     AppBskyActorDefsViewerState:
       type: object
       description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
@@ -623,34 +578,68 @@ components:
           format: at-uri
         knownFollowers:
           $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
-    AppBskyLabelerDefsLabelerView:
+    ChatBskyConvoDefsMessageViewSender:
       type: object
       required:
-      - uri
-      - cid
-      - creator
-      - indexedAt
+      - did
       properties:
+        did:
+          type: string
+          format: did
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
+    ComAtprotoLabelDefsLabel:
+      type: object
+      description: Metadata tag on an atproto resource (eg, repo or record).
+      required:
+      - src
+      - uri
+      - val
+      - cts
+      properties:
+        ver:
+          type: integer
+        src:
+          type: string
+          description: DID of the actor who created this label.
+          format: did
         uri:
           type: string
-          format: at-uri
+          description: AT URI of the record, repository (account), or other resource that this label applies to.
+          format: uri
         cid:
           type: string
+          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
           format: cid
-        creator:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
-        likeCount:
-          type: integer
-          minimum: 0
-        viewer:
-          $ref: '#/components/schemas/AppBskyLabelerDefsLabelerViewerState'
-        indexedAt:
+        val:
           type: string
+          description: The short string name of the value or type of this label.
+          maxLength: 128
+        neg:
+          type: boolean
+          description: If true, this is a negation label, overwriting a previous label.
+        cts:
+          type: string
+          description: Timestamp when this label was created.
           format: date-time
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        exp:
+          type: string
+          description: Timestamp at which this label expires (no longer applies).
+          format: date-time
+        sig:
+          type: string
+          format: byte
+          description: Signature of dag-cbor encoded label.
+    AppBskyGraphDefsListViewerState:
+      type: object
+      properties:
+        muted:
+          type: boolean
+        blocked:
+          type: string
+          format: at-uri
     AppBskyFeedDefsGeneratorView:
       type: object
       required:
@@ -698,21 +687,80 @@ components:
         indexedAt:
           type: string
           format: date-time
-    AppBskyEmbedRecordView:
+    AppBskyFeedDefsBlockedAuthor:
       type: object
       required:
-      - record
+      - did
       properties:
-        record:
+        did:
+          type: string
+          format: did
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+    AppBskyEmbedExternalView:
+      type: object
+      required:
+      - external
+      properties:
+        external:
+          $ref: '#/components/schemas/AppBskyEmbedExternalViewExternal'
+    AppBskyActorDefsProfileAssociated:
+      type: object
+      properties:
+        lists:
+          type: integer
+        feedgens:
+          type: integer
+        starterPacks:
+          type: integer
+        labeler:
+          type: boolean
+        chat:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
+    AppBskyRichtextFacet:
+      type: object
+      description: Annotation of a sub-string within rich text.
+      required:
+      - index
+      - features
+      properties:
+        index:
+          $ref: '#/components/schemas/AppBskyRichtextFacetByteSlice'
+        features:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/AppBskyRichtextFacetMention'
+            - $ref: '#/components/schemas/AppBskyRichtextFacetLink'
+            - $ref: '#/components/schemas/AppBskyRichtextFacetTag'
+    ChatBskyConvoDefsMessageView:
+      type: object
+      required:
+      - id
+      - rev
+      - text
+      - sender
+      - sentAt
+      properties:
+        id:
+          type: string
+        rev:
+          type: string
+        text:
+          type: string
+          maxLength: 10000
+        facets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyRichtextFacet'
+        embed:
           oneOf:
-          - $ref: '#/components/schemas/AppBskyEmbedRecordViewRecord'
-          - $ref: '#/components/schemas/AppBskyEmbedRecordViewNotFound'
-          - $ref: '#/components/schemas/AppBskyEmbedRecordViewBlocked'
-          - $ref: '#/components/schemas/AppBskyEmbedRecordViewDetached'
-          - $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
-          - $ref: '#/components/schemas/AppBskyGraphDefsListView'
-          - $ref: '#/components/schemas/AppBskyLabelerDefsLabelerView'
-          - $ref: '#/components/schemas/AppBskyGraphDefsStarterPackViewBasic'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordView'
+        sender:
+          $ref: '#/components/schemas/ChatBskyConvoDefsMessageViewSender'
+        sentAt:
+          type: string
+          format: date-time
     AppBskyGraphDefsListViewBasic:
       type: object
       required:
@@ -748,61 +796,112 @@ components:
         indexedAt:
           type: string
           format: date-time
-    ComAtprotoLabelDefsLabel:
+    AppBskyActorDefsProfileAssociatedChat:
       type: object
-      description: Metadata tag on an atproto resource (eg, repo or record).
       required:
-      - src
-      - uri
-      - val
-      - cts
+      - allowIncoming
       properties:
-        ver:
-          type: integer
-        src:
+        allowIncoming:
           type: string
-          description: DID of the actor who created this label.
-          format: did
+          enum:
+          - all
+          - none
+          - following
+    AppBskyEmbedRecordWithMediaView:
+      type: object
+      required:
+      - record
+      - media
+      properties:
+        record:
+          $ref: '#/components/schemas/AppBskyEmbedRecordView'
+        media:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyEmbedImagesView'
+          - $ref: '#/components/schemas/AppBskyEmbedVideoView'
+          - $ref: '#/components/schemas/AppBskyEmbedExternalView'
+    AppBskyGraphDefsReferencelist:
+      type: string
+      format: token
+      description: A list of actors used for only for reference purposes such as within a starter pack.
+    AppBskyLabelerDefsLabelerView:
+      type: object
+      required:
+      - uri
+      - cid
+      - creator
+      - indexedAt
+      properties:
         uri:
           type: string
-          description: AT URI of the record, repository (account), or other resource that this label applies to.
-          format: uri
+          format: at-uri
         cid:
           type: string
-          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
           format: cid
-        val:
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+        likeCount:
+          type: integer
+          minimum: 0
+        viewer:
+          $ref: '#/components/schemas/AppBskyLabelerDefsLabelerViewerState'
+        indexedAt:
           type: string
-          description: The short string name of the value or type of this label.
-          maxLength: 128
-        neg:
-          type: boolean
-          description: If true, this is a negation label, overwriting a previous label.
-        cts:
-          type: string
-          description: Timestamp when this label was created.
           format: date-time
-        exp:
-          type: string
-          description: Timestamp at which this label expires (no longer applies).
-          format: date-time
-        sig:
-          type: string
-          format: byte
-          description: Signature of dag-cbor encoded label.
-    AppBskyActorDefsProfileAssociated:
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyActorDefsProfileView:
       type: object
+      required:
+      - did
+      - handle
       properties:
-        lists:
-          type: integer
-        feedgens:
-          type: integer
-        starterPacks:
-          type: integer
-        labeler:
-          type: boolean
-        chat:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        description:
+          type: string
+          maxLength: 2560
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyEmbedImagesView:
+      type: object
+      required:
+      - images
+      properties:
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyEmbedImagesViewImage'
+          maxItems: 4
+    AppBskyGraphDefsListPurpose:
+      oneOf:
+      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
     AppBskyGraphDefsListView:
       type: object
       required:
@@ -849,41 +948,20 @@ components:
         indexedAt:
           type: string
           format: date-time
-    AppBskyRichtextFacetTag:
+    AppBskyRichtextFacetLink:
       type: object
-      description: Facet feature for a hashtag. The text usually includes a '#' prefix, but the facet reference should not (except in the case of 'double hash tags').
+      description: Facet feature for a URL. The text URL may have been simplified or truncated, but the facet reference should be a complete URL.
       required:
-      - tag
+      - uri
       properties:
-        tag:
+        uri:
           type: string
-          maxLength: 640
-    AppBskyEmbedImagesViewImage:
-      type: object
-      required:
-      - thumb
-      - fullsize
-      - alt
-      properties:
-        thumb:
-          type: string
-          description: Fully-qualified URL where a thumbnail of the image can be fetched. For example, CDN location provided by the App View.
           format: uri
-        fullsize:
-          type: string
-          description: Fully-qualified URL where a large version of the image can be fetched. May or may not be the exact original blob. For example, CDN location provided by the App View.
-          format: uri
-        alt:
-          type: string
-          description: Alt text description of the image, for accessibility.
-        aspectRatio:
-          $ref: '#/components/schemas/AppBskyEmbedDefsAspectRatio'
-    ChatBskyConvoDefsMessageView:
+    ChatBskyConvoDefsDeletedMessageView:
       type: object
       required:
       - id
       - rev
-      - text
       - sender
       - sentAt
       properties:
@@ -891,123 +969,27 @@ components:
           type: string
         rev:
           type: string
-        text:
-          type: string
-          maxLength: 10000
-        facets:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyRichtextFacet'
-        embed:
-          oneOf:
-          - $ref: '#/components/schemas/AppBskyEmbedRecordView'
         sender:
           $ref: '#/components/schemas/ChatBskyConvoDefsMessageViewSender'
         sentAt:
           type: string
           format: date-time
-    AppBskyActorDefsProfileViewBasic:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
-          type: string
-          format: did
-        handle:
-          type: string
-          format: handle
-        displayName:
-          type: string
-          maxLength: 640
-        avatar:
-          type: string
-          format: uri
-        associated:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        createdAt:
-          type: string
-          format: date-time
-    AppBskyEmbedRecordViewNotFound:
+    AppBskyEmbedRecordViewBlocked:
       type: object
       required:
       - uri
-      - notFound
+      - blocked
+      - author
       properties:
         uri:
           type: string
           format: at-uri
-        notFound:
+        blocked:
           type: boolean
           default: true
-    AppBskyEmbedRecordViewRecord:
-      type: object
-      required:
-      - uri
-      - cid
-      - author
-      - value
-      - indexedAt
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
         author:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-        value: {}
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        replyCount:
-          type: integer
-        repostCount:
-          type: integer
-        likeCount:
-          type: integer
-        quoteCount:
-          type: integer
-        embeds:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/AppBskyEmbedImagesView'
-            - $ref: '#/components/schemas/AppBskyEmbedVideoView'
-            - $ref: '#/components/schemas/AppBskyEmbedExternalView'
-            - $ref: '#/components/schemas/AppBskyEmbedRecordView'
-            - $ref: '#/components/schemas/AppBskyEmbedRecordWithMediaView'
-        indexedAt:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/AppBskyFeedDefsBlockedAuthor'
   examples:
-    ChatModerationGetActorMetadataResponse200Example:
-      summary: Successful response for chatModerationGetActorMetadata
-      value:
-        day:
-          messagesSent: 50
-          messagesReceived: 50
-          convos: 50
-          convosStarted: 50
-        month:
-          messagesSent: 50
-          messagesReceived: 50
-          convos: 50
-          convosStarted: 50
-        all:
-          messagesSent: 50
-          messagesReceived: 50
-          convos: 50
-          convosStarted: 50
     ChatModerationUpdateActorAccessRequestExample:
       summary: Example request for chatModerationUpdateActorAccess
       value:
@@ -1026,6 +1008,24 @@ components:
           sentAt: '2024-01-15T12:00:00.000Z'
           facets: []
           embed: {}
+    ChatModerationGetActorMetadataResponse200Example:
+      summary: Successful response for chatModerationGetActorMetadata
+      value:
+        day:
+          messagesSent: 50
+          messagesReceived: 50
+          convos: 50
+          convosStarted: 50
+        month:
+          messagesSent: 50
+          messagesReceived: 50
+          convos: 50
+          convosStarted: 50
+        all:
+          messagesSent: 50
+          messagesReceived: 50
+          convos: 50
+          convosStarted: 50
   securitySchemes:
     Bearer:
       type: http
