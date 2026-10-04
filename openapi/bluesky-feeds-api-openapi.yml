@@ -1805,24 +1805,198 @@ paths:
                     type: string
 components:
   schemas:
-    AppBskyFeedDefsReplyRef:
+    AppBskyFeedDefsSkeletonReasonRepost:
       type: object
       required:
-      - root
-      - parent
+      - repost
       properties:
-        root:
+        repost:
+          type: string
+          format: at-uri
+    AppBskyGraphDefsListPurpose:
+      oneOf:
+      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
+      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
+    AppBskyRichtextFacetByteSlice:
+      type: object
+      description: 'Specifies the sub-string range a facet feature applies to. Start index is inclusive, end index is exclusive. Indices are zero-indexed, counting bytes of the UTF-8 encoded text. NOTE: some languages, like Javascript, use UTF-16 or Unicode codepoints for string slice indexing; in these languages, convert to byte arrays before working with facets.'
+      required:
+      - byteStart
+      - byteEnd
+      properties:
+        byteStart:
+          type: integer
+          minimum: 0
+        byteEnd:
+          type: integer
+          minimum: 0
+    AppBskyFeedDefsBlockedPost:
+      type: object
+      required:
+      - uri
+      - blocked
+      - author
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        blocked:
+          type: boolean
+          default: true
+        author:
+          $ref: '#/components/schemas/AppBskyFeedDefsBlockedAuthor'
+    AppBskyEmbedDefsAspectRatio:
+      type: object
+      description: width:height represents an aspect ratio. It may be approximate, and may not correspond to absolute dimensions in any given unit.
+      required:
+      - width
+      - height
+      properties:
+        width:
+          type: integer
+          minimum: 1
+        height:
+          type: integer
+          minimum: 1
+    AppBskyEmbedRecordWithMediaView:
+      type: object
+      required:
+      - record
+      - media
+      properties:
+        record:
+          $ref: '#/components/schemas/AppBskyEmbedRecordView'
+        media:
           oneOf:
-          - $ref: '#/components/schemas/AppBskyFeedDefsPostView'
-          - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
-          - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
-        parent:
-          oneOf:
-          - $ref: '#/components/schemas/AppBskyFeedDefsPostView'
-          - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
-          - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
-        grandparentAuthor:
+          - $ref: '#/components/schemas/AppBskyEmbedImagesView'
+          - $ref: '#/components/schemas/AppBskyEmbedVideoView'
+          - $ref: '#/components/schemas/AppBskyEmbedExternalView'
+    AppBskyFeedDefsReasonPin:
+      type: object
+      properties: {}
+    AppBskyEmbedRecordViewDetached:
+      type: object
+      required:
+      - uri
+      - detached
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        detached:
+          type: boolean
+          default: true
+    AppBskyFeedDefsNotFoundPost:
+      type: object
+      required:
+      - uri
+      - notFound
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        notFound:
+          type: boolean
+          default: true
+    AppBskyEmbedRecordViewNotFound:
+      type: object
+      required:
+      - uri
+      - notFound
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        notFound:
+          type: boolean
+          default: true
+    AppBskyGraphDefsModlist:
+      type: string
+      format: token
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyRichtextFacetTag:
+      type: object
+      description: Facet feature for a hashtag. The text usually includes a '#' prefix, but the facet reference should not (except in the case of 'double hash tags').
+      required:
+      - tag
+      properties:
+        tag:
+          type: string
+          maxLength: 640
+    AppBskyActorDefsProfileViewBasic:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        createdAt:
+          type: string
+          format: date-time
+    AppBskyFeedDefsPostView:
+      type: object
+      required:
+      - uri
+      - cid
+      - author
+      - record
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        author:
           $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        record: {}
+        embed:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyEmbedImagesView'
+          - $ref: '#/components/schemas/AppBskyEmbedVideoView'
+          - $ref: '#/components/schemas/AppBskyEmbedExternalView'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordView'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordWithMediaView'
+        replyCount:
+          type: integer
+        repostCount:
+          type: integer
+        likeCount:
+          type: integer
+        quoteCount:
+          type: integer
+        indexedAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/AppBskyFeedDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        threadgate:
+          $ref: '#/components/schemas/AppBskyFeedDefsThreadgateView'
     AppBskyGraphDefsStarterPackViewBasic:
       type: object
       required:
@@ -1857,328 +2031,19 @@ components:
         indexedAt:
           type: string
           format: date-time
-    AppBskyLabelerDefsLabelerViewerState:
+    AppBskyActorDefsProfileAssociated:
       type: object
       properties:
-        like:
-          type: string
-          format: at-uri
-    AppBskyRichtextFacetMention:
-      type: object
-      description: Facet feature for mention of another account. The text is usually a handle, including a '@' prefix, but the facet reference is a DID.
-      required:
-      - did
-      properties:
-        did:
-          type: string
-          format: did
-    AppBskyFeedDescribeFeedGeneratorLinks:
-      type: object
-      properties:
-        privacyPolicy:
-          type: string
-        termsOfService:
-          type: string
-    AppBskyEmbedExternalViewExternal:
-      type: object
-      required:
-      - uri
-      - title
-      - description
-      properties:
-        uri:
-          type: string
-          format: uri
-        title:
-          type: string
-        description:
-          type: string
-        thumb:
-          type: string
-          format: uri
-    AppBskyFeedDefsViewerState:
-      type: object
-      description: Metadata about the requesting account's relationship with the subject content. Only has meaningful content for authed requests.
-      properties:
-        repost:
-          type: string
-          format: at-uri
-        like:
-          type: string
-          format: at-uri
-        threadMuted:
+        lists:
+          type: integer
+        feedgens:
+          type: integer
+        starterPacks:
+          type: integer
+        labeler:
           type: boolean
-        replyDisabled:
-          type: boolean
-        embeddingDisabled:
-          type: boolean
-        pinned:
-          type: boolean
-    AppBskyEmbedRecordViewNotFound:
-      type: object
-      required:
-      - uri
-      - notFound
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        notFound:
-          type: boolean
-          default: true
-    AppBskyRichtextFacetByteSlice:
-      type: object
-      description: 'Specifies the sub-string range a facet feature applies to. Start index is inclusive, end index is exclusive. Indices are zero-indexed, counting bytes of the UTF-8 encoded text. NOTE: some languages, like Javascript, use UTF-16 or Unicode codepoints for string slice indexing; in these languages, convert to byte arrays before working with facets.'
-      required:
-      - byteStart
-      - byteEnd
-      properties:
-        byteStart:
-          type: integer
-          minimum: 0
-        byteEnd:
-          type: integer
-          minimum: 0
-    AppBskyFeedDefsSkeletonFeedPost:
-      type: object
-      required:
-      - post
-      properties:
-        post:
-          type: string
-          format: at-uri
-        reason:
-          oneOf:
-          - $ref: '#/components/schemas/AppBskyFeedDefsSkeletonReasonRepost'
-          - $ref: '#/components/schemas/AppBskyFeedDefsSkeletonReasonPin'
-        feedContext:
-          type: string
-          description: Context that will be passed through to client and may be passed to feed generator back alongside interactions.
-          maxLength: 2000
-    AppBskyFeedDescribeFeedGeneratorFeed:
-      type: object
-      required:
-      - uri
-      properties:
-        uri:
-          type: string
-          format: at-uri
-    AppBskyGraphDefsModlist:
-      type: string
-      format: token
-      description: A list of actors to apply an aggregate moderation action (mute/block) on.
-    AppBskyEmbedImagesViewImage:
-      type: object
-      required:
-      - thumb
-      - fullsize
-      - alt
-      properties:
-        thumb:
-          type: string
-          description: Fully-qualified URL where a thumbnail of the image can be fetched. For example, CDN location provided by the App View.
-          format: uri
-        fullsize:
-          type: string
-          description: Fully-qualified URL where a large version of the image can be fetched. May or may not be the exact original blob. For example, CDN location provided by the App View.
-          format: uri
-        alt:
-          type: string
-          description: Alt text description of the image, for accessibility.
-        aspectRatio:
-          $ref: '#/components/schemas/AppBskyEmbedDefsAspectRatio'
-    AppBskyEmbedDefsAspectRatio:
-      type: object
-      description: width:height represents an aspect ratio. It may be approximate, and may not correspond to absolute dimensions in any given unit.
-      required:
-      - width
-      - height
-      properties:
-        width:
-          type: integer
-          minimum: 1
-        height:
-          type: integer
-          minimum: 1
-    AppBskyFeedDefsNotFoundPost:
-      type: object
-      required:
-      - uri
-      - notFound
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        notFound:
-          type: boolean
-          default: true
-    AppBskyEmbedRecordViewDetached:
-      type: object
-      required:
-      - uri
-      - detached
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        detached:
-          type: boolean
-          default: true
-    AppBskyFeedGetLikesLike:
-      type: object
-      required:
-      - indexedAt
-      - createdAt
-      - actor
-      properties:
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        actor:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
-    AppBskyFeedDefsGeneratorViewerState:
-      type: object
-      properties:
-        like:
-          type: string
-          format: at-uri
-    AppBskyEmbedRecordView:
-      type: object
-      required:
-      - record
-      properties:
-        record:
-          oneOf:
-          - $ref: '#/components/schemas/AppBskyEmbedRecordViewRecord'
-          - $ref: '#/components/schemas/AppBskyEmbedRecordViewNotFound'
-          - $ref: '#/components/schemas/AppBskyEmbedRecordViewBlocked'
-          - $ref: '#/components/schemas/AppBskyEmbedRecordViewDetached'
-          - $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
-          - $ref: '#/components/schemas/AppBskyGraphDefsListView'
-          - $ref: '#/components/schemas/AppBskyLabelerDefsLabelerView'
-          - $ref: '#/components/schemas/AppBskyGraphDefsStarterPackViewBasic'
-    AppBskyActorDefsProfileViewBasic:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
-          type: string
-          format: did
-        handle:
-          type: string
-          format: handle
-        displayName:
-          type: string
-          maxLength: 640
-        avatar:
-          type: string
-          format: uri
-        associated:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        createdAt:
-          type: string
-          format: date-time
-    AppBskyFeedDefsThreadViewPost:
-      type: object
-      required:
-      - post
-      properties:
-        post:
-          $ref: '#/components/schemas/AppBskyFeedDefsPostView'
-        parent:
-          oneOf:
-          - $ref: '#/components/schemas/AppBskyFeedDefsThreadViewPost'
-          - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
-          - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
-        replies:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/AppBskyFeedDefsThreadViewPost'
-            - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
-            - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
-    AppBskyEmbedVideoView:
-      type: object
-      required:
-      - cid
-      - playlist
-      properties:
-        cid:
-          type: string
-          format: cid
-        playlist:
-          type: string
-          format: uri
-        thumbnail:
-          type: string
-          format: uri
-        alt:
-          type: string
-          maxLength: 10000
-        aspectRatio:
-          $ref: '#/components/schemas/AppBskyEmbedDefsAspectRatio'
-    AppBskyRichtextFacetTag:
-      type: object
-      description: Facet feature for a hashtag. The text usually includes a '#' prefix, but the facet reference should not (except in the case of 'double hash tags').
-      required:
-      - tag
-      properties:
-        tag:
-          type: string
-          maxLength: 640
-    AppBskyEmbedRecordViewRecord:
-      type: object
-      required:
-      - uri
-      - cid
-      - author
-      - value
-      - indexedAt
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        author:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-        value: {}
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        replyCount:
-          type: integer
-        repostCount:
-          type: integer
-        likeCount:
-          type: integer
-        quoteCount:
-          type: integer
-        embeds:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/AppBskyEmbedImagesView'
-            - $ref: '#/components/schemas/AppBskyEmbedVideoView'
-            - $ref: '#/components/schemas/AppBskyEmbedExternalView'
-            - $ref: '#/components/schemas/AppBskyEmbedRecordView'
-            - $ref: '#/components/schemas/AppBskyEmbedRecordWithMediaView'
-        indexedAt:
-          type: string
-          format: date-time
+        chat:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
     AppBskyFeedDefsThreadgateView:
       type: object
       properties:
@@ -2193,108 +2058,54 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-    AppBskyActorDefsKnownFollowers:
-      type: object
-      description: The subject's followers whom you also follow
-      required:
-      - count
-      - followers
-      properties:
-        count:
-          type: integer
-        followers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-          maxItems: 5
-    AppBskyFeedDefsReasonRepost:
+    AppBskyActorDefsProfileView:
       type: object
       required:
-      - by
-      - indexedAt
+      - did
+      - handle
       properties:
-        by:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        description:
+          type: string
+          maxLength: 2560
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
         indexedAt:
           type: string
           format: date-time
-    AppBskyGraphDefsCuratelist:
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyGraphDefsReferencelist:
       type: string
       format: token
-      description: A list of actors used for curation purposes such as list feeds or interaction gating.
-    AppBskyActorDefsViewerState:
+      description: A list of actors used for only for reference purposes such as within a starter pack.
+    AppBskyRichtextFacetMention:
       type: object
-      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
-      properties:
-        muted:
-          type: boolean
-        mutedByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        blockedBy:
-          type: boolean
-        blocking:
-          type: string
-          format: at-uri
-        blockingByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        following:
-          type: string
-          format: at-uri
-        followedBy:
-          type: string
-          format: at-uri
-        knownFollowers:
-          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
-    AppBskyGraphDefsListViewerState:
-      type: object
-      properties:
-        muted:
-          type: boolean
-        blocked:
-          type: string
-          format: at-uri
-    ComAtprotoLabelDefsLabel:
-      type: object
-      description: Metadata tag on an atproto resource (eg, repo or record).
+      description: Facet feature for mention of another account. The text is usually a handle, including a '@' prefix, but the facet reference is a DID.
       required:
-      - src
-      - uri
-      - val
-      - cts
+      - did
       properties:
-        ver:
-          type: integer
-        src:
+        did:
           type: string
-          description: DID of the actor who created this label.
           format: did
-        uri:
-          type: string
-          description: AT URI of the record, repository (account), or other resource that this label applies to.
-          format: uri
-        cid:
-          type: string
-          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
-          format: cid
-        val:
-          type: string
-          description: The short string name of the value or type of this label.
-          maxLength: 128
-        neg:
-          type: boolean
-          description: If true, this is a negation label, overwriting a previous label.
-        cts:
-          type: string
-          description: Timestamp when this label was created.
-          format: date-time
-        exp:
-          type: string
-          description: Timestamp at which this label expires (no longer applies).
-          format: date-time
-        sig:
-          type: string
-          format: byte
-          description: Signature of dag-cbor encoded label.
     AppBskyFeedDefsGeneratorView:
       type: object
       required:
@@ -2342,56 +2153,48 @@ components:
         indexedAt:
           type: string
           format: date-time
-    AppBskyFeedDefsBlockedAuthor:
+    ComAtprotoLabelDefsLabel:
       type: object
+      description: Metadata tag on an atproto resource (eg, repo or record).
       required:
-      - did
+      - src
+      - uri
+      - val
+      - cts
       properties:
-        did:
+        ver:
+          type: integer
+        src:
           type: string
+          description: DID of the actor who created this label.
           format: did
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-    AppBskyEmbedExternalView:
-      type: object
-      required:
-      - external
-      properties:
-        external:
-          $ref: '#/components/schemas/AppBskyEmbedExternalViewExternal'
-    AppBskyFeedDefsSkeletonReasonPin:
-      type: object
-      properties: {}
-    AppBskyFeedDefsFeedViewPost:
-      type: object
-      required:
-      - post
-      properties:
-        post:
-          $ref: '#/components/schemas/AppBskyFeedDefsPostView'
-        reply:
-          $ref: '#/components/schemas/AppBskyFeedDefsReplyRef'
-        reason:
-          oneOf:
-          - $ref: '#/components/schemas/AppBskyFeedDefsReasonRepost'
-          - $ref: '#/components/schemas/AppBskyFeedDefsReasonPin'
-        feedContext:
+        uri:
           type: string
-          description: Context provided by feed generator that may be passed back alongside interactions.
-          maxLength: 2000
-    AppBskyActorDefsProfileAssociated:
-      type: object
-      properties:
-        lists:
-          type: integer
-        feedgens:
-          type: integer
-        starterPacks:
-          type: integer
-        labeler:
+          description: AT URI of the record, repository (account), or other resource that this label applies to.
+          format: uri
+        cid:
+          type: string
+          description: Optionally, CID specifying the specific version of 'uri' resource this label applies to.
+          format: cid
+        val:
+          type: string
+          description: The short string name of the value or type of this label.
+          maxLength: 128
+        neg:
           type: boolean
-        chat:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
+          description: If true, this is a negation label, overwriting a previous label.
+        cts:
+          type: string
+          description: Timestamp when this label was created.
+          format: date-time
+        exp:
+          type: string
+          description: Timestamp at which this label expires (no longer applies).
+          format: date-time
+        sig:
+          type: string
+          format: byte
+          description: Signature of dag-cbor encoded label.
     AppBskyRichtextFacet:
       type: object
       description: Annotation of a sub-string within rich text.
@@ -2408,190 +2211,24 @@ components:
             - $ref: '#/components/schemas/AppBskyRichtextFacetMention'
             - $ref: '#/components/schemas/AppBskyRichtextFacetLink'
             - $ref: '#/components/schemas/AppBskyRichtextFacetTag'
-    AppBskyGraphDefsListViewBasic:
+    AppBskyFeedDefsReplyRef:
       type: object
       required:
-      - uri
-      - cid
-      - name
-      - purpose
+      - root
+      - parent
       properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        name:
-          type: string
-          minLength: 1
-          maxLength: 64
-        purpose:
-          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
-        avatar:
-          type: string
-          format: uri
-        listItemCount:
-          type: integer
-          minimum: 0
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        viewer:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
-        indexedAt:
-          type: string
-          format: date-time
-    AppBskyFeedDefsInteraction:
-      type: object
-      properties:
-        item:
-          type: string
-          format: at-uri
-        event:
-          type: string
-          enum:
-          - app.bsky.feed.defs#requestLess
-          - app.bsky.feed.defs#requestMore
-          - app.bsky.feed.defs#clickthroughItem
-          - app.bsky.feed.defs#clickthroughAuthor
-          - app.bsky.feed.defs#clickthroughReposter
-          - app.bsky.feed.defs#clickthroughEmbed
-          - app.bsky.feed.defs#interactionSeen
-          - app.bsky.feed.defs#interactionLike
-          - app.bsky.feed.defs#interactionRepost
-          - app.bsky.feed.defs#interactionReply
-          - app.bsky.feed.defs#interactionQuote
-          - app.bsky.feed.defs#interactionShare
-        feedContext:
-          type: string
-          description: Context on a feed item that was originally supplied by the feed generator on getFeedSkeleton.
-          maxLength: 2000
-    AppBskyActorDefsProfileAssociatedChat:
-      type: object
-      required:
-      - allowIncoming
-      properties:
-        allowIncoming:
-          type: string
-          enum:
-          - all
-          - none
-          - following
-    AppBskyEmbedRecordWithMediaView:
-      type: object
-      required:
-      - record
-      - media
-      properties:
-        record:
-          $ref: '#/components/schemas/AppBskyEmbedRecordView'
-        media:
+        root:
           oneOf:
-          - $ref: '#/components/schemas/AppBskyEmbedImagesView'
-          - $ref: '#/components/schemas/AppBskyEmbedVideoView'
-          - $ref: '#/components/schemas/AppBskyEmbedExternalView'
-    AppBskyGraphDefsReferencelist:
-      type: string
-      format: token
-      description: A list of actors used for only for reference purposes such as within a starter pack.
-    AppBskyLabelerDefsLabelerView:
-      type: object
-      required:
-      - uri
-      - cid
-      - creator
-      - indexedAt
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        creator:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
-        likeCount:
-          type: integer
-          minimum: 0
-        viewer:
-          $ref: '#/components/schemas/AppBskyLabelerDefsLabelerViewerState'
-        indexedAt:
-          type: string
-          format: date-time
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-    AppBskyActorDefsProfileView:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
-          type: string
-          format: did
-        handle:
-          type: string
-          format: handle
-        displayName:
-          type: string
-          maxLength: 640
-        description:
-          type: string
-          maxLength: 2560
-        avatar:
-          type: string
-          format: uri
-        associated:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-    AppBskyFeedDefsReasonPin:
-      type: object
-      properties: {}
-    AppBskyFeedDefsBlockedPost:
-      type: object
-      required:
-      - uri
-      - blocked
-      - author
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        blocked:
-          type: boolean
-          default: true
-        author:
-          $ref: '#/components/schemas/AppBskyFeedDefsBlockedAuthor'
-    AppBskyEmbedImagesView:
-      type: object
-      required:
-      - images
-      properties:
-        images:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyEmbedImagesViewImage'
-          maxItems: 4
-    AppBskyGraphDefsListPurpose:
-      oneOf:
-      - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
-      - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
+          - $ref: '#/components/schemas/AppBskyFeedDefsPostView'
+          - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyFeedDefsPostView'
+          - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
+        grandparentAuthor:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
     AppBskyGraphDefsListView:
       type: object
       required:
@@ -2638,6 +2275,283 @@ components:
         indexedAt:
           type: string
           format: date-time
+    AppBskyFeedDescribeFeedGeneratorFeed:
+      type: object
+      required:
+      - uri
+      properties:
+        uri:
+          type: string
+          format: at-uri
+    AppBskyGraphDefsListViewBasic:
+      type: object
+      required:
+      - uri
+      - cid
+      - name
+      - purpose
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        purpose:
+          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
+        avatar:
+          type: string
+          format: uri
+        listItemCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyLabelerDefsLabelerView:
+      type: object
+      required:
+      - uri
+      - cid
+      - creator
+      - indexedAt
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        creator:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+        likeCount:
+          type: integer
+          minimum: 0
+        viewer:
+          $ref: '#/components/schemas/AppBskyLabelerDefsLabelerViewerState'
+        indexedAt:
+          type: string
+          format: date-time
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyFeedDefsReasonRepost:
+      type: object
+      required:
+      - by
+      - indexedAt
+      properties:
+        by:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+        indexedAt:
+          type: string
+          format: date-time
+    AppBskyFeedDefsThreadViewPost:
+      type: object
+      required:
+      - post
+      properties:
+        post:
+          $ref: '#/components/schemas/AppBskyFeedDefsPostView'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyFeedDefsThreadViewPost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
+        replies:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/AppBskyFeedDefsThreadViewPost'
+            - $ref: '#/components/schemas/AppBskyFeedDefsNotFoundPost'
+            - $ref: '#/components/schemas/AppBskyFeedDefsBlockedPost'
+    AppBskyFeedDefsInteraction:
+      type: object
+      properties:
+        item:
+          type: string
+          format: at-uri
+        event:
+          type: string
+          enum:
+          - app.bsky.feed.defs#requestLess
+          - app.bsky.feed.defs#requestMore
+          - app.bsky.feed.defs#clickthroughItem
+          - app.bsky.feed.defs#clickthroughAuthor
+          - app.bsky.feed.defs#clickthroughReposter
+          - app.bsky.feed.defs#clickthroughEmbed
+          - app.bsky.feed.defs#interactionSeen
+          - app.bsky.feed.defs#interactionLike
+          - app.bsky.feed.defs#interactionRepost
+          - app.bsky.feed.defs#interactionReply
+          - app.bsky.feed.defs#interactionQuote
+          - app.bsky.feed.defs#interactionShare
+        feedContext:
+          type: string
+          description: Context on a feed item that was originally supplied by the feed generator on getFeedSkeleton.
+          maxLength: 2000
+    AppBskyFeedDefsSkeletonReasonPin:
+      type: object
+      properties: {}
+    AppBskyFeedGetLikesLike:
+      type: object
+      required:
+      - indexedAt
+      - createdAt
+      - actor
+      properties:
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        actor:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileView'
+    AppBskyEmbedVideoView:
+      type: object
+      required:
+      - cid
+      - playlist
+      properties:
+        cid:
+          type: string
+          format: cid
+        playlist:
+          type: string
+          format: uri
+        thumbnail:
+          type: string
+          format: uri
+        alt:
+          type: string
+          maxLength: 10000
+        aspectRatio:
+          $ref: '#/components/schemas/AppBskyEmbedDefsAspectRatio'
+    AppBskyFeedDefsGeneratorViewerState:
+      type: object
+      properties:
+        like:
+          type: string
+          format: at-uri
+    AppBskyEmbedImagesView:
+      type: object
+      required:
+      - images
+      properties:
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyEmbedImagesViewImage'
+          maxItems: 4
+    AppBskyLabelerDefsLabelerViewerState:
+      type: object
+      properties:
+        like:
+          type: string
+          format: at-uri
+    AppBskyFeedDescribeFeedGeneratorLinks:
+      type: object
+      properties:
+        privacyPolicy:
+          type: string
+        termsOfService:
+          type: string
+    AppBskyFeedDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject content. Only has meaningful content for authed requests.
+      properties:
+        repost:
+          type: string
+          format: at-uri
+        like:
+          type: string
+          format: at-uri
+        threadMuted:
+          type: boolean
+        replyDisabled:
+          type: boolean
+        embeddingDisabled:
+          type: boolean
+        pinned:
+          type: boolean
+    AppBskyFeedDefsFeedViewPost:
+      type: object
+      required:
+      - post
+      properties:
+        post:
+          $ref: '#/components/schemas/AppBskyFeedDefsPostView'
+        reply:
+          $ref: '#/components/schemas/AppBskyFeedDefsReplyRef'
+        reason:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyFeedDefsReasonRepost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsReasonPin'
+        feedContext:
+          type: string
+          description: Context provided by feed generator that may be passed back alongside interactions.
+          maxLength: 2000
+    AppBskyFeedDefsBlockedAuthor:
+      type: object
+      required:
+      - did
+      properties:
+        did:
+          type: string
+          format: did
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+    AppBskyFeedDefsSkeletonFeedPost:
+      type: object
+      required:
+      - post
+      properties:
+        post:
+          type: string
+          format: at-uri
+        reason:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyFeedDefsSkeletonReasonRepost'
+          - $ref: '#/components/schemas/AppBskyFeedDefsSkeletonReasonPin'
+        feedContext:
+          type: string
+          description: Context that will be passed through to client and may be passed to feed generator back alongside interactions.
+          maxLength: 2000
+    AppBskyActorDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          format: at-uri
+        blockingByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        following:
+          type: string
+          format: at-uri
+        followedBy:
+          type: string
+          format: at-uri
+        knownFollowers:
+          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
     AppBskyRichtextFacetLink:
       type: object
       description: Facet feature for a URL. The text URL may have been simplified or truncated, but the facet reference should be a complete URL.
@@ -2647,13 +2561,13 @@ components:
         uri:
           type: string
           format: uri
-    AppBskyFeedDefsPostView:
+    AppBskyEmbedRecordViewRecord:
       type: object
       required:
       - uri
       - cid
       - author
-      - record
+      - value
       - indexedAt
       properties:
         uri:
@@ -2664,14 +2578,11 @@ components:
           format: cid
         author:
           $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-        record: {}
-        embed:
-          oneOf:
-          - $ref: '#/components/schemas/AppBskyEmbedImagesView'
-          - $ref: '#/components/schemas/AppBskyEmbedVideoView'
-          - $ref: '#/components/schemas/AppBskyEmbedExternalView'
-          - $ref: '#/components/schemas/AppBskyEmbedRecordView'
-          - $ref: '#/components/schemas/AppBskyEmbedRecordWithMediaView'
+        value: {}
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
         replyCount:
           type: integer
         repostCount:
@@ -2680,25 +2591,107 @@ components:
           type: integer
         quoteCount:
           type: integer
+        embeds:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/AppBskyEmbedImagesView'
+            - $ref: '#/components/schemas/AppBskyEmbedVideoView'
+            - $ref: '#/components/schemas/AppBskyEmbedExternalView'
+            - $ref: '#/components/schemas/AppBskyEmbedRecordView'
+            - $ref: '#/components/schemas/AppBskyEmbedRecordWithMediaView'
         indexedAt:
           type: string
           format: date-time
-        viewer:
-          $ref: '#/components/schemas/AppBskyFeedDefsViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        threadgate:
-          $ref: '#/components/schemas/AppBskyFeedDefsThreadgateView'
-    AppBskyFeedDefsSkeletonReasonRepost:
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
+    AppBskyGraphDefsListViewerState:
       type: object
-      required:
-      - repost
       properties:
-        repost:
+        muted:
+          type: boolean
+        blocked:
           type: string
           format: at-uri
+    AppBskyEmbedExternalViewExternal:
+      type: object
+      required:
+      - uri
+      - title
+      - description
+      properties:
+        uri:
+          type: string
+          format: uri
+        title:
+          type: string
+        description:
+          type: string
+        thumb:
+          type: string
+          format: uri
+    AppBskyActorDefsKnownFollowers:
+      type: object
+      description: The subject's followers whom you also follow
+      required:
+      - count
+      - followers
+      properties:
+        count:
+          type: integer
+        followers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+          maxItems: 5
+    AppBskyEmbedImagesViewImage:
+      type: object
+      required:
+      - thumb
+      - fullsize
+      - alt
+      properties:
+        thumb:
+          type: string
+          description: Fully-qualified URL where a thumbnail of the image can be fetched. For example, CDN location provided by the App View.
+          format: uri
+        fullsize:
+          type: string
+          description: Fully-qualified URL where a large version of the image can be fetched. May or may not be the exact original blob. For example, CDN location provided by the App View.
+          format: uri
+        alt:
+          type: string
+          description: Alt text description of the image, for accessibility.
+        aspectRatio:
+          $ref: '#/components/schemas/AppBskyEmbedDefsAspectRatio'
+    AppBskyActorDefsProfileAssociatedChat:
+      type: object
+      required:
+      - allowIncoming
+      properties:
+        allowIncoming:
+          type: string
+          enum:
+          - all
+          - none
+          - following
+    AppBskyEmbedRecordView:
+      type: object
+      required:
+      - record
+      properties:
+        record:
+          oneOf:
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewRecord'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewNotFound'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewBlocked'
+          - $ref: '#/components/schemas/AppBskyEmbedRecordViewDetached'
+          - $ref: '#/components/schemas/AppBskyFeedDefsGeneratorView'
+          - $ref: '#/components/schemas/AppBskyGraphDefsListView'
+          - $ref: '#/components/schemas/AppBskyLabelerDefsLabelerView'
+          - $ref: '#/components/schemas/AppBskyGraphDefsStarterPackViewBasic'
     AppBskyEmbedRecordViewBlocked:
       type: object
       required:
@@ -2714,11 +2707,17 @@ components:
           default: true
         author:
           $ref: '#/components/schemas/AppBskyFeedDefsBlockedAuthor'
+    AppBskyEmbedExternalView:
+      type: object
+      required:
+      - external
+      properties:
+        external:
+          $ref: '#/components/schemas/AppBskyEmbedExternalViewExternal'
   examples:
-    FeedGetQuotesResponse200Example:
-      summary: Successful response for feedGetQuotes
+    FeedGetPostsResponse200Example:
+      summary: Successful response for feedGetPosts
       value:
-        uri: at://did:plc:example123/app.bsky.feed.post/abc123
         posts:
         - uri: at://did:plc:example123/app.bsky.feed.post/abc123
           cid: bafyreiabc123example
@@ -2737,50 +2736,59 @@ components:
             images: {}
           replyCount: 50
           repostCount: 50
-        cid: bafyreiabc123example
+    FeedGetActorFeedsResponse200Example:
+      summary: Successful response for feedGetActorFeeds
+      value:
+        feeds:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          did: did:plc:example123abc
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          displayName: Example Name
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: {}
         cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    FeedGetActorLikesResponse200Example:
-      summary: Successful response for feedGetActorLikes
+    FeedGetSuggestedFeedsResponse200Example:
+      summary: Successful response for feedGetSuggestedFeeds
+      value:
+        feeds:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          did: did:plc:example123abc
+          creator:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+          displayName: Example Name
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+          descriptionFacets:
+          - index: {}
+            features: {}
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedGetFeedSkeletonResponse200Example:
+      summary: Successful response for feedGetFeedSkeleton
       value:
         feed:
-        - post:
-            uri: at://did:plc:example123/app.bsky.feed.post/abc123
-            cid: bafyreiabc123example
-            author: {}
-            record: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            embed: {}
-            replyCount: 50
-            repostCount: 50
-          reply:
-            root: {}
-            parent: {}
-            grandparentAuthor: {}
+        - post: at://did:plc:example123/app.bsky.feed.post/abc123
           reason:
-            by: {}
-            indexedAt: {}
-          feedContext: Example text content
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    FeedGetTimelineResponse200Example:
-      summary: Successful response for feedGetTimeline
-      value:
-        feed:
-        - post:
-            uri: at://did:plc:example123/app.bsky.feed.post/abc123
-            cid: bafyreiabc123example
-            author: {}
-            record: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            embed: {}
-            replyCount: 50
-            repostCount: 50
-          reply:
-            root: {}
-            parent: {}
-            grandparentAuthor: {}
-          reason:
-            by: {}
-            indexedAt: {}
+            repost: {}
           feedContext: Example text content
         cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
     FeedGetFeedGeneratorResponse200Example:
@@ -2812,31 +2820,12 @@ components:
             features: []
         isOnline: true
         isValid: true
-    FeedGetSuggestedFeedsResponse200Example:
-      summary: Successful response for feedGetSuggestedFeeds
+    FeedSendInteractionsResponse200Example:
+      summary: Successful response for feedSendInteractions
       value:
-        feeds:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          did: did:plc:example123abc
-          creator:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            description: This is an example description.
-            avatar: https://example.com/resource
-            associated: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            createdAt: '2024-01-15T12:00:00.000Z'
-          displayName: Example Name
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          description: This is an example description.
-          descriptionFacets:
-          - index: {}
-            features: {}
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    FeedGetFeedResponse200Example:
-      summary: Successful response for feedGetFeed
+        _unknown_: {}
+    FeedGetAuthorFeedResponse200Example:
+      summary: Successful response for feedGetAuthorFeed
       value:
         feed:
         - post:
@@ -2857,162 +2846,8 @@ components:
             indexedAt: {}
           feedContext: Example text content
         cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    FeedGetActorFeedsResponse200Example:
-      summary: Successful response for feedGetActorFeeds
-      value:
-        feeds:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          did: did:plc:example123abc
-          creator:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            description: This is an example description.
-            avatar: https://example.com/resource
-            associated: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            createdAt: '2024-01-15T12:00:00.000Z'
-          displayName: Example Name
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          description: This is an example description.
-          descriptionFacets:
-          - index: {}
-            features: {}
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    FeedGetPostsResponse200Example:
-      summary: Successful response for feedGetPosts
-      value:
-        posts:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          author:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            avatar: https://example.com/resource
-            associated: {}
-            viewer: {}
-            labels: []
-            createdAt: '2024-01-15T12:00:00.000Z'
-          record: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          embed:
-            images: {}
-          replyCount: 50
-          repostCount: 50
-    FeedGetPostThreadResponse200Example:
-      summary: Successful response for feedGetPostThread
-      value:
-        thread:
-          post:
-            uri: at://did:plc:example123/app.bsky.feed.post/abc123
-            cid: bafyreiabc123example
-            author: {}
-            record: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            embed: {}
-            replyCount: 50
-            repostCount: 50
-          parent:
-            post: {}
-            parent: {}
-            replies: {}
-          replies: []
-        threadgate:
-          uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          record: {}
-          lists:
-          - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-            cid: bafyreiabc123example
-            name: Example Name
-            purpose: {}
-            avatar: https://example.com/resource
-            listItemCount: 50
-            labels: []
-            viewer: {}
-    FeedDescribeFeedGeneratorResponse200Example:
-      summary: Successful response for feedDescribeFeedGenerator
-      value:
-        did: did:plc:example123abc
-        feeds:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-        links:
-          privacyPolicy: example-privacyPolicy
-          termsOfService: example-termsOfService
-    FeedGetRepostedByResponse200Example:
-      summary: Successful response for feedGetRepostedBy
-      value:
-        uri: at://did:plc:example123/app.bsky.feed.post/abc123
-        repostedBy:
-        - did: did:plc:example123abc
-          handle: user.bsky.social
-          displayName: Example Name
-          description: This is an example description.
-          avatar: https://example.com/resource
-          associated:
-            lists: 50
-            feedgens: 50
-            starterPacks: 50
-            labeler: true
-            chat: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          createdAt: '2024-01-15T12:00:00.000Z'
-        cid: bafyreiabc123example
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    FeedGetFeedSkeletonResponse200Example:
-      summary: Successful response for feedGetFeedSkeleton
-      value:
-        feed:
-        - post: at://did:plc:example123/app.bsky.feed.post/abc123
-          reason:
-            repost: {}
-          feedContext: Example text content
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    FeedSearchPostsResponse200Example:
-      summary: Successful response for feedSearchPosts
-      value:
-        posts:
-        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
-          cid: bafyreiabc123example
-          author:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            avatar: https://example.com/resource
-            associated: {}
-            viewer: {}
-            labels: []
-            createdAt: '2024-01-15T12:00:00.000Z'
-          record: {}
-          indexedAt: '2024-01-15T12:00:00.000Z'
-          embed:
-            images: {}
-          replyCount: 50
-          repostCount: 50
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-        hitsTotal: 50
-    FeedGetLikesResponse200Example:
-      summary: Successful response for feedGetLikes
-      value:
-        uri: at://did:plc:example123/app.bsky.feed.post/abc123
-        likes:
-        - indexedAt: '2024-01-15T12:00:00.000Z'
-          createdAt: '2024-01-15T12:00:00.000Z'
-          actor:
-            did: did:plc:example123abc
-            handle: user.bsky.social
-            displayName: Example Name
-            description: This is an example description.
-            avatar: https://example.com/resource
-            associated: {}
-            indexedAt: '2024-01-15T12:00:00.000Z'
-            createdAt: '2024-01-15T12:00:00.000Z'
-        cid: bafyreiabc123example
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    FeedGetAuthorFeedResponse200Example:
-      summary: Successful response for feedGetAuthorFeed
+    FeedGetFeedResponse200Example:
+      summary: Successful response for feedGetFeed
       value:
         feed:
         - post:
@@ -3055,6 +2890,117 @@ components:
           descriptionFacets:
           - index: {}
             features: {}
+    FeedSendInteractionsRequestExample:
+      summary: Example request for feedSendInteractions
+      value:
+        interactions:
+        - item: at://did:plc:example123/app.bsky.feed.post/abc123
+          event: app.bsky.feed.defs#requestLess
+          feedContext: Example text content
+    FeedGetLikesResponse200Example:
+      summary: Successful response for feedGetLikes
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        likes:
+        - indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+          actor:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            description: This is an example description.
+            avatar: https://example.com/resource
+            associated: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            createdAt: '2024-01-15T12:00:00.000Z'
+        cid: bafyreiabc123example
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedGetTimelineResponse200Example:
+      summary: Successful response for feedGetTimeline
+      value:
+        feed:
+        - post:
+            uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            author: {}
+            record: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            embed: {}
+            replyCount: 50
+            repostCount: 50
+          reply:
+            root: {}
+            parent: {}
+            grandparentAuthor: {}
+          reason:
+            by: {}
+            indexedAt: {}
+          feedContext: Example text content
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedGetQuotesResponse200Example:
+      summary: Successful response for feedGetQuotes
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        posts:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          author:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            avatar: https://example.com/resource
+            associated: {}
+            viewer: {}
+            labels: []
+            createdAt: '2024-01-15T12:00:00.000Z'
+          record: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          embed:
+            images: {}
+          replyCount: 50
+          repostCount: 50
+        cid: bafyreiabc123example
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedDescribeFeedGeneratorResponse200Example:
+      summary: Successful response for feedDescribeFeedGenerator
+      value:
+        did: did:plc:example123abc
+        feeds:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        links:
+          privacyPolicy: example-privacyPolicy
+          termsOfService: example-termsOfService
+    FeedGetPostThreadResponse200Example:
+      summary: Successful response for feedGetPostThread
+      value:
+        thread:
+          post:
+            uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            author: {}
+            record: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            embed: {}
+            replyCount: 50
+            repostCount: 50
+          parent:
+            post: {}
+            parent: {}
+            replies: {}
+          replies: []
+        threadgate:
+          uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          record: {}
+          lists:
+          - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            name: Example Name
+            purpose: {}
+            avatar: https://example.com/resource
+            listItemCount: 50
+            labels: []
+            viewer: {}
     FeedGetListFeedResponse200Example:
       summary: Successful response for feedGetListFeed
       value:
@@ -3077,17 +3023,71 @@ components:
             indexedAt: {}
           feedContext: Example text content
         cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    FeedSendInteractionsResponse200Example:
-      summary: Successful response for feedSendInteractions
+    FeedGetActorLikesResponse200Example:
+      summary: Successful response for feedGetActorLikes
       value:
-        _unknown_: {}
-    FeedSendInteractionsRequestExample:
-      summary: Example request for feedSendInteractions
-      value:
-        interactions:
-        - item: at://did:plc:example123/app.bsky.feed.post/abc123
-          event: app.bsky.feed.defs#requestLess
+        feed:
+        - post:
+            uri: at://did:plc:example123/app.bsky.feed.post/abc123
+            cid: bafyreiabc123example
+            author: {}
+            record: {}
+            indexedAt: '2024-01-15T12:00:00.000Z'
+            embed: {}
+            replyCount: 50
+            repostCount: 50
+          reply:
+            root: {}
+            parent: {}
+            grandparentAuthor: {}
+          reason:
+            by: {}
+            indexedAt: {}
           feedContext: Example text content
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    FeedSearchPostsResponse200Example:
+      summary: Successful response for feedSearchPosts
+      value:
+        posts:
+        - uri: at://did:plc:example123/app.bsky.feed.post/abc123
+          cid: bafyreiabc123example
+          author:
+            did: did:plc:example123abc
+            handle: user.bsky.social
+            displayName: Example Name
+            avatar: https://example.com/resource
+            associated: {}
+            viewer: {}
+            labels: []
+            createdAt: '2024-01-15T12:00:00.000Z'
+          record: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          embed:
+            images: {}
+          replyCount: 50
+          repostCount: 50
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+        hitsTotal: 50
+    FeedGetRepostedByResponse200Example:
+      summary: Successful response for feedGetRepostedBy
+      value:
+        uri: at://did:plc:example123/app.bsky.feed.post/abc123
+        repostedBy:
+        - did: did:plc:example123abc
+          handle: user.bsky.social
+          displayName: Example Name
+          description: This is an example description.
+          avatar: https://example.com/resource
+          associated:
+            lists: 50
+            feedgens: 50
+            starterPacks: 50
+            labeler: true
+            chat: {}
+          indexedAt: '2024-01-15T12:00:00.000Z'
+          createdAt: '2024-01-15T12:00:00.000Z'
+        cid: bafyreiabc123example
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
   securitySchemes:
     Bearer:
       type: http

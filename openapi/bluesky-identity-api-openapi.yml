@@ -430,10 +430,15 @@ paths:
                     type: string
 components:
   examples:
-    IdentityUpdateHandleRequestExample:
-      summary: Example request for identityUpdateHandle
+    IdentityGetRecommendedDidCredentialsResponse200Example:
+      summary: Successful response for identityGetRecommendedDidCredentials
       value:
-        handle: user.bsky.social
+        rotationKeys:
+        - example-rotationKeys
+        alsoKnownAs:
+        - example-alsoKnownAs
+        verificationMethods: {}
+        services: {}
     IdentitySubmitPlcOperationRequestExample:
       summary: Example request for identitySubmitPlcOperation
       value:
@@ -448,23 +453,18 @@ components:
         - example-alsoKnownAs
         verificationMethods: {}
         services: {}
-    IdentityResolveHandleResponse200Example:
-      summary: Successful response for identityResolveHandle
-      value:
-        did: did:plc:example123abc
     IdentitySignPlcOperationResponse200Example:
       summary: Successful response for identitySignPlcOperation
       value:
         operation: {}
-    IdentityGetRecommendedDidCredentialsResponse200Example:
-      summary: Successful response for identityGetRecommendedDidCredentials
+    IdentityUpdateHandleRequestExample:
+      summary: Example request for identityUpdateHandle
       value:
-        rotationKeys:
-        - example-rotationKeys
-        alsoKnownAs:
-        - example-alsoKnownAs
-        verificationMethods: {}
-        services: {}
+        handle: user.bsky.social
+    IdentityResolveHandleResponse200Example:
+      summary: Successful response for identityResolveHandle
+      value:
+        did: did:plc:example123abc
   securitySchemes:
     Bearer:
       type: http

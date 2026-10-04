@@ -524,63 +524,19 @@ paths:
                   message:
                     type: string
 components:
-  examples:
-    OzoneSetUpsertSetResponse200Example:
-      summary: Successful response for ozoneSetUpsertSet
-      value:
-        name: Example Name
-        setSize: 50
-        createdAt: '2024-01-15T12:00:00.000Z'
-        updatedAt: '2024-01-15T12:00:00.000Z'
-        description: This is an example description.
-    OzoneSetDeleteSetResponse200Example:
-      summary: Successful response for ozoneSetDeleteSet
-      value:
-        _unknown_: {}
-    OzoneSetDeleteSetRequestExample:
-      summary: Example request for ozoneSetDeleteSet
-      value:
-        name: Example Name
-    OzoneSetUpsertSetRequestExample:
-      summary: Example request for ozoneSetUpsertSet
-      value:
-        name: Example Name
-        description: This is an example description.
-    OzoneSetGetValuesResponse200Example:
-      summary: Successful response for ozoneSetGetValues
-      value:
-        set:
-          name: Example Name
-          setSize: 50
-          createdAt: '2024-01-15T12:00:00.000Z'
-          updatedAt: '2024-01-15T12:00:00.000Z'
-          description: This is an example description.
-        values:
-        - example-values
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
-    OzoneSetAddValuesRequestExample:
-      summary: Example request for ozoneSetAddValues
-      value:
-        name: Example Name
-        values:
-        - example-values
-    OzoneSetDeleteValuesRequestExample:
-      summary: Example request for ozoneSetDeleteValues
-      value:
-        name: Example Name
-        values:
-        - example-values
-    OzoneSetQuerySetsResponse200Example:
-      summary: Successful response for ozoneSetQuerySets
-      value:
-        sets:
-        - name: Example Name
-          setSize: 50
-          createdAt: '2024-01-15T12:00:00.000Z'
-          updatedAt: '2024-01-15T12:00:00.000Z'
-          description: This is an example description.
-        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
   schemas:
+    ToolsOzoneSetDefsSet:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 128
+        description:
+          type: string
+          maxLength: 10240
     ToolsOzoneSetDefsSetView:
       type: object
       required:
@@ -604,18 +560,62 @@ components:
         updatedAt:
           type: string
           format: date-time
-    ToolsOzoneSetDefsSet:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          minLength: 3
-          maxLength: 128
-        description:
-          type: string
-          maxLength: 10240
+  examples:
+    OzoneSetUpsertSetRequestExample:
+      summary: Example request for ozoneSetUpsertSet
+      value:
+        name: Example Name
+        description: This is an example description.
+    OzoneSetDeleteSetRequestExample:
+      summary: Example request for ozoneSetDeleteSet
+      value:
+        name: Example Name
+    OzoneSetDeleteValuesRequestExample:
+      summary: Example request for ozoneSetDeleteValues
+      value:
+        name: Example Name
+        values:
+        - example-values
+    OzoneSetQuerySetsResponse200Example:
+      summary: Successful response for ozoneSetQuerySets
+      value:
+        sets:
+        - name: Example Name
+          setSize: 50
+          createdAt: '2024-01-15T12:00:00.000Z'
+          updatedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneSetGetValuesResponse200Example:
+      summary: Successful response for ozoneSetGetValues
+      value:
+        set:
+          name: Example Name
+          setSize: 50
+          createdAt: '2024-01-15T12:00:00.000Z'
+          updatedAt: '2024-01-15T12:00:00.000Z'
+          description: This is an example description.
+        values:
+        - example-values
+        cursor: eyJsYXN0SWQiOiIxMjM0NTYifQ
+    OzoneSetUpsertSetResponse200Example:
+      summary: Successful response for ozoneSetUpsertSet
+      value:
+        name: Example Name
+        setSize: 50
+        createdAt: '2024-01-15T12:00:00.000Z'
+        updatedAt: '2024-01-15T12:00:00.000Z'
+        description: This is an example description.
+    OzoneSetAddValuesRequestExample:
+      summary: Example request for ozoneSetAddValues
+      value:
+        name: Example Name
+        values:
+        - example-values
+    OzoneSetDeleteSetResponse200Example:
+      summary: Successful response for ozoneSetDeleteSet
+      value:
+        _unknown_: {}
   securitySchemes:
     Bearer:
       type: http
