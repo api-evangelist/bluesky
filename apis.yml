@@ -847,6 +847,12 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bluesky.png
 access: 3rd-Party
 common:
+  - type: Plans
+    url: plans/bluesky-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/bluesky-rate-limits.yml
+  - type: FinOps
+    url: finops/bluesky-finops.yml
   - type: CapabilityMap
     url: capabilities/bluesky-capability-edges.yml
     name: Bluesky Business Capability Map
