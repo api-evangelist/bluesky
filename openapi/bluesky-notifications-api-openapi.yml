@@ -428,10 +428,91 @@ components:
       - $ref: '#/components/schemas/AppBskyGraphDefsModlist'
       - $ref: '#/components/schemas/AppBskyGraphDefsCuratelist'
       - $ref: '#/components/schemas/AppBskyGraphDefsReferencelist'
-    AppBskyGraphDefsModlist:
+    AppBskyActorDefsProfileView:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+          format: did
+        handle:
+          type: string
+          format: handle
+        displayName:
+          type: string
+          maxLength: 640
+        description:
+          type: string
+          maxLength: 2560
+        avatar:
+          type: string
+          format: uri
+        associated:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+    AppBskyActorDefsKnownFollowers:
+      type: object
+      description: The subject's followers whom you also follow
+      required:
+      - count
+      - followers
+      properties:
+        count:
+          type: integer
+        followers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
+          maxItems: 5
+    AppBskyGraphDefsReferencelist:
       type: string
       format: token
-      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+      description: A list of actors used for only for reference purposes such as within a starter pack.
+    AppBskyGraphDefsListViewerState:
+      type: object
+      properties:
+        muted:
+          type: boolean
+        blocked:
+          type: string
+          format: at-uri
+    AppBskyActorDefsProfileAssociatedChat:
+      type: object
+      required:
+      - allowIncoming
+      properties:
+        allowIncoming:
+          type: string
+          enum:
+          - all
+          - none
+          - following
+    AppBskyActorDefsProfileAssociated:
+      type: object
+      properties:
+        lists:
+          type: integer
+        feedgens:
+          type: integer
+        starterPacks:
+          type: integer
+        labeler:
+          type: boolean
+        chat:
+          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
     AppBskyActorDefsProfileViewBasic:
       type: object
       required:
@@ -459,6 +540,41 @@ components:
           items:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
         createdAt:
+          type: string
+          format: date-time
+    AppBskyGraphDefsListViewBasic:
+      type: object
+      required:
+      - uri
+      - cid
+      - name
+      - purpose
+      properties:
+        uri:
+          type: string
+          format: at-uri
+        cid:
+          type: string
+          format: cid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        purpose:
+          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
+        avatar:
+          type: string
+          format: uri
+        listItemCount:
+          type: integer
+          minimum: 0
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
+        viewer:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
+        indexedAt:
           type: string
           format: date-time
     AppBskyNotificationListNotificationsNotification:
@@ -504,58 +620,37 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-    AppBskyActorDefsProfileAssociated:
-      type: object
-      properties:
-        lists:
-          type: integer
-        feedgens:
-          type: integer
-        starterPacks:
-          type: integer
-        labeler:
-          type: boolean
-        chat:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociatedChat'
-    AppBskyActorDefsProfileView:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
-          type: string
-          format: did
-        handle:
-          type: string
-          format: handle
-        displayName:
-          type: string
-          maxLength: 640
-        description:
-          type: string
-          maxLength: 2560
-        avatar:
-          type: string
-          format: uri
-        associated:
-          $ref: '#/components/schemas/AppBskyActorDefsProfileAssociated'
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        viewer:
-          $ref: '#/components/schemas/AppBskyActorDefsViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-    AppBskyGraphDefsReferencelist:
+    AppBskyGraphDefsModlist:
       type: string
       format: token
-      description: A list of actors used for only for reference purposes such as within a starter pack.
+      description: A list of actors to apply an aggregate moderation action (mute/block) on.
+    AppBskyGraphDefsCuratelist:
+      type: string
+      format: token
+      description: A list of actors used for curation purposes such as list feeds or interaction gating.
+    AppBskyActorDefsViewerState:
+      type: object
+      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          format: at-uri
+        blockingByList:
+          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
+        following:
+          type: string
+          format: at-uri
+        followedBy:
+          type: string
+          format: at-uri
+        knownFollowers:
+          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
     ComAtprotoLabelDefsLabel:
       type: object
       description: Metadata tag on an atproto resource (eg, repo or record).
@@ -598,110 +693,11 @@ components:
           type: string
           format: byte
           description: Signature of dag-cbor encoded label.
-    AppBskyGraphDefsListViewBasic:
-      type: object
-      required:
-      - uri
-      - cid
-      - name
-      - purpose
-      properties:
-        uri:
-          type: string
-          format: at-uri
-        cid:
-          type: string
-          format: cid
-        name:
-          type: string
-          minLength: 1
-          maxLength: 64
-        purpose:
-          $ref: '#/components/schemas/AppBskyGraphDefsListPurpose'
-        avatar:
-          type: string
-          format: uri
-        listItemCount:
-          type: integer
-          minimum: 0
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComAtprotoLabelDefsLabel'
-        viewer:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewerState'
-        indexedAt:
-          type: string
-          format: date-time
-    AppBskyActorDefsViewerState:
-      type: object
-      description: Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.
-      properties:
-        muted:
-          type: boolean
-        mutedByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        blockedBy:
-          type: boolean
-        blocking:
-          type: string
-          format: at-uri
-        blockingByList:
-          $ref: '#/components/schemas/AppBskyGraphDefsListViewBasic'
-        following:
-          type: string
-          format: at-uri
-        followedBy:
-          type: string
-          format: at-uri
-        knownFollowers:
-          $ref: '#/components/schemas/AppBskyActorDefsKnownFollowers'
-    AppBskyGraphDefsCuratelist:
-      type: string
-      format: token
-      description: A list of actors used for curation purposes such as list feeds or interaction gating.
-    AppBskyGraphDefsListViewerState:
-      type: object
-      properties:
-        muted:
-          type: boolean
-        blocked:
-          type: string
-          format: at-uri
-    AppBskyActorDefsKnownFollowers:
-      type: object
-      description: The subject's followers whom you also follow
-      required:
-      - count
-      - followers
-      properties:
-        count:
-          type: integer
-        followers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppBskyActorDefsProfileViewBasic'
-          maxItems: 5
-    AppBskyActorDefsProfileAssociatedChat:
-      type: object
-      required:
-      - allowIncoming
-      properties:
-        allowIncoming:
-          type: string
-          enum:
-          - all
-          - none
-          - following
   examples:
     NotificationGetUnreadCountResponse200Example:
       summary: Successful response for notificationGetUnreadCount
       value:
         count: 50
-    NotificationUpdateSeenRequestExample:
-      summary: Example request for notificationUpdateSeen
-      value:
-        seenAt: '2024-01-15T12:00:00.000Z'
     NotificationRegisterPushRequestExample:
       summary: Example request for notificationRegisterPush
       value:
@@ -736,6 +732,10 @@ components:
       summary: Example request for notificationPutPreferences
       value:
         priority: true
+    NotificationUpdateSeenRequestExample:
+      summary: Example request for notificationUpdateSeen
+      value:
+        seenAt: '2024-01-15T12:00:00.000Z'
   securitySchemes:
     Bearer:
       type: http

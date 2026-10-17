@@ -92,12 +92,6 @@ paths:
                     type: string
 components:
   schemas:
-    ToolsOzoneServerGetConfigServiceConfig:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
     ToolsOzoneServerGetConfigViewerConfig:
       type: object
       properties:
@@ -107,6 +101,12 @@ components:
           - tools.ozone.team.defs#roleAdmin
           - tools.ozone.team.defs#roleModerator
           - tools.ozone.team.defs#roleTriage
+    ToolsOzoneServerGetConfigServiceConfig:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
   examples:
     OzoneServerGetConfigResponse200Example:
       summary: Successful response for ozoneServerGetConfig

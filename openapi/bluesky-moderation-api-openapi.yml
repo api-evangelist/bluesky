@@ -125,27 +125,10 @@ paths:
                     type: string
 components:
   schemas:
-    ComAtprotoModerationDefsReasonType:
-      oneOf:
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSpam'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonViolation'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonMisleading'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSexual'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonRude'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonOther'
-      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonAppeal'
     ComAtprotoModerationDefsReasonOther:
       type: string
       format: token
       description: 'Other: reports not falling under another report category'
-    ComAtprotoModerationDefsReasonSpam:
-      type: string
-      format: token
-      description: 'Spam: frequent unwanted promotion, replies, mentions'
-    ComAtprotoModerationDefsReasonViolation:
-      type: string
-      format: token
-      description: Direct violation of server rules, laws, terms of service
     ComAtprotoRepoStrongRef:
       type: object
       required:
@@ -158,6 +141,14 @@ components:
         cid:
           type: string
           format: cid
+    ComAtprotoModerationDefsReasonSexual:
+      type: string
+      format: token
+      description: Unwanted or mislabeled sexual content
+    ComAtprotoModerationDefsReasonViolation:
+      type: string
+      format: token
+      description: Direct violation of server rules, laws, terms of service
     ComAtprotoModerationDefsReasonMisleading:
       type: string
       format: token
@@ -166,14 +157,15 @@ components:
       type: string
       format: token
       description: Rude, harassing, explicit, or otherwise unwelcoming behavior
-    ComAtprotoModerationDefsReasonAppeal:
-      type: string
-      format: token
-      description: 'Appeal: appeal a previously taken moderation action'
-    ComAtprotoModerationDefsReasonSexual:
-      type: string
-      format: token
-      description: Unwanted or mislabeled sexual content
+    ComAtprotoModerationDefsReasonType:
+      oneOf:
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSpam'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonViolation'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonMisleading'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonSexual'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonRude'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonOther'
+      - $ref: '#/components/schemas/ComAtprotoModerationDefsReasonAppeal'
     ComAtprotoAdminDefsRepoRef:
       type: object
       required:
@@ -182,7 +174,22 @@ components:
         did:
           type: string
           format: did
+    ComAtprotoModerationDefsReasonSpam:
+      type: string
+      format: token
+      description: 'Spam: frequent unwanted promotion, replies, mentions'
+    ComAtprotoModerationDefsReasonAppeal:
+      type: string
+      format: token
+      description: 'Appeal: appeal a previously taken moderation action'
   examples:
+    ModerationCreateReportRequestExample:
+      summary: Example request for moderationCreateReport
+      value:
+        reasonType: example-token
+        subject:
+          did: did:plc:example123abc
+        reason: Example reason
     ModerationCreateReportResponse200Example:
       summary: Successful response for moderationCreateReport
       value:
@@ -192,13 +199,6 @@ components:
           did: did:plc:example123abc
         reportedBy: did:plc:example123abc
         createdAt: '2024-01-15T12:00:00.000Z'
-        reason: Example reason
-    ModerationCreateReportRequestExample:
-      summary: Example request for moderationCreateReport
-      value:
-        reasonType: example-token
-        subject:
-          did: did:plc:example123abc
         reason: Example reason
   securitySchemes:
     Bearer:
