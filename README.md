@@ -1,4 +1,4 @@
-# Bluesky (bluesky)
+# Bluesky
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,109 +66,149 @@
 
 API for the Bluesky decentralized social network built on the AT Protocol.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-search/bluesky/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-search/bluesky/refs/heads/main/apis.yml)
+**Areas:** At-Protocol · Decentralized · Federated · Open Source · Social Network · Social Media · Real-Time · Social
 
-## Scope
+## Bluesky on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Bluesky is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/bluesky/](https://apis.io/providers/bluesky/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (24)
 
-- At-Protocol
-- Decentralized
-- Federated
-- Open-Source
-- Social Networks
-- Social-Media
+- [Bluesky Jetstream](https://apis.io/apis/bluesky/bluesky-jetstream/) — Jetstream is a simplified JSON event stream for the AT Protocol that converts CBOR-encoded MST blocks from the firehose into JSON objects over WebSocket…
+- [Bluesky Actor Profiles API](https://apis.io/apis/bluesky/bluesky-actor-profiles-api/) — Operations for managing user profiles, preferences, and actor information.
+- [Bluesky Administration API](https://apis.io/apis/bluesky/bluesky-administration-api/) — Administrative operations for managing accounts and invites.
+- [Bluesky Chat Actors API](https://apis.io/apis/bluesky/bluesky-chat-actors-api/) — Operations for managing chat actor settings and declarations.
+- [Bluesky Chat Moderation API](https://apis.io/apis/bluesky/bluesky-chat-moderation-api/) — Operations for moderating chat content.
+- [Bluesky Content Labels API](https://apis.io/apis/bluesky/bluesky-content-labels-api/) — Operations for managing content labelers and label subscriptions.
+- [Bluesky Conversations API](https://apis.io/apis/bluesky/bluesky-conversations-api/) — Operations for managing direct message conversations.
+- [Bluesky Feeds API](https://apis.io/apis/bluesky/bluesky-feeds-api/) — Operations for managing feeds, posts, likes, and reposts.
+- [Bluesky Identity API](https://apis.io/apis/bluesky/bluesky-identity-api/) — Operations for identity management and DID resolution.
+- [Bluesky Labels API](https://apis.io/apis/bluesky/bluesky-labels-api/) — Operations for content labeling and moderation.
+- [Bluesky Moderation API](https://apis.io/apis/bluesky/bluesky-moderation-api/) — Operations for content moderation reporting.
+- [Bluesky Notifications API](https://apis.io/apis/bluesky/bluesky-notifications-api/) — Operations for managing user notifications.
+- [Bluesky Ozone Communication API](https://apis.io/apis/bluesky/bluesky-ozone-communication-api/) — Ozone moderation tool communication operations.
+- [Bluesky Ozone Moderation API](https://apis.io/apis/bluesky/bluesky-ozone-moderation-api/) — Ozone moderation tool operations.
+- [Bluesky Ozone Server API](https://apis.io/apis/bluesky/bluesky-ozone-server-api/) — Ozone server configuration operations.
+- [Bluesky Ozone Sets API](https://apis.io/apis/bluesky/bluesky-ozone-sets-api/) — Ozone set management operations.
+- [Bluesky Ozone Settings API](https://apis.io/apis/bluesky/bluesky-ozone-settings-api/) — Ozone settings management operations.
+- [Bluesky Ozone Signatures API](https://apis.io/apis/bluesky/bluesky-ozone-signatures-api/) — Ozone signature and threat analysis operations.
+- [Bluesky Ozone Team API](https://apis.io/apis/bluesky/bluesky-ozone-team-api/) — Ozone team member management operations.
+- [Bluesky Repository API](https://apis.io/apis/bluesky/bluesky-repository-api/) — Operations for managing AT Protocol repositories.
+- [Bluesky Server API](https://apis.io/apis/bluesky/bluesky-server-api/) — Operations for server management and authentication.
+- [Bluesky Social Graph API](https://apis.io/apis/bluesky/bluesky-social-graph-api/) — Operations for managing follows, followers, blocks, mutes, and lists.
+- [Bluesky Sync API](https://apis.io/apis/bluesky/bluesky-sync-api/) — Operations for repository synchronization.
+- [Bluesky Video API](https://apis.io/apis/bluesky/bluesky-video-api/) — Operations for video upload and processing.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2024-11-16
-- **Modified:** 2026-05-29
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Bluesky API
+Event-driven and webhook contracts.
 
-The Bluesky API allows you to work programmatically with actors, feeds, graph, conversations, and other resources available for the the Bluesky app and social network.
+- [Bluesky / AT Protocol Event Streams](https://apis.io/asyncapis/bluesky/bluesky-asyncapi/)
 
-- **Human URL:** [https://docs.bsky.app/](https://docs.bsky.app/)
+#### Event channels (3)
 
-#### Tags
+Individual events and webhooks the provider emits.
 
-- Social Networks
+- [subscribe](https://apis.io/channels/bluesky/subscribe/)
+- [xrpc/com.atproto.label.subscribeLabels](https://apis.io/channels/bluesky/xrpc-com-atproto-label-subscribelabels/)
+- [xrpc/com.atproto.sync.subscribeRepos](https://apis.io/channels/bluesky/xrpc-com-atproto-sync-subscriberepos/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://docs.bsky.app/)
-- [OpenAPI](openapi/bluesky-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/bluesky.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/bluesky.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](https://www.postman.com/api-evangelist/bluesky/collection/ubo2xuv/bluesky-api) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [API Reference](https://docs.bsky.app/docs/api/at-protocol-xrpc-api)
-- [H T T P Reference](https://docs.bsky.app/docs/category/http-reference)
-- [A P I Directory](https://docs.bsky.app/docs/advanced-guides/api-directory)
-- [Authentication](https://docs.bsky.app/docs/advanced-guides/oauth-client)
-- [Rate Limits](https://docs.bsky.app/docs/advanced-guides/rate-limits)
-- [Firehose](https://docs.bsky.app/docs/advanced-guides/firehose)
-- [AsyncAPI](asyncapi/bluesky-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Moderation](https://docs.bsky.app/docs/advanced-guides/moderation)
-- [Identity](https://docs.bsky.app/docs/advanced-guides/resolving-identities)
-- [Summary](undefined)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Bluesky Jetstream
+- [Bluesky Agentic Access](https://apis.io/agentic-access/bluesky/bluesky-agentic-access/)
 
-Jetstream is a simplified JSON event stream for the AT Protocol that converts CBOR-encoded MST blocks from the firehose into JSON objects over WebSocket connections, making it easier to consume real-time Bluesky network events for building feed generators, bots, and search engines.
+#### Collections (25)
 
-- **Human URL:** [https://docs.bsky.app/blog/jetstream](https://docs.bsky.app/blog/jetstream)
+Postman and Open Collection request collections.
 
-#### Tags
+- [Bluesky Bruno Collection](https://apis.io/collections/bluesky/bruno/)
+- [Bluesky Social API](https://apis.io/collections/bluesky/open-bluesky/)
+- [Bluesky Social Actor Profiles API](https://apis.io/collections/bluesky/open-bluesky-actor-profiles-api/)
+- [Bluesky Social Actor Profiles Administration API](https://apis.io/collections/bluesky/open-bluesky-administration-api/)
+- [Bluesky Social Actor Profiles Chat Actors API](https://apis.io/collections/bluesky/open-bluesky-chat-actors-api/)
+- [Bluesky Social Actor Profiles Chat Moderation API](https://apis.io/collections/bluesky/open-bluesky-chat-moderation-api/)
+- [Bluesky Social Actor Profiles Content Labels API](https://apis.io/collections/bluesky/open-bluesky-content-labels-api/)
+- [Bluesky Social Actor Profiles Conversations API](https://apis.io/collections/bluesky/open-bluesky-conversations-api/)
+- [Bluesky Social Actor Profiles Feeds API](https://apis.io/collections/bluesky/open-bluesky-feeds-api/)
+- [Bluesky Social Actor Profiles Identity API](https://apis.io/collections/bluesky/open-bluesky-identity-api/)
+- [Bluesky Social Actor Profiles Labels API](https://apis.io/collections/bluesky/open-bluesky-labels-api/)
+- [Bluesky Social Actor Profiles Moderation API](https://apis.io/collections/bluesky/open-bluesky-moderation-api/)
+- [Bluesky Social Actor Profiles Notifications API](https://apis.io/collections/bluesky/open-bluesky-notifications-api/)
+- [Bluesky Social Actor Profiles Ozone Communication API](https://apis.io/collections/bluesky/open-bluesky-ozone-communication-api/)
+- [Bluesky Social Actor Profiles Ozone Moderation API](https://apis.io/collections/bluesky/open-bluesky-ozone-moderation-api/)
+- [Bluesky Social Actor Profiles Ozone Server API](https://apis.io/collections/bluesky/open-bluesky-ozone-server-api/)
+- [Bluesky Social Actor Profiles Ozone Sets API](https://apis.io/collections/bluesky/open-bluesky-ozone-sets-api/)
+- [Bluesky Social Actor Profiles Ozone Settings API](https://apis.io/collections/bluesky/open-bluesky-ozone-settings-api/)
+- [Bluesky Social Actor Profiles Ozone Signatures API](https://apis.io/collections/bluesky/open-bluesky-ozone-signatures-api/)
+- [Bluesky Social Actor Profiles Ozone Team API](https://apis.io/collections/bluesky/open-bluesky-ozone-team-api/)
+- [Bluesky Social Actor Profiles Repository API](https://apis.io/collections/bluesky/open-bluesky-repository-api/)
+- [Bluesky Social Actor Profiles Server API](https://apis.io/collections/bluesky/open-bluesky-server-api/)
+- [Bluesky Social Actor Profiles Social Graph API](https://apis.io/collections/bluesky/open-bluesky-social-graph-api/)
+- [Bluesky Social Actor Profiles Sync API](https://apis.io/collections/bluesky/open-bluesky-sync-api/)
+- [Bluesky Social Actor Profiles Video API](https://apis.io/collections/bluesky/open-bluesky-video-api/)
 
-- Events
-- Social Networks
-- Streaming
+#### Governance rules (1)
 
-#### Properties
+Spectral rulesets for the provider's contracts.
 
-- [Documentation](https://docs.bsky.app/blog/jetstream)
-- [GitHub Repository](https://github.com/bluesky-social/jetstream)
-- [AsyncAPI](asyncapi/bluesky-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Postman Collection](collections/bluesky.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/bluesky.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Bluesky — asyncapi rules](https://apis.io/rules/bluesky/bluesky-asyncapi-spectral-rules/)
 
-## Common Properties
+#### Security (3)
 
-- [LinkedIn](https://www.linkedin.com/company/bluesky-pbc)
-- [Bots](https://docs.bsky.app/docs/starter-templates/bots)
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Bluesky Authentication](https://apis.io/security/bluesky/bluesky-authentication/)
+- [Bluesky Domain Security](https://apis.io/security/bluesky/bluesky-domain-security/)
+- [Bluesky Vulnerability Disclosure](https://apis.io/security/bluesky/bluesky-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Bluesky Plans Pricing](https://apis.io/plans/bluesky/bluesky-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Bluesky Rate Limits](https://apis.io/rate-limits/bluesky/bluesky-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Bluesky Finops](https://apis.io/finops/bluesky/bluesky-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Getting started](https://docs.bsky.app/docs/get-started)
 - [Support](https://docs.bsky.app/docs/category/support)
 - [Blog](https://docs.bsky.app/blog)
-- [Getting Started](https://docs.bsky.app/docs/get-started)
-- [Templates](https://docs.bsky.app/docs/category/starter-templates)
-- [Tutorials](https://docs.bsky.app/docs/category/tutorials)
-- [Newsletter](https://docs.bsky.app/docs/support/mailing-list)
-- [Postman Workspace](https://www.postman.com/api-evangelist/bluesky/overview)
-- [Guidelines](https://docs.bsky.app/docs/support/developer-guidelines)
-- [Custom Feeds](https://docs.bsky.app/docs/starter-templates/custom-feeds)
-- [Protocol](https://docs.bsky.app/docs/advanced-guides/atproto)
-- [Advanced Guides](https://docs.bsky.app/docs/category/advanced-guides)
-- [Terms of Service](https://bsky.social/about/support/tos)
-- [Privacy Policy](https://bsky.social/about/support/privacy-policy)
-- [Community Guidelines](https://bsky.social/about/support/community-guidelines)
-- [S D Ks](https://atproto.com/sdks)
-- [Protocol Overview](https://atproto.com/guides/overview)
-- [Specifications](https://atproto.com/)
-- [Git Hub  Org](https://github.com/bluesky-social)
-- [GitHub Repository](https://github.com/bluesky-social/atproto)
-- [GitHub Repository](https://github.com/bluesky-social/feed-generator)
-- [GitHub Repository](https://github.com/bluesky-social/ozone)
-- [Forum](https://github.com/bluesky-social/atproto/discussions)
-- [Summary](undefined)
+- [Terms of service](https://bsky.social/about/support/tos)
+- [Privacy policy](https://bsky.social/about/support/privacy-policy)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
-**Email:** support@bsky.app
-**URL:** https://bsky.social
+**Unrated** — no public website could be reached for this company, so there was almost nothing to measure and nothing a reader could check.
+
+This is not a score of zero. No rating is published for this company. If that is wrong because something public exists that we missed, say so on this repository or email [info@apievangelist.com](mailto:info@apievangelist.com) and it will be re-run — free, and no justification needed.
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Bluesky: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/bluesky/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
