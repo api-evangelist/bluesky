@@ -150,7 +150,7 @@ maintainers:
     email: support@bsky.app
     url: https://bsky.social
 x-canonical:
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - free
